@@ -1,4 +1,5 @@
 LEXER
-FOLDER_5_OUTPUT/
-FOLDER_3_BIN/
+FOLDER_5_OUTPUT/*.txt
+FOLDER_3_BIN/*.class
 FOLDER_2_SRC/Lexer.java
+.DS_Store/
