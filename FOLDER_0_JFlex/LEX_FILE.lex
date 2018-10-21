@@ -16,15 +16,21 @@ import java_cup.runtime.*;
 %}
 
 LineTerminator		= \r|\n|\r\n
+InputCharacter		= [^\r\n]
 WhiteSpace		= {LineTerminator} | [ \t\f]
+
 INTEGER			= -? (0 | [1-9][0-9]*)
 LETTER			= [a-z] | [A-Z]
 ALPHANUM		= {LETTER} | [0-9]
 STRING			= [\"]{ALPHANUM}*[\"]
 ID			= {LETTER}+{ALPHANUM}*
-InputCar		= [^\r\n]
-EndofLineComment	= "//" {InputCar}* {LineTerminator}?
-OldSchoolComment	= "/*"( [^"*"] | "*"[^"/"] )*"*/"
+
+Comment			= {TraditionalComment} | {EndOfLineComment} | {DocumentationComment}
+TraditionalComment	= "/*" [^*] ~"*/" | "/*" "*"+ "/"
+EndOfLineComment	= "//" {InputCharacter}* {LineTerminator}?
+DocumentationComment	= "/**" {CommentContent} "*"+ "/"
+CommentContent		= ( [^*] | \*+ [^/*] )*
+
 %%
 
 
@@ -54,8 +60,7 @@ OldSchoolComment	= "/*"( [^"*"] | "*"[^"/"] )*"*/"
 "while"				{ return symbol(TokenNames.WHILE); }
 "if"				{ return symbol(TokenNames.IF); }
 "new"				{ return symbol(TokenNames.NEW); }
-{EndofLineComment}		{ return symbol(TokenNames.COMMENT); }
-{OldSchoolComment}		{ return symbol(TokenNames.COMMENT); }
+{Comment}		{ return symbol(TokenNames.COMMENT); }
 {INTEGER}			{ return symbol(TokenNames.INT, new Integer(yytext())); }
 {ID}				{ return symbol(TokenNames.ID, new String(yytext())); }   
 {STRING}			{ return symbol(TokenNames.STRING, new String(yytext())); }
