@@ -14,11 +14,18 @@ public class Main
 			Symbol s = l.next_token();
 			while (s.sym != TokenNames.EOF)
 			{
+				if (s.sym == TokenNames.COMMENT)
+				{
+					s = l.next_token();
+					continue;
+				}
+				System.out.print(TokenNames.toString(s.sym));
 				if (s.value != null) { System.out.print("(" + s.value + ")"); }
 				System.out.print("[");
 				System.out.print(l.getLine());
 				System.out.println("," + l.getTokenStartPosition() + "]");
 
+				file_writer.print(TokenNames.toString(s.sym));
 				if (s.value != null) { file_writer.print("(" + s.value + ")"); }
 				file_writer.print("[");
 				file_writer.print(l.getLine());

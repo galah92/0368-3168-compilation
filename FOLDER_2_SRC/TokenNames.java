@@ -1,4 +1,5 @@
 public interface TokenNames {
+
   public static final int LPAREN = 0;
   public static final int RPAREN = 1;
   public static final int LBRACK = 2;
@@ -29,5 +30,42 @@ public interface TokenNames {
   public static final int ID = 27;
   public static final int COMMENT = 28;
   public static final int EOF = 99;
+
+  public static String toString(int token) {
+    switch (token) {
+        case LPAREN: return "LPAREN";
+        case RPAREN: return "RPAREN";
+        case LBRACK: return "LBRACK";
+        case RBRACK: return "RBRACK";
+        case LBRACE: return "LBRACE";
+        case RBRACE: return "RBRACE";
+        case NIL: return "NIL";
+        case PLUS: return "PLUS";
+        case MINUS: return "MINUS";
+        case TIMES: return "TIMES";
+        case DIVIDE: return "DIVIDE";
+        case COMMA: return "COMMA";
+        case DOT: return "DOT";
+        case SEMICOLON: return "SEMICOLON";
+        case ASSIGN: return "ASSIGN";
+        case EQ: return "EQ";
+        case LT: return "LT";
+        case GT: return "GT";
+        case ARRAY: return "ARRAY";
+        case CLASS: return "CLASS";
+        case EXTENDS: return "EXTENDS";
+        case RETURN: return "RETURN";
+        case WHILE: return "WHILE";
+        case IF: return "IF";
+        case NEW: return "NEW";
+        case INT: return "INT";
+        case STRING: return "STRING";
+        case ID: return "ID";
+        case COMMENT: return "COMMENT";
+        case EOF: return "EOF";
+        default: return "ERROR";
+    }
+  }
+
 }
 

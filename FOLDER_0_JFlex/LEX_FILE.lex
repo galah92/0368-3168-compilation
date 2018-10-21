@@ -17,14 +17,14 @@ import java_cup.runtime.*;
 
 LineTerminator		= \r|\n|\r\n
 WhiteSpace		= {LineTerminator} | [ \t\f]
-INTEGER			= 0 | [1-9][0-9]*
+INTEGER			= -? (0 | [1-9][0-9]*)
 LETTER			= [a-z] | [A-Z]
 ALPHANUM		= {LETTER} | [0-9]
 STRING			= [\"]{ALPHANUM}*[\"]
 ID			= {LETTER}+{ALPHANUM}*
 InputCar		= [^\r\n]
 EndofLineComment	= "//" {InputCar}* {LineTerminator}?
-OldSchoolComment	= "/*"( [^"*"] | "*"[^"/"])*"*/"
+OldSchoolComment	= "/*"( [^"*"] | "*"[^"/"] )*"*/"
 %%
 
 
