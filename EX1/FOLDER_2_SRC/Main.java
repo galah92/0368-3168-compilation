@@ -8,9 +8,8 @@ public class Main
 	{
 		try
 		{
-			FileReader file_reader = new FileReader(argv[0]);
-			PrintWriter file_writer = new PrintWriter(argv[1]);
-			Lexer l = new Lexer(file_reader);
+			Lexer l = new Lexer(new FileReader(argv[0]));
+			PrintWriter fileWriter = new PrintWriter(argv[1]);
 			Symbol s = l.next_token();
 			while (s.sym != TokenNames.EOF)
 			{
@@ -19,22 +18,16 @@ public class Main
 					s = l.next_token();
 					continue;
 				}
-				System.out.print(TokenNames.toString(s.sym));
-				if (s.value != null) { System.out.print("(" + s.value + ")"); }
-				System.out.print("[");
-				System.out.print(l.getLine());
-				System.out.println("," + l.getTokenStartPosition() + "]");
 
-				file_writer.print(TokenNames.toString(s.sym));
-				if (s.value != null) { file_writer.print("(" + s.value + ")"); }
-				file_writer.print("[");
-				file_writer.print(l.getLine());
-				file_writer.print("," + l.getTokenStartPosition() + "]\n");
+				fileWriter.print(TokenNames.toString(s.sym));
+				if (s.value != null) { fileWriter.print("(" + s.value + ")"); }
+				fileWriter.print("[" + l.getLine());
+				fileWriter.print("," + l.getTokenStartPosition() + "]\n");
 
 				s = l.next_token();
 			}
 			l.yyclose();
-			file_writer.close();
+			fileWriter.close();
     		}
 		catch (Exception e) { e.printStackTrace(); }
 	}
