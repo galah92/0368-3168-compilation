@@ -27,6 +27,7 @@ public interface TokenNames {
   public static final int INT = 25;
   public static final int STRING = 26;
   public static final int ID = 27;
+  public static final int COMMENT = 28;
   public static final int EOF = 99;
 }
 

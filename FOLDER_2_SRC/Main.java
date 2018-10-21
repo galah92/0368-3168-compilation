@@ -23,6 +23,8 @@ public class Main
 				file_writer.print("[");
 				file_writer.print(l.getLine());
 				file_writer.print("," + l.getTokenStartPosition() + "]\n");
+
+				s = l.next_token();
 			}
 			l.yyclose();
 			file_writer.close();

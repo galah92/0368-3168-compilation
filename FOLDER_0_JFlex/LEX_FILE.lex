@@ -4,6 +4,7 @@ import java_cup.runtime.*;
 
 %class Lexer
 %line
+%column
 %cupsym TokenNames
 %cup
 
@@ -34,7 +35,7 @@ OldSchoolComment	= "/*"( [^"*"] | "*"[^"/"])*"*/"
 "]"				{ return symbol(TokenNames.RBRACK); }
 "{"				{ return symbol(TokenNames.LBRACE); }
 "}"				{ return symbol(TokenNames.RBRACE); }
-"NIL"				{ return symbol(TokenNames.NIL); }
+"nil"				{ return symbol(TokenNames.NIL); }
 "+"				{ return symbol(TokenNames.PLUS); }
 "-"				{ return symbol(TokenNames.MINUS); }
 "*"				{ return symbol(TokenNames.TIMES); }
@@ -46,18 +47,18 @@ OldSchoolComment	= "/*"( [^"*"] | "*"[^"/"])*"*/"
 "="				{ return symbol(TokenNames.EQ); }
 "<"				{ return symbol(TokenNames.LT); }
 ">"				{ return symbol(TokenNames.GT); }
-"ARRAY"				{ return symbol(TokenNames.ARRAY); }
-"CLASS"				{ return symbol(TokenNames.CLASS); }
-"EXTENDS"			{ return symbol(TokenNames.EXTENDS); }
-"RETURN"			{ return symbol(TokenNames.RETURN); }
-"WHILE"				{ return symbol(TokenNames.WHILE); }
-"IF"				{ return symbol(TokenNames.IF); }
-"NEW"				{ return symbol(TokenNames.NEW); }
+"array"				{ return symbol(TokenNames.ARRAY); }
+"class"				{ return symbol(TokenNames.CLASS); }
+"extends"			{ return symbol(TokenNames.EXTENDS); }
+"return"			{ return symbol(TokenNames.RETURN); }
+"while"				{ return symbol(TokenNames.WHILE); }
+"if"				{ return symbol(TokenNames.IF); }
+"new"				{ return symbol(TokenNames.NEW); }
+{EndofLineComment}		{ return symbol(TokenNames.COMMENT); }
+{OldSchoolComment}		{ return symbol(TokenNames.COMMENT); }
 {INTEGER}			{ return symbol(TokenNames.INT, new Integer(yytext())); }
-{STRING}			{ return symbol(TokenNames.STRING, new String(yytext())); }
 {ID}				{ return symbol(TokenNames.ID, new String(yytext())); }   
-{EndofLineComment}		{  return symbol(TokenNames.COMMENT); }
-{OldSchoolComment}		{  return symbol(TokenNames.COMMENT); }
+{STRING}			{ return symbol(TokenNames.STRING, new String(yytext())); }
 {WhiteSpace}			{ /* just skip what was found, do nothing */ }
 <<EOF>>				{ return symbol(TokenNames.EOF); }
 }
