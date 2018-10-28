@@ -4,12 +4,12 @@ import java_cup.runtime.Symbol;
    
 public class Main
 {
-	static public void main(String argv[])
+	static public void main(String argv[]) throws IOException
 	{
+		Lexer l = new Lexer(new FileReader(argv[0]));
+		PrintWriter writer = new PrintWriter(argv[1]);
 		try
 		{
-			Lexer l = new Lexer(new FileReader(argv[0]));
-			PrintWriter fileWriter = new PrintWriter(argv[1]);
 			Symbol s = l.next_token();
 			while (s.sym != TokenNames.EOF)
 			{
@@ -19,17 +19,25 @@ public class Main
 					continue;
 				}
 
-				fileWriter.print(TokenNames.toString(s.sym));
-				if (s.value != null) { fileWriter.print("(" + s.value + ")"); }
-				fileWriter.print("[" + l.getLine());
-				fileWriter.print("," + l.getTokenStartPosition() + "]\n");
+				writer.print(TokenNames.toString(s.sym));
+				if (s.value != null) { writer.print("(" + s.value + ")"); }
+				writer.print("[" + l.getLine());
+				writer.print("," + l.getTokenStartPosition() + "]");
 
 				s = l.next_token();
 			}
-			l.yyclose();
-			fileWriter.close();
     		}
+		catch (Error e)
+		{
+			writer = new PrintWriter(argv[1]); // clear content
+			writer.println("ERROR");
+		}
 		catch (Exception e) { e.printStackTrace(); }
+		finally
+		{
+			l.yyclose();
+			writer.close();
+		}
 	}
 }
 

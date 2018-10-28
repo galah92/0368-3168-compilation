@@ -70,5 +70,6 @@ CommentContent		= ( [^*] | \*+ [^/*] )*
 {STRING}			{ return symbol(TokenNames.STRING, new String(yytext())); }
 {WhiteSpace}			{ /* just skip what was found, do nothing */ }
 <<EOF>>				{ return symbol(TokenNames.EOF); }
+[^]				{ throw new Error("Illegal character <" + yytext() + ">"); }
 }
 
