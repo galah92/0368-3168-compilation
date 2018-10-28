@@ -65,7 +65,7 @@ CommentContent		= ( [^*] | \*+ [^/*] )*
 ">"				{ return symbol(TokenNames.GT); }
 
 {Comment}			{ return symbol(TokenNames.COMMENT); }
-{INTEGER}			{ return symbol(TokenNames.INT, new Integer(yytext())); }
+{INTEGER}			{ return symbol(TokenNames.INT, new Short(yytext())); }
 {ID}				{ return symbol(TokenNames.ID, new String(yytext())); }   
 {STRING}			{ return symbol(TokenNames.STRING, new String(yytext())); }
 {WhiteSpace}			{ /* just skip what was found, do nothing */ }
