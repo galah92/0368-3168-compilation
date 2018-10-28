@@ -22,17 +22,17 @@ public class Main
 				writer.print(TokenNames.toString(s.sym));
 				if (s.value != null) { writer.print("(" + s.value + ")"); }
 				writer.print("[" + l.getLine());
-				writer.print("," + l.getTokenStartPosition() + "]");
+				writer.println("," + l.getTokenStartPosition() + "]");
 
 				s = l.next_token();
 			}
     		}
-		catch (Error e)
+		catch (Exception | Error e)
 		{
+//			e.printStackTrace(); 
 			writer = new PrintWriter(argv[1]); // clear content
 			writer.println("ERROR");
 		}
-		catch (Exception e) { e.printStackTrace(); }
 		finally
 		{
 			l.yyclose();
