@@ -20,16 +20,20 @@ public class Main
 				}
 
 				writer.print(TokenNames.toString(s.sym));
-				if (s.value != null) { writer.print("(" + s.value + ")"); }
-				writer.print("[" + l.getLine());
-				writer.println("," + l.getTokenStartPosition() + "]");
+				if (s.value != null)
+				{
+					writer.print("(" + s.value + ")");
+				}
+				int line = l.getLine();
+				int pos = l.getTokenStartPosition();
+				writer.println("[" + line + "," + pos + "]");
 
 				s = l.next_token();
 			}
     		}
 		catch (Exception | Error e)
 		{
-//			e.printStackTrace(); 
+//			e.printStackTrace();
 			writer = new PrintWriter(argv[1]); // clear content
 			writer.println("ERROR");
 		}
