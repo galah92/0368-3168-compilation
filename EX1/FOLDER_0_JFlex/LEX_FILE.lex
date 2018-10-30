@@ -18,8 +18,8 @@ import java_cup.runtime.*;
 LineTerminator		= \r|\n|\r\n
 InputCharacter		= [^\r\n]
 WhiteSpace		= {LineTerminator} | [ \t\f]
-
 INTEGER			=  (0 |-?[1-9][0-9]*)
+BadInteger		= 0{INTEGER} 
 LETTER			= [a-z] | [A-Z]
 ALPHANUM		= {LETTER} | [0-9]
 STRING			= [\"]{LETTER}*[\"]
@@ -66,6 +66,7 @@ CommentContent		= ( [^*] | \*+ [^/*] )*
 
 {Comment}			{ return symbol(TokenNames.COMMENT); }
 {INTEGER}			{ return symbol(TokenNames.INT, new Short(yytext())); }
+{BadInteger}			{ throw new Error("Illegal integer format <" + yytext() + ">"); }
 {ID}				{ return symbol(TokenNames.ID, new String(yytext())); }   
 {STRING}			{ return symbol(TokenNames.STRING, new String(yytext())); }
 {WhiteSpace}			{ /* just skip what was found, do nothing */ }
