@@ -24,11 +24,14 @@ LETTER			= [a-z] | [A-Z]
 ALPHANUM		= {LETTER} | [0-9]
 STRING			= [\"]{LETTER}*[\"]
 ID			= {LETTER}+{ALPHANUM}*
+PARENTHESIS = "(" | ")" | "[" | "]" | "{" | "}"
+CommentContent = ({LETTER} | [0-9] | [ \t\f] | {PARENTHESIS} | "?" | "!" | "+" | "-" | "." | ";")
 
 Comment			= {TraditionalComment} | {EndOfLineComment}
-TraditionalComment	= "/*" [^*] ~"*/" | "/*" "*"+ "/"
-EndOfLineComment	= "//" {InputCharacter}* {LineTerminator}?
+TraditionalComment	= "/*"(("/"*"*"*("*"*{CommentContent}"*"* | "*"*{LineTerminator}"*"* | {CommentContent}"/"* | {LineTerminator}"/"*)*) ) "*/"
+EndOfLineComment	= "//"({CommentContent} | "*" | "/")*{LineTerminator}
 UnclosedComment		= "/*" [^*] | "/*"
+BadEndOfLineComment = "//"[^CommentContent]
 
 %%
 
@@ -44,6 +47,16 @@ UnclosedComment		= "/*" [^*] | "/*"
 "while"				{ return symbol(TokenNames.WHILE); }
 "if"				{ return symbol(TokenNames.IF); }
 "new"				{ return symbol(TokenNames.NEW); }
+
+{Comment}			{ return symbol(TokenNames.COMMENT); }
+{INTEGER}			{ return symbol(TokenNames.INT, new Short(yytext())); }
+{BadInteger}			{ throw new Error("Illegal integer format <" + yytext() + ">"); }
+{UnclosedComment}		{ throw new Error("Illegal comment <" + yytext() + ">"); }
+{BadEndOfLineComment}   { throw new Error("Illegal comment <" + yytext() + ">"); }
+{ID}				{ return symbol(TokenNames.ID, new String(yytext())); }   
+{STRING}			{ return symbol(TokenNames.STRING, new String(yytext())); }
+{WhiteSpace}			{ /* just skip what was found, do nothing */ }
+<<EOF>>				{ return symbol(TokenNames.EOF); }
 
 "("				{ return symbol(TokenNames.LPAREN); }
 ")"				{ return symbol(TokenNames.RPAREN); }
@@ -63,16 +76,6 @@ UnclosedComment		= "/*" [^*] | "/*"
 "<"				{ return symbol(TokenNames.LT); }
 ">"				{ return symbol(TokenNames.GT); }
 
-{Comment}			{ return symbol(TokenNames.COMMENT); }
-{INTEGER}			{ return symbol(TokenNames.INT, new Short(yytext())); }
-{BadInteger}			{ throw new Error("Illegal integer format <" + yytext() + ">"); }
-{UnclosedComment}		{ throw new Error("Illegal integer format <" + yytext() + ">"); }
-{ID}				{ return symbol(TokenNames.ID, new String(yytext())); }   
-{STRING}			{ return symbol(TokenNames.STRING, new String(yytext())); }
-{WhiteSpace}			{ /* just skip what was found, do nothing */ }
-<<EOF>>				{ return symbol(TokenNames.EOF); }
-
 [^]				{ throw new Error("Illegal character <" + yytext() + ">"); }
 
 }
-
