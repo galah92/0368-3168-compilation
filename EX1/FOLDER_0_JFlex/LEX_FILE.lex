@@ -25,11 +25,10 @@ ALPHANUM		= {LETTER} | [0-9]
 STRING			= [\"]{LETTER}*[\"]
 ID			= {LETTER}+{ALPHANUM}*
 
-Comment			= {TraditionalComment} | {EndOfLineComment} | {DocumentationComment}
+Comment			= {TraditionalComment} | {EndOfLineComment}
 TraditionalComment	= "/*" [^*] ~"*/" | "/*" "*"+ "/"
 EndOfLineComment	= "//" {InputCharacter}* {LineTerminator}?
-DocumentationComment	= "/**" {CommentContent} "*"+ "/"
-CommentContent		= ( [^*] | \*+ [^/*] )*
+UnclosedComment		= "/*" [^*] | "/*"
 
 %%
 
@@ -67,6 +66,7 @@ CommentContent		= ( [^*] | \*+ [^/*] )*
 {Comment}			{ return symbol(TokenNames.COMMENT); }
 {INTEGER}			{ return symbol(TokenNames.INT, new Short(yytext())); }
 {BadInteger}			{ throw new Error("Illegal integer format <" + yytext() + ">"); }
+{UnclosedComment}		{ throw new Error("Illegal integer format <" + yytext() + ">"); }
 {ID}				{ return symbol(TokenNames.ID, new String(yytext())); }   
 {STRING}			{ return symbol(TokenNames.STRING, new String(yytext())); }
 {WhiteSpace}			{ /* just skip what was found, do nothing */ }
