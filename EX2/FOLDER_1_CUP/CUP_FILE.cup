@@ -1,6 +1,3 @@
-/*************/
-/* IMPORT(S) */
-/*************/
 import java_cup.runtime.*;
 import AST.*;
 
@@ -25,9 +22,7 @@ parser code
 	}
 :}
 
-/************************/
 /* CUSTOMIZE CUP PARSER */
-/************************/
 scan with
 {:
 	Symbol s;
@@ -49,56 +44,54 @@ scan with
 	return s; 
 :};
 
-/*************/
 /* TERMINALS */
-/*************/
-terminal IF;
-terminal EQ;
-terminal DOT;
-terminal PLUS;
-terminal MINUS;
-terminal TIMES;
-terminal WHILE;
-terminal DIVIDE;
 terminal LPAREN;
 terminal RPAREN;
 terminal LBRACK;
 terminal RBRACK;
 terminal LBRACE;
 terminal RBRACE;
+terminal NIL;
+terminal PLUS;
+terminal MINUS;
+terminal TIMES;
+terminal DIVIDE;
+terminal COMMA;
+terminal DOT;
 terminal SEMICOLON;
 terminal ASSIGN;
+terminal EQ;
+terminal LT;
+terminal GT;
+terminal ARRAY;
+terminal CLASS;
+terminal EXTENDS;
+terminal RETURN;
+terminal WHILE;
+terminal IF;
+terminal NEW;
+terminal COMMENT;
+terminal STRING;
 
-/*************/
-/* TERMINALS */
-/*************/
 terminal Integer INT;
 terminal String ID;
 
-/*****************/
 /* NON TERMINALS */
-/*****************/
 non terminal AST_EXP exp;
 non terminal AST_VAR var;
 non terminal AST_STMT stmt;
 non terminal AST_STMT_LIST stmtList;
 
-/***********************/
 /* OPERATOR PRECEDENCE */
-/***********************/
 precedence left PLUS;
 precedence left MINUS;
 precedence left TIMES;
 precedence left DIVIDE;
 
-/************************/
 /* START WITH: stmtList */
-/************************/
 start with stmtList;
 
-/********************/
 /* DERIVATION RULES */
-/********************/
 
 stmtList	::=		stmt:s	stmtList:l		{: RESULT = new AST_STMT_LIST(s,l);    :}
 					| stmt:s				{: RESULT = new AST_STMT_LIST(s,null); :}
