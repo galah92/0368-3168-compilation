@@ -12,7 +12,7 @@ public class Main
 		{
 			Parser p = new Parser(new Lexer(new FileReader(argv[0])));
 			AST_STMT_LIST AST = (AST_STMT_LIST) p.parse().value;
-			AST.PrintMe();
+//			AST.PrintMe();
 			PrintWriter file_writer = new PrintWriter(argv[1]);
 			// TODO: write OK / ERROR(...) to the file
 			file_writer.close();

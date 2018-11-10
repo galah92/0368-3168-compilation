@@ -45,6 +45,7 @@ all: clean
 	jar cfm PARSER ${MANIFEST_FILE} -C ${BIN_DIR} .
 	java -jar PARSER ${INPUT} ${OUTPUT}
 	dot -Tjpeg -o${OUTPUT_DIR}/AST.jpeg ${OUTPUT_DIR}/AST_IN_GRAPHVIZ_DOT_FORMAT.txt
+	cp ${OUTPUT_DIR}/AST.jpeg /mnt/c/Users/Gal/Downloads/
 #	eog ${OUTPUT_DIR}/AST.jpeg &
 
 clean:
