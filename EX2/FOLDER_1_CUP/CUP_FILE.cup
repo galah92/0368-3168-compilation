@@ -71,6 +71,7 @@ non terminal AST_STMT stmt;
 non terminal AST_STMT_LIST stmtList;
 non terminal AST_ARRAY_DEC arrayDec;
 non terminal AST_varDec varDec;
+non terminal AST_funcDec funcDec;
 non terminal AST_newExp newExp;
 non terminal AST_paramsList paramsList;
 
@@ -115,6 +116,7 @@ exp			::=		INT:i								{: RESULT = new AST_EXP_INT(i);          :}
 varDec      ::=     ID:id1 ID:id2                           {: RESULT = new AST_varDec(id1, id2); :} |
                     ID:id1 ID:id2 ASSIGN exp:e              {: RESULT = new AST_varDec(id1, id2, e); :} |
                     ID:id1 ID:id2 ASSIGN newExp:e           {: RESULT = new AST_varDec(id1, id2, e); :} ;
+funcDec     ::=     ID:retType ID:funcName LPAREN paramsList:pList RPAREN LBRACE stmtList:sList RBRACE   {: RESULT = new AST_funcDec(retType, funcName, pList, sList); :} ;
 arrayDec    ::=     ARRAY ID:id1 EQ ID:id2 LBRACK RBRACK    {: RESULT = new AST_ARRAY_DEC(id2, id2); :};
 
 
