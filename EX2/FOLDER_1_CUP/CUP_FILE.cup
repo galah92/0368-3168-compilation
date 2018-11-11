@@ -108,10 +108,11 @@ exp			::=		INT:i								{: RESULT = new AST_EXP_INT(i);          :}
                     | exp:e1 MINUS exp:e2				{: RESULT = new AST_EXP_BINOP(e1, e2, 1);:}
                     ;
 
-varDec      ::=     ID:id1 ID:id2 LBRACK ASSIGN exp:e RBRACK SEMICOLON  {: RESULT = new AST_varDec(id1, id2, e); :};
-arrayDec    ::=     ARRAY ID:id1 EQ ID:id2 LBRACK RBRACK  {: RESULT = new AST_ARRAY_DEC(id2, id2); :};
+varDec      ::=     ID:id1 ID:id2                           {: RESULT = new AST_varDec(id1, id2); :} |
+                    ID:id1 ID:id2 ASSIGN exp:e              {: RESULT = new AST_varDec(id1, id2, e); :} |
+                    ID:id1 ID:id2 ASSIGN newExp:e           {: RESULT = new AST_varDec(id1, id2, e); :} ;
+arrayDec    ::=     ARRAY ID:id1 EQ ID:id2 LBRACK RBRACK    {: RESULT = new AST_ARRAY_DEC(id2, id2); :};
 
 
-newExp      ::=     NEW ID:id                           {: RESULT = new AST_newExp(id); :}
-                    | NEW ID:id LBRACK exp:e RBRACK     {: RESULT = new AST_newExp(id, e); :}
-                    ;
+newExp      ::=     NEW ID:id                           {: RESULT = new AST_newExp(id); :} |
+                    NEW ID:id LBRACK exp:e RBRACK       {: RESULT = new AST_newExp(id, e); :} ;
