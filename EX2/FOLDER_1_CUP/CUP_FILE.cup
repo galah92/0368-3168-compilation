@@ -69,6 +69,7 @@ non terminal AST_EXP exp;
 non terminal AST_VAR var;
 non terminal AST_STMT stmt;
 non terminal AST_STMT_LIST stmtList;
+non terminal AST_decList decList;
 non terminal AST_dec dec;
 non terminal AST_ARRAY_DEC arrayDec;
 non terminal AST_varDec varDec;
@@ -94,15 +95,18 @@ start with stmtList;
 
 /* DERIVATION RULES */
 
-stmtList	::=		stmt:s	stmtList:l		{: RESULT = new AST_STMT_LIST(s,l);    :}
-                    | stmt:s				{: RESULT = new AST_STMT_LIST(s,null); :}
-                    ;
+decList     ::=     dec:d decList:list                  {: RESULT = new AST_decList(d, list); :} |
+                    dec:d                               {: RESULT = new AST_decList(d, null); :} ;
+
+stmtList	::=		stmt:s stmtList:l                   {: RESULT = new AST_STMT_LIST(s,l); :} |
+                    stmt:s                              {: RESULT = new AST_STMT_LIST(s,null); :} ;
 
 paramsList  ::=     ID:id paramsList:list               {: RESULT = new AST_paramsList(id, list); :} |
                     ID:id                               {: RESULT = new AST_paramsList(id, null); :} ;
 
 cFieldList  ::=     cField:field cFieldList:list        {: RESULT = new AST_cFieldList(field, list); :} |
                     cField:field                        {: RESULT = new AST_cFieldList(field, null); :} ;
+
 
 var			::=		ID:name								{: RESULT = new AST_VAR_SIMPLE(name);       :}
                     | var:v DOT ID:fieldName			{: RESULT = new AST_VAR_FIELD(v,fieldName); :} 
