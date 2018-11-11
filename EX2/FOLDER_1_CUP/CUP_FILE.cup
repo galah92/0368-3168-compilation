@@ -74,6 +74,7 @@ non terminal AST_varDec varDec;
 non terminal AST_funcDec funcDec;
 non terminal AST_newExp newExp;
 non terminal AST_paramsList paramsList;
+non terminal AST_cField cField;
 
 /* OPERATOR PRECEDENCE */
 precedence left ASSIGN;
@@ -122,3 +123,7 @@ arrayDec    ::=     ARRAY ID:id1 EQ ID:id2 LBRACK RBRACK    {: RESULT = new AST_
 
 newExp      ::=     NEW ID:id                           {: RESULT = new AST_newExp(id); :} |
                     NEW ID:id LBRACK exp:e RBRACK       {: RESULT = new AST_newExp(id, e); :} ;
+
+cField      ::=     varDec:vDec                         {: RESULT = new AST_cField(vDec); :} |
+                    funcDec:fDec                        {: RESULT = new AST_cField(fDec); :} ;
+
