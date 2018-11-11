@@ -70,6 +70,7 @@ non terminal AST_VAR var;
 non terminal AST_STMT stmt;
 non terminal AST_STMT_LIST stmtList;
 non terminal AST_ARRAY_DEC arrayDec;
+non terminal AST_varDec varDec;
 
 /* OPERATOR PRECEDENCE */
 precedence left ASSIGN;
@@ -106,4 +107,5 @@ exp			::=		INT:i								{: RESULT = new AST_EXP_INT(i);          :}
                     | exp:e1 MINUS exp:e2				{: RESULT = new AST_EXP_BINOP(e1, e2, 1);:}
                     ;
 
+varDec      ::=     ID:id1 ID:id2 LBRACK ASSIGN exp:e RBRACK SEMICOLON  {: RESULT = new AST_varDec(id1, id2, e); :};
 arrayDec    ::=     ARRAY ID:id1 EQ ID:id2 LBRACK RBRACK  {: RESULT = new AST_ARRAY_DEC(id2, id2); :};

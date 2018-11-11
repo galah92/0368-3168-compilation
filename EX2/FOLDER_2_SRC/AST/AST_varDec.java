@@ -1,0 +1,38 @@
+package AST;
+
+public class AST_varDec extends AST_Node
+{
+	public String id1;
+	public String id2;
+	public AST_EXP exp;
+	
+	public AST_varDec(String id1, String id2, AST_EXP exp)
+	{
+		SerialNumber = AST_Node_Serial_Number.getFresh();
+
+		System.out.format("varDec -> ID(%s) ID(%s) LBRACK ASSIGN exp RBRACK SEMICOLON\n", id1, id2);
+
+		this.id1 = id1;
+		this.id2 = id2;
+		this.exp = exp;
+	}
+
+	public void PrintMe()
+	{
+		System.out.println("AST_varDec");
+
+		System.out.format("ID1(%s)\n", id1);
+		System.out.format("ID2(%s)\n", id2);
+		exp.PrintMe();
+
+		AST_GRAPHVIZ.getInstance().logNode(
+			SerialNumber,
+			String.format("ID1\n...->%s", id1));
+		AST_GRAPHVIZ.getInstance().logNode(
+			SerialNumber,
+			String.format("ID2\n...->%s", id2));
+		AST_GRAPHVIZ.getInstance().logEdge(
+			SerialNumber,
+			exp.SerialNumber);
+	}
+}
