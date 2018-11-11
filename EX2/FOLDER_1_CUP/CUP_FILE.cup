@@ -75,6 +75,7 @@ non terminal AST_funcDec funcDec;
 non terminal AST_newExp newExp;
 non terminal AST_paramsList paramsList;
 non terminal AST_cField cField;
+non terminal AST_cFieldList cFieldList;
 
 /* OPERATOR PRECEDENCE */
 precedence left ASSIGN;
@@ -97,6 +98,9 @@ stmtList	::=		stmt:s	stmtList:l		{: RESULT = new AST_STMT_LIST(s,l);    :}
 
 paramsList  ::=     ID:id paramsList:list               {: RESULT = new AST_paramsList(id, list); :} |
                     ID:id                               {: RESULT = new AST_paramsList(id, null); :} ;
+
+cFieldList  ::=     cField:field cFieldList:list        {: RESULT = new AST_cFieldList(field, list); :} |
+                    cField:field                        {: RESULT = new AST_cFieldList(field, null); :} ;
 
 var			::=		ID:name								{: RESULT = new AST_VAR_SIMPLE(name);       :}
                     | var:v DOT ID:fieldName			{: RESULT = new AST_VAR_FIELD(v,fieldName); :} 
