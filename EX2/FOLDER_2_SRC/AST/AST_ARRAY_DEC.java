@@ -2,8 +2,6 @@ package AST;
 
 public class AST_ARRAY_DEC extends AST_Node
 {
-	public AST_VAR var;
-	public String fieldName;
 	public String id1;
 	public String id2;
 	
