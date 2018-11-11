@@ -72,6 +72,7 @@ non terminal AST_STMT_LIST stmtList;
 non terminal AST_ARRAY_DEC arrayDec;
 non terminal AST_varDec varDec;
 non terminal AST_newExp newExp;
+non terminal AST_paramsList paramsList;
 
 /* OPERATOR PRECEDENCE */
 precedence left ASSIGN;
@@ -91,6 +92,9 @@ start with stmtList;
 stmtList	::=		stmt:s	stmtList:l		{: RESULT = new AST_STMT_LIST(s,l);    :}
                     | stmt:s				{: RESULT = new AST_STMT_LIST(s,null); :}
                     ;
+
+paramsList  ::=     ID:id paramsList:list               {: RESULT = new AST_paramsList(id, list); :} |
+                    ID:id                               {: RESULT = new AST_paramsList(id, null); :} ;
 
 var			::=		ID:name								{: RESULT = new AST_VAR_SIMPLE(name);       :}
                     | var:v DOT ID:fieldName			{: RESULT = new AST_VAR_FIELD(v,fieldName); :} 
