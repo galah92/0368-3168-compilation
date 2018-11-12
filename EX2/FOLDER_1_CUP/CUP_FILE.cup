@@ -1,7 +1,7 @@
 import java_cup.runtime.*;
 import AST.*;
 
-parser code 
+parser code
 {:
     public Lexer lexer;
 
@@ -29,7 +29,7 @@ scan with
     //System.out.print(TokenNames.terminalNames[s.sym]);
     //if (s.value != null) { System.out.print("(" + s.value + ")"); }
     //System.out.println();
-    return s; 
+    return s;
 :};
 
 /* TERMINALS */
@@ -59,7 +59,8 @@ terminal WHILE;
 terminal IF;
 terminal NEW;
 terminal COMMENT;
-terminal STRING;
+
+terminal String STRING;
 
 terminal Integer INT;
 terminal String ID;
@@ -109,19 +110,28 @@ cFieldList  ::=     cField:field cFieldList:list        {: RESULT = new AST_cFie
 
 
 var			::=		ID:name								{: RESULT = new AST_VAR_SIMPLE(name);       :}
-                    | var:v DOT ID:fieldName			{: RESULT = new AST_VAR_FIELD(v,fieldName); :} 
-                    | var:v LBRACK exp:e RBRACK			{: RESULT = new AST_VAR_SUBSCRIPT(v,e);     :} 
+                    | var:v DOT ID:fieldName			{: RESULT = new AST_VAR_FIELD(v,fieldName); :}
+                    | var:v LBRACK exp:e RBRACK			{: RESULT = new AST_VAR_SUBSCRIPT(v,e);     :}
                     ;
-                    
-stmt		::=		var:v ASSIGN exp:e SEMICOLON								{: RESULT = new AST_STMT_ASSIGN(v,e); :}
+
+stmt		::=		      varDec:v {: RESULT = new AST_STMT_VarDec(v); :}
+                    | var:v ASSIGN exp:e SEMICOLON								{: RESULT = new AST_STMT_ASSIGN(v,e); :}
+                    | var:v ASSIGN newExp:e SEMICOLON								{: RESULT = new AST_STMT_ASSIGN(v,e); :}
                     | IF    LPAREN exp:cond RPAREN LBRACE stmtList:body RBRACE	{: RESULT = new AST_STMT_IF(   cond,body); :}
                     | WHILE LPAREN exp:cond RPAREN LBRACE stmtList:body RBRACE	{: RESULT = new AST_STMT_WHILE(cond,body); :}
                     ;
 
 exp			::=		INT:i								{: RESULT = new AST_EXP_INT(i);          :}
+                    | STRING:s								{: RESULT = new AST_EXP_STRING(s);          :}
                     | var:v								{: RESULT = new AST_EXP_VAR(v);          :}
+                    | LPAREN exp:e RPAREN							{: RESULT = new AST_EXP_PAREN(e);          :}
                     | exp:e1 PLUS  exp:e2				{: RESULT = new AST_EXP_BINOP(e1, e2, 0);:}
                     | exp:e1 MINUS exp:e2				{: RESULT = new AST_EXP_BINOP(e1, e2, 1);:}
+                    | exp:e1 TIMES exp:e2				{: RESULT = new AST_EXP_BINOP(e1, e2, 2);:}
+                    | exp:e1 DIVIDE exp:e2				{: RESULT = new AST_EXP_BINOP(e1, e2, 3);:}
+                    | exp:e1 LT exp:e2				{: RESULT = new AST_EXP_BINOP(e1, e2, 4);:}
+                    | exp:e1 GT exp:e2				{: RESULT = new AST_EXP_BINOP(e1, e2, 5);:}
+                    | exp:e1 EQ exp:e2				{: RESULT = new AST_EXP_BINOP(e1, e2, 6);:}
                     ;
 
 dec         ::=     varDec:dec                                                                          {: RESULT = new AST_dec(dec); :} |
@@ -129,9 +139,9 @@ dec         ::=     varDec:dec                                                  
                     classDec:dec                                                                        {: RESULT = new AST_dec(dec); :} |
                     arrayDec:dec                                                                        {: RESULT = new AST_dec(dec); :} ;
 
-varDec      ::=     ID:id1 ID:id2                                                                       {: RESULT = new AST_varDec(id1, id2); :} |
-                    ID:id1 ID:id2 ASSIGN exp:e                                                          {: RESULT = new AST_varDec(id1, id2, e); :} |
-                    ID:id1 ID:id2 ASSIGN newExp:e                                                       {: RESULT = new AST_varDec(id1, id2, e); :} ;
+varDec      ::=     ID:id1 ID:id2 SEMICOLON                                                                      {: RESULT = new AST_varDec(id1, id2); :} |
+                    ID:id1 ID:id2 ASSIGN exp:e  SEMICOLON                                                        {: RESULT = new AST_varDec(id1, id2, e); :} |
+                    ID:id1 ID:id2 ASSIGN newExp:e  SEMICOLON                                                      {: RESULT = new AST_varDec(id1, id2, e); :} ;
 
 funcDec     ::=     ID:retType ID:funcName LPAREN paramsList:pList RPAREN LBRACE stmtList:sList RBRACE  {: RESULT = new AST_funcDec(retType, funcName, pList, sList); :} ;
 
@@ -146,4 +156,3 @@ newExp      ::=     NEW ID:id                           {: RESULT = new AST_newE
 
 cField      ::=     varDec:vDec                         {: RESULT = new AST_cField(vDec); :} |
                     funcDec:fDec                        {: RESULT = new AST_cField(fDec); :} ;
-
