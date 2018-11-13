@@ -6,3 +6,6 @@ FOLDER_2_SRC/Lexer.java
 FOLDER_2_SRC/Parser.java
 FOLDER_2_SRC/TokenNames.java
 .DS_Store
+*~
+*.swp
+*.swo

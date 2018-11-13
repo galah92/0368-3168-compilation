@@ -67,6 +67,7 @@ terminal String ID;
 
 /* NON TERMINALS */
 non terminal AST_EXP exp;
+non terminal AST_expList expList;
 non terminal AST_VAR var;
 non terminal AST_STMT stmt;
 non terminal AST_STMT_LIST stmtList;
@@ -92,6 +93,7 @@ precedence left TIMES;
 precedence left DIVIDE;
 
 /* START WITH: stmtList */
+// TODO: change it to decList when ready (when all the rest is complete
 start with stmtList;
 
 /* DERIVATION RULES */
@@ -108,40 +110,18 @@ paramsList  ::=     ID:id paramsList:list               {: RESULT = new AST_para
 cFieldList  ::=     cField:field cFieldList:list        {: RESULT = new AST_cFieldList(field, list); :} |
                     cField:field                        {: RESULT = new AST_cFieldList(field, null); :} ;
 
+expList     ::=     exp:e expList:list                  {: RESULT = new AST_expList(e, list); :} |
+                    exp:e                               {: RESULT = new AST_expList(e, null); :} ;
 
-var			::=		ID:name								{: RESULT = new AST_VAR_SIMPLE(name);       :}
-                    | var:v DOT ID:fieldName			{: RESULT = new AST_VAR_FIELD(v,fieldName); :}
-                    | var:v LBRACK exp:e RBRACK			{: RESULT = new AST_VAR_SUBSCRIPT(v,e);     :}
-                    ;
-
-stmt		::=		      varDec:v {: RESULT = new AST_STMT_VarDec(v); :}
-                    | var:v ASSIGN exp:e SEMICOLON								{: RESULT = new AST_STMT_ASSIGN(v,e); :}
-                    | var:v ASSIGN newExp:e SEMICOLON								{: RESULT = new AST_STMT_ASSIGN(v,e); :}
-                    | IF    LPAREN exp:cond RPAREN LBRACE stmtList:body RBRACE	{: RESULT = new AST_STMT_IF(   cond,body); :}
-                    | WHILE LPAREN exp:cond RPAREN LBRACE stmtList:body RBRACE	{: RESULT = new AST_STMT_WHILE(cond,body); :}
-                    ;
-
-exp			::=		INT:i								{: RESULT = new AST_EXP_INT(i);          :}
-                    | STRING:s								{: RESULT = new AST_EXP_STRING(s);          :}
-                    | var:v								{: RESULT = new AST_EXP_VAR(v);          :}
-                    | LPAREN exp:e RPAREN							{: RESULT = new AST_EXP_PAREN(e);          :}
-                    | exp:e1 PLUS  exp:e2				{: RESULT = new AST_EXP_BINOP(e1, e2, 0);:}
-                    | exp:e1 MINUS exp:e2				{: RESULT = new AST_EXP_BINOP(e1, e2, 1);:}
-                    | exp:e1 TIMES exp:e2				{: RESULT = new AST_EXP_BINOP(e1, e2, 2);:}
-                    | exp:e1 DIVIDE exp:e2				{: RESULT = new AST_EXP_BINOP(e1, e2, 3);:}
-                    | exp:e1 LT exp:e2				{: RESULT = new AST_EXP_BINOP(e1, e2, 4);:}
-                    | exp:e1 GT exp:e2				{: RESULT = new AST_EXP_BINOP(e1, e2, 5);:}
-                    | exp:e1 EQ exp:e2				{: RESULT = new AST_EXP_BINOP(e1, e2, 6);:}
-                    ;
 
 dec         ::=     varDec:dec                                                                          {: RESULT = new AST_dec(dec); :} |
                     funcDec:dec                                                                         {: RESULT = new AST_dec(dec); :} |
                     classDec:dec                                                                        {: RESULT = new AST_dec(dec); :} |
                     arrayDec:dec                                                                        {: RESULT = new AST_dec(dec); :} ;
 
-varDec      ::=     ID:id1 ID:id2 SEMICOLON                                                                      {: RESULT = new AST_varDec(id1, id2); :} |
-                    ID:id1 ID:id2 ASSIGN exp:e  SEMICOLON                                                        {: RESULT = new AST_varDec(id1, id2, e); :} |
-                    ID:id1 ID:id2 ASSIGN newExp:e  SEMICOLON                                                      {: RESULT = new AST_varDec(id1, id2, e); :} ;
+varDec      ::=     ID:id1 ID:id2 SEMICOLON                                                             {: RESULT = new AST_varDec(id1, id2); :} |
+                    ID:id1 ID:id2 ASSIGN exp:e  SEMICOLON                                               {: RESULT = new AST_varDec(id1, id2, e); :} |
+                    ID:id1 ID:id2 ASSIGN newExp:e  SEMICOLON                                            {: RESULT = new AST_varDec(id1, id2, e); :} ;
 
 funcDec     ::=     ID:retType ID:funcName LPAREN paramsList:pList RPAREN LBRACE stmtList:sList RBRACE  {: RESULT = new AST_funcDec(retType, funcName, pList, sList); :} ;
 
@@ -150,9 +130,38 @@ classDec    ::=     CLASS ID:id1 LBRACE cFieldList:list RBRACE                  
 
 arrayDec    ::=     ARRAY ID:id1 EQ ID:id2 LBRACK RBRACK                                                {: RESULT = new AST_ARRAY_DEC(id2, id2); :};
 
+exp			::=		INT:i								{: RESULT = new AST_EXP_INT(i); :}
+                    | STRING:s								{: RESULT = new AST_EXP_STRING(s); :}
+                    | var:v								{: RESULT = new AST_EXP_VAR(v); :}
+                    | LPAREN exp:e RPAREN							{: RESULT = new AST_EXP_PAREN(e); :}
+// TODO: var DOT ID LPAREN expList RPAREN
+                    | exp:e1 PLUS  exp:e2				{: RESULT = new AST_EXP_BINOP(e1, e2, 0);:}
+                    | exp:e1 MINUS exp:e2				{: RESULT = new AST_EXP_BINOP(e1, e2, 1);:}
+                    | exp:e1 TIMES exp:e2				{: RESULT = new AST_EXP_BINOP(e1, e2, 2);:}
+                    | exp:e1 DIVIDE exp:e2				{: RESULT = new AST_EXP_BINOP(e1, e2, 3);:}
+                    | exp:e1 LT exp:e2				{: RESULT = new AST_EXP_BINOP(e1, e2, 4);:}
+                    | exp:e1 GT exp:e2				{: RESULT = new AST_EXP_BINOP(e1, e2, 5);:}
+                    | exp:e1 EQ exp:e2				{: RESULT = new AST_EXP_BINOP(e1, e2, 6);:}
+                    ;
+// TODO: a lot to complete regarding exp rules
+
+var			::=		ID:name								                        {: RESULT = new AST_VAR_SIMPLE(name);       :} |
+                    var:v DOT ID:fieldName			                            {: RESULT = new AST_VAR_FIELD(v,fieldName); :} |
+                    var:v LBRACK exp:e RBRACK			                        {: RESULT = new AST_VAR_SUBSCRIPT(v,e);     :} ;
+
+stmt		::=		varDec:v                                                    {: RESULT = new AST_STMT_VarDec(v); :} |
+                    var:v ASSIGN exp:e    SEMICOLON								{: RESULT = new AST_STMT_ASSIGN(v, e); :} |
+                    var:v ASSIGN newExp:e SEMICOLON								{: RESULT = new AST_STMT_ASSIGN(v, e); :} |
+// TODO: RETURN exp SEMICOLON
+                    IF    LPAREN exp:cond RPAREN LBRACE stmtList:body RBRACE	{: RESULT = new AST_STMT_IF(cond, body); :} |
+                    WHILE LPAREN exp:cond RPAREN LBRACE stmtList:body RBRACE	{: RESULT = new AST_STMT_WHILE(cond, body); :} ;
+// TODO: var ID exp exp SEMICOLON
 
 newExp      ::=     NEW ID:id                           {: RESULT = new AST_newExp(id); :} |
                     NEW ID:id LBRACK exp:e RBRACK       {: RESULT = new AST_newExp(id, e); :} ;
 
 cField      ::=     varDec:vDec                         {: RESULT = new AST_cField(vDec); :} |
                     funcDec:fDec                        {: RESULT = new AST_cField(fDec); :} ;
+
+// TODO: what about BINOP and INT in the documentation?
+

@@ -14,7 +14,7 @@ public class Main
 			AST_STMT_LIST AST = (AST_STMT_LIST) p.parse().value;
 			AST.PrintMe();
 			PrintWriter file_writer = new PrintWriter(argv[1]);
-			// TODO: write OK / ERROR(...) to the file
+            file_writer.print("OK");
 			file_writer.close();
 			AST_GRAPHVIZ.getInstance().finalizeFile();
     		}
