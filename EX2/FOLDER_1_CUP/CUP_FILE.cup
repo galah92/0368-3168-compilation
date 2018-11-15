@@ -91,6 +91,9 @@ precedence left PLUS;
 precedence left MINUS;
 precedence left TIMES;
 precedence left DIVIDE;
+precedence left LBRACK;
+precedence left LPAREN;
+precedence left DOT;
 
 /* START WITH: stmtList */
 // TODO: change it to decList when ready (when all the rest is complete
@@ -130,19 +133,18 @@ classDec    ::=     CLASS ID:id1 LBRACE cFieldList:list RBRACE                  
 
 arrayDec    ::=     ARRAY ID:id1 EQ ID:id2 LBRACK RBRACK                                                {: RESULT = new AST_ARRAY_DEC(id2, id2); :};
 
-exp			::=		INT:i								{: RESULT = new AST_EXP_INT(i); :}
-                    | STRING:s								{: RESULT = new AST_EXP_STRING(s); :}
-                    | var:v								{: RESULT = new AST_EXP_VAR(v); :}
-                    | LPAREN exp:e RPAREN							{: RESULT = new AST_EXP_PAREN(e); :}
+exp			::=		INT:i							{: RESULT = new AST_EXP_INT(i); :} |
+                    STRING:s						{: RESULT = new AST_EXP_STRING(s); :} |
+                    var:v							{: RESULT = new AST_EXP_VAR(v); :} |
+                    LPAREN exp:e RPAREN				{: RESULT = new AST_EXP_PAREN(e); :} |
 // TODO: var DOT ID LPAREN expList RPAREN
-                    | exp:e1 PLUS  exp:e2				{: RESULT = new AST_EXP_BINOP(e1, e2, 0);:}
-                    | exp:e1 MINUS exp:e2				{: RESULT = new AST_EXP_BINOP(e1, e2, 1);:}
-                    | exp:e1 TIMES exp:e2				{: RESULT = new AST_EXP_BINOP(e1, e2, 2);:}
-                    | exp:e1 DIVIDE exp:e2				{: RESULT = new AST_EXP_BINOP(e1, e2, 3);:}
-                    | exp:e1 LT exp:e2				{: RESULT = new AST_EXP_BINOP(e1, e2, 4);:}
-                    | exp:e1 GT exp:e2				{: RESULT = new AST_EXP_BINOP(e1, e2, 5);:}
-                    | exp:e1 EQ exp:e2				{: RESULT = new AST_EXP_BINOP(e1, e2, 6);:}
-                    ;
+                    exp:e1 PLUS  exp:e2				{: RESULT = new AST_EXP_BINOP(e1, e2, 0);:} |
+                    exp:e1 MINUS exp:e2				{: RESULT = new AST_EXP_BINOP(e1, e2, 1);:} |
+                    exp:e1 TIMES exp:e2				{: RESULT = new AST_EXP_BINOP(e1, e2, 2);:} |
+                    exp:e1 DIVIDE exp:e2		    {: RESULT = new AST_EXP_BINOP(e1, e2, 3);:} |
+                    exp:e1 LT exp:e2				{: RESULT = new AST_EXP_BINOP(e1, e2, 4);:} |
+                    exp:e1 GT exp:e2				{: RESULT = new AST_EXP_BINOP(e1, e2, 5);:} |
+                    exp:e1 EQ exp:e2				{: RESULT = new AST_EXP_BINOP(e1, e2, 6);:} ;
 // TODO: a lot to complete regarding exp rules
 
 var			::=		ID:name								                        {: RESULT = new AST_VAR_SIMPLE(name);       :} |
