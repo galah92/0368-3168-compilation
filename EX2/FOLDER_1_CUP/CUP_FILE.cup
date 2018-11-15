@@ -106,14 +106,14 @@ decList     ::=     dec:d decList:list                  {: RESULT = new AST_decL
 
 stmtList	::=		stmt:s stmtList:l                   {: RESULT = new AST_STMT_LIST(s,l); :} |
                     stmt:s                              {: RESULT = new AST_STMT_LIST(s,null); :} ;
-
+// TODO: check if cant be odd number of id's
 paramsList  ::=     ID:id paramsList:list               {: RESULT = new AST_paramsList(id, list); :} |
                     ID:id                               {: RESULT = new AST_paramsList(id, null); :} ;
 
 cFieldList  ::=     cField:field cFieldList:list        {: RESULT = new AST_cFieldList(field, list); :} |
                     cField:field                        {: RESULT = new AST_cFieldList(field, null); :} ;
 
-expList     ::=     exp:e expList:list                  {: RESULT = new AST_expList(e, list); :} |
+expList     ::=     exp:e COMMA expList:list                  {: RESULT = new AST_expList(e, list); :} |
                     exp:e                               {: RESULT = new AST_expList(e, null); :} ;
 
 
@@ -121,7 +121,7 @@ dec         ::=     varDec:dec                                                  
                     funcDec:dec                                                                         {: RESULT = new AST_dec(dec); :} |
                     classDec:dec                                                                        {: RESULT = new AST_dec(dec); :} |
                     arrayDec:dec                                                                        {: RESULT = new AST_dec(dec); :} ;
-
+//TODO : fix varDec printing
 varDec      ::=     ID:id1 ID:id2 SEMICOLON                                                             {: RESULT = new AST_varDec(id1, id2); :} |
                     ID:id1 ID:id2 ASSIGN exp:e  SEMICOLON                                               {: RESULT = new AST_varDec(id1, id2, e); :} |
                     ID:id1 ID:id2 ASSIGN newExp:e  SEMICOLON                                            {: RESULT = new AST_varDec(id1, id2, e); :} ;
@@ -137,7 +137,8 @@ exp			::=		INT:i							{: RESULT = new AST_EXP_INT(i); :} |
                     STRING:s						{: RESULT = new AST_EXP_STRING(s); :} |
                     var:v							{: RESULT = new AST_EXP_VAR(v); :} |
                     LPAREN exp:e RPAREN				{: RESULT = new AST_EXP_PAREN(e); :} |
-// TODO: var DOT ID LPAREN expList RPAREN
+                    ID:id LPAREN expList:eList RPAREN {: RESULT = new AST_EXP_ID(id,eList); :} |
+                    var:v DOT ID:id LPAREN expList:eList RPAREN {: RESULT = new AST_EXP_ID(v, id,eList); :} |
                     exp:e1 PLUS  exp:e2				{: RESULT = new AST_EXP_BINOP(e1, e2, 0);:} |
                     exp:e1 MINUS exp:e2				{: RESULT = new AST_EXP_BINOP(e1, e2, 1);:} |
                     exp:e1 TIMES exp:e2				{: RESULT = new AST_EXP_BINOP(e1, e2, 2);:} |
@@ -166,4 +167,3 @@ cField      ::=     varDec:vDec                         {: RESULT = new AST_cFie
                     funcDec:fDec                        {: RESULT = new AST_cField(fDec); :} ;
 
 // TODO: what about BINOP and INT in the documentation?
-
