@@ -152,13 +152,14 @@ var			::=		ID:name								                        {: RESULT = new AST_VAR_SIMPLE
                     var:v DOT ID:fieldName			                            {: RESULT = new AST_VAR_FIELD(v,fieldName); :} |
                     var:v LBRACK exp:e RBRACK			                        {: RESULT = new AST_VAR_SUBSCRIPT(v,e);     :} ;
 
-stmt		::=		varDec:v                                                    {: RESULT = new AST_STMT_VarDec(v);    :} |
-                    var:v ASSIGN exp:e    SEMICOLON								{: RESULT = new AST_STMT_ASSIGN(v, e); :} |
-                    var:v ASSIGN newExp:e SEMICOLON								{: RESULT = new AST_STMT_ASSIGN(v, e); :} |
-                    RETURN exp:e SEMICOLON                                      {: RESULT = new AST_STMT_RETURN(e);    :} |
-                    IF    LPAREN exp:cond RPAREN LBRACE stmtList:body RBRACE	{: RESULT = new AST_STMT_IF(cond, body); :} |
-                    WHILE LPAREN exp:cond RPAREN LBRACE stmtList:body RBRACE	{: RESULT = new AST_STMT_WHILE(cond, body); :} ;
-// TODO: var ID exp exp SEMICOLON
+stmt		::=		varDec:v                                                    {: RESULT = new AST_STMT_VarDec(v);         :} |
+                    var:v ASSIGN exp:e    SEMICOLON								{: RESULT = new AST_STMT_ASSIGN(v, e);      :} |
+                    var:v ASSIGN newExp:e SEMICOLON								{: RESULT = new AST_STMT_ASSIGN(v, e);      :} |
+                    RETURN exp:e SEMICOLON                                      {: RESULT = new AST_STMT_RETURN(e);         :} |
+                    IF    LPAREN exp:cond RPAREN LBRACE stmtList:body RBRACE	{: RESULT = new AST_STMT_IF(cond, body);    :} |
+                    WHILE LPAREN exp:cond RPAREN LBRACE stmtList:body RBRACE	{: RESULT = new AST_STMT_WHILE(cond, body); :} |
+                    ID:id LPAREN expList:eList RPAREN SEMICOLON	                {: RESULT = new AST_STMT_ID(id, eList);     :} |
+                    var:v DOT ID:id LPAREN expList:eList RPAREN SEMICOLON   	{: RESULT = new AST_STMT_ID(v, id, eList);  :} ;
 
 newExp      ::=     NEW ID:id                           {: RESULT = new AST_newExp(id); :} |
                     NEW ID:id LBRACK exp:e RBRACK       {: RESULT = new AST_newExp(id, e); :} ;

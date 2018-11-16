@@ -36,8 +36,7 @@ public class AST_varDec extends AST_Node
 		if (exp != null) { exp.PrintMe(); }
 		if (newExp != null) { newExp.PrintMe(); }
 
-		AST_GRAPHVIZ.getInstance().logNode(SerialNumber, String.format("ID1\n...->%s", id1));
-		AST_GRAPHVIZ.getInstance().logNode(SerialNumber, String.format("ID2\n...->%s", id2));
+		AST_GRAPHVIZ.getInstance().logNode(SerialNumber, String.format("ID1...->%s\nID2...->%s", id1, id2));
 		if (exp != null) { AST_GRAPHVIZ.getInstance().logEdge(SerialNumber, exp.SerialNumber); }
 		if (newExp != null) { AST_GRAPHVIZ.getInstance().logEdge(SerialNumber, newExp.SerialNumber); }
 	}
