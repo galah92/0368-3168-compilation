@@ -19,6 +19,7 @@ public class AST_STMT_IF extends AST_STMT
 		System.out.format("AST_STMT_IF\n");
 		if (cond != null) cond.PrintMe();
 		if (body != null) body.PrintMe();
+		AST_GRAPHVIZ.getInstance().logNode(SerialNumber, "IF\n");        
 		AST_GRAPHVIZ.getInstance().logEdge(SerialNumber, cond.SerialNumber);
 		AST_GRAPHVIZ.getInstance().logEdge(SerialNumber, body.SerialNumber);
 	}

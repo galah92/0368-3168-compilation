@@ -19,6 +19,8 @@ public class AST_STMT_WHILE extends AST_STMT
 		System.out.format("AST_STMT_WHILE\n");
 		if (cond != null) cond.PrintMe();
 		if (body != null) body.PrintMe();
+
+		AST_GRAPHVIZ.getInstance().logNode(SerialNumber, "WHILE\n");        
 		AST_GRAPHVIZ.getInstance().logEdge(SerialNumber, cond.SerialNumber);
 		AST_GRAPHVIZ.getInstance().logEdge(SerialNumber, body.SerialNumber);
 	}
