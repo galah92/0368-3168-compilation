@@ -12,8 +12,9 @@ parser code
     }
     public void report_error(String message, Object info)
     {
-        System.out.print("ERROR >> [" + lexer.getLine() + ":"
+        System.out.println("ERROR >> [" + lexer.getLine() + ":"
                           + lexer.getCharPos() + "]");
+        System.out.format("ERROR message : %s\n", message);
         System.exit(0);
     }
 :}
@@ -107,13 +108,13 @@ decList     ::=     dec:d decList:list                  {: RESULT = new AST_decL
 stmtList	::=		stmt:s stmtList:l                   {: RESULT = new AST_STMT_LIST(s,l); :} |
                     stmt:s                              {: RESULT = new AST_STMT_LIST(s,null); :} ;
 // TODO: check if cant be odd number of id's
-paramsList  ::=     ID:id paramsList:list               {: RESULT = new AST_paramsList(id, list); :} |
-                    ID:id                               {: RESULT = new AST_paramsList(id, null); :} ;
+paramsList  ::=     ID:id1 ID:id2 COMMA paramsList:list {: RESULT = new AST_paramsList(id1, id2, list); :} |
+                    ID:id1 ID:id2                       {: RESULT = new AST_paramsList(id1, id2, null); :} ;
 
 cFieldList  ::=     cField:field cFieldList:list        {: RESULT = new AST_cFieldList(field, list); :} |
                     cField:field                        {: RESULT = new AST_cFieldList(field, null); :} ;
 
-expList     ::=     exp:e COMMA expList:list                  {: RESULT = new AST_expList(e, list); :} |
+expList     ::=     exp:e COMMA expList:list            {: RESULT = new AST_expList(e, list); :} |
                     exp:e                               {: RESULT = new AST_expList(e, null); :} ;
 
 
@@ -153,6 +154,7 @@ var			::=		ID:name								                        {: RESULT = new AST_VAR_SIMPLE
                     var:v LBRACK exp:e RBRACK			                        {: RESULT = new AST_VAR_SUBSCRIPT(v,e);     :} ;
 
 stmt		::=		varDec:v                                                    {: RESULT = new AST_STMT_VarDec(v);         :} |
+                    funcDec:fDec                                                {: RESULT = new AST_STMT_funcDec(fDec);         :} |
                     var:v ASSIGN exp:e    SEMICOLON								{: RESULT = new AST_STMT_ASSIGN(v, e);      :} |
                     var:v ASSIGN newExp:e SEMICOLON								{: RESULT = new AST_STMT_ASSIGN(v, e);      :} |
                     RETURN exp:e SEMICOLON                                      {: RESULT = new AST_STMT_RETURN(e);         :} |
