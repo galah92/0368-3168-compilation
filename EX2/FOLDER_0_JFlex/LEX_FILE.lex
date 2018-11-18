@@ -18,7 +18,7 @@ import java_cup.runtime.*;
 LineTerminator		= \r|\n|\r\n
 InputCharacter		= [^\r\n]
 WhiteSpace		= {LineTerminator} | [ \t\f]
-INTEGER			=  (0 |-?[1-9][0-9]*)
+INTEGER			=  (0 |[1-9][0-9]*)
 BadInteger		= 0{INTEGER} | -0 
 LETTER			= [a-z] | [A-Z]
 ALPHANUM		= {LETTER} | [0-9]

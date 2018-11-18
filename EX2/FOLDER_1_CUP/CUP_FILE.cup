@@ -141,6 +141,7 @@ classDec    ::=     CLASS ID:id1 LBRACE cFieldList:list RBRACE                  
 arrayDec    ::=     ARRAY ID:id1 EQ ID:id2 LBRACK RBRACK                                                {: RESULT = new AST_ARRAY_DEC(id2, id2); :};
 
 exp			::=		INT:i							{: RESULT = new AST_EXP_INT(i); :} |
+                    MINUS INT:i						{: RESULT = new AST_EXP_INT(-i); :} |
                     STRING:s						{: RESULT = new AST_EXP_STRING(s); :} |
                     NIL                             {: RESULT = new AST_EXP_NIL(); :} |
                     var:v							{: RESULT = new AST_EXP_VAR(v); :} |
