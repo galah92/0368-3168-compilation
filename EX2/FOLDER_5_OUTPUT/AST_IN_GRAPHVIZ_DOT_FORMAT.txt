@@ -1,27 +1,13 @@
 digraph
 {
 graph [ordering = "out"]
-v6 [label = "ID(IntList)"];
+v5 [label = "class1"];
+v5 -> v3;
+v6 [label = "ID1...->var
+ID2...->var1"];
 v6 -> v5;
 v7 -> v6;
-v162 [label = "ID(IntList)"];
-v162 [label = "ID(MergeLists)"];
-v162 -> v9;
-v162 -> v161;
-v163 -> v162;
-v431 [label = "ID(void)"];
-v431 [label = "ID(main)"];
-v431 -> v430;
-v432 -> v431;
-v433 [label = "decList
+v8 [label = "decList
 "];
-v433 -> v432;
-v434 [label = "decList
-"];
-v434 -> v163;
-v434 -> v433;
-v435 [label = "decList
-"];
-v435 -> v7;
-v435 -> v434;
+v8 -> v7;
 }

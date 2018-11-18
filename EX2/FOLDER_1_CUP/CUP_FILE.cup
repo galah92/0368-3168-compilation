@@ -90,17 +90,17 @@ non terminal AST_cFieldList cFieldList;
 non terminal AST_NIL nil;
 
 /* OPERATOR PRECEDENCE */
-precedence left ASSIGN;
-precedence left EQ;
-precedence left LT;
-precedence left GT;
-precedence left PLUS;
-precedence left MINUS;
-precedence left TIMES;
-precedence left DIVIDE;
-precedence left LBRACK;
-precedence left LPAREN;
-precedence left DOT;
+precedence nonassoc ASSIGN;
+precedence left     EQ;
+precedence left     LT;
+precedence left     GT;
+precedence left     PLUS;
+precedence left     MINUS;
+precedence left     TIMES;
+precedence left     DIVIDE;
+precedence nonassoc LBRACK;
+precedence nonassoc LPAREN;
+precedence left     DOT;
 
 /* START WITH: decList */
 start with decList;
