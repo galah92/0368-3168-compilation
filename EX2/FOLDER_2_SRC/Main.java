@@ -11,9 +11,9 @@ public class Main
 		{
 			PrintWriter pwriter = new PrintWriter(argv[1]);
 			Parser p = new Parser(new Lexer(new FileReader(argv[0])), pwriter);
-			AST_STMT_LIST AST = (AST_STMT_LIST)p.parse().value;
+			AST_decList AST = (AST_decList)p.parse().value;
 			AST.PrintMe();
-            pwriter.print("OK");
+            pwriter.println("OK");
 			pwriter.close();
 			AST_GRAPHVIZ.getInstance().finalizeFile();
     	}

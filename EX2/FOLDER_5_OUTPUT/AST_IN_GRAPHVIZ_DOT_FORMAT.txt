@@ -1,69 +1,38 @@
 digraph
 {
 graph [ordering = "out"]
-v1 [label = "SIMPLE
-VAR
-(GIDI)"];
-v3 [label = "INT(60)"];
-v5 [label = "ASSIGN
-left := right
+v1 [label = "ID1
+...->int"];
+v1 [label = "ID2
+...->int"];
+v2 -> v1;
+v4 [label = "ID1
+...->IntArray"];
+v4 [label = "ID2
+...->IntArray"];
+v5 -> v4;
+v51 [label = "ID(int)"];
+v51 [label = "ID(trace3x3)"];
+v51 -> v6;
+v51 -> v50;
+v52 -> v51;
+v241 [label = "ID(void)"];
+v241 [label = "ID(main)"];
+v241 -> v240;
+v242 -> v241;
+v243 [label = "decList
 "];
-v5 -> v1;
-v5 -> v3;
-v7 [label = "SIMPLE
-VAR
-(AVROOM)"];
-v9 [label = "INT(55)"];
-v11 [label = "SIMPLE
-VAR
-(GIDI)"];
-v13 [label = "EXP
-VAR"];
-v13 -> v11;
-v15 [label = "BINOP(+)"];
-v15 -> v9;
-v15 -> v13;
-v17 [label = "ASSIGN
-left := right
+v243 -> v242;
+v244 [label = "decList
 "];
-v17 -> v7;
-v17 -> v15;
-v19 [label = "SIMPLE
-VAR
-(JACOB)"];
-v21 [label = "FIELD
-VAR
-...->sons"];
-v21 -> v19;
-v23 [label = "INT(11)"];
-v25 [label = "SUBSCRIPT
-VAR
-...[...]"];
-v25 -> v21;
-v25 -> v23;
-v27 [label = "SIMPLE
-VAR
-(JOSEF)"];
-v29 [label = "EXP
-VAR"];
-v29 -> v27;
-v31 [label = "ASSIGN
-left := right
+v244 -> v52;
+v244 -> v243;
+v245 [label = "decList
 "];
-v31 -> v25;
-v31 -> v29;
-v33 [label = "STMT
-LIST
+v245 -> v5;
+v245 -> v244;
+v246 [label = "decList
 "];
-v33 -> v31;
-v35 [label = "STMT
-LIST
-"];
-v35 -> v17;
-v35 -> v33;
-v37 [label = "STMT
-LIST
-"];
-v37 -> v5;
-v37 -> v35;
+v246 -> v2;
+v246 -> v245;
 }
