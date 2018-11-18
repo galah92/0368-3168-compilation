@@ -1,20 +1,25 @@
 import java_cup.runtime.*;
+import java.io.PrintWriter;
 import AST.*;
 
 parser code
 {:
     public Lexer lexer;
+    public PrintWriter pwriter;
 
-    public Parser(Lexer lexer)
+    public Parser(Lexer lexer, PrintWriter pwriter)
     {
         super(lexer);
         this.lexer = lexer;
+        this.pwriter = pwriter;
     }
     public void report_error(String message, Object info)
     {
-        System.out.println("ERROR >> [" + lexer.getLine() + ":"
-                          + lexer.getCharPos() + "]");
-        System.out.format("ERROR message : %s\n", message);
+        pwriter.println("ERROR(" + lexer.getLine() + ")");
+        pwriter.close();
+//        System.out.println("ERROR >> [" + lexer.getLine() + ":"
+//                          + lexer.getCharPos() + "]");
+//        System.out.format("ERROR message : %s\n", message);
         System.exit(0);
     }
 :}
