@@ -175,7 +175,9 @@ stmt		::=		varDec:v                                                    {: RESULT
                     IF    LPAREN exp:cond RPAREN LBRACE stmtList:body RBRACE	{: RESULT = new AST_STMT_IF(cond, body);    :} |
                     WHILE LPAREN exp:cond RPAREN LBRACE stmtList:body RBRACE	{: RESULT = new AST_STMT_WHILE(cond, body); :} |
                     ID:id LPAREN expList:eList RPAREN SEMICOLON	                {: RESULT = new AST_STMT_ID(id, eList);     :} |
-                    var:v DOT ID:id LPAREN expList:eList RPAREN SEMICOLON   	{: RESULT = new AST_STMT_ID(v, id, eList);  :} ;
+                    ID:id LPAREN RPAREN SEMICOLON	                            {: RESULT = new AST_STMT_ID(id, null);     :} |
+                    var:v DOT ID:id LPAREN expList:eList RPAREN SEMICOLON   	{: RESULT = new AST_STMT_ID(v, id, eList);  :} |
+                    var:v DOT ID:id LPAREN RPAREN SEMICOLON                 	{: RESULT = new AST_STMT_ID(v, id, null);  :} ;
 
 newExp      ::=     NEW ID:id                           {: RESULT = new AST_newExp(id); :} |
                     NEW ID:id LBRACK exp:e RBRACK       {: RESULT = new AST_newExp(id, e); :} ;

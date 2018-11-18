@@ -25,7 +25,7 @@ public class AST_STMT_ID extends AST_STMT
 		/* COPY INPUT DATA NENBERS ... */
 		/*******************************/
 		this.id = id;
-		this.expList = expList;
+		if (expList != null) this.expList = expList;
 	}
 
 public AST_STMT_ID(AST_VAR var, String id, AST_expList expList)
@@ -38,14 +38,15 @@ public AST_STMT_ID(AST_VAR var, String id, AST_expList expList)
 		/***************************************/
 		/* PRINT CORRESPONDING DERIVATION RULE */
 		/***************************************/
-		System.out.print("====================== exp -> var DOT ID LPAREN expList RPAREN SEMICOLON\n");
+		if (expList == null) System.out.print("====================== exp -> var DOT ID LPAREN RPAREN SEMICOLON\n");
+		else System.out.print("====================== exp -> var DOT ID LPAREN expList RPAREN SEMICOLON\n");
 
 		/*******************************/
 		/* COPY INPUT DATA NENBERS ... */
 		/*******************************/
 		this.var = var;
 		this.id = id;
-		this.expList = expList;
+		if (expList != null) this.expList = expList;
 	}
 	
 	
@@ -54,8 +55,13 @@ public AST_STMT_ID(AST_VAR var, String id, AST_expList expList)
 		/************************************/
 		/* AST NODE TYPE = EXP ID LPAREN expList RPAREN AST NODE */
 		/************************************/
-		if(var == null) System.out.print(" ID LPAREN expList RPAREN SEMICOLON\n");
-		else System.out.print(" ID VAR DOT LPAREN expList RPAREN SEMICOLON\n");
+		if(var == null){
+			if (expList == null) System.out.print(" ID LPAREN expList RPAREN SEMICOLON\n");
+			else System.out.print(" ID LPAREN RPAREN SEMICOLON\n");
+		} else {
+			if (expList == null) System.out.print(" ID VAR DOT LPAREN RPAREN SEMICOLON\n");
+			else System.out.print(" ID VAR DOT LPAREN expList RPAREN SEMICOLON\n");
+		}
 		/*****************************/
 		/* RECURSIVELY PRINT exp ... */
 		/*****************************/
@@ -74,7 +80,7 @@ public AST_STMT_ID(AST_VAR var, String id, AST_expList expList)
 		/****************************************/
 
 		if (var != null) AST_GRAPHVIZ.getInstance().logEdge(SerialNumber,var.SerialNumber);
-		AST_GRAPHVIZ.getInstance().logEdge(SerialNumber,expList.SerialNumber);
+		if (expList != null) AST_GRAPHVIZ.getInstance().logEdge(SerialNumber,expList.SerialNumber);
 			
 	}
 }
