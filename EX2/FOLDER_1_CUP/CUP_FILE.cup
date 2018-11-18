@@ -71,6 +71,10 @@ terminal String STRING;
 terminal Integer INT;
 terminal String ID;
 
+terminal ILLEGAL_CHARACTER;
+terminal ILLEGAL_INTEGER;
+terminal ILLEGAL_COMMENT;
+
 /* NON TERMINALS */
 non terminal AST_EXP exp;
 non terminal AST_expList expList;

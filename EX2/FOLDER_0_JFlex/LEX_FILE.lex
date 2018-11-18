@@ -19,7 +19,7 @@ LineTerminator		= \r|\n|\r\n
 InputCharacter		= [^\r\n]
 WhiteSpace		= {LineTerminator} | [ \t\f]
 INTEGER			=  (0 |[1-9][0-9]*)
-BadInteger		= 0{INTEGER} | -0 
+BadInteger		= 0{INTEGER} 
 LETTER			= [a-z] | [A-Z]
 ALPHANUM		= {LETTER} | [0-9]
 STRING			= [\"]{LETTER}*[\"]
@@ -50,9 +50,9 @@ BadEndOfLineComment = "//"[^CommentContent]
 
 {Comment}			{}
 {INTEGER}			{ return symbol(TokenNames.INT, new Short(yytext()).intValue()); }
-{BadInteger}			{ throw new Error("Illegal integer format <" + yytext() + ">"); }
-{UnclosedComment}		{ throw new Error("Illegal comment <" + yytext() + ">"); }
-{BadEndOfLineComment}		{ throw new Error("Illegal comment <" + yytext() + ">"); }
+{BadInteger}			{ return symbol(TokenNames.ILLEGAL_INTEGER); }
+{UnclosedComment}		{ return symbol(TokenNames.ILLEGAL_CHARACTER); }
+{BadEndOfLineComment}		{ return symbol(TokenNames.ILLEGAL_CHARACTER); }
 {ID}				{ return symbol(TokenNames.ID, new String(yytext())); }   
 {STRING}			{ return symbol(TokenNames.STRING, new String(yytext())); }
 {WhiteSpace}			{ /* just skip what was found, do nothing */ }
@@ -76,6 +76,6 @@ BadEndOfLineComment = "//"[^CommentContent]
 "<"				{ return symbol(TokenNames.LT); }
 ">"				{ return symbol(TokenNames.GT); }
 
-[^]				{ throw new Error("Illegal character <" + yytext() + ">"); }
+[^]				{ return symbol(TokenNames.ILLEGAL_CHARACTER); }
 
 }
