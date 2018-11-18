@@ -98,7 +98,7 @@ precedence left DOT;
 
 /* START WITH: stmtList */
 // TODO: change it to decList when ready (when all the rest is complete
-start with stmtList;
+start with decList;
 
 /* DERIVATION RULES */
 

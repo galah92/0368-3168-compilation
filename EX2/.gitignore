@@ -9,3 +9,8 @@ FOLDER_2_SRC/TokenNames.java
 *~
 *.swp
 *.swo
+
+input/
+output/
+expected_output/
+run_tests.sh
