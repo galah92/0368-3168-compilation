@@ -132,7 +132,8 @@ varDec      ::=     ID:id1 ID:id2 SEMICOLON                                     
                     ID:id1 ID:id2 ASSIGN exp:e  SEMICOLON                                               {: RESULT = new AST_varDec(id1, id2, e); :} |
                     ID:id1 ID:id2 ASSIGN newExp:e  SEMICOLON                                            {: RESULT = new AST_varDec(id1, id2, e); :} ;
 
-funcDec     ::=     ID:retType ID:funcName LPAREN paramsList:pList RPAREN LBRACE stmtList:sList RBRACE  {: RESULT = new AST_funcDec(retType, funcName, pList, sList); :} ;
+funcDec     ::=     ID:retType ID:funcName LPAREN paramsList:pList RPAREN LBRACE stmtList:sList RBRACE  {: RESULT = new AST_funcDec(retType, funcName, pList, sList); :} |
+                    ID:retType ID:funcName LPAREN RPAREN LBRACE stmtList:sList RBRACE                   {: RESULT = new AST_funcDec(retType, funcName, null, sList); :};
 
 classDec    ::=     CLASS ID:id1 LBRACE cFieldList:list RBRACE                                          {: RESULT = new AST_classDec(id1, list); :} |
                     CLASS ID:id1 LBRACK EXTENDS ID:id2 RBRACK LBRACE cFieldList:list RBRACE             {: RESULT = new AST_classDec(id1, id2, list); :} ;

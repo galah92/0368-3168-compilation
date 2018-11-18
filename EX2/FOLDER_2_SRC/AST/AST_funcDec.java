@@ -11,7 +11,7 @@ public class AST_funcDec extends AST_EXP
 	{
 		this.retType = retType;
 		this.funcName = funcName;
-		this.params = params;
+		if (params != null) this.params = params;
 		this.stmts = stmts;
 	}
 
@@ -21,7 +21,7 @@ public class AST_funcDec extends AST_EXP
 
 		AST_GRAPHVIZ.getInstance().logNode(SerialNumber, String.format("ID(%s)" ,retType));
 		AST_GRAPHVIZ.getInstance().logNode(SerialNumber, String.format("ID(%s)" ,funcName));
-		AST_GRAPHVIZ.getInstance().logEdge(SerialNumber, params.SerialNumber);
+		if (params != null) AST_GRAPHVIZ.getInstance().logEdge(SerialNumber, params.SerialNumber);
 		AST_GRAPHVIZ.getInstance().logEdge(SerialNumber, stmts.SerialNumber);
 	}
 }
