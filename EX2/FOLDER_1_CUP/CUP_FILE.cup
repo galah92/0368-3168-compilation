@@ -167,7 +167,6 @@ var			::=		ID:name								                        {: RESULT = new AST_VAR_SIMPLE
                     var:v LBRACK exp:e RBRACK			                        {: RESULT = new AST_VAR_SUBSCRIPT(v,e);     :} ;
 
 stmt		::=		varDec:v                                                    {: RESULT = new AST_STMT_VarDec(v);         :} |
-                    funcDec:fDec                                                {: RESULT = new AST_STMT_funcDec(fDec);     :} |
                     var:v ASSIGN exp:e    SEMICOLON								{: RESULT = new AST_STMT_ASSIGN(v, e);      :} |
                     var:v ASSIGN newExp:e SEMICOLON								{: RESULT = new AST_STMT_ASSIGN(v, e);      :} |
                     RETURN SEMICOLON                                            {: RESULT = new AST_STMT_RETURN(null);      :} |
