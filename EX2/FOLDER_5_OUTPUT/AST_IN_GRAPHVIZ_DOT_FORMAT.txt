@@ -1,38 +1,27 @@
 digraph
 {
 graph [ordering = "out"]
-v1 [label = "ID1
-...->int"];
-v1 [label = "ID2
-...->int"];
-v2 -> v1;
-v4 [label = "ID1
-...->IntArray"];
-v4 [label = "ID2
-...->IntArray"];
-v5 -> v4;
-v51 [label = "ID(int)"];
-v51 [label = "ID(trace3x3)"];
-v51 -> v6;
-v51 -> v50;
-v52 -> v51;
-v241 [label = "ID(void)"];
-v241 [label = "ID(main)"];
-v241 -> v240;
-v242 -> v241;
-v243 [label = "decList
+v6 [label = "ID(IntList)"];
+v6 -> v5;
+v7 -> v6;
+v162 [label = "ID(IntList)"];
+v162 [label = "ID(MergeLists)"];
+v162 -> v9;
+v162 -> v161;
+v163 -> v162;
+v431 [label = "ID(void)"];
+v431 [label = "ID(main)"];
+v431 -> v430;
+v432 -> v431;
+v433 [label = "decList
 "];
-v243 -> v242;
-v244 [label = "decList
+v433 -> v432;
+v434 [label = "decList
 "];
-v244 -> v52;
-v244 -> v243;
-v245 [label = "decList
+v434 -> v163;
+v434 -> v433;
+v435 [label = "decList
 "];
-v245 -> v5;
-v245 -> v244;
-v246 [label = "decList
-"];
-v246 -> v2;
-v246 -> v245;
+v435 -> v7;
+v435 -> v434;
 }

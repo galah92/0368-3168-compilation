@@ -48,7 +48,7 @@ BadEndOfLineComment = "//"[^CommentContent]
 "if"				{ return symbol(TokenNames.IF); }
 "new"				{ return symbol(TokenNames.NEW); }
 
-{Comment}			{ return symbol(TokenNames.COMMENT); }
+{Comment}			{}
 {INTEGER}			{ return symbol(TokenNames.INT, new Short(yytext()).intValue()); }
 {BadInteger}			{ throw new Error("Illegal integer format <" + yytext() + ">"); }
 {UnclosedComment}		{ throw new Error("Illegal comment <" + yytext() + ">"); }

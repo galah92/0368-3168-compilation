@@ -87,6 +87,7 @@ non terminal AST_newExp newExp;
 non terminal AST_paramsList paramsList;
 non terminal AST_cField cField;
 non terminal AST_cFieldList cFieldList;
+non terminal AST_NIL nil;
 
 /* OPERATOR PRECEDENCE */
 precedence left ASSIGN;
@@ -101,8 +102,7 @@ precedence left LBRACK;
 precedence left LPAREN;
 precedence left DOT;
 
-/* START WITH: stmtList */
-// TODO: change it to decList when ready (when all the rest is complete
+/* START WITH: decList */
 start with decList;
 
 /* DERIVATION RULES */
@@ -142,6 +142,7 @@ arrayDec    ::=     ARRAY ID:id1 EQ ID:id2 LBRACK RBRACK                        
 
 exp			::=		INT:i							{: RESULT = new AST_EXP_INT(i); :} |
                     STRING:s						{: RESULT = new AST_EXP_STRING(s); :} |
+                    NIL                             {: RESULT = new AST_EXP_NIL(); :} |
                     var:v							{: RESULT = new AST_EXP_VAR(v); :} |
                     LPAREN exp:e RPAREN				{: RESULT = new AST_EXP_PAREN(e); :} |
                     ID:id LPAREN expList:eList RPAREN {: RESULT = new AST_EXP_ID(id,eList); :} |
@@ -160,7 +161,7 @@ var			::=		ID:name								                        {: RESULT = new AST_VAR_SIMPLE
                     var:v LBRACK exp:e RBRACK			                        {: RESULT = new AST_VAR_SUBSCRIPT(v,e);     :} ;
 
 stmt		::=		varDec:v                                                    {: RESULT = new AST_STMT_VarDec(v);         :} |
-                    funcDec:fDec                                                {: RESULT = new AST_STMT_funcDec(fDec);         :} |
+                    funcDec:fDec                                                {: RESULT = new AST_STMT_funcDec(fDec);     :} |
                     var:v ASSIGN exp:e    SEMICOLON								{: RESULT = new AST_STMT_ASSIGN(v, e);      :} |
                     var:v ASSIGN newExp:e SEMICOLON								{: RESULT = new AST_STMT_ASSIGN(v, e);      :} |
                     RETURN exp:e SEMICOLON                                      {: RESULT = new AST_STMT_RETURN(e);         :} |
