@@ -19,13 +19,14 @@ public class AST_EXP_ID extends AST_EXP
 		/***************************************/
 		/* PRINT CORRESPONDING DERIVATION RULE */
 		/***************************************/
-		System.out.print("====================== exp -> ID LPAREN expList RPAREN\n");
+		if (expList != null) System.out.print("====================== exp -> ID LPAREN expList RPAREN\n");
+		else System.out.print("====================== exp -> ID LPAREN RPAREN\n");			
 
 		/*******************************/
 		/* COPY INPUT DATA NENBERS ... */
 		/*******************************/
 		this.id = id;
-		this.expList = expList;
+		if (expList != null) this.expList = expList;
 	}
 
 public AST_EXP_ID(AST_VAR var, String id, AST_expList expList)
@@ -38,7 +39,8 @@ public AST_EXP_ID(AST_VAR var, String id, AST_expList expList)
 		/***************************************/
 		/* PRINT CORRESPONDING DERIVATION RULE */
 		/***************************************/
-		System.out.print("====================== exp -> var DOT ID LPAREN expList RPAREN\n");
+		if (expList != null) System.out.print("====================== exp -> var DOT ID LPAREN expList RPAREN\n");			
+		else System.out.print("====================== exp -> var DOT ID LPAREN RPAREN\n");
 
 		/*******************************/
 		/* COPY INPUT DATA NENBERS ... */
@@ -54,8 +56,13 @@ public AST_EXP_ID(AST_VAR var, String id, AST_expList expList)
 		/************************************/
 		/* AST NODE TYPE = EXP ID LPAREN expList RPAREN AST NODE */
 		/************************************/
-		if(var == null) System.out.print(" ID LPAREN expList RPAREN\n");
-		else System.out.print(" ID VAR DOT LPAREN expList RPAREN\n");
+		if(var == null){
+			if (expList == null) System.out.print(" ID LPAREN RPAREN\n");
+			else System.out.print(" ID LPAREN expList RPAREN\n");
+		} else {
+			if (expList == null) System.out.print(" ID VAR DOT LPAREN RPAREN\n");
+			else System.out.print(" ID VAR DOT LPAREN expList RPAREN\n");
+		}
 		/*****************************/
 		/* RECURSIVELY PRINT exp ... */
 		/*****************************/
