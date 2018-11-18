@@ -45,7 +45,7 @@ public AST_EXP_ID(AST_VAR var, String id, AST_expList expList)
 		/*******************************/
 		this.var = var;
 		this.id = id;
-		this.expList = expList;
+		if (expList != null) this.expList = expList;
 	}
 	
 	
@@ -74,7 +74,7 @@ public AST_EXP_ID(AST_VAR var, String id, AST_expList expList)
 		/****************************************/
 		//AST_GRAPHVIZ.getInstance().logNode(SerialNumber, "Lparen exp Rparen");
 		if (var != null) AST_GRAPHVIZ.getInstance().logEdge(SerialNumber,var.SerialNumber);
-		AST_GRAPHVIZ.getInstance().logEdge(SerialNumber,expList.SerialNumber);
+		if (expList != null) AST_GRAPHVIZ.getInstance().logEdge(SerialNumber,expList.SerialNumber);
 			
 	}
 }

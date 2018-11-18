@@ -147,6 +147,7 @@ exp			::=		INT:i							{: RESULT = new AST_EXP_INT(i); :} |
                     LPAREN exp:e RPAREN				{: RESULT = new AST_EXP_PAREN(e); :} |
                     ID:id LPAREN expList:eList RPAREN {: RESULT = new AST_EXP_ID(id,eList); :} |
                     var:v DOT ID:id LPAREN expList:eList RPAREN {: RESULT = new AST_EXP_ID(v, id,eList); :} |
+                    var:v DOT ID:id LPAREN RPAREN   {: RESULT = new AST_EXP_ID(v, id,null); :} |
                     exp:e1 PLUS  exp:e2				{: RESULT = new AST_EXP_BINOP(e1, e2, 0);:} |
                     exp:e1 MINUS exp:e2				{: RESULT = new AST_EXP_BINOP(e1, e2, 1);:} |
                     exp:e1 TIMES exp:e2				{: RESULT = new AST_EXP_BINOP(e1, e2, 2);:} |
