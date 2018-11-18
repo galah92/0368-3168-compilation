@@ -136,7 +136,7 @@ funcDec     ::=     ID:retType ID:funcName LPAREN paramsList:pList RPAREN LBRACE
                     ID:retType ID:funcName LPAREN RPAREN LBRACE stmtList:sList RBRACE                   {: RESULT = new AST_funcDec(retType, funcName, null, sList); :};
 
 classDec    ::=     CLASS ID:id1 LBRACE cFieldList:list RBRACE                                          {: RESULT = new AST_classDec(id1, list); :} |
-                    CLASS ID:id1 LBRACK EXTENDS ID:id2 RBRACK LBRACE cFieldList:list RBRACE             {: RESULT = new AST_classDec(id1, id2, list); :} ;
+                    CLASS ID:id1 EXTENDS ID:id2 LBRACE cFieldList:list RBRACE             {: RESULT = new AST_classDec(id1, id2, list); :} ;
 
 arrayDec    ::=     ARRAY ID:id1 EQ ID:id2 LBRACK RBRACK                                                {: RESULT = new AST_ARRAY_DEC(id2, id2); :};
 
