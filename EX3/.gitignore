@@ -1,0 +1,17 @@
+COMPILER
+FOLDER_2_SRC/Lexer.java
+FOLDER_2_SRC/Parser.java
+FOLDER_2_SRC/TokenNames.java
+FOLDER_3_BIN/*.class
+FOLDER_3_BIN/AST/*.class
+FOLDER_5_OUTPUT/
+
+.DS_Store
+*~
+*.swp
+*.swo
+
+input/
+output/
+expected_output/
+run_tests.sh
