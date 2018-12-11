@@ -1,26 +1,23 @@
-/*************/
-/* IMPORT(S) */
-/*************/
+import java.io.PrintWriter;
 import java_cup.runtime.*;
 import AST.*;
 
 parser code 
 {:
 	public Lexer lexer;
+    public PrintWriter pwriter;
 
-	public Parser(Lexer lexer)
+	public Parser(Lexer lexer, PrintWriter pwriter)
 	{
 		super(lexer);
 		this.lexer = lexer;
+        this.pwriter = pwriter;
 	}
 	public void report_error(String message, Object info)
 	{
-		System.out.print("ERROR >> ");		
-		System.out.print("[");
-		System.out.print(lexer.getLine());
-		System.out.print(":");
-		System.out.print(lexer.getCharPos());
-		System.out.print("] ");		
+        pwriter.println("ERROR(" + lexer.getLine() + ")");
+        pwriter.close();
+        System.out.println("ERROR(" + lexer.getLine() + "," + lexer.getCharPos() + ")");
 		System.exit(0);
 	}
 :}
