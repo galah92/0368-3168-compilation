@@ -6,7 +6,7 @@ public class AST_STMT_CALL extends AST_STMT
 	/* DATA MEMBERS */
 	/****************/
 	public AST_EXP_CALL callExp;
-	
+
 	/******************/
 	/* CONSTRUCTOR(S) */
 	/******************/
@@ -19,7 +19,7 @@ public class AST_STMT_CALL extends AST_STMT
 
 		this.callExp = callExp;
 	}
-	
+
 	public void PrintMe()
 	{
 		callExp.PrintMe();
@@ -30,10 +30,17 @@ public class AST_STMT_CALL extends AST_STMT
 		AST_GRAPHVIZ.getInstance().logNode(
 			SerialNumber,
 			String.format("STMT\nCALL"));
-		
+
 		/****************************************/
 		/* PRINT Edges to AST GRAPHVIZ DOT file */
 		/****************************************/
-		AST_GRAPHVIZ.getInstance().logEdge(SerialNumber,callExp.SerialNumber);		
+		AST_GRAPHVIZ.getInstance().logEdge(SerialNumber,callExp.SerialNumber);
 	}
+
+	public TYPE SemantMe(){
+		/* Nothing else I think, right? */
+		return callExp.SemantMe();
+
+	}
+
 }
