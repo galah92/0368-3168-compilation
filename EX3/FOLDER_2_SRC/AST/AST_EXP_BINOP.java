@@ -7,7 +7,7 @@ public class AST_EXP_BINOP extends AST_EXP
 	int OP;
 	public AST_EXP left;
 	public AST_EXP right;
-	
+
 	/******************/
 	/* CONSTRUCTOR(S) */
 	/******************/
@@ -30,14 +30,14 @@ public class AST_EXP_BINOP extends AST_EXP
 		this.right = right;
 		this.OP = OP;
 	}
-	
+
 	/*************************************************/
 	/* The printing message for a binop exp AST node */
 	/*************************************************/
 	public void PrintMe()
 	{
 		String sOP="";
-		
+
 		/*********************************/
 		/* CONVERT OP to a printable sOP */
 		/*********************************/
@@ -63,7 +63,7 @@ public class AST_EXP_BINOP extends AST_EXP
 		AST_GRAPHVIZ.getInstance().logNode(
 			SerialNumber,
 			String.format("BINOP(%s)",sOP));
-		
+
 		/****************************************/
 		/* PRINT Edges to AST GRAPHVIZ DOT file */
 		/****************************************/
@@ -74,13 +74,17 @@ public class AST_EXP_BINOP extends AST_EXP
 	{
 		TYPE t1 = null;
 		TYPE t2 = null;
-		
+
 		if (left  != null) t1 = left.SemantMe();
 		if (right != null) t2 = right.SemantMe();
-		
+
 		if ((t1 == TYPE_INT.getInstance()) && (t2 == TYPE_INT.getInstance()))
 		{
 			return TYPE_INT.getInstance();
+		}
+		if ((this.OP == 0 ) && (t1 == TYPE_STRING.getInstance()) && (t2 == TYPE_STRING.getInstance()))
+		{
+			return TYPE_STRING.getInstance();
 		}
 		System.exit(0);
 		return null;
