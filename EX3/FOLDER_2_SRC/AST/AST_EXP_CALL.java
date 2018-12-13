@@ -1,5 +1,7 @@
 package AST;
 
+import TYPES.*;
+
 public class AST_EXP_CALL extends AST_EXP
 {
 	/****************/
@@ -54,17 +56,17 @@ public class AST_EXP_CALL extends AST_EXP
 		TYPE t;
 		TYPE type_func = SYMBOL_TABLE.getInstance().find(this.funcName);
 		if (ret_type == null){
-			System.out.format(">> ERROR [%d:%d] non existing function %s\n",99,99,this.funcName;
+			System.out.format(">> ERROR [%d:%d] non existing function %s\n",99,99,this.funcName);
 		}
-
-		for(AST_EXP_LIST el = paramas, TYPE_LIST tl = type_func.params; el != null && tl != null ; el = el.tail, tl = tl.tail){
+		AST_EXP_LIST el;
+		TYPE_LIST tl;
+		for( el = paramas,  tl = type_func.params; (el != null && tl != null) ; el = el.tail, tl = tl.tail){
 			t = SYMBOL_TABLE.getInstance().find(el.head.name);
-			if(tl != t)
-				System.out.format(">> ERROR [%d:%d] arguments types dont fit in func %s\n",99,99,this.funcName;
-
+			if(tl.head != t)
+				System.out.format(">> ERROR [%d:%d] arguments types dont fit in func %s\n",99,99,this.funcName);
 		}
-		if (el != tl) /* one of them is not null and therefore there is an error */
-			System.out.format(">> ERROR [%d:%d] number of arguments doesnt fit function %s\n",99,99,this.funcName;
+		if (el !=null || tl != null) /* one of them is not null and therefore there is an error */
+			System.out.format(">> ERROR [%d:%d] number of arguments doesnt fit function %s\n",99,99,this.funcName);
 
 
 		return ret_type.returnType;
