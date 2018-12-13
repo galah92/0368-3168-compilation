@@ -1,48 +1,28 @@
 package AST;
+import TYPES.*;
+import SYMBOL_TABLE.*;
 
 public class AST_STMT_WHILE extends AST_STMT
 {
 	public AST_EXP cond;
 	public AST_STMT_LIST body;
 
-	/*******************/
-	/*  CONSTRUCTOR(S) */
-	/*******************/
 	public AST_STMT_WHILE(AST_EXP cond,AST_STMT_LIST body)
 	{
 		this.cond = cond;
 		this.body = body;
 	}
 
-		public TYPE SemantMe()
+	public TYPE SemantMe()
+	{
+		if (cond.SemantMe() != TYPE_INT.getInstance())
 		{
-			/****************************/
-			/* [0] Semant the Condition */
-			/****************************/
-			if (cond.SemantMe() != TYPE_INT.getInstance())
-			{
-				System.out.format(">> ERROR [%d:%d] condition inside While is not integral\n",2,2);
-			}
-
-			/*************************/
-			/* [1] Begin Class Scope */
-			/*************************/
-			SYMBOL_TABLE.getInstance().beginScope();
-
-			/***************************/
-			/* [2] Semant Data Members */
-			/***************************/
-			body.SemantMe();
-
-			/*****************/
-			/* [3] End Scope */
-			/*****************/
-			SYMBOL_TABLE.getInstance().endScope();
-
-			/*********************************************************/
-			/* [4] Return value is irrelevant for class declarations */
-			/*********************************************************/
-			return null;
+			System.out.format(">> ERROR [%d:%d] condition inside While is not integral\n",2,2);
 		}
+		SYMBOL_TABLE.getInstance().beginScope();
+		body.SemantMe();
+		SYMBOL_TABLE.getInstance().endScope();
+		return null;
+	}
 
 }

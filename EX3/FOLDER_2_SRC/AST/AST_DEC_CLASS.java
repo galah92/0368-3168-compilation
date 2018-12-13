@@ -1,5 +1,4 @@
 package AST;
-
 import TYPES.*;
 import SYMBOL_TABLE.*;
 
@@ -32,7 +31,7 @@ public class AST_DEC_CLASS extends AST_DEC
 	public TYPE SemantMe()
 	{	
 		SYMBOL_TABLE.getInstance().beginScope();
-		TYPE_CLASS t = new TYPE_CLASS(null, name,data_members.SemantMe());
+		TYPE_CLASS t = new TYPE_CLASS(null, name, data_members.SemantMe());
 		SYMBOL_TABLE.getInstance().endScope();
 		SYMBOL_TABLE.getInstance().enter(name, t);
 		return null;		

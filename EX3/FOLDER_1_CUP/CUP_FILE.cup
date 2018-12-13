@@ -142,11 +142,11 @@ stmtList	::=		stmt:s stmtList:l	{: RESULT = new AST_STMT_LIST(s,l);    :}
 					| stmt:s			{: RESULT = new AST_STMT_LIST(s,null); :};
 					
 stmt		::=		varDec:v                                                    {: RESULT = new AST_STMT_DEC_VAR(v);       :}
-					| callExp:callExp SEMICOLON									{: RESULT = new AST_STMT_CALL(callExp);    :}
-					| RETURN exp:e SEMICOLON									{: RESULT = new AST_STMT_RETURN(e);        :}
 					| varExp:v ASSIGN exp:e SEMICOLON							{: RESULT = new AST_STMT_ASSIGN(v,e);      :}
+					| RETURN exp:e SEMICOLON									{: RESULT = new AST_STMT_RETURN(e);        :}
 					| IF    LPAREN exp:cond RPAREN LBRACE stmtList:body RBRACE	{: RESULT = new AST_STMT_IF(   cond,body); :}
-					| WHILE LPAREN exp:cond RPAREN LBRACE stmtList:body RBRACE	{: RESULT = new AST_STMT_WHILE(cond,body); :};
+					| WHILE LPAREN exp:cond RPAREN LBRACE stmtList:body RBRACE	{: RESULT = new AST_STMT_WHILE(cond,body); :}
+					| callExp:callExp SEMICOLON									{: RESULT = new AST_STMT_CALL(callExp);    :};
 
 exp			::=		INT:i			{: RESULT = new AST_EXP_INT(i);    :}
 					| STRING:s		{: RESULT = new AST_EXP_STRING(s); :}
