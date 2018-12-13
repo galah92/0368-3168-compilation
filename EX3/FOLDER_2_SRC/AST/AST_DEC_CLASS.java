@@ -8,7 +8,7 @@ public class AST_DEC_CLASS extends AST_DEC
 
 	public AST_TYPE_NAME_LIST data_members;
 	
-	public AST_DEC_CLASS(String name,AST_TYPE_NAME_LIST data_members)
+	public AST_DEC_CLASS(String name, AST_TYPE_NAME_LIST data_members)
 	{
 		SerialNumber = AST_Node_Serial_Number.getFresh();
 	
@@ -29,7 +29,8 @@ public class AST_DEC_CLASS extends AST_DEC
 	}
 	
 	public TYPE SemantMe()
-	{	
+	{
+		// TODO: most of the work is here with semanting AST_TYPE_NAME_LIST
 		SYMBOL_TABLE.getInstance().beginScope();
 		TYPE_CLASS t = new TYPE_CLASS(null, name, data_members.SemantMe());
 		SYMBOL_TABLE.getInstance().endScope();

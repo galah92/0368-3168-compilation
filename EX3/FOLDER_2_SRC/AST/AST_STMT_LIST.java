@@ -10,8 +10,8 @@ public class AST_STMT_LIST extends AST_Node
 	{
 		SerialNumber = AST_Node_Serial_Number.getFresh();
 
-//		if (tail != null) System.out.print("====================== stmts -> stmt stmts\n");
-//		if (tail == null) System.out.print("====================== stmts -> stmt      \n");
+		if (tail != null) System.out.print("====================== stmts -> stmt stmts\n");
+		if (tail == null) System.out.print("====================== stmts -> stmt      \n");
 
 		this.head = head;
 		this.tail = tail;
