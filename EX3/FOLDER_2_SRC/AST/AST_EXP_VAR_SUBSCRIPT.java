@@ -4,7 +4,7 @@ public class AST_EXP_VAR_SUBSCRIPT extends AST_EXP_VAR
 {
 	public AST_EXP_VAR var;
 	public AST_EXP subscript;
-	
+
 	/******************/
 	/* CONSTRUCTOR(S) */
 	/******************/
@@ -31,4 +31,14 @@ public class AST_EXP_VAR_SUBSCRIPT extends AST_EXP_VAR
 		if (var != null) var.PrintMe();
 		if (subscript != null) subscript.PrintMe();
 	}
+
+	public TYPE SemantMe(){
+		TYPE t;
+		if (subscript != null) t = subscript.SemantMe();
+		if(t != TYPE_INT.getInstance()){
+			System.out.format(">> ERROR [%d:%d] %s type is not int\n",6,6,subscript);
+			System.exit(0);
+		}
+	}
+
 }
