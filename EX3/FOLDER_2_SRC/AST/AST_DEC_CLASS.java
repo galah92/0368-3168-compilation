@@ -5,7 +5,6 @@ import SYMBOL_TABLE.*;
 public class AST_DEC_CLASS extends AST_DEC
 {
 	public String name;
-
 	public AST_TYPE_NAME_LIST data_members;
 	
 	public AST_DEC_CLASS(String name, AST_TYPE_NAME_LIST data_members)

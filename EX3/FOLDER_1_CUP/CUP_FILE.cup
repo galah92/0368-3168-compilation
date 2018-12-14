@@ -44,26 +44,32 @@ scan with
 /*************/
 /* TERMINALS */
 /*************/
-terminal IF;
-terminal LT;
-terminal EQ;
-terminal DOT;
-terminal PLUS;
-terminal MINUS;
-terminal TIMES;
-terminal CLASS;
-terminal COMMA;
-terminal WHILE;
-terminal RETURN;
-terminal DIVIDE;
 terminal LPAREN;
 terminal RPAREN;
 terminal LBRACK;
 terminal RBRACK;
 terminal LBRACE;
 terminal RBRACE;
-terminal ASSIGN;
+terminal NIL;
+terminal PLUS;
+terminal MINUS;
+terminal TIMES;
+terminal DIVIDE;
+terminal COMMA;
+terminal DOT;
 terminal SEMICOLON;
+terminal ASSIGN;
+terminal EQ;
+terminal LT;
+terminal GT;
+terminal ARRAY;
+terminal CLASS;
+terminal EXTENDS;
+terminal RETURN;
+terminal WHILE;
+terminal IF;
+terminal NEW;
+terminal COMMENT;
 
 /*************/
 /* TERMINALS */
@@ -90,6 +96,7 @@ non terminal AST_EXP_VAR	varExp;
 non terminal AST_EXP_CALL	callExp;
 non terminal AST_EXP_BINOP	binopExp;
 non terminal AST_EXP_LIST	expListComma;
+non terminal AST_NEW_EXP    newExp;
 
 /*****************/
 /* NON TERMINALS */
@@ -131,7 +138,8 @@ dec			::=		varDec:d		{: RESULT = d; :} |
                     classDec:d		{: RESULT = d; :}
                     ;
 varDec		::=		ID:type ID:var SEMICOLON	            {: RESULT = new AST_DEC_VAR(type, var, null); :} |
-                    ID:type ID:var ASSIGN exp:e SEMICOLON   {: RESULT = new AST_DEC_VAR(type, var, e);    :}
+                    ID:type ID:var ASSIGN exp:e SEMICOLON   {: RESULT = new AST_DEC_VAR(type, var, e);    :} |
+                    ID:type ID:var ASSIGN newExp:e SEMICOLON   {: RESULT = new AST_DEC_VAR(type, var, e); :}
                     ;
 funcDec		::=		ID:ret ID:name LPAREN typeNameListComma:tnl RPAREN LBRACE stmtList:body RBRACE  {: RESULT = new AST_DEC_FUNC(ret,name,tnl,body);  :} |
                     ID:ret ID:name LPAREN RPAREN LBRACE stmtList:body RBRACE                        {: RESULT = new AST_DEC_FUNC(ret,name,null,body); :}
@@ -174,6 +182,10 @@ stmt		::=		varDec:v                                                    {: RESULT
                     IF    LPAREN exp:cond RPAREN LBRACE stmtList:body RBRACE	{: RESULT = new AST_STMT_IF(cond,body);     :} |
                     WHILE LPAREN exp:cond RPAREN LBRACE stmtList:body RBRACE	{: RESULT = new AST_STMT_WHILE(cond,body);  :} |
                     callExp:callExp SEMICOLON									{: RESULT = new AST_STMT_CALL(callExp);     :}
+                    ;
+
+newExp      ::=     NEW ID:type                         {: RESULT = new AST_NEW_EXP(type); :} |
+                    NEW ID:type LBRACK exp:e RBRACK     {: RESULT = new AST_NEW_EXP(type, e); :}
                     ;
 
 typeName				::=		ID:type ID:name								    {: RESULT = new AST_TYPE_NAME(type,name);    :}

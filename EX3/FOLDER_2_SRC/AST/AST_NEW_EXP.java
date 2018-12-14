@@ -1,24 +1,31 @@
 package AST;
 import TYPES.*;
 
-public abstract class AST_NEW_EXP extends AST_Node
+public class AST_NEW_EXP extends AST_EXP
 {
 
-    String name;
+    String type;
     AST_EXP exp;
 
-    public AST_NEW_EXP(String name, AST_EXP exp)
+    public AST_NEW_EXP(String type, AST_EXP exp)
     {
         SerialNumber = AST_Node_Serial_Number.getFresh();
-		this.name = name;
+		this.type = type;
         this.exp = exp;
+    }
+
+    public AST_NEW_EXP(String type)
+    {
+        SerialNumber = AST_Node_Serial_Number.getFresh();
+		this.type = type;
+        this.exp = null;
     }
 
     public void PrintMe()
 	{
-		System.out.format("AST NODE NEW_EXP( %d )\n", name);
+		System.out.format("AST NODE NEW_EXP( %d )\n", type);
 
-		AST_GRAPHVIZ.getInstance().logNode(SerialNumber, String.format("INT(%d)", name));
+		AST_GRAPHVIZ.getInstance().logNode(SerialNumber, String.format("INT(%d)", type));
         if (exp != null) AST_GRAPHVIZ.getInstance().logEdge(SerialNumber, exp.SerialNumber);
 	}
 
