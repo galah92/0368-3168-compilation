@@ -9,12 +9,14 @@ public class Main
 	{
 		try
 		{
+			PrintWriter writer = new PrintWriter(argv[1]);
 			Lexer lexer = new Lexer(new FileReader(argv[0]));
-			Parser parser = new Parser(lexer, new PrintWriter(argv[1]));
+			Parser parser = new Parser(lexer, writer);
 			AST_DEC_LIST AST = (AST_DEC_LIST) parser.parse().value;
-//			AST.PrintMe();
-			AST.SemantMe();
+			AST.PrintMe();
 			AST_GRAPHVIZ.getInstance().finalizeFile();			
+			AST.SemantMe(); // will exit here if error exists
+			writer.println("OK");
     	}
 		catch (Exception e)
 		{
@@ -22,5 +24,3 @@ public class Main
 		}
 	}
 }
-
-

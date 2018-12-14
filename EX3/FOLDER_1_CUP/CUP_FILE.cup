@@ -114,12 +114,17 @@ non terminal AST_TYPE_NAME_LIST	typeNameListSemicolon;
 /***********************/
 /* OPERATOR PRECEDENCE */
 /***********************/
-precedence left EQ;
-precedence left LT;
-precedence left PLUS;
-precedence left MINUS;
-precedence left TIMES;
-precedence left DIVIDE;
+precedence nonassoc ASSIGN;
+precedence left     EQ;
+precedence left     LT;
+precedence left     GT;
+precedence left     PLUS;
+precedence left     MINUS;
+precedence left     TIMES;
+precedence left     DIVIDE;
+precedence nonassoc LBRACK;
+precedence nonassoc LPAREN;
+precedence left     DOT;
 
 /************************/
 /* START WITH: stmtList */
@@ -148,10 +153,10 @@ classDec	::=		CLASS ID:name LBRACE typeNameListSemicolon:l RBRACE	{: RESULT = ne
                     ;
 
 exp			::=		varExp:v		{: RESULT = v; :} |
-                    binopExp:e	    {: RESULT = e; :}
-                    INT:i			{: RESULT = new AST_EXP_INT(i);    :} |
-                    STRING:s		{: RESULT = new AST_EXP_STRING(s); :} |
+                    binopExp:e	    {: RESULT = e; :} |
                     callExp:e		{: RESULT = e; :} |
+                    INT:i			{: RESULT = new AST_EXP_INT(i);    :} |
+                    STRING:s		{: RESULT = new AST_EXP_STRING(s); :}
                     ;
 
 varExp		::=		ID:name							{: RESULT = new AST_EXP_VAR_SIMPLE(name);       :} |

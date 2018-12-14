@@ -35,34 +35,16 @@ public class AST_DEC_FUNC extends AST_DEC
 
 	public TYPE SemantMe()
 	{
-		TYPE t;
-		TYPE returnType = null;
-		TYPE_LIST type_list = null;
-
-		returnType = SYMBOL_TABLE.getInstance().find(returnTypeName);
+		TYPE returnType = SYMBOL_TABLE.getInstance().find(returnTypeName);
 		if (returnType == null)
 		{
-			System.out.format(">> ERROR [%d:%d] non existing return type %s\n",6,6,returnType);				
+			System.out.format(">> ERROR [%d:%d] non existing return type %s\n",6,6, returnType);
 		}
-
+		TYPE_LIST paramsTypes = params != null ? params.SemantMe(): null;
 		SYMBOL_TABLE.getInstance().beginScope();
-		for (AST_TYPE_NAME_LIST it = params; it  != null; it = it.tail)
-		{
-			t = SYMBOL_TABLE.getInstance().find(it.head.type);
-			if (t == null)
-			{
-				System.out.format(">> ERROR [%d:%d] non existing type %s\n",2,2,it.head.type);				
-			}
-			else
-			{
-				type_list = new TYPE_LIST(t,type_list);
-				SYMBOL_TABLE.getInstance().enter(it.head.name,t);
-			}
-		}
-		body.SemantMe();
+		if (body != null) { body.SemantMe(); }
 		SYMBOL_TABLE.getInstance().endScope();
-		
-		SYMBOL_TABLE.getInstance().enter(name, new TYPE_FUNCTION(returnType, name, type_list));
+		SYMBOL_TABLE.getInstance().enter(name, new TYPE_FUNCTION(returnType, name, paramsTypes));
 		return null;
 	}
 	

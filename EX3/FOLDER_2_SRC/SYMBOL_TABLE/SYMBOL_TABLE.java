@@ -177,16 +177,13 @@ public class SYMBOL_TABLE
 
 			/* [2] How should we handle void ??? */
 
-			/* [3] Enter library function PrintInt */
-			instance.enter(
-				"PrintInt",
-				new TYPE_FUNCTION(
-					TYPE_VOID.getInstance(),
-					"PrintInt",
-					new TYPE_LIST(
-						TYPE_INT.getInstance(),
-						null)));
-			
+			// enter lib functions
+			TYPE_FUNCTION printIntFunc = new TYPE_FUNCTION(TYPE_VOID.getInstance(), "PrintInt", new TYPE_LIST(TYPE_INT.getInstance(), null));
+			TYPE_FUNCTION printStringFunc = new TYPE_FUNCTION(TYPE_VOID.getInstance(), "PrintString", new TYPE_LIST(TYPE_INT.getInstance(), null));
+			TYPE_FUNCTION printTraceFunc = new TYPE_FUNCTION(TYPE_VOID.getInstance(), "PrintTrace", null);
+			instance.enter("PrintInt", printIntFunc);
+			instance.enter("PrintString", printStringFunc);
+			instance.enter("PrintTrace", printTraceFunc);
 		}
 		return instance;
 	}
