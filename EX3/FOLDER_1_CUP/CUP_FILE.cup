@@ -5,18 +5,18 @@ import AST.*;
 parser code 
 {:
     public Lexer lexer;
-    public PrintWriter pwriter;
+    public PrintWriter writer;
 
-    public Parser(Lexer lexer, PrintWriter pwriter)
+    public Parser(Lexer lexer, PrintWriter writer)
     {
         super(lexer);
         this.lexer = lexer;
-        this.pwriter = pwriter;
+        this.writer = writer;
     }
     public void report_error(String message, Object info)
     {
-        pwriter.println("ERROR(" + lexer.getLine() + ")");
-        pwriter.close();
+        writer.println("ERROR(" + lexer.getLine() + ")");
+        writer.close();
         System.out.println("ERROR(" + lexer.getLine() + "," + lexer.getCharPos() + ")");
         System.exit(0);
     }

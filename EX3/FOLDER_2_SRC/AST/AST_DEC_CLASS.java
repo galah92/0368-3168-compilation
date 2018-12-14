@@ -29,10 +29,10 @@ public class AST_DEC_CLASS extends AST_DEC
 	
 	public TYPE SemantMe() throws Exception
 	{
-		// TODO: most of the work is here with semanting AST_TYPE_NAME_LIST
 		SYMBOL_TABLE.getInstance().beginScope();
+		TYPE_LIST dataMembersTypes = data_members.SemantMe();
 		SYMBOL_TABLE.getInstance().endScope();
-		SYMBOL_TABLE.getInstance().enter(name, new TYPE_CLASS(null, name, data_members.SemantMe()));
+		SYMBOL_TABLE.getInstance().enter(name, new TYPE_CLASS(null, name, dataMembersTypes));
 		return null;		
 	}
 }

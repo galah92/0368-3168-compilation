@@ -61,6 +61,22 @@ public class SYMBOL_TABLE
 		return null;
 	}
 
+	public TYPE findInScope(String name)
+	{
+		SYMBOL_TABLE_ENTRY e = top;
+		int i = top_index; // inner scope index
+		while (e.name != "SCOPE-BOUNDARY" && e.prevtop != null)
+		{
+			i = i - 1;
+			e = e.prevtop;
+		}
+		for (e = table[hash(name)]; e != null && i < top_index; e = e.next, i++)
+		{
+			if (name.equals(e.name)) return e.type;
+		}
+		return null;
+	}
+
 	/* begine scope = Enter the <SCOPE-BOUNDARY> element to the data structure */
 	public void beginScope()
 	{
@@ -68,9 +84,7 @@ public class SYMBOL_TABLE
 		/* they are not really types. In order to be ablt to debug print them,  */
 		/* a special TYPE_FOR_SCOPE_BOUNDARIES was developed for them. This     */
 		/* class only contain their type name which is the bottom sign: _|_     */
-		enter(
-			"SCOPE-BOUNDARY",
-			new TYPE_FOR_SCOPE_BOUNDARIES("NONE"));
+		enter("SCOPE-BOUNDARY", new TYPE_FOR_SCOPE_BOUNDARIES("NONE"));
 
 		/* Print the symbol table after every change */
 		PrintMe();

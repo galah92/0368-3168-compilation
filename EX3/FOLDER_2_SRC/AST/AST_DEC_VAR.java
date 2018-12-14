@@ -38,7 +38,7 @@ public class AST_DEC_VAR extends AST_DEC
 			System.out.format(">> ERROR [%d:%d] non existing type %s\n",2,2, type);
 			throw new Exception();
 		}	
-		if (SYMBOL_TABLE.getInstance().find(name) != null)
+		if (SYMBOL_TABLE.getInstance().findInScope(name) != null)
 		{
 			System.out.format(">> ERROR [%d:%d] variable %s already exists in scope\n",2,2, name);
 			throw new Exception();
