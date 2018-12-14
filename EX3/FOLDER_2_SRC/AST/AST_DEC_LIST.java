@@ -15,13 +15,6 @@ public class AST_DEC_LIST extends AST_Node
 		this.tail = tail;
 	}
 
-	public TYPE SemantMe()
-	{		
-		if (head != null) head.SemantMe();
-		if (tail != null) tail.SemantMe();
-		return null;	
-	}
-
 	public void PrintMe()
 	{
 		System.out.print("AST NODE DEC LIST\n");
@@ -32,5 +25,12 @@ public class AST_DEC_LIST extends AST_Node
 		AST_GRAPHVIZ.getInstance().logNode(SerialNumber, "DEC\nLIST\n");
 		if (head != null) AST_GRAPHVIZ.getInstance().logEdge(SerialNumber, head.SerialNumber);
 		if (tail != null) AST_GRAPHVIZ.getInstance().logEdge(SerialNumber, tail.SerialNumber);
+	}
+
+	public TYPE SemantMe()
+	{
+		if (head != null) head.SemantMe();
+		if (tail != null) tail.SemantMe();
+		return null;
 	}
 }

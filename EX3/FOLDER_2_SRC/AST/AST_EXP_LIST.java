@@ -29,6 +29,8 @@ public class AST_EXP_LIST extends AST_Node
 
 	public TYPE SemantMe()
 	{
-		return null;  // TODO: implement
+		if (head != null) head.SemantMe();
+		if (tail != null) tail.SemantMe();
+		return null;
 	}
 }
