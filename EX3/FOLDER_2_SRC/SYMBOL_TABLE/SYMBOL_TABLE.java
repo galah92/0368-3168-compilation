@@ -77,6 +77,18 @@ public class SYMBOL_TABLE
 		return null;
 	}
 
+	public boolean isGlobalScope()
+	{
+		SYMBOL_TABLE_ENTRY e = top;
+		int i = top_index;
+		while (e.name != "SCOPE-BOUNDARY" && e.prevtop != null)
+		{
+			i = i - 1;
+			e = e.prevtop;
+		}
+		if (e.prevtop == null) return true;
+		return false;
+	}
 	/* begine scope = Enter the <SCOPE-BOUNDARY> element to the data structure */
 	public void beginScope()
 	{

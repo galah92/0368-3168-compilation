@@ -28,6 +28,7 @@ public class AST_DEC_CLASS extends AST_DEC
 	
 	public TYPE SemantMe() throws Exception
 	{
+		if (!SYMBOL_TABLE.getInstance().isGlobalScope()) { throw new Exception(); }
 		SYMBOL_TABLE.getInstance().beginScope();
 		TYPE_LIST dataMembersTypes = data_members.SemantMe();
 		SYMBOL_TABLE.getInstance().endScope();

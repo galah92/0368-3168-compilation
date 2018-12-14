@@ -28,6 +28,7 @@ public class AST_ARRAY_DEC extends AST_Node
 
 	public TYPE SemantMe() throws Exception
 	{
+		if (!SYMBOL_TABLE.getInstance().isGlobalScope()) { throw new Exception(); }
 		if (SYMBOL_TABLE.getInstance().find(arrName) != null)
 		{
 			System.out.format(">> ERROR [%d:%d] variable %s already exists in scope\n",2,2,arrName);
