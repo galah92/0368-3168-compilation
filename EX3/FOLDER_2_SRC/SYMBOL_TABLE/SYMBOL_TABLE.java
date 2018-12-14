@@ -168,12 +168,11 @@ public class SYMBOL_TABLE
 	{
 		if (instance == null)
 		{
-			/* [0] The instance itself ... */
 			instance = new SYMBOL_TABLE();
 
-			/* [1] Enter primitive types int, string */
-			instance.enter("int",   TYPE_INT.getInstance());
-			instance.enter("string",TYPE_STRING.getInstance());
+			// enter primitive types
+			instance.enter("int", TYPE_INT.getInstance());
+			instance.enter("string", TYPE_STRING.getInstance());
 
 			/* [2] How should we handle void ??? */
 

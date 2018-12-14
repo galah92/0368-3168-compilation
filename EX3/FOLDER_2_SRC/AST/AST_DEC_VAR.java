@@ -40,8 +40,8 @@ public class AST_DEC_VAR extends AST_DEC
 		}	
 		if (SYMBOL_TABLE.getInstance().find(name) != null)
 		{
-			// System.out.format(">> ERROR [%d:%d] variable %s already exists in scope\n",2,2, name);
-			// System.exit(0);
+			System.out.format(">> ERROR [%d:%d] variable %s already exists in scope\n",2,2, name);
+			System.exit(0);
 		}
 		SYMBOL_TABLE.getInstance().enter(name, t);
 		return null;		

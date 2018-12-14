@@ -5,6 +5,7 @@ FOLDER_2_SRC/TokenNames.java
 FOLDER_3_BIN/*.class
 FOLDER_3_BIN/AST/*.class
 FOLDER_5_OUTPUT/
+!FOLDER_5_OUTPUT/.gitignore
 
 .DS_Store
 *~
