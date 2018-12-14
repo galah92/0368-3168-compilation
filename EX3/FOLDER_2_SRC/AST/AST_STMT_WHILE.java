@@ -13,7 +13,7 @@ public class AST_STMT_WHILE extends AST_STMT
 		this.body = body;
 	}
 
-	public TYPE SemantMe()
+	public TYPE SemantMe() throws Exception
 	{
 		if (cond.SemantMe() != TYPE_INT.getInstance())
 		{

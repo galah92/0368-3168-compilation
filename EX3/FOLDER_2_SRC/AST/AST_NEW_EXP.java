@@ -29,7 +29,7 @@ public class AST_NEW_EXP extends AST_EXP
         if (exp != null) AST_GRAPHVIZ.getInstance().logEdge(SerialNumber, exp.SerialNumber);
 	}
 
-	public TYPE SemantMe()
+	public TYPE SemantMe() throws Exception
 	{
         // TODO: complete. a new TYPE_NEW_EXP might be necessary
 		return null;

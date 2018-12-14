@@ -24,7 +24,7 @@ public class AST_EXP_CALL extends AST_EXP
 		AST_GRAPHVIZ.getInstance().logEdge(SerialNumber, params.SerialNumber);
 	}
 
-	public TYPE SemantMe()
+	public TYPE SemantMe() throws Exception
 	{
 		TYPE funcRetType = SYMBOL_TABLE.getInstance().find(funcName);
 		if (funcRetType == null)

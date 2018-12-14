@@ -27,7 +27,7 @@ public class AST_EXP_LIST extends AST_Node
 		if (tail != null) AST_GRAPHVIZ.getInstance().logEdge(SerialNumber, tail.SerialNumber);
 	}
 
-	public TYPE SemantMe()
+	public TYPE SemantMe() throws Exception
 	{
 		if (head != null) head.SemantMe();
 		if (tail != null) tail.SemantMe();

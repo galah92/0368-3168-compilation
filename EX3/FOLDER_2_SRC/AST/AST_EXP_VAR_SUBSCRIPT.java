@@ -21,12 +21,12 @@ public class AST_EXP_VAR_SUBSCRIPT extends AST_EXP_VAR
 		if (subscript != null) subscript.PrintMe();
 	}
 
-	public TYPE SemantMe()
+	public TYPE SemantMe() throws Exception
 	{
 		if (subscript != null && subscript.SemantMe() != TYPE_INT.getInstance())
 		{
 			System.out.format(">> ERROR [%d:%d] %s type is not int\n",6,6,subscript);
-			System.exit(0);
+			throw new Exception();
 		}
 		return null;
 	}

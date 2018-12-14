@@ -40,7 +40,7 @@ public class AST_EXP_BINOP extends AST_EXP
 		if (right != null) AST_GRAPHVIZ.getInstance().logEdge(SerialNumber, right.SerialNumber);
 	}
 
-	public TYPE SemantMe()
+	public TYPE SemantMe() throws Exception
 	{
 		TYPE t1 = null;
 		TYPE t2 = null;
@@ -56,8 +56,7 @@ public class AST_EXP_BINOP extends AST_EXP
 		{
 			return TYPE_STRING.getInstance();
 		}
-		System.exit(0);
-		return null;
+		throw new Exception();
 	}
 
 }

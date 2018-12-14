@@ -26,7 +26,7 @@ public class AST_ARRAY_DEC extends AST_Node
 		AST_GRAPHVIZ.getInstance().logNode(SerialNumber, String.format("ID2\n...->%s", arrType));
 	}
 
-	public TYPE SemantMe()
+	public TYPE SemantMe() throws Exception
 	{
 		if (SYMBOL_TABLE.getInstance().find(arrName) != null)
 		{

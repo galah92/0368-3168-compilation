@@ -3,7 +3,6 @@ package TYPES;
 public class TYPE_FUNCTION extends TYPE
 {
 	public TYPE returnType;
-
 	public TYPE_LIST params;
 	
 	public TYPE_FUNCTION(TYPE returnType, String name, TYPE_LIST params)

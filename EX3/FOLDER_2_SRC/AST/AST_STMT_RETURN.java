@@ -19,7 +19,7 @@ public class AST_STMT_RETURN extends AST_STMT
 		AST_GRAPHVIZ.getInstance().logNode(SerialNumber, "RETURN");
 		if (exp != null) AST_GRAPHVIZ.getInstance().logEdge(SerialNumber, exp.SerialNumber);
 	}
-	public TYPE SemantMe()
+	public TYPE SemantMe() throws Exception
 	{
 		return exp != null ? exp.SemantMe() : TYPE_VOID.getInstance();
 	}
