@@ -23,7 +23,11 @@ public class AST_EXP_BINOP extends AST_EXP
 		String sOP="";
 		if (OP == 0) { sOP = "+"; }
 		if (OP == 1) { sOP = "-"; }
-		if (OP == 3) { sOP = "="; } // comparison
+		if (OP == 2) { sOP = "*"; }
+		if (OP == 3) { sOP = "/"; }
+		if (OP == 4) { sOP = "<"; }
+		if (OP == 5) { sOP = ">"; }
+		if (OP == 6) { sOP = "="; }
 
 		System.out.print("AST NODE BINOP EXP\n");
 		System.out.format("BINOP EXP(%s)\n", sOP);
@@ -32,8 +36,8 @@ public class AST_EXP_BINOP extends AST_EXP
 		if (right != null) right.PrintMe();
 
 		AST_GRAPHVIZ.getInstance().logNode(SerialNumber, String.format("BINOP(%s)", sOP));
-		if (left  != null) AST_GRAPHVIZ.getInstance().logEdge(SerialNumber,left.SerialNumber);
-		if (right != null) AST_GRAPHVIZ.getInstance().logEdge(SerialNumber,right.SerialNumber);
+		if (left  != null) AST_GRAPHVIZ.getInstance().logEdge(SerialNumber, left.SerialNumber);
+		if (right != null) AST_GRAPHVIZ.getInstance().logEdge(SerialNumber, right.SerialNumber);
 	}
 
 	public TYPE SemantMe()

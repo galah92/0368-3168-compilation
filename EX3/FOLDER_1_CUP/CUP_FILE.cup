@@ -147,11 +147,11 @@ funcDec		::=		ID:ret ID:name LPAREN typeNameListComma:tnl RPAREN LBRACE stmtList
 classDec	::=		CLASS ID:name LBRACE typeNameListSemicolon:l RBRACE	{: RESULT = new AST_DEC_CLASS(name,l); :}
                     ;
 
-exp			::=		INT:i			{: RESULT = new AST_EXP_INT(i);    :} |
-                    STRING:s		{: RESULT = new AST_EXP_STRING(s); :} |
-                    varExp:v		{: RESULT = v; :} |
-                    callExp:e		{: RESULT = e; :} |
+exp			::=		varExp:v		{: RESULT = v; :} |
                     binopExp:e	    {: RESULT = e; :}
+                    INT:i			{: RESULT = new AST_EXP_INT(i);    :} |
+                    STRING:s		{: RESULT = new AST_EXP_STRING(s); :} |
+                    callExp:e		{: RESULT = e; :} |
                     ;
 
 varExp		::=		ID:name							{: RESULT = new AST_EXP_VAR_SIMPLE(name);       :} |
@@ -159,10 +159,13 @@ varExp		::=		ID:name							{: RESULT = new AST_EXP_VAR_SIMPLE(name);       :} |
                     varExp:v LBRACK exp:e RBRACK	{: RESULT = new AST_EXP_VAR_SUBSCRIPT(v,e);     :}
                     ;
 
-binopExp	::=		exp:e1 PLUS exp:e2		{: RESULT = new AST_EXP_BINOP(e1,e2,0); :} |
-                    exp:e1 TIMES exp:e2 	{: RESULT = new AST_EXP_BINOP(e1,e2,1); :} |
-                    exp:e1 LT exp:e2		{: RESULT = new AST_EXP_BINOP(e1,e2,2); :} |
-                    exp:e1 EQ exp:e2		{: RESULT = new AST_EXP_BINOP(e1,e2,3); :}
+binopExp	::=		exp:e1 PLUS exp:e2		{: RESULT = new AST_EXP_BINOP(e1, e2, 0); :} |
+                    exp:e1 MINUS exp:e2 	{: RESULT = new AST_EXP_BINOP(e1, e2, 1); :} |
+                    exp:e1 TIMES exp:e2 	{: RESULT = new AST_EXP_BINOP(e1, e2, 2); :} |
+                    exp:e1 DIVIDE exp:e2 	{: RESULT = new AST_EXP_BINOP(e1, e2, 3); :} |
+                    exp:e1 LT exp:e2		{: RESULT = new AST_EXP_BINOP(e1, e2, 4); :} |
+                    exp:e1 GT exp:e2		{: RESULT = new AST_EXP_BINOP(e1, e2, 5); :} |
+                    exp:e1 EQ exp:e2		{: RESULT = new AST_EXP_BINOP(e1, e2, 6); :}
                     ;
 
 callExp		::=		ID:funcName LPAREN expListComma:el RPAREN	{: RESULT = new AST_EXP_CALL(funcName,el); :}
