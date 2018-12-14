@@ -8,7 +8,7 @@ public class AST_DEC_VAR extends AST_DEC
 	public String name;
 	public AST_EXP initialValue;
 	
-	public AST_DEC_VAR(String type,String name, AST_EXP initialValue)
+	public AST_DEC_VAR(String type, String name, AST_EXP initialValue)
 	{
 		SerialNumber = AST_Node_Serial_Number.getFresh();
 
@@ -19,24 +19,19 @@ public class AST_DEC_VAR extends AST_DEC
 
 	public void PrintMe()
 	{
-		if (initialValue != null) System.out.format("VAR-DEC(%s):%s := initialValue\n",name,type);
-		if (initialValue == null) System.out.format("VAR-DEC(%s):%s                \n",name,type);
-
 		if (initialValue != null) initialValue.PrintMe();
-
 		AST_GRAPHVIZ.getInstance().logNode(SerialNumber, String.format("VAR\nDEC(%s)\n:%s", name, type));
-
-		if (initialValue != null) AST_GRAPHVIZ.getInstance().logEdge(SerialNumber,initialValue.SerialNumber);		
+		if (initialValue != null) AST_GRAPHVIZ.getInstance().logEdge(SerialNumber,initialValue.SerialNumber);
 			
 	}
 
 	public TYPE SemantMe() throws Exception
 	{
 		TYPE t = SYMBOL_TABLE.getInstance().find(type);
-		if (t == null) { throw new Exception(); }	
+		if (t == null) { throw new Exception(); }
 		if (SYMBOL_TABLE.getInstance().findInScope(name) != null) { throw new Exception(); }
 		SYMBOL_TABLE.getInstance().enter(name, t);
-		return null;		
+		return null;
 	}
 	
 }
