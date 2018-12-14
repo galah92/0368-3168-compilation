@@ -9,6 +9,4 @@ public class TYPE_ARRAY extends TYPE
 		this.elementType = elementType;
 		this.name = name;
 	}
-
-	public boolean isArray() { return true; }
 }

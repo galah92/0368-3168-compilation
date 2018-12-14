@@ -25,7 +25,7 @@ public class AST_EXP_VAR_FIELD extends AST_EXP_VAR
 	public TYPE SemantMe() throws Exception
 	{
 		TYPE t = var.SemantMe();
-		if (!t.isClass()) { throw new Exception(); }
+		if (!(t instanceof TYPE_CLASS)) { throw new Exception(); }
 		TYPE_CLASS tc = (TYPE_CLASS)t;
 		for (TYPE_LIST it = tc.data_members; it != null; it = it.tail)
 		{

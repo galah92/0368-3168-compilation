@@ -37,7 +37,7 @@ public class AST_DEC_CLASS extends AST_DEC
 		if (base != null)
 		{
 			TYPE t = SYMBOL_TABLE.getInstance().find(base);
-			if (!t.isClass()) { throw new Exception(); }
+			if (!(t instanceof TYPE_CLASS)) { throw new Exception(); }
 			baseType = (TYPE_CLASS)t;
 		}
 
