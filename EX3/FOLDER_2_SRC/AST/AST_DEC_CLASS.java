@@ -20,11 +20,8 @@ public class AST_DEC_CLASS extends AST_DEC
 		System.out.format("CLASS DEC = %s\n",name);
 		if (data_members != null) data_members.PrintMe();
 		
-		AST_GRAPHVIZ.getInstance().logNode(
-			SerialNumber,
-			String.format("CLASS\n%s",name));
-		
-		AST_GRAPHVIZ.getInstance().logEdge(SerialNumber, data_members.SerialNumber);		
+		AST_GRAPHVIZ.getInstance().logNode(SerialNumber, String.format("CLASS\n%s",name));
+		AST_GRAPHVIZ.getInstance().logEdge(SerialNumber, data_members.SerialNumber);
 	}
 	
 	public TYPE SemantMe() throws Exception
