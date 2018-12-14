@@ -80,30 +80,19 @@ public class SYMBOL_TABLE
 	public boolean isGlobalScope()
 	{
 		SYMBOL_TABLE_ENTRY e = top;
-		while (e.name != "SCOPE-BOUNDARY" && e.prevtop != null)
-		{
-			e = e.prevtop;
-		}
-		return e.prevtop == null; // no SCOPE-BOUNDARY in table
+		while (e != null && e.name != "SCOPE-BOUNDARY") { e = e.prevtop; }
+		return e == null; // no SCOPE-BOUNDARY in table
 	}
-	/* begine scope = Enter the <SCOPE-BOUNDARY> element to the data structure */
+
 	public void beginScope()
 	{
-		/* Though <SCOPE-BOUNDARY> entries are present inside the symbol table, */
-		/* they are not really types. In order to be ablt to debug print them,  */
-		/* a special TYPE_FOR_SCOPE_BOUNDARIES was developed for them. This     */
-		/* class only contain their type name which is the bottom sign: _|_     */
 		enter("SCOPE-BOUNDARY", new TYPE_FOR_SCOPE_BOUNDARIES("NONE"));
-
-		/* Print the symbol table after every change */
 		PrintMe();
 	}
 
-	/* end scope = Keep popping elements out of the data structure,                 */
-	/* from most recent element entered, until a <NEW-SCOPE> element is encountered */
 	public void endScope()
 	{
-		/* Pop elements from the symbol table stack until a SCOPE-BOUNDARY is hit */		
+		/* Pop elements from the symbol table stack until a SCOPE-BOUNDARY is hit */
 		while (top.name != "SCOPE-BOUNDARY")
 		{
 			table[top.index] = top.next;
@@ -115,7 +104,6 @@ public class SYMBOL_TABLE
 		top_index = top_index-1;
 		top = top.prevtop;
 
-		/* Print the symbol table after every change */		
 		PrintMe();
 	}
 	
