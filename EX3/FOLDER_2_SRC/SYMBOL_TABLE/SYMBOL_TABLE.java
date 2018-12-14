@@ -70,7 +70,7 @@ public class SYMBOL_TABLE
 			i = i - 1;
 			e = e.prevtop;
 		}
-		for (e = table[hash(name)]; e != null && i < top_index; e = e.next, i++)
+		for (e = table[hash(name)]; e != null && e.prevtop_index > i; e = e.next)
 		{
 			if (name.equals(e.name)) return e.type;
 		}
