@@ -80,14 +80,11 @@ public class SYMBOL_TABLE
 	public boolean isGlobalScope()
 	{
 		SYMBOL_TABLE_ENTRY e = top;
-		int i = top_index;
 		while (e.name != "SCOPE-BOUNDARY" && e.prevtop != null)
 		{
-			i = i - 1;
 			e = e.prevtop;
 		}
-		if (e.prevtop == null) return true;
-		return false;
+		return e.prevtop == null; // no SCOPE-BOUNDARY in table
 	}
 	/* begine scope = Enter the <SCOPE-BOUNDARY> element to the data structure */
 	public void beginScope()
