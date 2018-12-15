@@ -17,7 +17,6 @@ public class AST_EXP_CALL extends AST_EXP
 
 	public void PrintMe()
 	{
-		System.out.format("CALL(%s)\nWITH:\n",funcName);
 		if (params != null) params.PrintMe();
 
 		AST_GRAPHVIZ.getInstance().logNode(SerialNumber, String.format("CALL(%s)\nWITH", funcName));
@@ -27,10 +26,7 @@ public class AST_EXP_CALL extends AST_EXP
 	public TYPE SemantMe() throws Exception
 	{
 		TYPE funcRetType = SYMBOL_TABLE.getInstance().find(funcName);
-		if (funcRetType == null)
-		{
-			System.out.format(">> ERROR [%d:%d] non existing function %s\n",99,99, funcName);
-		}
+		if (funcRetType == null) { throw new Exception(); }
 		params.SemantMe();
 		return funcRetType;
 	}

@@ -8,16 +8,12 @@ public class AST_EXP_LIST extends AST_Node
 
 	public AST_EXP_LIST(AST_EXP head, AST_EXP_LIST tail)
 	{
-		SerialNumber = AST_Node_Serial_Number.getFresh();
-
 		this.head = head;
 		this.tail = tail;
 	}
 	
 	public void PrintMe()
 	{
-		System.out.print("AST NODE EXP LIST\n");
-
 		if (head != null) head.PrintMe();
 		if (tail != null) tail.PrintMe();
 

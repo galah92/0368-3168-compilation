@@ -9,41 +9,26 @@ parser code
 
     public Parser(Lexer lexer, PrintWriter writer)
     {
-        super(lexer);
         this.lexer = lexer;
         this.writer = writer;
     }
     public void report_error(String message, Object info)
     {
-        writer.println("ERROR(" + lexer.getLine() + ")");
+        writer.println("ParserError(" + lexer.getLine() + ")");
         writer.close();
-        System.out.println("ERROR(" + lexer.getLine() + "," + lexer.getCharPos() + ")");
         System.exit(0);
     }
 :}
 
-/************************/
-/* CUSTOMIZE CUP PARSER */
-/************************/
 
+/* CUSTOMIZE CUP PARSER */
 scan with
 {:
-    Symbol s;
-    s = lexer.next_token();
-    System.out.print(s.sym);
-    if (s.value != null)
-    {
-        System.out.print("(");
-        System.out.print(s.value);
-        System.out.print(")");
-    }
-    System.out.print("\n");
-    return s; 
+    return lexer.next_token();
 :};
 
-/*************/
+
 /* TERMINALS */
-/*************/
 terminal LPAREN;
 terminal RPAREN;
 terminal LBRACK;
