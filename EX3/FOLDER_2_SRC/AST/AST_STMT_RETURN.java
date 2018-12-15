@@ -13,7 +13,6 @@ public class AST_STMT_RETURN extends AST_STMT
 
 	public void PrintMe()
 	{
-		System.out.print("AST NODE STMT RETURN\n");
 		if (exp != null) exp.PrintMe();
 
 		AST_GRAPHVIZ.getInstance().logNode(SerialNumber, "RETURN");

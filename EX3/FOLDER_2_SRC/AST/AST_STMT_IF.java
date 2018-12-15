@@ -17,8 +17,6 @@ public class AST_STMT_IF extends AST_STMT
 
 	public void PrintMe()
 	{
-		System.out.print("AST NODE STMT IF\n");
-
 		if (cond != null) cond.PrintMe();
 		if (body != null) body.PrintMe();
 
@@ -30,10 +28,7 @@ public class AST_STMT_IF extends AST_STMT
 
 	public TYPE SemantMe() throws Exception
 	{
-		if (cond.SemantMe() != TYPE_INT.getInstance())
-		{
-			System.out.format(">> ERROR [%d:%d] condition inside IF is not integral\n",2,2);
-		}
+		if (cond.SemantMe() != TYPE_INT.getInstance()) { throw new Exception(); }
 
 		SYMBOL_TABLE.getInstance().beginScope();
 		body.SemantMe();

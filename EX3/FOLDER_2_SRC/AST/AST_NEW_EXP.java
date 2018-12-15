@@ -23,8 +23,6 @@ public class AST_NEW_EXP extends AST_EXP
 
     public void PrintMe()
 	{
-		System.out.format("AST NODE NEW_EXP( %d )\n", type);
-
 		AST_GRAPHVIZ.getInstance().logNode(SerialNumber, String.format("INT(%d)", type));
         if (exp != null) AST_GRAPHVIZ.getInstance().logEdge(SerialNumber, exp.SerialNumber);
 	}

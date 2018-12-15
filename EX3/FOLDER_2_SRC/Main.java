@@ -13,7 +13,7 @@ public class Main
 			writer = new PrintWriter(argv[1]);
 			Lexer lexer = new Lexer(new FileReader(argv[0]));
 			Parser parser = new Parser(lexer, writer);
-			AST_DEC_LIST AST = (AST_DEC_LIST) parser.parse().value;
+			AST_Node AST = (AST_Node) parser.parse().value;
 			AST.PrintMe();
 			AST_GRAPHVIZ.getInstance().finalizeFile();
 			AST.SemantMe(); // will exit here if error exists

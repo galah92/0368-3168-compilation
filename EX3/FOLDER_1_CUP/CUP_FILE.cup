@@ -82,8 +82,8 @@ terminal UMINUS;
 /*****************/
 /* NON TERMINALS */
 /*****************/
-non terminal AST_DEC_LIST	decList;
-non terminal AST_DEC dec;
+non terminal AST_DecList	decList;
+non terminal AST_Dec dec;
 non terminal AST_VarDec varDec;
 non terminal AST_FuncDec funcDec;
 non terminal AST_ClassDec classDec;
@@ -137,8 +137,8 @@ paramsList  ::=     ID:id1 ID:id2 COMMA paramsList:list {: RESULT = new AST_Para
 cFieldList  ::=     cField:field cFieldList:list        {: RESULT = new AST_ClassFieldList(field, list); :} |
                     cField:field                        {: RESULT = new AST_ClassFieldList(field, null); :} ;
 
-decList		::=		dec:d decList:l	{: RESULT = new AST_DEC_LIST(d, l);    :} |
-                    dec:d			{: RESULT = new AST_DEC_LIST(d, null); :}
+decList		::=		dec:d decList:l	{: RESULT = new AST_DecList(d, l);    :} |
+                    dec:d			{: RESULT = new AST_DecList(d, null); :}
                     ;
 
 dec			::=		varDec:d		{: RESULT = d; :} |
