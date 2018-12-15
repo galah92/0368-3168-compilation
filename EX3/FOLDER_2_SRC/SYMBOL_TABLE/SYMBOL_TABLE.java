@@ -174,6 +174,7 @@ public class SYMBOL_TABLE
 			instance.enter("string", TYPE_STRING.getInstance());
 
 			/* [2] How should we handle void ??? */
+			instance.enter("void", TYPE_VOID.getInstance());
 
 			// enter lib functions
 			TYPE_FUNCTION printIntFunc = new TYPE_FUNCTION(TYPE_VOID.getInstance(), "PrintInt", new TYPE_LIST(TYPE_INT.getInstance(), null));

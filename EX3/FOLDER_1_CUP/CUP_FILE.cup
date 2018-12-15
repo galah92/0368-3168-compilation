@@ -63,7 +63,7 @@ terminal String STRING;
 terminal UMINUS;
 
 /* NON TERMINALS */
-non terminal AST_DecList	decList;
+non terminal AST_DecList decList;
 non terminal AST_Dec dec;
 non terminal AST_VarDec varDec;
 non terminal AST_FuncDec funcDec;
