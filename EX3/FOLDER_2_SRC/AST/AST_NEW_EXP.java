@@ -9,14 +9,12 @@ public class AST_NEW_EXP extends AST_EXP
 
     public AST_NEW_EXP(String type, AST_EXP exp)
     {
-        SerialNumber = AST_Node_Serial_Number.getFresh();
 		this.type = type;
         this.exp = exp;
     }
 
     public AST_NEW_EXP(String type)
     {
-        SerialNumber = AST_Node_Serial_Number.getFresh();
 		this.type = type;
         this.exp = null;
     }

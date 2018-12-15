@@ -7,7 +7,6 @@ public class AST_StmtReturn extends AST_STMT
 
 	public AST_StmtReturn(AST_EXP exp)
 	{
-		SerialNumber = AST_Node_Serial_Number.getFresh();
 		this.exp = exp;
 	}
 

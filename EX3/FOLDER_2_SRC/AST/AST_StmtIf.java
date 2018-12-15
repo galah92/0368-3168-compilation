@@ -9,8 +9,6 @@ public class AST_StmtIf extends AST_STMT
 
 	public AST_StmtIf(AST_EXP cond, AST_STMT_LIST body)
 	{
-		SerialNumber = AST_Node_Serial_Number.getFresh();
-
 		this.cond = cond;
 		this.body = body;
 	}
