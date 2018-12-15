@@ -1,13 +1,13 @@
 package AST;
 import TYPES.*;
 
-public class AST_ExpBinOp extends AST_EXP
+public class AST_ExpBinOp extends AST_Exp
 {
 	char op;
-	public AST_EXP left;
-	public AST_EXP right;
+	public AST_Exp left;
+	public AST_Exp right;
 
-	public AST_ExpBinOp(AST_EXP left, AST_EXP right, char op)
+	public AST_ExpBinOp(AST_Exp left, AST_Exp right, char op)
 	{
 		this.left = left;
 		this.right = right;

@@ -3,10 +3,10 @@ import TYPES.*;
 
 public class AST_ExpList extends AST_Node
 {
-	public AST_EXP head;
+	public AST_Exp head;
 	public AST_ExpList tail;
 
-	public AST_ExpList(AST_EXP head, AST_ExpList tail)
+	public AST_ExpList(AST_Exp head, AST_ExpList tail)
 	{
 		this.head = head;
 		this.tail = tail;

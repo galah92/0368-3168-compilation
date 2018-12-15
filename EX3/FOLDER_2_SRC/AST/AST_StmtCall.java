@@ -1,7 +1,7 @@
 package AST;
 import TYPES.*;
 
-public class AST_StmtCall extends AST_STMT
+public class AST_StmtCall extends AST_Stmt
 {
 	public AST_ExpCall callExp;
 

@@ -1,13 +1,13 @@
 package AST;
 import TYPES.*;
 
-public class AST_NEW_EXP extends AST_EXP
+public class AST_NEW_EXP extends AST_Exp
 {
 
     String type;
-    AST_EXP exp;
+    AST_Exp exp;
 
-    public AST_NEW_EXP(String type, AST_EXP exp)
+    public AST_NEW_EXP(String type, AST_Exp exp)
     {
 		this.type = type;
         this.exp = exp;

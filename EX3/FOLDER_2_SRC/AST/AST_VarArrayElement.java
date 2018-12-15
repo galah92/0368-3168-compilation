@@ -4,9 +4,9 @@ import TYPES.*;
 public class AST_VarArrayElement extends AST_Var
 {
 	public AST_Var var;
-	public AST_EXP index;
+	public AST_Exp index;
 
-	public AST_VarArrayElement(AST_Var var, AST_EXP index)
+	public AST_VarArrayElement(AST_Var var, AST_Exp index)
 	{
 		this.var = var;
 		this.index = index;

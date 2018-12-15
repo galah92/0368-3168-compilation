@@ -2,7 +2,7 @@ package AST;
 import TYPES.*;
 import SYMBOL_TABLE.*;
 
-public class AST_ExpCall extends AST_EXP
+public class AST_ExpCall extends AST_Exp
 {
 	public String funcName;
 	public AST_Var instanceName;

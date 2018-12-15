@@ -1,12 +1,12 @@
 package AST;
 import TYPES.*;
 
-public class AST_StmtAssign extends AST_STMT
+public class AST_StmtAssign extends AST_Stmt
 {
 	public AST_Var var;
-	public AST_EXP exp;
+	public AST_Exp exp;
 
-	public AST_StmtAssign(AST_Var var, AST_EXP exp)
+	public AST_StmtAssign(AST_Var var, AST_Exp exp)
 	{
 		this.var = var;
 		this.exp = exp;

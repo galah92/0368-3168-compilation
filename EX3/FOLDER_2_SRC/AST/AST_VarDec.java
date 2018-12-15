@@ -6,9 +6,9 @@ public class AST_VarDec extends AST_ClassField
 {
 	public String varTypeName;
 	public String varName;
-	public AST_EXP initVal;
+	public AST_Exp initVal;
 	
-	public AST_VarDec(String varTypeName, String varName, AST_EXP initVal)
+	public AST_VarDec(String varTypeName, String varName, AST_Exp initVal)
 	{
         this.varTypeName = varTypeName;
 		this.varName = varName;

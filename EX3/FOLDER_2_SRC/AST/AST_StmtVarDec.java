@@ -1,7 +1,7 @@
 package AST;
 import TYPES.*;
 
-public class AST_StmtVarDec extends AST_STMT
+public class AST_StmtVarDec extends AST_Stmt
 {
 	public AST_VarDec var;
 	

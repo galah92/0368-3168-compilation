@@ -1,11 +1,11 @@
 package AST;
 import TYPES.*;
 
-public class AST_StmtReturn extends AST_STMT
+public class AST_StmtReturn extends AST_Stmt
 {
-	public AST_EXP exp;
+	public AST_Exp exp;
 
-	public AST_StmtReturn(AST_EXP exp)
+	public AST_StmtReturn(AST_Exp exp)
 	{
 		this.exp = exp;
 	}

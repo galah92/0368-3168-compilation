@@ -7,9 +7,9 @@ public class AST_FuncDec extends AST_ClassField
 	public String retTypeName;
 	public String funcName;
 	public AST_ParamsList params;
-	public AST_STMT_LIST body;
+	public AST_StmtList body;
 	
-	public AST_FuncDec(String retTypeName, String funcName, AST_ParamsList params, AST_STMT_LIST body)
+	public AST_FuncDec(String retTypeName, String funcName, AST_ParamsList params, AST_StmtList body)
 	{
 		this.retTypeName = retTypeName;
 		this.funcName = funcName;

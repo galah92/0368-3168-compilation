@@ -74,7 +74,7 @@ non terminal AST_ClassField cField;
 non terminal AST_ClassFieldList cFieldList;
 
 /* NON TERMINALS */
-non terminal AST_EXP exp;
+non terminal AST_Exp exp;
 non terminal AST_Var var;
 non terminal AST_ExpCall callExp;
 non terminal AST_ExpBinOp binopExp;
@@ -83,8 +83,8 @@ non terminal AST_ExpList expListComma;
 non terminal AST_NEW_EXP newExp;
 
 /* NON TERMINALS */
-non terminal AST_STMT stmt;
-non terminal AST_STMT_LIST stmtList;
+non terminal AST_Stmt stmt;
+non terminal AST_StmtList stmtList;
 
 /* OPERATOR PRECEDENCE */
 precedence nonassoc ASSIGN;
@@ -165,8 +165,8 @@ expListComma	::=		exp:e COMMA expListComma:el	{: RESULT = new AST_ExpList(e,el);
                         exp:e						{: RESULT = new AST_ExpList(e,null); :}
                         ;
 
-stmtList	::=		stmt:s stmtList:l	{: RESULT = new AST_STMT_LIST(s,l);    :} |
-                    stmt:s  			{: RESULT = new AST_STMT_LIST(s,null); :}
+stmtList	::=		stmt:s stmtList:l	{: RESULT = new AST_StmtList(s,l);    :} |
+                    stmt:s  			{: RESULT = new AST_StmtList(s,null); :}
                     ;
                     
 stmt		::=		varDec:v                                                    {: RESULT = new AST_StmtVarDec(v);        :} |
