@@ -2,7 +2,7 @@ package AST;
 import TYPES.*;
 import SYMBOL_TABLE.*;
 
-public class AST_FuncDec extends AST_DEC
+public class AST_FuncDec extends AST_ClassField
 {
 	public String retTypeName;
 	public String funcName;

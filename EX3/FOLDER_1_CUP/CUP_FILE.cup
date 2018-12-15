@@ -82,12 +82,14 @@ terminal UMINUS;
 /*****************/
 /* NON TERMINALS */
 /*****************/
+non terminal AST_DEC_LIST	decList;
 non terminal AST_DEC dec;
 non terminal AST_VarDec varDec;
 non terminal AST_FuncDec funcDec;
-non terminal AST_DEC_CLASS	classDec;
-non terminal AST_DEC_LIST	decList;
+non terminal AST_ClassDec classDec;
 non terminal AST_ParamsList paramsList;
+non terminal AST_ClassField cField;
+non terminal AST_ClassFieldList cFieldList;
 
 /*****************/
 /* NON TERMINALS */
@@ -104,13 +106,6 @@ non terminal AST_NEW_EXP    newExp;
 /*****************/
 non terminal AST_STMT stmt;
 non terminal AST_STMT_LIST stmtList;
-
-/*****************/
-/* NON TERMINALS */
-/*****************/
-non terminal AST_TYPE_NAME		typeName;
-non terminal AST_TYPE_NAME_LIST	typeNameListComma;
-non terminal AST_TYPE_NAME_LIST	typeNameListSemicolon;
 
 /***********************/
 /* OPERATOR PRECEDENCE */
@@ -138,6 +133,9 @@ start with decList;
 paramsList  ::=     ID:id1 ID:id2 COMMA paramsList:list {: RESULT = new AST_ParamsList(id1, id2, list); :} |
                     ID:id1 ID:id2                       {: RESULT = new AST_ParamsList(id1, id2, null); :} ;
 
+cFieldList  ::=     cField:field cFieldList:list        {: RESULT = new AST_ClassFieldList(field, list); :} |
+                    cField:field                        {: RESULT = new AST_ClassFieldList(field, null); :} ;
+
 decList		::=		dec:d decList:l	{: RESULT = new AST_DEC_LIST(d, l);    :} |
                     dec:d			{: RESULT = new AST_DEC_LIST(d, null); :}
                     ;
@@ -153,8 +151,8 @@ varDec		::=		ID:type ID:var SEMICOLON	                {: RESULT = new AST_VarDec
 funcDec		::=		ID:ret ID:name LPAREN paramsList:p RPAREN LBRACE stmtList:body RBRACE  {: RESULT = new AST_FuncDec(ret, name, p, body);  :} |
                     ID:ret ID:name LPAREN RPAREN LBRACE stmtList:body RBRACE                        {: RESULT = new AST_FuncDec(ret,name,null,body); :}
                     ;
-classDec	::=		CLASS ID:name LBRACE typeNameListSemicolon:l RBRACE	{: RESULT = new AST_DEC_CLASS(name, null, l); :} |
-                    CLASS ID:name EXTENDS ID:base LBRACE typeNameListSemicolon:l RBRACE	{: RESULT = new AST_DEC_CLASS(name, base, l); :}
+classDec	::=		CLASS ID:name LBRACE cFieldList:l RBRACE	{: RESULT = new AST_ClassDec(name, null, l); :} |
+                    CLASS ID:name EXTENDS ID:base LBRACE cFieldList:l RBRACE	{: RESULT = new AST_ClassDec(name, base, l); :}
                     ;
 
 exp			::=		varExp:v		{: RESULT = v; :} |
@@ -201,15 +199,5 @@ newExp      ::=     NEW ID:type                         {: RESULT = new AST_NEW_
                     NEW ID:type LBRACK exp:e RBRACK     {: RESULT = new AST_NEW_EXP(type, e); :}
                     ;
 
-cField      ::=     varDec:vDec                         {: RESULT = new AST_cField(vDec); :} |
-                    funcDec:fDec                        {: RESULT = new AST_cField(fDec); :} ;
-
-typeName				::=		ID:type ID:name								    {: RESULT = new AST_TYPE_NAME(type,name);    :}
-                                ;
-typeNameListComma		::=		typeName:tn COMMA typeNameListComma:tnl		    {: RESULT = new AST_TYPE_NAME_LIST(tn,tnl);  :} |
-                                typeName:tn									    {: RESULT = new AST_TYPE_NAME_LIST(tn,null); :}
-                                ;
-typeNameListSemicolon	::=		typeName:tn SEMICOLON typeNameListSemicolon:tnl	{: RESULT = new AST_TYPE_NAME_LIST(tn,tnl);  :} |
-                                typeName:tn SEMICOLON                           {: RESULT = new AST_TYPE_NAME_LIST(tn,null); :}
-                                ;
-
+cField      ::=     varDec:vDec                         {: RESULT = vDec; :} |
+                    funcDec:fDec                        {: RESULT = fDec; :} ;

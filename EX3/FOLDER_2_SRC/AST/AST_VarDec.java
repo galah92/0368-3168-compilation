@@ -2,7 +2,7 @@ package AST;
 import TYPES.*;
 import SYMBOL_TABLE.*;
 
-public class AST_VarDec extends AST_DEC
+public class AST_VarDec extends AST_ClassField
 {
 	public String varTypeName;
 	public String varName;
