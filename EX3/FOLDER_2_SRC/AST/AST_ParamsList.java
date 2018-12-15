@@ -19,9 +19,7 @@ public class AST_ParamsList extends AST_Node
 	{
 		if (tail != null) tail.PrintMe();
 
-		AST_GRAPHVIZ.getInstance().logNode(SerialNumber, "ParamsList\n");
-		AST_GRAPHVIZ.getInstance().logNode(SerialNumber, paramTypeName);
-		AST_GRAPHVIZ.getInstance().logNode(SerialNumber, paramName);
+		AST_GRAPHVIZ.getInstance().logNode(SerialNumber, String.format("ParamsList\n%s\n%s", paramName, paramTypeName));
 		if (tail != null) AST_GRAPHVIZ.getInstance().logEdge(SerialNumber, tail.SerialNumber);
 	}
 

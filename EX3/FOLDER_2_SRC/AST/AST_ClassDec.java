@@ -18,8 +18,7 @@ public class AST_ClassDec extends AST_DEC
 	public void PrintMe()
 	{
         if (fields != null) fields.PrintMe();
-		AST_GRAPHVIZ.getInstance().logNode(SerialNumber, String.format("ClassDec(%s)" ,className));
-		if (baseName != null) { AST_GRAPHVIZ.getInstance().logNode(SerialNumber, String.format("ID(%s)" ,baseName)); }
+		AST_GRAPHVIZ.getInstance().logNode(SerialNumber, String.format("ClassDec\n%s\n%s", className, baseName));
 		AST_GRAPHVIZ.getInstance().logEdge(SerialNumber, fields.SerialNumber);
 	}
 

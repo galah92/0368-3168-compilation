@@ -22,7 +22,7 @@ public class AST_FuncDec extends AST_ClassField
 		if (params != null) params.PrintMe();
 		if (body != null) body.PrintMe();
 
-		AST_GRAPHVIZ.getInstance().logNode(SerialNumber, String.format("ID(%s), ID(%s)", retTypeName, funcName));
+		AST_GRAPHVIZ.getInstance().logNode(SerialNumber, String.format("FuncDec\n%s\n%s", retTypeName, funcName));
 		if (params != null) AST_GRAPHVIZ.getInstance().logEdge(SerialNumber, params.SerialNumber);
 		if (body != null) AST_GRAPHVIZ.getInstance().logEdge(SerialNumber, body.SerialNumber);
 	}

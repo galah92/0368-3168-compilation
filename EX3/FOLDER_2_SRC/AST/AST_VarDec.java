@@ -18,7 +18,7 @@ public class AST_VarDec extends AST_ClassField
 	public void PrintMe()
 	{
 		if (initVal != null) initVal.PrintMe();
-		AST_GRAPHVIZ.getInstance().logNode(SerialNumber, String.format("VarDec(%s)\n:%s", varName, varTypeName));
+		AST_GRAPHVIZ.getInstance().logNode(SerialNumber, String.format("VarDec\n%s\n%s", varName, varTypeName));
 		if (initVal != null) AST_GRAPHVIZ.getInstance().logEdge(SerialNumber, initVal.SerialNumber);
 	}
 
