@@ -24,11 +24,13 @@ public class AST_VarClassField extends AST_Var
 		TYPE classType = className.SemantMe();
 		if (!(classType instanceof TYPE_CLASS)) { throw new Exception(); }
 		TYPE_CLASS tc = (TYPE_CLASS)classType;
-		// System.out.println("looikng for: " + fieldName);
 		for (TYPE_LIST it = tc.data_members; it != null; it = it.tail)
 		{
-			// System.out.println(it.head.name);
-			if (it.head.name == fieldName) { return it.head; }
+			if (it.head instanceof TYPE_CLASS_VAR_DEC)
+			{
+				TYPE classVarType = (TYPE_CLASS_VAR_DEC)it.head;
+				if (fieldName.equals(classVarType.name)) { return classVarType; }
+			}
 		}
 		throw new Exception();
 	}

@@ -30,7 +30,7 @@ public class AST_VarDec extends AST_ClassField
 
 		if (varType == null) { throw new Exception(); }
 		SYMBOL_TABLE.getInstance().enter(varName, varType);
-		return varType;
+		return new TYPE_CLASS_VAR_DEC(varType, varName);
 	}
 
 	public TYPE SemantMe() throws Exception
