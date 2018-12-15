@@ -17,7 +17,7 @@ public class AST_ExpList extends AST_Node
 		if (head != null) head.PrintMe();
 		if (tail != null) tail.PrintMe();
 
-		AST_GRAPHVIZ.getInstance().logNode(SerialNumber, "EXP\nLIST\n");
+		AST_GRAPHVIZ.getInstance().logNode(SerialNumber, "ExpList");
 
 		if (head != null) AST_GRAPHVIZ.getInstance().logEdge(SerialNumber, head.SerialNumber);
 		if (tail != null) AST_GRAPHVIZ.getInstance().logEdge(SerialNumber, tail.SerialNumber);

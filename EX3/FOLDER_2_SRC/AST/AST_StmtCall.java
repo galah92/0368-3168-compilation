@@ -1,11 +1,11 @@
 package AST;
 import TYPES.*;
 
-public class AST_STMT_CALL extends AST_STMT
+public class AST_StmtCall extends AST_STMT
 {
 	public AST_ExpCall callExp;
 
-	public AST_STMT_CALL(AST_ExpCall callExp)
+	public AST_StmtCall(AST_ExpCall callExp)
 	{
 		this.callExp = callExp;
 	}
@@ -13,7 +13,7 @@ public class AST_STMT_CALL extends AST_STMT
 	public void PrintMe()
 	{
 		callExp.PrintMe();
-		AST_GRAPHVIZ.getInstance().logNode(SerialNumber, String.format("STMT\nCALL"));
+		AST_GRAPHVIZ.getInstance().logNode(SerialNumber, String.format("StmtCall"));
 		AST_GRAPHVIZ.getInstance().logEdge(SerialNumber, callExp.SerialNumber);
 	}
 

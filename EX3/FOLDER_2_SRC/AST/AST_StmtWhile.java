@@ -2,12 +2,12 @@ package AST;
 import TYPES.*;
 import SYMBOL_TABLE.*;
 
-public class AST_STMT_WHILE extends AST_STMT
+public class AST_StmtWhile extends AST_STMT
 {
 	public AST_EXP cond;
 	public AST_STMT_LIST body;
 
-	public AST_STMT_WHILE(AST_EXP cond,AST_STMT_LIST body)
+	public AST_StmtWhile(AST_EXP cond,AST_STMT_LIST body)
 	{
 		this.cond = cond;
 		this.body = body;

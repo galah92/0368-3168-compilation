@@ -169,12 +169,12 @@ stmtList	::=		stmt:s stmtList:l	{: RESULT = new AST_STMT_LIST(s,l);    :} |
                     stmt:s  			{: RESULT = new AST_STMT_LIST(s,null); :}
                     ;
                     
-stmt		::=		varDec:v                                                    {: RESULT = new AST_STMT_DEC_VAR(v);        :} |
-                    var:v ASSIGN exp:e SEMICOLON						    	{: RESULT = new AST_STMT_ASSIGN(v,e);       :} |
-                    RETURN exp:e SEMICOLON									    {: RESULT = new AST_STMT_RETURN(e);         :} |
-                    IF    LPAREN exp:cond RPAREN LBRACE stmtList:body RBRACE	{: RESULT = new AST_STMT_IF(cond,body);     :} |
-                    WHILE LPAREN exp:cond RPAREN LBRACE stmtList:body RBRACE	{: RESULT = new AST_STMT_WHILE(cond,body);  :} |
-                    callExp:callExp SEMICOLON									{: RESULT = new AST_STMT_CALL(callExp);     :}
+stmt		::=		varDec:v                                                    {: RESULT = new AST_StmtVarDec(v);        :} |
+                    var:v ASSIGN exp:e SEMICOLON						    	{: RESULT = new AST_StmtAssign(v,e);       :} |
+                    RETURN exp:e SEMICOLON									    {: RESULT = new AST_StmtReturn(e);         :} |
+                    IF    LPAREN exp:cond RPAREN LBRACE stmtList:body RBRACE	{: RESULT = new AST_StmtIf(cond,body);     :} |
+                    WHILE LPAREN exp:cond RPAREN LBRACE stmtList:body RBRACE	{: RESULT = new AST_StmtWhile(cond,body);  :} |
+                    callExp:callExp SEMICOLON									{: RESULT = new AST_StmtCall(callExp);     :}
                     ;
 
 newExp      ::=     NEW ID:type                         {: RESULT = new AST_NEW_EXP(type); :} |
