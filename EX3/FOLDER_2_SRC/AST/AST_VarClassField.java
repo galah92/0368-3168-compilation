@@ -4,26 +4,26 @@ import SYMBOL_TABLE.*;
 
 public class AST_VarClassField extends AST_Var
 {
-	public AST_Var var;
+	public AST_Var className;
 	public String fieldName;
 	
-	public AST_VarClassField(AST_Var var, String fieldName)
+	public AST_VarClassField(AST_Var className, String fieldName)
 	{
-		this.var = var;
+		this.className = className;
 		this.fieldName = fieldName;
 	}
 
 	public void PrintMe()
 	{
-		var.PrintMe();
+		className.PrintMe();
 		AST_GRAPHVIZ.getInstance().logNode(SerialNumber, String.format("VarClassField\n%s", fieldName));
-		AST_GRAPHVIZ.getInstance().logEdge(SerialNumber, var.SerialNumber);
+		AST_GRAPHVIZ.getInstance().logEdge(SerialNumber, className.SerialNumber);
 	}
 	public TYPE SemantMe() throws Exception
 	{
-		TYPE varType = var.SemantMe();
-		if (!(varType instanceof TYPE_CLASS)) { throw new Exception(); }
-		TYPE_CLASS tc = (TYPE_CLASS)varType;
+		TYPE classType = className.SemantMe();
+		if (!(classType instanceof TYPE_CLASS)) { throw new Exception(); }
+		TYPE_CLASS tc = (TYPE_CLASS)classType;
 		for (TYPE_LIST it = tc.data_members; it != null; it = it.tail)
 		{
 			if (it.head.name == fieldName) { return it.head; }

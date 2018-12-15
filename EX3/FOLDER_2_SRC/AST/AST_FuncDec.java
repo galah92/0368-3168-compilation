@@ -27,16 +27,28 @@ public class AST_FuncDec extends AST_ClassField
 		if (body != null) AST_GRAPHVIZ.getInstance().logEdge(SerialNumber, body.SerialNumber);
 	}
 
-	public TYPE SemantMe() throws Exception
+	public TYPE_FUNCTION SemantDeclaration() throws Exception
 	{
 		TYPE retType = SYMBOL_TABLE.getInstance().find(retTypeName);
 		if (retType == null) { throw new Exception(); }
+
 		TYPE_LIST paramsTypes = params != null ? params.SemantMe(): null;
+
+		TYPE_FUNCTION funcType = new TYPE_FUNCTION(retType, funcName, paramsTypes);
+		SYMBOL_TABLE.getInstance().enter(funcName, funcType);
+
+		return funcType;
+	}
+
+	public TYPE_FUNCTION SemantMe() throws Exception
+	{
+		TYPE_FUNCTION funcType = SemantDeclaration();
+
 		SYMBOL_TABLE.getInstance().beginScope();
 		if (body != null) { body.SemantMe(); }
 		SYMBOL_TABLE.getInstance().endScope();
-		SYMBOL_TABLE.getInstance().enter(funcName, new TYPE_FUNCTION(retType, funcName, paramsTypes));
-		return null;
+
+		return funcType;
 	}
 
 }
