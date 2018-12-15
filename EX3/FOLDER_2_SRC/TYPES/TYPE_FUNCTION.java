@@ -2,13 +2,13 @@ package TYPES;
 
 public class TYPE_FUNCTION extends TYPE
 {
-	public TYPE returnType;
+	public TYPE retType;
 	public TYPE_LIST params;
 	
-	public TYPE_FUNCTION(TYPE returnType, String name, TYPE_LIST params)
+	public TYPE_FUNCTION(TYPE retType, String name, TYPE_LIST params)
 	{
 		this.name = name;
-		this.returnType = returnType;
+		this.retType = retType;
 		this.params = params;
 	}
 }

@@ -56,17 +56,13 @@ terminal IF;
 terminal NEW;
 terminal COMMENT;
 
-/*************/
 /* TERMINALS */
-/*************/
 terminal String ID;
 terminal Integer INT;
 terminal String STRING;
 terminal UMINUS;
 
-/*****************/
 /* NON TERMINALS */
-/*****************/
 non terminal AST_DecList	decList;
 non terminal AST_Dec dec;
 non terminal AST_VarDec varDec;
@@ -77,25 +73,20 @@ non terminal AST_ParamsList paramsList;
 non terminal AST_ClassField cField;
 non terminal AST_ClassFieldList cFieldList;
 
-/*****************/
 /* NON TERMINALS */
-/*****************/
 non terminal AST_EXP exp;
 non terminal AST_Var var;
-non terminal AST_EXP_CALL	callExp;
-non terminal AST_EXP_BINOP	binopExp;
-non terminal AST_EXP_LIST	expListComma;
-non terminal AST_NEW_EXP    newExp;
+non terminal AST_ExpCall callExp;
+non terminal AST_ExpBinOp binopExp;
+non terminal AST_ExpPrimitive primitiveExp;
+non terminal AST_ExpList expListComma;
+non terminal AST_NEW_EXP newExp;
 
-/*****************/
 /* NON TERMINALS */
-/*****************/
 non terminal AST_STMT stmt;
 non terminal AST_STMT_LIST stmtList;
 
-/***********************/
 /* OPERATOR PRECEDENCE */
-/***********************/
 precedence nonassoc ASSIGN;
 precedence left     EQ;
 precedence left     LT;
@@ -108,14 +99,10 @@ precedence nonassoc LBRACK;
 precedence nonassoc LPAREN;
 precedence left     DOT;
 
-/************************/
-/* START WITH: stmtList */
-/************************/
+
 start with decList;
 
-/********************/
-/* DERIVATION RULES */
-/********************/
+
 paramsList  ::=     ID:id1 ID:id2 COMMA paramsList:list {: RESULT = new AST_ParamsList(id1, id2, list); :} |
                     ID:id1 ID:id2                       {: RESULT = new AST_ParamsList(id1, id2, null); :} ;
 
@@ -144,32 +131,38 @@ classDec	::=		CLASS ID:name LBRACE cFieldList:l RBRACE	                {: RESULT
 
 arrayDec    ::=     ARRAY ID:name EQ ID:type LBRACK RBRACK                        {: RESULT = new AST_ArrayDec(name, type); :};
 
-exp			::=		var:v		{: RESULT = v; :} |
-                    binopExp:e	    {: RESULT = e; :} |
-                    callExp:e		{: RESULT = e; :} |
-                    INT:i			{: RESULT = new AST_EXP_INT(i);    :} |
-                    STRING:s		{: RESULT = new AST_EXP_STRING(s); :}
+exp			::=		var:v		            {: RESULT = v; :} |
+                    LPAREN exp:e RPAREN		{: RESULT = e; :} |
+                    binopExp:e	            {: RESULT = e; :} |
+                    callExp:e		        {: RESULT = e; :} |
+                    primitiveExp:e          {: RESULT = e; :}
                     ;
 
-var		::=		ID:name							{: RESULT = new AST_VarSimple(name);       :} |
+var		::=		    ID:name						{: RESULT = new AST_VarSimple(name);       :} |
                     var:v DOT ID:fieldName		{: RESULT = new AST_VarClassField(v, fieldName); :} |
                     var:v LBRACK exp:e RBRACK	{: RESULT = new AST_VarArrayElement(v,e);     :}
                     ;
 
-binopExp	::=		exp:e1 PLUS exp:e2		{: RESULT = new AST_EXP_BINOP(e1, e2, 0); :} |
-                    exp:e1 MINUS exp:e2 	{: RESULT = new AST_EXP_BINOP(e1, e2, 1); :} |
-                    exp:e1 TIMES exp:e2 	{: RESULT = new AST_EXP_BINOP(e1, e2, 2); :} |
-                    exp:e1 DIVIDE exp:e2 	{: RESULT = new AST_EXP_BINOP(e1, e2, 3); :} |
-                    exp:e1 LT exp:e2		{: RESULT = new AST_EXP_BINOP(e1, e2, 4); :} |
-                    exp:e1 GT exp:e2		{: RESULT = new AST_EXP_BINOP(e1, e2, 5); :} |
-                    exp:e1 EQ exp:e2		{: RESULT = new AST_EXP_BINOP(e1, e2, 6); :}
+binopExp	::=		exp:e1 PLUS exp:e2		{: RESULT = new AST_ExpBinOp(e1, e2, '+'); :} |
+                    exp:e1 MINUS exp:e2 	{: RESULT = new AST_ExpBinOp(e1, e2, '-'); :} |
+                    exp:e1 TIMES exp:e2 	{: RESULT = new AST_ExpBinOp(e1, e2, '*'); :} |
+                    exp:e1 DIVIDE exp:e2 	{: RESULT = new AST_ExpBinOp(e1, e2, '/'); :} |
+                    exp:e1 LT exp:e2		{: RESULT = new AST_ExpBinOp(e1, e2, '<'); :} |
+                    exp:e1 GT exp:e2		{: RESULT = new AST_ExpBinOp(e1, e2, '>'); :} |
+                    exp:e1 EQ exp:e2		{: RESULT = new AST_ExpBinOp(e1, e2, '='); :}
                     ;
 
-callExp		::=		ID:funcName LPAREN expListComma:el RPAREN	{: RESULT = new AST_EXP_CALL(funcName,el); :}
+callExp		::=		ID:funcName LPAREN expListComma:args RPAREN             {: RESULT = new AST_ExpCall(funcName, null, args); :} |
+                    var:v DOT ID:funcName LPAREN expListComma:args RPAREN   {: RESULT = new AST_ExpCall(funcName, v, args); :}
                     ;
 
-expListComma	::=		exp:e COMMA expListComma:el	{: RESULT = new AST_EXP_LIST(e,el);   :} |
-                        exp:e						{: RESULT = new AST_EXP_LIST(e,null); :}
+primitiveExp    ::=     INT:i			        {: RESULT = new AST_ExpInt(i); :} |
+                        STRING:s		        {: RESULT = new AST_ExpString(s); :} |
+                        NIL		                {: RESULT = new AST_ExpNil(); :}
+                        ;
+
+expListComma	::=		exp:e COMMA expListComma:el	{: RESULT = new AST_ExpList(e,el);   :} |
+                        exp:e						{: RESULT = new AST_ExpList(e,null); :}
                         ;
 
 stmtList	::=		stmt:s stmtList:l	{: RESULT = new AST_STMT_LIST(s,l);    :} |

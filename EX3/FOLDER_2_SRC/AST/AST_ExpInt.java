@@ -1,12 +1,11 @@
 package AST;
-
 import TYPES.*;
 
-public class AST_EXP_INT extends AST_EXP
+public class AST_ExpInt extends AST_ExpPrimitive
 {
 	public int value;
 	
-	public AST_EXP_INT(int value)
+	public AST_ExpInt(int value)
 	{
 		this.value = value;
 	}

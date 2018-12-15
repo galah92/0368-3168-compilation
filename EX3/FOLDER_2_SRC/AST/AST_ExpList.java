@@ -1,12 +1,12 @@
 package AST;
 import TYPES.*;
 
-public class AST_EXP_LIST extends AST_Node
+public class AST_ExpList extends AST_Node
 {
 	public AST_EXP head;
-	public AST_EXP_LIST tail;
+	public AST_ExpList tail;
 
-	public AST_EXP_LIST(AST_EXP head, AST_EXP_LIST tail)
+	public AST_ExpList(AST_EXP head, AST_ExpList tail)
 	{
 		this.head = head;
 		this.tail = tail;

@@ -1,11 +1,11 @@
 package AST;
 import TYPES.*;
 
-public class AST_EXP_STRING extends AST_EXP
+public class AST_ExpString extends AST_ExpPrimitive
 {
 	public String value;
 	
-	public AST_EXP_STRING(String value)
+	public AST_ExpString(String value)
 	{
 		this.value = value;
 	}
