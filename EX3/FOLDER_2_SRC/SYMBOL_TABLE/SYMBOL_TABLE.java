@@ -53,7 +53,7 @@ public class SYMBOL_TABLE
 	{
 		SYMBOL_TABLE_ENTRY e = top;
 		int i = top_index; // inner scope index
-		while (e.name != "SCOPE-BOUNDARY" && e.prevtop != null)
+		while (e != null && e.name != "SCOPE-BOUNDARY")
 		{
 			i = i - 1;
 			e = e.prevtop;

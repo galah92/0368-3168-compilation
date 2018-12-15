@@ -1,5 +1,4 @@
 package AST;
-
 import TYPES.*;
 import SYMBOL_TABLE.*;
 
@@ -11,15 +10,12 @@ public class AST_TYPE_NAME extends AST_Node
 	public AST_TYPE_NAME(String type,String name)
 	{
 		SerialNumber = AST_Node_Serial_Number.getFresh();
-	
 		this.type = type;
 		this.name = name;
 	}
 
 	public void PrintMe()
 	{
-		System.out.format("NAME(%s):TYPE(%s)\n",name,type);
-
 		AST_GRAPHVIZ.getInstance().logNode(SerialNumber, String.format("NAME:TYPE\n%s:%s", name, type));
 	}
 
