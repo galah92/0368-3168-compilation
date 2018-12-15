@@ -87,6 +87,7 @@ non terminal AST_DEC dec;
 non terminal AST_VarDec varDec;
 non terminal AST_FuncDec funcDec;
 non terminal AST_ClassDec classDec;
+non terminal AST_ArrayDec arrayDec;
 non terminal AST_ParamsList paramsList;
 non terminal AST_ClassField cField;
 non terminal AST_ClassFieldList cFieldList;
@@ -142,18 +143,21 @@ decList		::=		dec:d decList:l	{: RESULT = new AST_DEC_LIST(d, l);    :} |
 
 dec			::=		varDec:d		{: RESULT = d; :} |
                     funcDec:d		{: RESULT = d; :} |
-                    classDec:d		{: RESULT = d; :}
+                    classDec:d		{: RESULT = d; :} |
+                    arrayDec:d		{: RESULT = d; :}
                     ;
 varDec		::=		ID:type ID:var SEMICOLON	                {: RESULT = new AST_VarDec(type, var, null); :} |
                     ID:type ID:var ASSIGN exp:e SEMICOLON       {: RESULT = new AST_VarDec(type, var, e); :} |
                     ID:type ID:var ASSIGN newExp:e SEMICOLON    {: RESULT = new AST_VarDec(type, var, e); :}
                     ;
-funcDec		::=		ID:ret ID:name LPAREN paramsList:p RPAREN LBRACE stmtList:body RBRACE  {: RESULT = new AST_FuncDec(ret, name, p, body);  :} |
-                    ID:ret ID:name LPAREN RPAREN LBRACE stmtList:body RBRACE                        {: RESULT = new AST_FuncDec(ret,name,null,body); :}
+funcDec		::=		ID:ret ID:name LPAREN paramsList:p RPAREN LBRACE stmtList:body RBRACE   {: RESULT = new AST_FuncDec(ret, name, p, body); :} |
+                    ID:ret ID:name LPAREN RPAREN LBRACE stmtList:body RBRACE                {: RESULT = new AST_FuncDec(ret,name,null,body); :}
                     ;
-classDec	::=		CLASS ID:name LBRACE cFieldList:l RBRACE	{: RESULT = new AST_ClassDec(name, null, l); :} |
+classDec	::=		CLASS ID:name LBRACE cFieldList:l RBRACE	                {: RESULT = new AST_ClassDec(name, null, l); :} |
                     CLASS ID:name EXTENDS ID:base LBRACE cFieldList:l RBRACE	{: RESULT = new AST_ClassDec(name, base, l); :}
                     ;
+
+arrayDec    ::=     ARRAY ID:name EQ ID:type LBRACK RBRACK                        {: RESULT = new AST_ArrayDec(name, type); :};
 
 exp			::=		varExp:v		{: RESULT = v; :} |
                     binopExp:e	    {: RESULT = e; :} |
