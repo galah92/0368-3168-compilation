@@ -56,11 +56,13 @@ terminal IF;
 terminal NEW;
 terminal COMMENT;
 
-/* TERMINALS */
-terminal String ID;
-terminal Integer INT;
 terminal String STRING;
-terminal UMINUS;
+terminal Integer INT;
+terminal String ID;
+
+terminal ILLEGAL_CHARACTER;
+terminal ILLEGAL_INTEGER;
+terminal ILLEGAL_COMMENT;
 
 /* NON TERMINALS */
 non terminal AST_DecList decList;
@@ -72,8 +74,6 @@ non terminal AST_ArrayDec arrayDec;
 non terminal AST_ParamsList paramsList;
 non terminal AST_ClassField cField;
 non terminal AST_ClassFieldList cFieldList;
-
-/* NON TERMINALS */
 non terminal AST_Exp exp;
 non terminal AST_Var var;
 non terminal AST_ExpCall callExp;
@@ -81,8 +81,6 @@ non terminal AST_ExpBinOp binopExp;
 non terminal AST_ExpPrimitive primitiveExp;
 non terminal AST_ExpList expListComma;
 non terminal AST_NEW_EXP newExp;
-
-/* NON TERMINALS */
 non terminal AST_Stmt stmt;
 non terminal AST_StmtList stmtList;
 
@@ -157,6 +155,7 @@ callExp		::=		ID:funcName LPAREN expListComma:args RPAREN             {: RESULT 
                     ;
 
 primitiveExp    ::=     INT:i			        {: RESULT = new AST_ExpInt(i); :} |
+                        MINUS INT:i			    {: RESULT = new AST_ExpInt(-i); :} |
                         STRING:s		        {: RESULT = new AST_ExpString(s); :} |
                         NIL		                {: RESULT = new AST_ExpNil(); :}
                         ;

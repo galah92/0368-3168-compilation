@@ -3,7 +3,6 @@ import TYPES.*;
 
 public class AST_NEW_EXP extends AST_Exp
 {
-
     String type;
     AST_Exp exp;
 
@@ -21,7 +20,7 @@ public class AST_NEW_EXP extends AST_Exp
 
     public void PrintMe()
 	{
-		AST_GRAPHVIZ.getInstance().logNode(SerialNumber, String.format("INT(%d)", type));
+		AST_GRAPHVIZ.getInstance().logNode(SerialNumber, String.format("NewExp\n%s", type));
         if (exp != null) AST_GRAPHVIZ.getInstance().logEdge(SerialNumber, exp.SerialNumber);
 	}
 

@@ -40,7 +40,7 @@ public class AST_ExpBinOp extends AST_Exp
 		{
 			return TYPE_STRING.getInstance();
 		}
-		throw new Exception();
+		throw new Exception(t1.name + ", " + t2.name);
 	}
 
 }
