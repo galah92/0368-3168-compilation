@@ -19,7 +19,7 @@ public class AST_ClassFieldList extends AST_Node
 		if (tail != null) tail.PrintMe();
 
 		AST_GRAPHVIZ.getInstance().logNode(SerialNumber, "ClassFieldList\n");
-        if (tail != null) AST_GRAPHVIZ.getInstance().logEdge(SerialNumber, classField.SerialNumber);
+        AST_GRAPHVIZ.getInstance().logEdge(SerialNumber, classField.SerialNumber);
 		if (tail != null) AST_GRAPHVIZ.getInstance().logEdge(SerialNumber, tail.SerialNumber);
 	}
 
