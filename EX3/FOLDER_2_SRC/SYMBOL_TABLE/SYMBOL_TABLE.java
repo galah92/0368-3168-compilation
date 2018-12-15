@@ -40,7 +40,7 @@ public class SYMBOL_TABLE
 	public TYPE find(String name)
 	{
 		SYMBOL_TABLE_ENTRY e;
-				
+		
 		for (e = table[hash(name)]; e != null; e = e.next)
 		{
 			if (name.equals(e.name)) return e.type;

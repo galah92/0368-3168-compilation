@@ -23,8 +23,21 @@ public class AST_ClassFieldList extends AST_Node
 		if (tail != null) AST_GRAPHVIZ.getInstance().logEdge(SerialNumber, tail.SerialNumber);
 	}
 
+	public TYPE_LIST SemantDeclaration() throws Exception
+	{
+		TYPE classFieldType = classField.SemantDeclaration();
+		return new TYPE_LIST(classFieldType, tail != null ? tail.SemantDeclaration() : null);
+	}
+
+	public void SemantBody() throws Exception
+	{
+		classField.SemantBody();
+		if (tail != null) tail.SemantBody();
+	}
+
     public TYPE_LIST SemantMe() throws Exception
 	{
-        return null; // TODO: I guess now most of the work is here...
+		TYPE classFieldType = classField.SemantMe();
+		return new TYPE_LIST(classFieldType, tail != null ? tail.SemantMe() : null);
 	}
 }

@@ -34,7 +34,8 @@ public class AST_ClassDec extends AST_Dec
 
 		if (!SYMBOL_TABLE.getInstance().isGlobalScope()) { throw new Exception(); }
 		SYMBOL_TABLE.getInstance().beginScope();
-		TYPE_LIST fieldsTypes = fields.SemantMe();
+		TYPE_LIST fieldsTypes = fields.SemantDeclaration();
+		fields.SemantBody();
 		SYMBOL_TABLE.getInstance().endScope();
 
 		SYMBOL_TABLE.getInstance().enter(className, new TYPE_CLASS(baseType, className, fieldsTypes));

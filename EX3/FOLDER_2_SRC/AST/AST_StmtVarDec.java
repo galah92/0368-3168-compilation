@@ -14,7 +14,7 @@ public class AST_StmtVarDec extends AST_STMT
 	{
 		var.PrintMe();
 		AST_GRAPHVIZ.getInstance().logNode(SerialNumber, String.format("StmtVarDec"));
-		AST_GRAPHVIZ.getInstance().logEdge(SerialNumber,var.SerialNumber);		
+		AST_GRAPHVIZ.getInstance().logEdge(SerialNumber,var.SerialNumber);
 	}
 
 	public TYPE SemantMe() throws Exception

@@ -22,13 +22,21 @@ public class AST_VarDec extends AST_ClassField
 		if (initVal != null) AST_GRAPHVIZ.getInstance().logEdge(SerialNumber, initVal.SerialNumber);
 	}
 
+	public TYPE SemantDeclaration() throws Exception
+	{
+		if (SYMBOL_TABLE.getInstance().findInScope(varName) != null) { throw new Exception(); }
+		
+		TYPE varType = SYMBOL_TABLE.getInstance().find(varTypeName);
+
+		if (varType == null) { throw new Exception(); }
+		SYMBOL_TABLE.getInstance().enter(varName, varType);
+		return varType;
+	}
+
 	public TYPE SemantMe() throws Exception
 	{
-		TYPE varType = SYMBOL_TABLE.getInstance().find(varTypeName);
-		if (varType == null) { throw new Exception(); }
-		if (SYMBOL_TABLE.getInstance().findInScope(varName) != null) { throw new Exception(); }
-		SYMBOL_TABLE.getInstance().enter(varName, varType);
-		return null;
+		TYPE varType = SemantDeclaration();
+		return varType;
 	}
 	
 }

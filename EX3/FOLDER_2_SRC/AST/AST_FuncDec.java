@@ -36,18 +36,20 @@ public class AST_FuncDec extends AST_ClassField
 
 		TYPE_FUNCTION funcType = new TYPE_FUNCTION(retType, funcName, paramsTypes);
 		SYMBOL_TABLE.getInstance().enter(funcName, funcType);
-
 		return funcType;
+	}
+
+	public void SemantBody() throws Exception
+	{
+		SYMBOL_TABLE.getInstance().beginScope();
+		if (body != null) { body.SemantMe(); }
+		SYMBOL_TABLE.getInstance().endScope();
 	}
 
 	public TYPE_FUNCTION SemantMe() throws Exception
 	{
 		TYPE_FUNCTION funcType = SemantDeclaration();
-
-		SYMBOL_TABLE.getInstance().beginScope();
-		if (body != null) { body.SemantMe(); }
-		SYMBOL_TABLE.getInstance().endScope();
-
+		SemantBody();
 		return funcType;
 	}
 
