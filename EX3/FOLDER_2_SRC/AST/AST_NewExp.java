@@ -21,9 +21,9 @@ public class AST_NewExp extends AST_Exp
 
 	public TYPE SemantMe() throws Exception
 	{
-        if (exp != null && exp.SemantMe() != TYPE_INT.getInstance()) { throw new Exception(); }
+        if (exp != null && exp.SemantMe() != TYPE_INT.getInstance()) { throw new SemanticException(); }
         TYPE newExpType = SYMBOL_TABLE.getInstance().find(type);
-        if (newExpType == null) { throw new Exception(); }
+        if (newExpType == null) { throw new SemanticException(); }
         return newExpType;
 	}
 }

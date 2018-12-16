@@ -22,7 +22,7 @@ public class AST_VarClassField extends AST_Var
 	public TYPE SemantMe() throws Exception
 	{
 		TYPE t = className.SemantMe();
-		if (!(t instanceof TYPE_CLASS)) { throw new Exception(); }
+		if (!(t instanceof TYPE_CLASS)) { throw new SemanticException(); }
 		TYPE_CLASS typeClass = (TYPE_CLASS)t;
 		
 		for (TYPE_LIST it = typeClass.fields; it != null; it = it.tail)
@@ -33,6 +33,6 @@ public class AST_VarClassField extends AST_Var
 				if (fieldName.equals(classVarType.name)) { return classVarType.varType; }
 			}
 		}
-		throw new Exception();
+		throw new SemanticException();
 	}
 }

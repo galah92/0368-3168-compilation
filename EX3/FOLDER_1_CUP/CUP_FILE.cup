@@ -159,10 +159,10 @@ callExp		::=		ID:funcName LPAREN RPAREN                           {: RESULT = ne
                     var:v DOT ID:funcName LPAREN expList:args RPAREN    {: RESULT = new AST_ExpCall(funcName, v, args); RESULT.lineNumber = funcNameleft; :}
                     ;
 
-primitiveExp    ::=     INT:i			        {: RESULT = new AST_ExpInt(i); RESULT.lineNumber = ileft; :} |
-                        MINUS INT:i			    {: RESULT = new AST_ExpInt(-i); RESULT.lineNumber = ileft; :} |
-                        STRING:s		        {: RESULT = new AST_ExpString(s); RESULT.lineNumber = sleft; :} |
-                        NIL:n	                {: RESULT = new AST_ExpNil(); RESULT.lineNumber = nleft; :}
+primitiveExp    ::=     INT:i           {: RESULT = new AST_ExpInt(i); RESULT.lineNumber = ileft; :} |
+                        MINUS INT:i     {: RESULT = new AST_ExpInt(-i); RESULT.lineNumber = ileft; :} |
+                        STRING:s        {: RESULT = new AST_ExpString(s); RESULT.lineNumber = sleft; :} |
+                        NIL:n           {: RESULT = new AST_ExpNil(); RESULT.lineNumber = nleft; :}
                         ;
 
 stmtList	::=		stmt:s stmtList:l	{: RESULT = new AST_StmtList(s,l); RESULT.lineNumber = sleft; :} |

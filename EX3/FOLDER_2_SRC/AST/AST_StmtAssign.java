@@ -30,7 +30,7 @@ public class AST_StmtAssign extends AST_Stmt
 		if (exp != null) expType = exp.SemantMe();
 		
 		if (expType == null) return null;
-		if (varType != expType) { throw new Exception(); }
+		if (varType != expType) { throw new SemanticException(); }
 		return expType;
 	}
 }

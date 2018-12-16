@@ -44,7 +44,7 @@ public class AST_ExpBinOp extends AST_Exp
 			{
 				if (t1 instanceof TYPE_CLASS || t1 instanceof TYPE_ARRAY) { return TYPE_INT.getInstance(); }
 				if (t2 instanceof TYPE_CLASS || t2 instanceof TYPE_ARRAY) { return TYPE_INT.getInstance(); }
-				throw new Exception();
+				throw new SemanticException();
 			}
 		}
 		throw new Exception(t1.name + ", " + t2.name);

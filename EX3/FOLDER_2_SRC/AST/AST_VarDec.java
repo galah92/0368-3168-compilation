@@ -24,11 +24,11 @@ public class AST_VarDec extends AST_ClassField
 
 	public TYPE SemantDeclaration() throws Exception
 	{
-		if (SYMBOL_TABLE.getInstance().findInScope(varName) != null) { throw new Exception(); }
+		if (SYMBOL_TABLE.getInstance().findInScope(varName) != null) { throw new SemanticException(); }
 		
 		TYPE varType = SYMBOL_TABLE.getInstance().find(varTypeName);
 
-		if (varType == null) { throw new Exception(); }
+		if (varType == null) { throw new SemanticException(); }
 		SYMBOL_TABLE.getInstance().enter(varName, varType);
 		return new TYPE_CLASS_VAR_DEC(varType, varName);
 	}

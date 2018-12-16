@@ -24,13 +24,13 @@ public class AST_ClassDec extends AST_Dec
 
     public TYPE SemantMe() throws Exception
 	{
-		if (!SYMBOL_TABLE.getInstance().isGlobalScope()) { throw new Exception(); }
+		if (!SYMBOL_TABLE.getInstance().isGlobalScope()) { throw new SemanticException(); }
 
 		TYPE_CLASS baseType = null;
 		if (baseName != null)
 		{
 			TYPE t = SYMBOL_TABLE.getInstance().find(baseName);
-			if (!(t instanceof TYPE_CLASS)) { throw new Exception(); }
+			if (!(t instanceof TYPE_CLASS)) { throw new SemanticException(); }
 			baseType = (TYPE_CLASS)t;
 		}
 

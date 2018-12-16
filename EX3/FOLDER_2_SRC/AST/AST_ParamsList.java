@@ -26,8 +26,8 @@ public class AST_ParamsList extends AST_Node
     public TYPE_LIST SemantMe() throws Exception
 	{
         TYPE paramType = SYMBOL_TABLE.getInstance().find(paramTypeName);
-		if (paramType == null) { throw new Exception(); }
-		if (SYMBOL_TABLE.getInstance().findInScope(paramName) != null) { throw new Exception(); }
+		if (paramType == null) { throw new SemanticException(); }
+		if (SYMBOL_TABLE.getInstance().findInScope(paramName) != null) { throw new SemanticException(); }
 		SYMBOL_TABLE.getInstance().enter(paramName, paramType);
 		return new TYPE_LIST(paramType, tail != null ? tail.SemantMe() : null);
 	}
