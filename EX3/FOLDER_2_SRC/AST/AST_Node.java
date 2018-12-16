@@ -13,11 +13,6 @@ public abstract class AST_Node
 
 	public class SemanticException extends Exception
 	{
-		public int lineNumber;
-
-		public SemanticException(int lineNumber)
-		{
-			this.lineNumber = lineNumber;
-		}
+		public int getLineNumber() { return lineNumber + 1; }
 	}
 }

@@ -22,7 +22,7 @@ public class Main
 		catch (AST_Node.SemanticException e)
 		{
 			e.printStackTrace();
-			if (writer != null) { writer.println("ERROR(" + e.lineNumber + ")"); }
+			if (writer != null) { writer.println("ERROR(" + e.getLineNumber() + ")"); }
 		}
 		catch (Exception e)
 		{
