@@ -4,8 +4,8 @@ import subprocess
 
 subprocess.run(['make'])
 
-for path in Path('FOLDER_4_INPUT').glob('TEST*.txt'):
-
+for path in sorted(Path('FOLDER_4_INPUT').glob('TEST*.txt')):
+    print (path)
     n = int(path.name[5:7])
     output_file = Path('FOLDER_5_OUTPUT') / path.name
     expected_file = list(Path('FOLDER_6_EXPECTED_OUTPUT').glob(path.name[:7] + '*.txt'))[0]
