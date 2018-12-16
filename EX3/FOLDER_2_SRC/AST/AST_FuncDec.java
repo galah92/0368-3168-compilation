@@ -22,9 +22,9 @@ public class AST_FuncDec extends AST_ClassField
 		if (params != null) params.PrintMe();
 		if (body != null) body.PrintMe();
 
-		ASTGraphviz.logNode(SerialNumber, String.format("FuncDec\n%s\n%s", retTypeName, funcName));
-		if (params != null) ASTGraphviz.logEdge(SerialNumber, params.SerialNumber);
-		if (body != null) ASTGraphviz.logEdge(SerialNumber, body.SerialNumber);
+		logNode(String.format("FuncDec\n%s\n%s", retTypeName, funcName));
+		if (params != null) logEdge(params);
+		if (body != null) logEdge(body);
 	}
 
 	public TypeFunc SemantDeclaration() throws Exception

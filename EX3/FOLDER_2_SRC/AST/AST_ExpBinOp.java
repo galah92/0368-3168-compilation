@@ -19,9 +19,9 @@ public class AST_ExpBinOp extends AST_Exp
 		if (left != null) left.PrintMe();
 		if (right != null) right.PrintMe();
 
-		ASTGraphviz.logNode(SerialNumber, String.format("ExpBinOp\n%s", op));
-		if (left  != null) ASTGraphviz.logEdge(SerialNumber, left.SerialNumber);
-		if (right != null) ASTGraphviz.logEdge(SerialNumber, right.SerialNumber);
+		logNode(String.format("ExpBinOp\n%s", op));
+		if (left  != null) logEdge(left);
+		if (right != null) logEdge(right);
 	}
 
 	public Type SemantMe() throws Exception

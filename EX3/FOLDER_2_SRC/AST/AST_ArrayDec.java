@@ -15,8 +15,8 @@ public class AST_ArrayDec extends AST_Dec
 
 	public void PrintMe()
 	{
-		ASTGraphviz.logNode(SerialNumber, String.format("ID1\n...->%s", arrName));
-		ASTGraphviz.logNode(SerialNumber, String.format("ID2\n...->%s", arrTypeName));
+		logNode(String.format("ID1\n...->%s", arrName));
+		logNode(String.format("ID2\n...->%s", arrTypeName));
 	}
 
 	public Type SemantMe() throws Exception

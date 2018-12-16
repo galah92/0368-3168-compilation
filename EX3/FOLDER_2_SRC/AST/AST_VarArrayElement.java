@@ -16,8 +16,8 @@ public class AST_VarArrayElement extends AST_Var
 	{
 		var.PrintMe();
 		index.PrintMe();
-		ASTGraphviz.logNode(SerialNumber, String.format("VarArrayElement\n%s", index));
-		ASTGraphviz.logEdge(SerialNumber, var.SerialNumber);
+		logNode(String.format("VarArrayElement\n%s", index));
+		logEdge(var);
 	}
 
 	public Type SemantMe() throws Exception

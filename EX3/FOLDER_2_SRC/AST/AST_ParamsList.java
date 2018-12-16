@@ -19,8 +19,8 @@ public class AST_ParamsList extends AST_Node
 	{
 		if (tail != null) tail.PrintMe();
 
-		ASTGraphviz.logNode(SerialNumber, String.format("ParamsList\n%s\n%s", paramName, paramTypeName));
-		if (tail != null) ASTGraphviz.logEdge(SerialNumber, tail.SerialNumber);
+		logNode(String.format("ParamsList\n%s\n%s", paramName, paramTypeName));
+		if (tail != null) logEdge(tail);
 	}
 
 	public TypeList SemantDeclaration() throws Exception

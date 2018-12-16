@@ -13,8 +13,8 @@ public class AST_StmtCall extends AST_Stmt
 	public void PrintMe()
 	{
 		callExp.PrintMe();
-		ASTGraphviz.logNode(SerialNumber, String.format("StmtCall"));
-		ASTGraphviz.logEdge(SerialNumber, callExp.SerialNumber);
+		logNode(String.format("StmtCall"));
+		logEdge(callExp);
 	}
 
 	public Type SemantMe() throws Exception

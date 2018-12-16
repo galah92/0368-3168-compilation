@@ -1,4 +1,5 @@
 package AST;
+import java.io.PrintWriter;
 import TYPES.*;
 
 public abstract class AST_Node
@@ -17,5 +18,36 @@ public abstract class AST_Node
 		public SemanticException(String message) { super(message); }
 
 		public int getLineNumber() { return lineNumber + 1; }
+	}
+
+	private static PrintWriter fileWriter;
+
+	public static void initFile() throws Exception
+	{
+		String dirname = "./FOLDER_5_OUTPUT/";
+		String filename = "AST_IN_GRAPHVIZ_DOT_FORMAT.txt";
+		fileWriter = new PrintWriter(dirname + filename);
+		fileWriter.print("digraph\n");
+		fileWriter.print("{\n");
+		fileWriter.print("graph [ordering = \"out\"]\n");
+	}
+
+	public void logNode(String nodeName)
+	{
+		if (fileWriter == null) { return; }
+		fileWriter.format("v%d [label = \"%s\"];\n", SerialNumber, nodeName);
+	}
+
+	public void logEdge(AST_Node otherNode)
+	{
+		if (fileWriter == null) { return; }
+		fileWriter.format("v%d -> v%d;\n", SerialNumber, otherNode.SerialNumber);
+	}
+	
+	public static void saveFile()
+	{
+		if (fileWriter == null) { return; }
+		fileWriter.print("}\n");
+		fileWriter.close();
 	}
 }

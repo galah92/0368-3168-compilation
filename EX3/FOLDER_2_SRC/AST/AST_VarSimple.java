@@ -13,7 +13,7 @@ public class AST_VarSimple extends AST_Var
 
 	public void PrintMe()
 	{
-		ASTGraphviz.logNode(SerialNumber, String.format("VarSimple\n(%s)", varName));
+		logNode(String.format("VarSimple\n(%s)", varName));
 	}
 	
 	public Type SemantMe() throws Exception

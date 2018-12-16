@@ -13,8 +13,8 @@ public class AST_StmtVarDec extends AST_Stmt
 	public void PrintMe()
 	{
 		var.PrintMe();
-		ASTGraphviz.logNode(SerialNumber, String.format("StmtVarDec"));
-		ASTGraphviz.logEdge(SerialNumber,var.SerialNumber);
+		logNode(String.format("StmtVarDec"));
+		logEdge(var);
 	}
 
 	public Type SemantMe() throws Exception

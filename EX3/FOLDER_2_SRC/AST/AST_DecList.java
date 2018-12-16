@@ -17,9 +17,9 @@ public class AST_DecList extends AST_Node
 		if (head != null) head.PrintMe();
 		if (tail != null) tail.PrintMe();
 
-		ASTGraphviz.logNode(SerialNumber, "DecList");
-		if (head != null) ASTGraphviz.logEdge(SerialNumber, head.SerialNumber);
-		if (tail != null) ASTGraphviz.logEdge(SerialNumber, tail.SerialNumber);
+		logNode("DecList");
+		if (head != null) logEdge(head);
+		if (tail != null) logEdge(tail);
 	}
 
 	public Type SemantMe() throws Exception

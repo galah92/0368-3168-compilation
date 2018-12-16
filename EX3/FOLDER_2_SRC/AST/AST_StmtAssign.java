@@ -17,9 +17,9 @@ public class AST_StmtAssign extends AST_Stmt
 		if (var != null) var.PrintMe();
 		if (exp != null) exp.PrintMe();
 
-		ASTGraphviz.logNode(SerialNumber, "ASSIGN\nleft := right\n");
-		ASTGraphviz.logEdge(SerialNumber, var.SerialNumber);
-		ASTGraphviz.logEdge(SerialNumber, exp.SerialNumber);
+		logNode("ASSIGN\nleft := right\n");
+		logEdge(var);
+		logEdge(exp);
 	}
 	public Type SemantMe() throws Exception
 	{

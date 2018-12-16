@@ -18,8 +18,8 @@ public class AST_VarDec extends AST_ClassField
 	public void PrintMe()
 	{
 		if (initVal != null) initVal.PrintMe();
-		ASTGraphviz.logNode(SerialNumber, String.format("VarDec\n%s\n%s", varName, varTypeName));
-		if (initVal != null) ASTGraphviz.logEdge(SerialNumber, initVal.SerialNumber);
+		logNode(String.format("VarDec\n%s\n%s", varName, varTypeName));
+		if (initVal != null) logEdge(initVal);
 	}
 
 	public Type SemantDeclaration() throws Exception

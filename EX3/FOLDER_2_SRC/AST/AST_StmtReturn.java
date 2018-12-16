@@ -15,8 +15,8 @@ public class AST_StmtReturn extends AST_Stmt
 	{
 		if (exp != null) exp.PrintMe();
 
-		ASTGraphviz.logNode(SerialNumber, "StmtReturn");
-		if (exp != null) ASTGraphviz.logEdge(SerialNumber, exp.SerialNumber);
+		logNode("StmtReturn");
+		if (exp != null) logEdge(exp);
 	}
 	public Type SemantMe() throws Exception
 	{

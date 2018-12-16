@@ -18,10 +18,10 @@ public class AST_StmtIf extends AST_Stmt
 		if (cond != null) cond.PrintMe();
 		if (body != null) body.PrintMe();
 
-		ASTGraphviz.logNode(SerialNumber, "StmtIf");
+		logNode("StmtIf");
 		
-		if (cond != null) ASTGraphviz.logEdge(SerialNumber,cond.SerialNumber);
-		if (body != null) ASTGraphviz.logEdge(SerialNumber,body.SerialNumber);
+		if (cond != null) logEdge(cond);
+		if (body != null) logEdge(body);
 	}
 
 	public Type SemantMe() throws Exception

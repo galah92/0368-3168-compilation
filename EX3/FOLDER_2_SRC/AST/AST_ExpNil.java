@@ -5,7 +5,7 @@ public class AST_ExpNil extends AST_ExpPrimitive
 {
 	public void PrintMe()
 	{
-		ASTGraphviz.logNode(SerialNumber, String.format("ExpNil"));
+		logNode(String.format("ExpNil"));
 	}
 	
 	public Type SemantMe() throws Exception

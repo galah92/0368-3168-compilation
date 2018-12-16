@@ -18,9 +18,9 @@ public class AST_ClassFieldList extends AST_Node
         classField.PrintMe();
 		if (tail != null) tail.PrintMe();
 
-		ASTGraphviz.logNode(SerialNumber, "ClassFieldList\n");
-        ASTGraphviz.logEdge(SerialNumber, classField.SerialNumber);
-		if (tail != null) ASTGraphviz.logEdge(SerialNumber, tail.SerialNumber);
+		logNode("ClassFieldList\n");
+        logEdge(classField);
+		if (tail != null) logEdge(tail);
 	}
 
 	public TypeList SemantDeclaration() throws Exception

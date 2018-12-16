@@ -17,10 +17,10 @@ public class AST_StmtList extends AST_Node
 		if (head != null) head.PrintMe();
 		if (tail != null) tail.PrintMe();
 
-		ASTGraphviz.logNode(SerialNumber, "STMT\nLIST\n");
+		logNode("STMT\nLIST\n");
 		
-		if (head != null) ASTGraphviz.logEdge(SerialNumber,head.SerialNumber);
-		if (tail != null) ASTGraphviz.logEdge(SerialNumber,tail.SerialNumber);
+		if (head != null) logEdge(head);
+		if (tail != null) logEdge(tail);
 	}
 	
 	public Type SemantMe() throws Exception

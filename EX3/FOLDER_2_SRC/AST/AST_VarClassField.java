@@ -16,8 +16,8 @@ public class AST_VarClassField extends AST_Var
 	public void PrintMe()
 	{
 		className.PrintMe();
-		ASTGraphviz.logNode(SerialNumber, String.format("VarClassField\n%s", fieldName));
-		ASTGraphviz.logEdge(SerialNumber, className.SerialNumber);
+		logNode(String.format("VarClassField\n%s", fieldName));
+		logEdge(className);
 	}
 	public Type SemantMe() throws Exception
 	{
