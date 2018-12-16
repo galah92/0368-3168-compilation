@@ -29,6 +29,10 @@ public class AST_FuncDec extends AST_ClassField
 
 	public TYPE_FUNCTION SemantDeclaration() throws Exception
 	{
+		// TODO: check for method overloading
+		// specifically, we need to throw if:
+		// names are equals && (params are different || retType is different)
+
 		TYPE retType = SYMBOL_TABLE.getInstance().find(retTypeName);
 		if (retType == null) { throw new SemanticException(); }
 
