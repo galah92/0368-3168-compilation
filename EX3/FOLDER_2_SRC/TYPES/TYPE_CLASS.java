@@ -18,11 +18,25 @@ public class TYPE_CLASS extends TYPE
 		{
 			if (it.head instanceof TYPE_CLASS_VAR_DEC)
 			{
-				TYPE_CLASS_VAR_DEC classVarType = (TYPE_CLASS_VAR_DEC)it.head;
-				if (varFieldName.equals(classVarType.name)) { return classVarType.varType; }
+				TYPE_CLASS_VAR_DEC varFieldType = (TYPE_CLASS_VAR_DEC)it.head;
+				if (varFieldName.equals(varFieldType.name)) { return varFieldType.varType; }
 			}
 		}
 		if (base != null) { return base.getVarField(varFieldName); }
+		return null;
+	}
+
+	public TYPE_FUNCTION getFuncField(String funcFieldName)
+	{
+		for (TYPE_LIST it = fields; it != null; it = it.tail)
+		{
+			if (it.head instanceof TYPE_FUNCTION)
+			{
+				TYPE_FUNCTION funcFieldType = (TYPE_FUNCTION)it.head;
+				if (funcFieldName.equals(funcFieldType.name)) { return funcFieldType; }
+			}
+		}
+		if (base != null) { return base.getFuncField(funcFieldName); }
 		return null;
 	}
 }

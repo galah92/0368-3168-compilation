@@ -27,20 +27,22 @@ public class AST_ExpCall extends AST_Exp
 
 	public TYPE SemantMe() throws Exception
 	{
+		TYPE_LIST argsTypes = args != null ? (TYPE_LIST)args.SemantMe() : null;
+
+		// deal with class methods
+		if (instanceName != null)
+		{
+			TYPE t = instanceName.SemantMe();
+			if (!(t instanceof TYPE_CLASS)) { throw new SemanticException(); }
+			TYPE_CLASS instanceType = (TYPE_CLASS)t;
+			TYPE_FUNCTION tf = instanceType.getFuncField(funcName);
+			if (tf != null) { return tf.retType; }
+		}
+
+		// deal with global functions
 		TYPE t = SYMBOL_TABLE.getInstance().find(funcName);
 		if (t == null && !(t instanceof TYPE_FUNCTION)) { throw new SemanticException(); }
 		TYPE_FUNCTION funcType = (TYPE_FUNCTION)t;
-		
-		if (args != null) args.SemantMe();
-
-		if (instanceName != null)
-		{
-			t = instanceName.SemantMe();
-			if (!(t instanceof TYPE_CLASS)) { throw new SemanticException(); }
-			TYPE instanceType = (TYPE_CLASS)t;
-			// TODO: check that funcType is a member of instanceType
-		}
-
 		return funcType.retType;
 	}
 }
