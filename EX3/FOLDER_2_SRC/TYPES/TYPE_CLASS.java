@@ -12,6 +12,12 @@ public class TYPE_CLASS extends TYPE
 		this.fields = fields;
 	}
 
+	public boolean isInheritingFrom(String ancestor)
+	{
+		if (ancestor.equals(name)) { return true; }
+		return base != null ? base.isInheritingFrom(ancestor) : false;
+	}
+
 	public TYPE getVarField(String varFieldName)
 	{
 		for (TYPE_LIST it = fields; it != null; it = it.tail)

@@ -27,8 +27,25 @@ public class AST_VarDec extends AST_ClassField
 		if (SYMBOL_TABLE.getInstance().findInScope(varName) != null) { throw new SemanticException(); }
 		
 		TYPE varType = SYMBOL_TABLE.getInstance().find(varTypeName);
-
 		if (varType == null) { throw new SemanticException(); }
+
+		if (initVal != null)
+		{
+			TYPE initValType = initVal.SemantMe();
+			if (initValType instanceof TYPE_CLASS)
+			{
+				if (!((TYPE_CLASS)initValType).isInheritingFrom(varType.name)) { throw new SemanticException(); }
+			}
+			else if (varType instanceof TYPE_ARRAY)
+			{
+				if (((TYPE_ARRAY)varType).elementType != initValType) { throw new SemanticException(); }
+			}
+			else
+			{
+				if (initValType != varType) { throw new SemanticException(); }
+			}
+		}
+
 		SYMBOL_TABLE.getInstance().enter(varName, varType);
 		return new TYPE_CLASS_VAR_DEC(varType, varName);
 	}
