@@ -24,7 +24,7 @@ public class AST_VarClassField extends AST_Var
 		TYPE classType = className.SemantMe();
 		if (!(classType instanceof TYPE_CLASS)) { throw new Exception(); }
 		TYPE_CLASS tc = (TYPE_CLASS)classType;
-		for (TYPE_LIST it = tc.data_members; it != null; it = it.tail)
+		for (TYPE_LIST it = tc.fields; it != null; it = it.tail)
 		{
 			if (it.head instanceof TYPE_CLASS_VAR_DEC)
 			{

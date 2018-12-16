@@ -30,7 +30,6 @@ public class AST_FuncDec extends AST_ClassField
 	public TYPE_FUNCTION SemantDeclaration() throws Exception
 	{
 		TYPE retType = SYMBOL_TABLE.getInstance().find(retTypeName);
-		// System.out.println("")
 		if (retType == null) { throw new Exception(); }
 
 		TYPE_LIST paramsTypes = params != null ? params.SemantMe(): null;

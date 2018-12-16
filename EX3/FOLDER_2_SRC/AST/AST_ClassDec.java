@@ -34,13 +34,16 @@ public class AST_ClassDec extends AST_Dec
 			baseType = (TYPE_CLASS)t;
 		}
 
+		// enter the class type to that we could field of same type
+		TYPE_CLASS classType = new TYPE_CLASS(baseType, className, null);
+		SYMBOL_TABLE.getInstance().enter(className, classType);
+
 		SYMBOL_TABLE.getInstance().beginScope();
 		TYPE_LIST fieldsTypes = fields.SemantDeclaration();
 		fields.SemantBody();
 		SYMBOL_TABLE.getInstance().endScope();
 
-		TYPE_CLASS classType = new TYPE_CLASS(baseType, className, fieldsTypes);
-		SYMBOL_TABLE.getInstance().enter(className, classType);
+		classType.fields = fieldsTypes;
 		return classType;
 	}
 }
