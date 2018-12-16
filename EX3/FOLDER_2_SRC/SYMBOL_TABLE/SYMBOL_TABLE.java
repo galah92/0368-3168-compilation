@@ -36,7 +36,6 @@ public class SYMBOL_TABLE
 		PrintMe();
 	}
 
-	/* Find the inner-most scope element with name */
 	public TYPE find(String name)
 	{
 		SYMBOL_TABLE_ENTRY e;
@@ -63,6 +62,13 @@ public class SYMBOL_TABLE
 			if (name.equals(e.name)) return e.type;
 		}
 		return null;
+	}
+
+	public TYPE_FUNCTION findFunc()
+	{
+		SYMBOL_TABLE_ENTRY e = top;
+		while (e != null && !(e.type instanceof TYPE_FUNCTION)) { e = e.prevtop; }
+		return e != null ? (TYPE_FUNCTION)e.type : null;
 	}
 
 	public boolean isGlobalScope()
