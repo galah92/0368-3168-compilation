@@ -80,7 +80,7 @@ non terminal AST_ExpCall callExp;
 non terminal AST_ExpBinOp binopExp;
 non terminal AST_ExpPrimitive primitiveExp;
 non terminal AST_ExpList expListComma;
-non terminal AST_NEW_EXP newExp;
+non terminal AST_NewExp newExp;
 non terminal AST_Stmt stmt;
 non terminal AST_StmtList stmtList;
 
@@ -176,8 +176,8 @@ stmt		::=		varDec:v                                                    {: RESULT
                     callExp:callExp SEMICOLON									{: RESULT = new AST_StmtCall(callExp);     :}
                     ;
 
-newExp      ::=     NEW ID:type                         {: RESULT = new AST_NEW_EXP(type); :} |
-                    NEW ID:type LBRACK exp:e RBRACK     {: RESULT = new AST_NEW_EXP(type, e); :}
+newExp      ::=     NEW ID:type                         {: RESULT = new AST_NewExp(type); :} |
+                    NEW ID:type LBRACK exp:e RBRACK     {: RESULT = new AST_NewExp(type, e); :}
                     ;
 
 cField      ::=     varDec:vDec                         {: RESULT = vDec; :} |

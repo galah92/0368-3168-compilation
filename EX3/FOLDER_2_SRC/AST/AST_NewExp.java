@@ -1,18 +1,19 @@
 package AST;
 import TYPES.*;
+import SYMBOL_TABLE.*;
 
-public class AST_NEW_EXP extends AST_Exp
+public class AST_NewExp extends AST_Exp
 {
     String type;
     AST_Exp exp;
 
-    public AST_NEW_EXP(String type, AST_Exp exp)
+    public AST_NewExp(String type, AST_Exp exp)
     {
 		this.type = type;
         this.exp = exp;
     }
 
-    public AST_NEW_EXP(String type)
+    public AST_NewExp(String type)
     {
 		this.type = type;
         this.exp = null;
@@ -26,7 +27,9 @@ public class AST_NEW_EXP extends AST_Exp
 
 	public TYPE SemantMe() throws Exception
 	{
-        // TODO: complete. a new TYPE_NEW_EXP might be necessary
-		return null;
+        if (exp != null && exp.SemantMe() != TYPE_INT.getInstance()) { throw new Exception(); }
+        TYPE newExpType = SYMBOL_TABLE.getInstance().find(type);
+        if (newExpType == null) { throw new Exception(); }
+        return newExpType;
 	}
 }
