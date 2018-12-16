@@ -7,6 +7,8 @@ subprocess.run(['make'])
 for path in sorted(Path('FOLDER_4_INPUT').glob('TEST*.txt')):
     
     n = int(path.name[5:7])
+    if n < 12:
+        continue
 
     output_file = Path('FOLDER_5_OUTPUT') / path.name
     expected_file = list(Path('FOLDER_6_EXPECTED_OUTPUT').glob(path.name[:7] + '*.txt'))[0]

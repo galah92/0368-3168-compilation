@@ -40,6 +40,16 @@ public class AST_ClassDec extends AST_Dec
 
 		SYMBOL_TABLE.getInstance().beginScope();
 		TYPE_LIST fieldsTypes = fields.SemantDeclaration();
+		if (baseType != null)
+		{
+			for (TYPE_LIST t = baseType.fields; t != null; t = t.tail)
+			{
+				if (SYMBOL_TABLE.getInstance().findInScope(t.head.name) == null)
+				{
+					SYMBOL_TABLE.getInstance().enter(t.head.name, t.head instanceof TYPE_CLASS_VAR_DEC ? ((TYPE_CLASS_VAR_DEC)t.head).varType : t.head);
+				}
+			}
+		}
 		fields.SemantBody();
 		SYMBOL_TABLE.getInstance().endScope();
 
