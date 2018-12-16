@@ -14,7 +14,7 @@ parser code
     }
     public void report_error(String message, Object info)
     {
-        writer.println("ParserError(" + lexer.getLine() + ")");
+        writer.println("ParserError(" + lexer.getLine() + ", " + lexer.getCharPos() + "): " + message);
         writer.close();
         System.exit(0);
     }
@@ -57,8 +57,8 @@ terminal NEW;
 terminal COMMENT;
 
 terminal String STRING;
-terminal Integer INT;
 terminal String ID;
+terminal Integer INT;
 
 terminal ILLEGAL_CHARACTER;
 terminal ILLEGAL_INTEGER;
@@ -170,13 +170,15 @@ stmtList	::=		stmt:s stmtList:l	{: RESULT = new AST_StmtList(s,l); RESULT.lineNu
                     
 stmt		::=		varDec:v                                                    {: RESULT = new AST_StmtVarDec(v); RESULT.lineNumber = vleft; :} |
                     var:v ASSIGN exp:e SEMICOLON						    	{: RESULT = new AST_StmtAssign(v,e); RESULT.lineNumber = vleft; :} |
+                    var:v ASSIGN newExp:e SEMICOLON						    	{: RESULT = new AST_StmtAssign(v,e); RESULT.lineNumber = vleft; :} |
+                    RETURN:r SEMICOLON									        {: RESULT = new AST_StmtReturn(null); RESULT.lineNumber = rleft; :} |
                     RETURN exp:e SEMICOLON									    {: RESULT = new AST_StmtReturn(e); RESULT.lineNumber = eleft; :} |
                     IF    LPAREN exp:cond RPAREN LBRACE stmtList:body RBRACE	{: RESULT = new AST_StmtIf(cond,body); RESULT.lineNumber = condleft; :} |
                     WHILE LPAREN exp:cond RPAREN LBRACE stmtList:body RBRACE	{: RESULT = new AST_StmtWhile(cond,body); RESULT.lineNumber = condleft; :} |
                     callExp:callExp SEMICOLON									{: RESULT = new AST_StmtCall(callExp); RESULT.lineNumber = callExpleft; :}
                     ;
 
-newExp      ::=     NEW ID:type                         {: RESULT = new AST_NewExp(type); RESULT.lineNumber = typeleft; :} |
+newExp      ::=     NEW ID:type                         {: RESULT = new AST_NewExp(type, null); RESULT.lineNumber = typeleft; :} |
                     NEW ID:type LBRACK exp:e RBRACK     {: RESULT = new AST_NewExp(type, e); RESULT.lineNumber = typeleft; :}
                     ;
 

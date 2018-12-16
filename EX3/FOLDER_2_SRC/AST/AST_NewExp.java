@@ -13,12 +13,6 @@ public class AST_NewExp extends AST_Exp
         this.exp = exp;
     }
 
-    public AST_NewExp(String type)
-    {
-		this.type = type;
-        this.exp = null;
-    }
-
     public void PrintMe()
 	{
 		AST_GRAPHVIZ.getInstance().logNode(SerialNumber, String.format("NewExp\n%s", type));
