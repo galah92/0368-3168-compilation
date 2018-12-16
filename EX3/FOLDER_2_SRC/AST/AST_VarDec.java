@@ -29,9 +29,9 @@ public class AST_VarDec extends AST_ClassField
 		TYPE varType = SYMBOL_TABLE.getInstance().find(varTypeName);
 		if (varType == null) { throw new SemanticException(); }
 
-		if (initVal != null)
+		TYPE initValType = initVal != null ? initVal.SemantMe() : null;
+		if (initValType != null)
 		{
-			TYPE initValType = initVal.SemantMe();
 			if (varType instanceof TYPE_ARRAY)
 			{
 				if (((TYPE_ARRAY)varType).elementType != initValType) { throw new SemanticException(varType + ", " + initValType); }
