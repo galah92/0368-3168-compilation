@@ -23,13 +23,14 @@ public class AST_StmtAssign extends AST_Stmt
 	}
 	public TYPE SemantMe() throws Exception
 	{
-		TYPE t1 = null;
-		TYPE t2 = null;
+		TYPE varType = null;
+		TYPE expType = null;
 		
-		if (var != null) t1 = var.SemantMe();
-		if (exp != null) t2 = exp.SemantMe();
+		if (var != null) varType = var.SemantMe();
+		if (exp != null) expType = exp.SemantMe();
 		
-		if (t1 != t2) { throw new Exception(); }
-		return null;
+		if (expType == null) return null;
+		if (varType != expType) { throw new Exception(); }
+		return expType;
 	}
 }
