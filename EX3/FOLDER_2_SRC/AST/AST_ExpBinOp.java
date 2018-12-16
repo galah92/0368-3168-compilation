@@ -47,7 +47,7 @@ public class AST_ExpBinOp extends AST_Exp
 				throw new SemanticException();
 			}
 		}
-		throw new Exception(t1.name + ", " + t2.name);
+		throw new SemanticException();
 	}
 
 }
