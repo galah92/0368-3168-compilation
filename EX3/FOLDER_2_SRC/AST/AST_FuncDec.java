@@ -27,18 +27,18 @@ public class AST_FuncDec extends AST_ClassField
 		if (body != null) AST_GRAPHVIZ.getInstance().logEdge(SerialNumber, body.SerialNumber);
 	}
 
-	public TYPE_FUNCTION SemantDeclaration() throws Exception
+	public TypeFunc SemantDeclaration() throws Exception
 	{
 		// TODO: check for method overloading
 		// specifically, we need to throw if:
 		// names are equals && (params are different || retType is different)
 
-		TYPE retType = SymbolTable.getInstance().find(retTypeName);
+		Type retType = SymbolTable.getInstance().find(retTypeName);
 		if (retType == null) { throw new SemanticException(); }
 
-		TYPE_LIST paramsTypes = params != null ? params.SemantDeclaration(): null;
+		TypeList paramsTypes = params != null ? params.SemantDeclaration(): null;
 
-		TYPE_FUNCTION funcType = new TYPE_FUNCTION(retType, funcName, paramsTypes);
+		TypeFunc funcType = new TypeFunc(retType, funcName, paramsTypes);
 		SymbolTable.getInstance().enter(funcName, funcType);
 		return funcType;
 	}
@@ -51,9 +51,9 @@ public class AST_FuncDec extends AST_ClassField
 		SymbolTable.getInstance().endScope();
 	}
 
-	public TYPE_FUNCTION SemantMe() throws Exception
+	public TypeFunc SemantMe() throws Exception
 	{
-		TYPE_FUNCTION funcType = SemantDeclaration();
+		TypeFunc funcType = SemantDeclaration();
 		SemantBody();
 		return funcType;
 	}

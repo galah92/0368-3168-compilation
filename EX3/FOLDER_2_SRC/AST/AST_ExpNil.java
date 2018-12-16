@@ -8,8 +8,8 @@ public class AST_ExpNil extends AST_ExpPrimitive
 		AST_GRAPHVIZ.getInstance().logNode(SerialNumber, String.format("ExpNil"));
 	}
 	
-	public TYPE SemantMe() throws Exception
+	public Type SemantMe() throws Exception
 	{
-        return null; // TODO: should probably replace it with TYPE_VOID or something alike
+        return null; // TODO: should probably replace it with TypeVoid or something alike
 	}
 }

@@ -24,9 +24,9 @@ public class AST_StmtIf extends AST_Stmt
 		if (body != null) AST_GRAPHVIZ.getInstance().logEdge(SerialNumber,body.SerialNumber);
 	}
 
-	public TYPE SemantMe() throws Exception
+	public Type SemantMe() throws Exception
 	{
-		if (cond.SemantMe() != TYPE_INT.getInstance()) { throw new SemanticException(); }
+		if (cond.SemantMe() != TypeInt.getInstance()) { throw new SemanticException(); }
 
 		SymbolTable.getInstance().beginScope();
 		body.SemantMe();

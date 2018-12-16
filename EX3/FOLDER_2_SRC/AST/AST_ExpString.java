@@ -14,8 +14,8 @@ public class AST_ExpString extends AST_ExpPrimitive
 	{
 		AST_GRAPHVIZ.getInstance().logNode(SerialNumber, String.format("ExpString\n%s", value.replace('"','\'')));
 	}
-	public TYPE SemantMe() throws Exception
+	public Type SemantMe() throws Exception
 	{
-		return TYPE_STRING.getInstance();
+		return TypeString.getInstance();
 	}
 }

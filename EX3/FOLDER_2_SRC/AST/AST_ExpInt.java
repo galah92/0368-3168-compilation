@@ -15,8 +15,8 @@ public class AST_ExpInt extends AST_ExpPrimitive
 		AST_GRAPHVIZ.getInstance().logNode(SerialNumber, String.format("ExpInt\n%s",value));
 	}
 	
-	public TYPE SemantMe() throws Exception
+	public Type SemantMe() throws Exception
 	{
-		return TYPE_INT.getInstance();
+		return TypeInt.getInstance();
 	}
 }

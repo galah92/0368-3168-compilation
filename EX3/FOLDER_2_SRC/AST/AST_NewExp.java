@@ -4,25 +4,25 @@ import SymbolTable.*;
 
 public class AST_NewExp extends AST_Exp
 {
-    String type;
+    String Type;
     AST_Exp exp;
 
-    public AST_NewExp(String type, AST_Exp exp)
+    public AST_NewExp(String Type, AST_Exp exp)
     {
-		this.type = type;
+		this.Type = Type;
         this.exp = exp;
     }
 
     public void PrintMe()
 	{
-		AST_GRAPHVIZ.getInstance().logNode(SerialNumber, String.format("NewExp\n%s", type));
+		AST_GRAPHVIZ.getInstance().logNode(SerialNumber, String.format("NewExp\n%s", Type));
         if (exp != null) AST_GRAPHVIZ.getInstance().logEdge(SerialNumber, exp.SerialNumber);
 	}
 
-	public TYPE SemantMe() throws Exception
+	public Type SemantMe() throws Exception
 	{
-        if (exp != null && exp.SemantMe() != TYPE_INT.getInstance()) { throw new SemanticException(); }
-        TYPE newExpType = SymbolTable.getInstance().find(type);
+        if (exp != null && exp.SemantMe() != TypeInt.getInstance()) { throw new SemanticException(); }
+        Type newExpType = SymbolTable.getInstance().find(Type);
         if (newExpType == null) { throw new SemanticException(); }
         return newExpType;
 	}

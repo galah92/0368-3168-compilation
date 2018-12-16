@@ -23,10 +23,10 @@ public class AST_ClassFieldList extends AST_Node
 		if (tail != null) AST_GRAPHVIZ.getInstance().logEdge(SerialNumber, tail.SerialNumber);
 	}
 
-	public TYPE_LIST SemantDeclaration() throws Exception
+	public TypeList SemantDeclaration() throws Exception
 	{
-		TYPE classFieldType = classField.SemantDeclaration();
-		return new TYPE_LIST(classFieldType, tail != null ? tail.SemantDeclaration() : null);
+		Type classFieldType = classField.SemantDeclaration();
+		return new TypeList(classFieldType, tail != null ? tail.SemantDeclaration() : null);
 	}
 
 	public void SemantBody() throws Exception
@@ -35,9 +35,9 @@ public class AST_ClassFieldList extends AST_Node
 		if (tail != null) tail.SemantBody();
 	}
 
-    public TYPE_LIST SemantMe() throws Exception
+    public TypeList SemantMe() throws Exception
 	{
-		TYPE classFieldType = classField.SemantMe();
-		return new TYPE_LIST(classFieldType, tail != null ? tail.SemantMe() : null);
+		Type classFieldType = classField.SemantMe();
+		return new TypeList(classFieldType, tail != null ? tail.SemantMe() : null);
 	}
 }

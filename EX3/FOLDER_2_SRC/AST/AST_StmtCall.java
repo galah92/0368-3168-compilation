@@ -17,7 +17,7 @@ public class AST_StmtCall extends AST_Stmt
 		AST_GRAPHVIZ.getInstance().logEdge(SerialNumber, callExp.SerialNumber);
 	}
 
-	public TYPE SemantMe() throws Exception
+	public Type SemantMe() throws Exception
 	{
 		return callExp.SemantMe();
 	}

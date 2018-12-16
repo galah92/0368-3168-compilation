@@ -17,7 +17,7 @@ public class AST_StmtVarDec extends AST_Stmt
 		AST_GRAPHVIZ.getInstance().logEdge(SerialNumber,var.SerialNumber);
 	}
 
-	public TYPE SemantMe() throws Exception
+	public Type SemantMe() throws Exception
 	{
 		return var.SemantMe();
 	}

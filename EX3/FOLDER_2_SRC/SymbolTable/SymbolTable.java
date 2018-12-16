@@ -8,16 +8,16 @@ public class SymbolTable
 	{
 		int index;
 		public String name;
-		public TYPE type;
+		public Type Type;
 		public SymbolTableEntry prevtop;
 		public SymbolTableEntry next;
 		public int prevtop_index;
 		
-		public SymbolTableEntry(String name, TYPE type, int index, SymbolTableEntry next, SymbolTableEntry prevtop, int prevtop_index)
+		public SymbolTableEntry(String name, Type Type, int index, SymbolTableEntry next, SymbolTableEntry prevtop, int prevtop_index)
 		{
 			this.index = index;
 			this.name = name;
-			this.type = type;
+			this.Type = Type;
 			this.next = next;
 			this.prevtop = prevtop;
 			this.prevtop_index = prevtop_index;
@@ -43,7 +43,7 @@ public class SymbolTable
 		return 12;
 	}
 
-	public void enter(String name, TYPE t)
+	public void enter(String name, Type t)
 	{
 		int hashVal = hash(name);
 		table[hashVal] = top = new SymbolTableEntry(name,
@@ -55,19 +55,19 @@ public class SymbolTable
 		PrintMe();
 	}
 
-	public TYPE find(String name)
+	public Type find(String name)
 	{
 		SymbolTableEntry e;
 		
 		for (e = table[hash(name)]; e != null; e = e.next)
 		{
-			if (name.equals(e.name)) return e.type;
+			if (name.equals(e.name)) return e.Type;
 		}
 		
 		return null;
 	}
 
-	public TYPE findInScope(String name)
+	public Type findInScope(String name)
 	{
 		SymbolTableEntry e = top;
 		int i = top_index; // inner scope index
@@ -78,16 +78,16 @@ public class SymbolTable
 		}
 		for (e = table[hash(name)]; e != null && e.prevtop_index > i; e = e.next)
 		{
-			if (name.equals(e.name)) return e.type;
+			if (name.equals(e.name)) return e.Type;
 		}
 		return null;
 	}
 
-	public TYPE_FUNCTION findFunc()
+	public TypeFunc findFunc()
 	{
 		SymbolTableEntry e = top;
-		while (e != null && !(e.type instanceof TYPE_FUNCTION)) { e = e.prevtop; }
-		return e != null ? (TYPE_FUNCTION)e.type : null;
+		while (e != null && !(e.Type instanceof TypeFunc)) { e = e.prevtop; }
+		return e != null ? (TypeFunc)e.Type : null;
 	}
 
 	public boolean isGlobalScope()
@@ -99,7 +99,7 @@ public class SymbolTable
 
 	public void beginScope()
 	{
-		enter("SCOPE-BOUNDARY", new TYPE_FOR_SCOPE_BOUNDARIES("NONE"));
+		enter("SCOPE-BOUNDARY", new TypeScope("NONE"));
 		PrintMe();
 	}
 
@@ -159,7 +159,7 @@ public class SymbolTable
 					fileWriter.format("node_%d_%d ",i,j);
 					fileWriter.format("[label=\"<f0>%s|<f1>%s|<f2>prevtop=%d|<f3>next\"];\n",
 						it.name,
-						it.type.name,
+						it.Type.name,
 						it.prevtop_index);
 
 					if (it.next != null)
@@ -195,16 +195,16 @@ public class SymbolTable
 			instance = new SymbolTable();
 
 			// enter primitive types
-			instance.enter("int", TYPE_INT.getInstance());
-			instance.enter("string", TYPE_STRING.getInstance());
+			instance.enter("int", TypeInt.getInstance());
+			instance.enter("string", TypeString.getInstance());
 
-			// TODO: this is bad! as one can create a variable of type "void"
-			instance.enter("void", TYPE_VOID.getInstance());
+			// TODO: this is bad! as one can create a variable of Type "void"
+			instance.enter("void", TypeVoid.getInstance());
 
 			// enter lib functions
-			TYPE_FUNCTION printIntFunc = new TYPE_FUNCTION(TYPE_VOID.getInstance(), "PrintInt", new TYPE_LIST(TYPE_INT.getInstance(), null));
-			TYPE_FUNCTION printStringFunc = new TYPE_FUNCTION(TYPE_VOID.getInstance(), "PrintString", new TYPE_LIST(TYPE_INT.getInstance(), null));
-			TYPE_FUNCTION printTraceFunc = new TYPE_FUNCTION(TYPE_VOID.getInstance(), "PrintTrace", null);
+			TypeFunc printIntFunc = new TypeFunc(TypeVoid.getInstance(), "PrintInt", new TypeList(TypeInt.getInstance(), null));
+			TypeFunc printStringFunc = new TypeFunc(TypeVoid.getInstance(), "PrintString", new TypeList(TypeInt.getInstance(), null));
+			TypeFunc printTraceFunc = new TypeFunc(TypeVoid.getInstance(), "PrintTrace", null);
 			instance.enter("PrintInt", printIntFunc);
 			instance.enter("PrintString", printStringFunc);
 			instance.enter("PrintTrace", printTraceFunc);

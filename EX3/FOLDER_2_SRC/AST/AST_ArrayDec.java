@@ -19,13 +19,13 @@ public class AST_ArrayDec extends AST_Dec
 		AST_GRAPHVIZ.getInstance().logNode(SerialNumber, String.format("ID2\n...->%s", arrTypeName));
 	}
 
-	public TYPE SemantMe() throws Exception
+	public Type SemantMe() throws Exception
 	{
 		if (!SymbolTable.getInstance().isGlobalScope()) { throw new SemanticException(); }
 		if (SymbolTable.getInstance().find(arrName) != null) { throw new SemanticException(); }
-		TYPE arrType = SymbolTable.getInstance().find(arrTypeName);
+		Type arrType = SymbolTable.getInstance().find(arrTypeName);
 		if (arrType == null) { throw new SemanticException(); }
-		SymbolTable.getInstance().enter(arrName, new TYPE_ARRAY(arrType, arrName));
+		SymbolTable.getInstance().enter(arrName, new TypeArray(arrType, arrName));
 		return null;
 	}
 

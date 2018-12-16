@@ -9,8 +9,8 @@ import java_cup.runtime.*;
 %cup
 
 %{
-	private Symbol symbol(int type) { return new Symbol(type, yyline, yycolumn); }
-	private Symbol symbol(int type, Object value) {return new Symbol(type, yyline, yycolumn, value); }
+	private Symbol symbol(int Type) { return new Symbol(Type, yyline, yycolumn); }
+	private Symbol symbol(int Type, Object value) {return new Symbol(Type, yyline, yycolumn, value); }
 	public int getLine() { return yyline + 1; } 
 	public int getCharPos() { return yycolumn; }
 %}

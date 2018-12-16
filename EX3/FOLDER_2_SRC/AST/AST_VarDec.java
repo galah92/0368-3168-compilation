@@ -22,23 +22,23 @@ public class AST_VarDec extends AST_ClassField
 		if (initVal != null) AST_GRAPHVIZ.getInstance().logEdge(SerialNumber, initVal.SerialNumber);
 	}
 
-	public TYPE SemantDeclaration() throws Exception
+	public Type SemantDeclaration() throws Exception
 	{
 		if (SymbolTable.getInstance().findInScope(varName) != null) { throw new SemanticException(); }
 		
-		TYPE varType = SymbolTable.getInstance().find(varTypeName);
+		Type varType = SymbolTable.getInstance().find(varTypeName);
 		if (varType == null) { throw new SemanticException(); }
 
-		TYPE initValType = initVal != null ? initVal.SemantMe() : null;
+		Type initValType = initVal != null ? initVal.SemantMe() : null;
 		if (initValType != null)
 		{
-			if (varType instanceof TYPE_ARRAY)
+			if (varType instanceof TypeArray)
 			{
-				if (((TYPE_ARRAY)varType).elementType != initValType) { throw new SemanticException(varType + ", " + initValType); }
+				if (((TypeArray)varType).elementType != initValType) { throw new SemanticException(varType + ", " + initValType); }
 			}
-			else if (initValType instanceof TYPE_CLASS)
+			else if (initValType instanceof TypeClass)
 			{
-				if (!((TYPE_CLASS)initValType).isInheritingFrom(varType.name)) { throw new SemanticException(varType + ", " + initValType); }
+				if (!((TypeClass)initValType).isInheritingFrom(varType.name)) { throw new SemanticException(varType + ", " + initValType); }
 			}
 			else
 			{
@@ -47,7 +47,7 @@ public class AST_VarDec extends AST_ClassField
 		}
 
 		SymbolTable.getInstance().enter(varName, varType);
-		return new TYPE_CLASS_VAR_DEC(varType, varName);
+		return new TypeClassVar(varType, varName);
 	}
 
 	public void SemantBody() throws Exception
@@ -55,9 +55,9 @@ public class AST_VarDec extends AST_ClassField
 		// nothing to do here
 	}
 
-	public TYPE SemantMe() throws Exception
+	public Type SemantMe() throws Exception
 	{
-		TYPE varType = SemantDeclaration();
+		Type varType = SemantDeclaration();
 		return varType;
 	}
 	

@@ -1,11 +1,11 @@
 package TYPES;
 
-public class TYPE_CLASS extends TYPE
+public class TypeClass extends Type
 {
-	public TYPE_CLASS base;
-	public TYPE_LIST fields;
+	public TypeClass base;
+	public TypeList fields;
 	
-	public TYPE_CLASS(TYPE_CLASS base, String name, TYPE_LIST fields)
+	public TypeClass(TypeClass base, String name, TypeList fields)
 	{
 		this.name = name;
 		this.base = base;
@@ -18,13 +18,13 @@ public class TYPE_CLASS extends TYPE
 		return base != null ? base.isInheritingFrom(ancestor) : false;
 	}
 
-	public TYPE getVarField(String varFieldName)
+	public Type getVarField(String varFieldName)
 	{
-		for (TYPE_LIST it = fields; it != null; it = it.tail)
+		for (TypeList it = fields; it != null; it = it.tail)
 		{
-			if (it.head instanceof TYPE_CLASS_VAR_DEC)
+			if (it.head instanceof TypeClassVar)
 			{
-				TYPE_CLASS_VAR_DEC varFieldType = (TYPE_CLASS_VAR_DEC)it.head;
+				TypeClassVar varFieldType = (TypeClassVar)it.head;
 				if (varFieldName.equals(varFieldType.name)) { return varFieldType.varType; }
 			}
 		}
@@ -32,13 +32,13 @@ public class TYPE_CLASS extends TYPE
 		return null;
 	}
 
-	public TYPE_FUNCTION getFuncField(String funcFieldName)
+	public TypeFunc getFuncField(String funcFieldName)
 	{
-		for (TYPE_LIST it = fields; it != null; it = it.tail)
+		for (TypeList it = fields; it != null; it = it.tail)
 		{
-			if (it.head instanceof TYPE_FUNCTION)
+			if (it.head instanceof TypeFunc)
 			{
-				TYPE_FUNCTION funcFieldType = (TYPE_FUNCTION)it.head;
+				TypeFunc funcFieldType = (TypeFunc)it.head;
 				if (funcFieldName.equals(funcFieldType.name)) { return funcFieldType; }
 			}
 		}

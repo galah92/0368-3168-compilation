@@ -23,28 +23,28 @@ public class AST_ParamsList extends AST_Node
 		if (tail != null) AST_GRAPHVIZ.getInstance().logEdge(SerialNumber, tail.SerialNumber);
 	}
 
-	public TYPE_LIST SemantDeclaration() throws Exception
+	public TypeList SemantDeclaration() throws Exception
 	{
-		TYPE paramType = SymbolTable.getInstance().find(paramTypeName);
+		Type paramType = SymbolTable.getInstance().find(paramTypeName);
 		if (paramType == null) { throw new SemanticException(); }
-		return new TYPE_LIST(paramType, tail != null ? tail.SemantDeclaration() : null);
+		return new TypeList(paramType, tail != null ? tail.SemantDeclaration() : null);
 	}
 
 	public void SemantBody() throws Exception
 	{
-		TYPE paramType = SymbolTable.getInstance().find(paramTypeName);
+		Type paramType = SymbolTable.getInstance().find(paramTypeName);
 		if (paramType == null) { throw new SemanticException(); }
 		if (SymbolTable.getInstance().findInScope(paramName) != null) { throw new SemanticException(); }
 		SymbolTable.getInstance().enter(paramName, paramType);
 		if (tail != null) tail.SemantBody();
 	}
 
-    public TYPE_LIST SemantMe() throws Exception
+    public TypeList SemantMe() throws Exception
 	{
-		TYPE paramType = SymbolTable.getInstance().find(paramTypeName);
+		Type paramType = SymbolTable.getInstance().find(paramTypeName);
 		if (paramType == null) { throw new SemanticException(); }
 		if (SymbolTable.getInstance().findInScope(paramName) != null) { throw new SemanticException(); }
 		SymbolTable.getInstance().enter(paramName, paramType);
-		return new TYPE_LIST(paramType, tail != null ? tail.SemantMe() : null);
+		return new TypeList(paramType, tail != null ? tail.SemantMe() : null);
 	}
 }

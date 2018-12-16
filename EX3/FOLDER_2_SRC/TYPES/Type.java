@@ -1,7 +1,6 @@
 package TYPES;
 
-public abstract class TYPE
+public abstract class Type
 {
 	public String name;
 }
-

@@ -18,11 +18,11 @@ public class AST_StmtReturn extends AST_Stmt
 		AST_GRAPHVIZ.getInstance().logNode(SerialNumber, "StmtReturn");
 		if (exp != null) AST_GRAPHVIZ.getInstance().logEdge(SerialNumber, exp.SerialNumber);
 	}
-	public TYPE SemantMe() throws Exception
+	public Type SemantMe() throws Exception
 	{
-		TYPE_FUNCTION funcType = SymbolTable.getInstance().findFunc();
+		TypeFunc funcType = SymbolTable.getInstance().findFunc();
 		if (funcType == null) { throw new SemanticException(); }
-		TYPE expType = exp != null ? exp.SemantMe() : TYPE_VOID.getInstance();
+		Type expType = exp != null ? exp.SemantMe() : TypeVoid.getInstance();
 		if (funcType.retType != expType) { throw new SemanticException(); }
 		return expType;
 	}

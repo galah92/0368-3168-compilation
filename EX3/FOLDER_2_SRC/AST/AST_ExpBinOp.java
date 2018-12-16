@@ -24,26 +24,26 @@ public class AST_ExpBinOp extends AST_Exp
 		if (right != null) AST_GRAPHVIZ.getInstance().logEdge(SerialNumber, right.SerialNumber);
 	}
 
-	public TYPE SemantMe() throws Exception
+	public Type SemantMe() throws Exception
 	{
-		TYPE t1 = left.SemantMe();
-		TYPE t2 = right.SemantMe();
+		Type t1 = left.SemantMe();
+		Type t2 = right.SemantMe();
 
-		if (t1 == TYPE_INT.getInstance() && t2 == TYPE_INT.getInstance())
+		if (t1 == TypeInt.getInstance() && t2 == TypeInt.getInstance())
 		{
-			return TYPE_INT.getInstance();
+			return TypeInt.getInstance();
 		}
-		else if ((op == '+') && (t1 == TYPE_STRING.getInstance()) && (t2 == TYPE_STRING.getInstance()))
+		else if ((op == '+') && (t1 == TypeString.getInstance()) && (t2 == TypeString.getInstance()))
 		{
-			return TYPE_STRING.getInstance();
+			return TypeString.getInstance();
 		}
 		else if (op == '=')
 		{
 			if (t1 == t2) { return t1; }
 			if ((t1 == null || t2 == null))
 			{
-				if (t1 instanceof TYPE_CLASS || t1 instanceof TYPE_ARRAY) { return TYPE_INT.getInstance(); }
-				if (t2 instanceof TYPE_CLASS || t2 instanceof TYPE_ARRAY) { return TYPE_INT.getInstance(); }
+				if (t1 instanceof TypeClass || t1 instanceof TypeArray) { return TypeInt.getInstance(); }
+				if (t2 instanceof TypeClass || t2 instanceof TypeArray) { return TypeInt.getInstance(); }
 				throw new SemanticException();
 			}
 		}

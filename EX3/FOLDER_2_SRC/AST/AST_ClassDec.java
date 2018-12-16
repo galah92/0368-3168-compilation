@@ -22,31 +22,31 @@ public class AST_ClassDec extends AST_Dec
 		AST_GRAPHVIZ.getInstance().logEdge(SerialNumber, fields.SerialNumber);
 	}
 
-    public TYPE SemantMe() throws Exception
+    public Type SemantMe() throws Exception
 	{
 		if (!SymbolTable.getInstance().isGlobalScope()) { throw new SemanticException(); }
 
-		TYPE_CLASS baseType = null;
+		TypeClass baseType = null;
 		if (baseName != null)
 		{
-			TYPE t = SymbolTable.getInstance().find(baseName);
-			if (!(t instanceof TYPE_CLASS)) { throw new SemanticException(); }
-			baseType = (TYPE_CLASS)t;
+			Type t = SymbolTable.getInstance().find(baseName);
+			if (!(t instanceof TypeClass)) { throw new SemanticException(); }
+			baseType = (TypeClass)t;
 		}
 
-		// enter the class type to that we could field of same type
-		TYPE_CLASS classType = new TYPE_CLASS(baseType, className, null);
+		// enter the class Type to that we could field of same Type
+		TypeClass classType = new TypeClass(baseType, className, null);
 		SymbolTable.getInstance().enter(className, classType);
 
 		SymbolTable.getInstance().beginScope();
-		TYPE_LIST fieldsTypes = fields.SemantDeclaration();
+		TypeList fieldsTypes = fields.SemantDeclaration();
 		if (baseType != null)
 		{
-			for (TYPE_LIST t = baseType.fields; t != null; t = t.tail)
+			for (TypeList t = baseType.fields; t != null; t = t.tail)
 			{
 				if (SymbolTable.getInstance().findInScope(t.head.name) == null)
 				{
-					SymbolTable.getInstance().enter(t.head.name, t.head instanceof TYPE_CLASS_VAR_DEC ? ((TYPE_CLASS_VAR_DEC)t.head).varType : t.head);
+					SymbolTable.getInstance().enter(t.head.name, t.head instanceof TypeClassVar ? ((TypeClassVar)t.head).varType : t.head);
 				}
 			}
 		}

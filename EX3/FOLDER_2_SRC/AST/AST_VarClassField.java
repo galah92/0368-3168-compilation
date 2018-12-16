@@ -19,11 +19,11 @@ public class AST_VarClassField extends AST_Var
 		AST_GRAPHVIZ.getInstance().logNode(SerialNumber, String.format("VarClassField\n%s", fieldName));
 		AST_GRAPHVIZ.getInstance().logEdge(SerialNumber, className.SerialNumber);
 	}
-	public TYPE SemantMe() throws Exception
+	public Type SemantMe() throws Exception
 	{
-		TYPE t = className.SemantMe();
-		if (!(t instanceof TYPE_CLASS)) { throw new SemanticException(); }
-		TYPE_CLASS typeClass = (TYPE_CLASS)t;
+		Type t = className.SemantMe();
+		if (!(t instanceof TypeClass)) { throw new SemanticException(); }
+		TypeClass typeClass = (TypeClass)t;
 		return typeClass.getVarField(fieldName);
 	}
 }

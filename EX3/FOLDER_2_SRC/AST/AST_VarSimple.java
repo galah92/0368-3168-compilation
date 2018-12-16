@@ -16,7 +16,7 @@ public class AST_VarSimple extends AST_Var
 		AST_GRAPHVIZ.getInstance().logNode(SerialNumber, String.format("VarSimple\n(%s)", varName));
 	}
 	
-	public TYPE SemantMe() throws Exception
+	public Type SemantMe() throws Exception
 	{
 		return SymbolTable.getInstance().find(varName);
 	}

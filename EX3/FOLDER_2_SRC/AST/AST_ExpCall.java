@@ -25,24 +25,24 @@ public class AST_ExpCall extends AST_Exp
 		if (instanceName != null) AST_GRAPHVIZ.getInstance().logEdge(SerialNumber, instanceName.SerialNumber);
 	}
 
-	public TYPE SemantMe() throws Exception
+	public Type SemantMe() throws Exception
 	{
-		TYPE_LIST argsTypes = args != null ? (TYPE_LIST)args.SemantMe() : null;
+		TypeList argsTypes = args != null ? (TypeList)args.SemantMe() : null;
 
 		// deal with class methods
 		if (instanceName != null)
 		{
-			TYPE t = instanceName.SemantMe();
-			if (!(t instanceof TYPE_CLASS)) { throw new SemanticException(); }
-			TYPE_CLASS instanceType = (TYPE_CLASS)t;
-			TYPE_FUNCTION tf = instanceType.getFuncField(funcName);
+			Type t = instanceName.SemantMe();
+			if (!(t instanceof TypeClass)) { throw new SemanticException(); }
+			TypeClass instanceType = (TypeClass)t;
+			TypeFunc tf = instanceType.getFuncField(funcName);
 			if (tf != null) { return tf.retType; }
 		}
 
 		// deal with global functions
-		TYPE t = SymbolTable.getInstance().find(funcName);
-		if (t == null && !(t instanceof TYPE_FUNCTION)) { throw new SemanticException(); }
-		TYPE_FUNCTION funcType = (TYPE_FUNCTION)t;
+		Type t = SymbolTable.getInstance().find(funcName);
+		if (t == null && !(t instanceof TypeFunc)) { throw new SemanticException(); }
+		TypeFunc funcType = (TypeFunc)t;
 		return funcType.retType;
 	}
 }

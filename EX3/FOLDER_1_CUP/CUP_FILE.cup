@@ -130,7 +130,7 @@ classDec	::=		CLASS ID:name LBRACE cFieldList:l RBRACE	                {: RESULT
                     CLASS ID:name EXTENDS ID:base LBRACE cFieldList:l RBRACE	{: RESULT = new AST_ClassDec(name, base, l); RESULT.lineNumber = lleft; :}
                     ;
 
-arrayDec    ::=     ARRAY ID:name EQ ID:type LBRACK RBRACK                        {: RESULT = new AST_ArrayDec(name, type); RESULT.lineNumber = nameleft; :};
+arrayDec    ::=     ARRAY ID:name EQ ID:Type LBRACK RBRACK                        {: RESULT = new AST_ArrayDec(name, Type); RESULT.lineNumber = nameleft; :};
 
 exp			::=		var:v		            {: RESULT = v; RESULT.lineNumber = vleft; :} |
                     LPAREN exp:e RPAREN		{: RESULT = e; RESULT.lineNumber = eleft; :} |

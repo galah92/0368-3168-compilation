@@ -21,10 +21,10 @@ public class AST_StmtAssign extends AST_Stmt
 		AST_GRAPHVIZ.getInstance().logEdge(SerialNumber, var.SerialNumber);
 		AST_GRAPHVIZ.getInstance().logEdge(SerialNumber, exp.SerialNumber);
 	}
-	public TYPE SemantMe() throws Exception
+	public Type SemantMe() throws Exception
 	{
-		TYPE varType = null;
-		TYPE expType = null;
+		Type varType = null;
+		Type expType = null;
 		
 		if (var != null) varType = var.SemantMe();
 		if (exp != null) expType = exp.SemantMe();
@@ -33,12 +33,12 @@ public class AST_StmtAssign extends AST_Stmt
 
 		// if (exp instanceof AST_NewExp)
 		// {
-		// 	// if RHS is array, then expType is the integral type,
-		// 	// so we must compare it with the integral type of LHS
-		// 	TYPE integralVarType = varType instanceof TYPE_ARRAY ? ((TYPE_ARRAY)varType).elementType : varType;
-		// 	if (expType instanceof TYPE_CLASS)
+		// 	// if RHS is array, then expType is the integral Type,
+		// 	// so we must compare it with the integral Type of LHS
+		// 	Type integralVarType = varType instanceof TypeArray ? ((TypeArray)varType).elementType : varType;
+		// 	if (expType instanceof TypeClass)
 		// 	{
-		// 		if (!((TYPE_CLASS)expType).isInheritingFrom(integralVarType.name)) { throw new SemanticException(integralVarType + ", " + expType); }
+		// 		if (!((TypeClass)expType).isInheritingFrom(integralVarType.name)) { throw new SemanticException(integralVarType + ", " + expType); }
 		// 	}
 		// 	else
 		// 	{
@@ -48,10 +48,10 @@ public class AST_StmtAssign extends AST_Stmt
 		// else if (varType != expType) { throw new SemanticException(varType.name + ", " + expType.name); }
 
 
-		TYPE integralVarType = (exp instanceof AST_NewExp && varType instanceof TYPE_ARRAY) ? ((TYPE_ARRAY)varType).elementType : varType;
-		if (expType instanceof TYPE_CLASS)
+		Type integralVarType = (exp instanceof AST_NewExp && varType instanceof TypeArray) ? ((TypeArray)varType).elementType : varType;
+		if (expType instanceof TypeClass)
 		{
-			if (!((TYPE_CLASS)expType).isInheritingFrom(integralVarType.name)) { throw new SemanticException(integralVarType + ", " + expType); }
+			if (!((TypeClass)expType).isInheritingFrom(integralVarType.name)) { throw new SemanticException(integralVarType + ", " + expType); }
 		}
 		else
 		{

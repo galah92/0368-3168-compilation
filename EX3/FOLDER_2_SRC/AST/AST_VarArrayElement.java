@@ -20,12 +20,12 @@ public class AST_VarArrayElement extends AST_Var
 		AST_GRAPHVIZ.getInstance().logEdge(SerialNumber, var.SerialNumber);
 	}
 
-	public TYPE SemantMe() throws Exception
+	public Type SemantMe() throws Exception
 	{
-		if (index.SemantMe() != TYPE_INT.getInstance()) { throw new SemanticException(); }
-		TYPE arrType = var.SemantMe();
-		if (!(arrType instanceof TYPE_ARRAY)) { throw new SemanticException(); }
-		return ((TYPE_ARRAY)arrType).elementType;
+		if (index.SemantMe() != TypeInt.getInstance()) { throw new SemanticException(); }
+		Type arrType = var.SemantMe();
+		if (!(arrType instanceof TypeArray)) { throw new SemanticException(); }
+		return ((TypeArray)arrType).elementType;
 	}
 
 }
