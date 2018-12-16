@@ -21,15 +21,16 @@ public class AST_VarClassField extends AST_Var
 	}
 	public TYPE SemantMe() throws Exception
 	{
-		TYPE classType = className.SemantMe();
-		if (!(classType instanceof TYPE_CLASS)) { throw new Exception(); }
-		TYPE_CLASS tc = (TYPE_CLASS)classType;
-		for (TYPE_LIST it = tc.fields; it != null; it = it.tail)
+		TYPE t = className.SemantMe();
+		if (!(t instanceof TYPE_CLASS)) { throw new Exception(); }
+		TYPE_CLASS typeClass = (TYPE_CLASS)t;
+		
+		for (TYPE_LIST it = typeClass.fields; it != null; it = it.tail)
 		{
 			if (it.head instanceof TYPE_CLASS_VAR_DEC)
 			{
-				TYPE classVarType = (TYPE_CLASS_VAR_DEC)it.head;
-				if (fieldName.equals(classVarType.name)) { return classVarType; }
+				TYPE_CLASS_VAR_DEC classVarType = (TYPE_CLASS_VAR_DEC)it.head;
+				if (fieldName.equals(classVarType.name)) { return classVarType.varType; }
 			}
 		}
 		throw new Exception();
