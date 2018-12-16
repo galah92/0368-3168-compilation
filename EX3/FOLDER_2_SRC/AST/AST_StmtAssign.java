@@ -31,9 +31,14 @@ public class AST_StmtAssign extends AST_Stmt
 		
 		if (expType == null) return null;
 
-		// if varType is TYPE_ARRAY then we get it's elementType
-		TYPE integralVarType = varType instanceof TYPE_ARRAY ? ((TYPE_ARRAY)varType).elementType : varType;
-		if (integralVarType != expType) { throw new SemanticException(integralVarType + ", " + expType); }
+		if (exp instanceof AST_NewExp)
+		{
+			// if RHS is array, then expType is the integral type,
+			// so we must compare it with the integral type of LHS
+			TYPE integralVarType = varType instanceof TYPE_ARRAY ? ((TYPE_ARRAY)varType).elementType : varType;
+			if (integralVarType != expType) { throw new SemanticException(integralVarType + ", " + expType); }
+		}
+		else if (varType != expType) { throw new SemanticException(varType + ", " + expType); }
 
 		return varType;
 	}
