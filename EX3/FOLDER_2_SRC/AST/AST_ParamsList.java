@@ -23,9 +23,25 @@ public class AST_ParamsList extends AST_Node
 		if (tail != null) AST_GRAPHVIZ.getInstance().logEdge(SerialNumber, tail.SerialNumber);
 	}
 
+	public TYPE_LIST SemantDeclaration() throws Exception
+	{
+		TYPE paramType = SYMBOL_TABLE.getInstance().find(paramTypeName);
+		if (paramType == null) { throw new SemanticException(); }
+		return new TYPE_LIST(paramType, tail != null ? tail.SemantDeclaration() : null);
+	}
+
+	public void SemantBody() throws Exception
+	{
+		TYPE paramType = SYMBOL_TABLE.getInstance().find(paramTypeName);
+		if (paramType == null) { throw new SemanticException(); }
+		if (SYMBOL_TABLE.getInstance().findInScope(paramName) != null) { throw new SemanticException(); }
+		SYMBOL_TABLE.getInstance().enter(paramName, paramType);
+		if (tail != null) tail.SemantBody();
+	}
+
     public TYPE_LIST SemantMe() throws Exception
 	{
-        TYPE paramType = SYMBOL_TABLE.getInstance().find(paramTypeName);
+		TYPE paramType = SYMBOL_TABLE.getInstance().find(paramTypeName);
 		if (paramType == null) { throw new SemanticException(); }
 		if (SYMBOL_TABLE.getInstance().findInScope(paramName) != null) { throw new SemanticException(); }
 		SYMBOL_TABLE.getInstance().enter(paramName, paramType);

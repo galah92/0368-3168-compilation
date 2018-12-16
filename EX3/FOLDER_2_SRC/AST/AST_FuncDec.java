@@ -32,7 +32,7 @@ public class AST_FuncDec extends AST_ClassField
 		TYPE retType = SYMBOL_TABLE.getInstance().find(retTypeName);
 		if (retType == null) { throw new SemanticException(); }
 
-		TYPE_LIST paramsTypes = params != null ? params.SemantMe(): null;
+		TYPE_LIST paramsTypes = params != null ? params.SemantDeclaration(): null;
 
 		TYPE_FUNCTION funcType = new TYPE_FUNCTION(retType, funcName, paramsTypes);
 		SYMBOL_TABLE.getInstance().enter(funcName, funcType);
@@ -42,6 +42,7 @@ public class AST_FuncDec extends AST_ClassField
 	public void SemantBody() throws Exception
 	{
 		SYMBOL_TABLE.getInstance().beginScope();
+		if (params != null) params.SemantBody();
 		if (body != null) { body.SemantMe(); }
 		SYMBOL_TABLE.getInstance().endScope();
 	}
