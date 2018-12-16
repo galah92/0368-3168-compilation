@@ -32,13 +32,13 @@ public class AST_VarDec extends AST_ClassField
 		if (initVal != null)
 		{
 			TYPE initValType = initVal.SemantMe();
-			if (initValType instanceof TYPE_CLASS)
+			if (varType instanceof TYPE_ARRAY)
 			{
-				if (!((TYPE_CLASS)initValType).isInheritingFrom(varType.name)) { throw new SemanticException(); }
+				if (((TYPE_ARRAY)varType).elementType != initValType) { throw new SemanticException(varType + ", " + initValType); }
 			}
-			else if (varType instanceof TYPE_ARRAY)
+			else if (initValType instanceof TYPE_CLASS)
 			{
-				if (((TYPE_ARRAY)varType).elementType != initValType) { throw new SemanticException(); }
+				if (!((TYPE_CLASS)initValType).isInheritingFrom(varType.name)) { throw new SemanticException(varType + ", " + initValType); }
 			}
 			else
 			{
