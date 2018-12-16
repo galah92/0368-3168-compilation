@@ -30,7 +30,11 @@ public class AST_StmtAssign extends AST_Stmt
 		if (exp != null) expType = exp.SemantMe();
 		
 		if (expType == null) return null;
-		if (varType != expType) { throw new SemanticException(); }
-		return expType;
+
+		// if varType is TYPE_ARRAY then we get it's elementType
+		TYPE integralVarType = varType instanceof TYPE_ARRAY ? ((TYPE_ARRAY)varType).elementType : varType;
+		if (integralVarType != expType) { throw new SemanticException(integralVarType + ", " + expType); }
+
+		return varType;
 	}
 }

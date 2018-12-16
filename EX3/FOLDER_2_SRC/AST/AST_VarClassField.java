@@ -25,14 +25,15 @@ public class AST_VarClassField extends AST_Var
 		if (!(t instanceof TYPE_CLASS)) { throw new SemanticException(); }
 		TYPE_CLASS typeClass = (TYPE_CLASS)t;
 		
-		for (TYPE_LIST it = typeClass.fields; it != null; it = it.tail)
-		{
-			if (it.head instanceof TYPE_CLASS_VAR_DEC)
-			{
-				TYPE_CLASS_VAR_DEC classVarType = (TYPE_CLASS_VAR_DEC)it.head;
-				if (fieldName.equals(classVarType.name)) { return classVarType.varType; }
-			}
-		}
-		throw new SemanticException();
+		return typeClass.getVarField(fieldName);
+		// for (TYPE_LIST it = typeClass.fields; it != null; it = it.tail)
+		// {
+		// 	if (it.head instanceof TYPE_CLASS_VAR_DEC)
+		// 	{
+		// 		TYPE_CLASS_VAR_DEC classVarType = (TYPE_CLASS_VAR_DEC)it.head;
+		// 		if (fieldName.equals(classVarType.name)) { return classVarType.varType; }
+		// 	}
+		// }
+		// throw new SemanticException();
 	}
 }
