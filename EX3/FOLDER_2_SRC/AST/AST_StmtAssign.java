@@ -31,14 +31,33 @@ public class AST_StmtAssign extends AST_Stmt
 		
 		if (expType == null) return null;
 
-		if (exp instanceof AST_NewExp)
+		// if (exp instanceof AST_NewExp)
+		// {
+		// 	// if RHS is array, then expType is the integral type,
+		// 	// so we must compare it with the integral type of LHS
+		// 	TYPE integralVarType = varType instanceof TYPE_ARRAY ? ((TYPE_ARRAY)varType).elementType : varType;
+		// 	if (expType instanceof TYPE_CLASS)
+		// 	{
+		// 		if (!((TYPE_CLASS)expType).isInheritingFrom(integralVarType.name)) { throw new SemanticException(integralVarType + ", " + expType); }
+		// 	}
+		// 	else
+		// 	{
+		// 		if (expType != integralVarType) { throw new SemanticException(integralVarType + ", " + expType); }
+		// 	}
+		// }
+		// else if (varType != expType) { throw new SemanticException(varType.name + ", " + expType.name); }
+
+
+		TYPE integralVarType = (exp instanceof AST_NewExp && varType instanceof TYPE_ARRAY) ? ((TYPE_ARRAY)varType).elementType : varType;
+		if (expType instanceof TYPE_CLASS)
 		{
-			// if RHS is array, then expType is the integral type,
-			// so we must compare it with the integral type of LHS
-			TYPE integralVarType = varType instanceof TYPE_ARRAY ? ((TYPE_ARRAY)varType).elementType : varType;
-			if (integralVarType != expType) { throw new SemanticException(integralVarType + ", " + expType); }
+			if (!((TYPE_CLASS)expType).isInheritingFrom(integralVarType.name)) { throw new SemanticException(integralVarType + ", " + expType); }
 		}
-		else if (varType != expType) { throw new SemanticException(varType + ", " + expType); }
+		else
+		{
+			if (expType != integralVarType) { throw new SemanticException(integralVarType + ", " + expType); }
+		}
+
 
 		return varType;
 	}
