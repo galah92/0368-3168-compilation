@@ -12,7 +12,7 @@ public class AST_ExpInt extends AST_ExpPrimitive
 
 	public void PrintMe()
 	{
-		AST_GRAPHVIZ.getInstance().logNode(SerialNumber, String.format("ExpInt\n%s",value));
+		ASTGraphviz.logNode(SerialNumber, String.format("ExpInt\n%s",value));
 	}
 	
 	public Type SemantMe() throws Exception

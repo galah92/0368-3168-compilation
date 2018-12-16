@@ -18,10 +18,10 @@ public class AST_StmtWhile extends AST_Stmt
 		if (cond != null) cond.PrintMe();
 		if (body != null) body.PrintMe();
 
-		AST_GRAPHVIZ.getInstance().logNode(SerialNumber, "StmtWhile");
+		ASTGraphviz.logNode(SerialNumber, "StmtWhile");
 		
-		if (cond != null) AST_GRAPHVIZ.getInstance().logEdge(SerialNumber, cond.SerialNumber);
-		if (body != null) AST_GRAPHVIZ.getInstance().logEdge(SerialNumber, body.SerialNumber);
+		if (cond != null) ASTGraphviz.logEdge(SerialNumber, cond.SerialNumber);
+		if (body != null) ASTGraphviz.logEdge(SerialNumber, body.SerialNumber);
 	}
 
 	public Type SemantMe() throws Exception

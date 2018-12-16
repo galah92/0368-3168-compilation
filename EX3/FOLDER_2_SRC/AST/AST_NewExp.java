@@ -15,8 +15,8 @@ public class AST_NewExp extends AST_Exp
 
     public void PrintMe()
 	{
-		AST_GRAPHVIZ.getInstance().logNode(SerialNumber, String.format("NewExp\n%s", Type));
-        if (exp != null) AST_GRAPHVIZ.getInstance().logEdge(SerialNumber, exp.SerialNumber);
+		ASTGraphviz.logNode(SerialNumber, String.format("NewExp\n%s", Type));
+        if (exp != null) ASTGraphviz.logEdge(SerialNumber, exp.SerialNumber);
 	}
 
 	public Type SemantMe() throws Exception

@@ -18,8 +18,8 @@ public class AST_ClassDec extends AST_Dec
 	public void PrintMe()
 	{
         if (fields != null) fields.PrintMe();
-		AST_GRAPHVIZ.getInstance().logNode(SerialNumber, String.format("ClassDec\n%s\n%s", className, baseName));
-		AST_GRAPHVIZ.getInstance().logEdge(SerialNumber, fields.SerialNumber);
+		ASTGraphviz.logNode(SerialNumber, String.format("ClassDec\n%s\n%s", className, baseName));
+		ASTGraphviz.logEdge(SerialNumber, fields.SerialNumber);
 	}
 
     public Type SemantMe() throws Exception

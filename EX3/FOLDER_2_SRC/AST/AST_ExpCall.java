@@ -20,9 +20,9 @@ public class AST_ExpCall extends AST_Exp
 		if (args != null) args.PrintMe();
 		if (instanceName != null) instanceName.PrintMe();
 
-		AST_GRAPHVIZ.getInstance().logNode(SerialNumber, String.format("ExpCall\n%s", funcName));
-		if (args != null) AST_GRAPHVIZ.getInstance().logEdge(SerialNumber, args.SerialNumber);
-		if (instanceName != null) AST_GRAPHVIZ.getInstance().logEdge(SerialNumber, instanceName.SerialNumber);
+		ASTGraphviz.logNode(SerialNumber, String.format("ExpCall\n%s", funcName));
+		if (args != null) ASTGraphviz.logEdge(SerialNumber, args.SerialNumber);
+		if (instanceName != null) ASTGraphviz.logEdge(SerialNumber, instanceName.SerialNumber);
 	}
 
 	public Type SemantMe() throws Exception

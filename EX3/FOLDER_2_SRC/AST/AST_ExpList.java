@@ -17,10 +17,10 @@ public class AST_ExpList extends AST_Node
 		if (head != null) head.PrintMe();
 		if (tail != null) tail.PrintMe();
 
-		AST_GRAPHVIZ.getInstance().logNode(SerialNumber, "ExpList");
+		ASTGraphviz.logNode(SerialNumber, "ExpList");
 
-		if (head != null) AST_GRAPHVIZ.getInstance().logEdge(SerialNumber, head.SerialNumber);
-		if (tail != null) AST_GRAPHVIZ.getInstance().logEdge(SerialNumber, tail.SerialNumber);
+		if (head != null) ASTGraphviz.logEdge(SerialNumber, head.SerialNumber);
+		if (tail != null) ASTGraphviz.logEdge(SerialNumber, tail.SerialNumber);
 	}
 
 	public Type SemantMe() throws Exception
