@@ -1,6 +1,6 @@
 package AST;
 import TYPES.*;
-import SYMBOL_TABLE.*;
+import SymbolTable.*;
 
 public class AST_ArrayDec extends AST_Dec
 {
@@ -21,11 +21,11 @@ public class AST_ArrayDec extends AST_Dec
 
 	public TYPE SemantMe() throws Exception
 	{
-		if (!SYMBOL_TABLE.getInstance().isGlobalScope()) { throw new SemanticException(); }
-		if (SYMBOL_TABLE.getInstance().find(arrName) != null) { throw new SemanticException(); }
-		TYPE arrType = SYMBOL_TABLE.getInstance().find(arrTypeName);
+		if (!SymbolTable.getInstance().isGlobalScope()) { throw new SemanticException(); }
+		if (SymbolTable.getInstance().find(arrName) != null) { throw new SemanticException(); }
+		TYPE arrType = SymbolTable.getInstance().find(arrTypeName);
 		if (arrType == null) { throw new SemanticException(); }
-		SYMBOL_TABLE.getInstance().enter(arrName, new TYPE_ARRAY(arrType, arrName));
+		SymbolTable.getInstance().enter(arrName, new TYPE_ARRAY(arrType, arrName));
 		return null;
 	}
 

@@ -1,6 +1,6 @@
 package AST;
 import TYPES.*;
-import SYMBOL_TABLE.*;
+import SymbolTable.*;
 
 public class AST_VarSimple extends AST_Var
 {
@@ -18,6 +18,6 @@ public class AST_VarSimple extends AST_Var
 	
 	public TYPE SemantMe() throws Exception
 	{
-		return SYMBOL_TABLE.getInstance().find(varName);
+		return SymbolTable.getInstance().find(varName);
 	}
 }

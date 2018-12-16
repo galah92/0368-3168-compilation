@@ -1,6 +1,6 @@
 package AST;
 import TYPES.*;
-import SYMBOL_TABLE.*;
+import SymbolTable.*;
 
 public class AST_ClassFieldList extends AST_Node
 {

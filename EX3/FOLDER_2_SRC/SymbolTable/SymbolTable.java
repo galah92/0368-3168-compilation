@@ -1,44 +1,63 @@
-package SYMBOL_TABLE;
+package SymbolTable;
 import java.io.PrintWriter;
 import TYPES.*;
 
-public class SYMBOL_TABLE
+public class SymbolTable
 {
+	private class SymbolTableEntry
+	{
+		int index;
+		public String name;
+		public TYPE type;
+		public SymbolTableEntry prevtop;
+		public SymbolTableEntry next;
+		public int prevtop_index;
+		
+		public SymbolTableEntry(String name, TYPE type, int index, SymbolTableEntry next, SymbolTableEntry prevtop, int prevtop_index)
+		{
+			this.index = index;
+			this.name = name;
+			this.type = type;
+			this.next = next;
+			this.prevtop = prevtop;
+			this.prevtop_index = prevtop_index;
+		}
+	}
+
 	private int hashArraySize = 13;
 	
-	private SYMBOL_TABLE_ENTRY[] table = new SYMBOL_TABLE_ENTRY[hashArraySize];
-	private SYMBOL_TABLE_ENTRY top;
+	private SymbolTableEntry[] table = new SymbolTableEntry[hashArraySize];
+	private SymbolTableEntry top;
 	private int top_index = 0;
 	
 	private int hash(String s)
 	{
-		if (s.charAt(0) == 'l') {return 1;}
-		if (s.charAt(0) == 'm') {return 1;}
-		if (s.charAt(0) == 'r') {return 3;}
-		if (s.charAt(0) == 'i') {return 6;}
-		if (s.charAt(0) == 'd') {return 6;}
-		if (s.charAt(0) == 'k') {return 6;}
-		if (s.charAt(0) == 'f') {return 6;}
-		if (s.charAt(0) == 'S') {return 6;}
+		if (s.charAt(0) == 'l') { return 1; }
+		if (s.charAt(0) == 'm') { return 1; }
+		if (s.charAt(0) == 'r') { return 3; }
+		if (s.charAt(0) == 'i') { return 6; }
+		if (s.charAt(0) == 'd') { return 6; }
+		if (s.charAt(0) == 'k') { return 6; }
+		if (s.charAt(0) == 'f') { return 6; }
+		if (s.charAt(0) == 'S') { return 6; }
 		return 12;
 	}
 
-	public void enter(String name,TYPE t)
+	public void enter(String name, TYPE t)
 	{
-		int hashValue = hash(name);
-		SYMBOL_TABLE_ENTRY next = table[hashValue];
-		table[hashValue] = top = new SYMBOL_TABLE_ENTRY(name,
-													    t,
-														hashValue,
-														next,
-														top,
-														top_index++);
+		int hashVal = hash(name);
+		table[hashVal] = top = new SymbolTableEntry(name,
+													t,
+													hashVal,
+													table[hashVal],
+													top,
+													top_index++);
 		PrintMe();
 	}
 
 	public TYPE find(String name)
 	{
-		SYMBOL_TABLE_ENTRY e;
+		SymbolTableEntry e;
 		
 		for (e = table[hash(name)]; e != null; e = e.next)
 		{
@@ -50,7 +69,7 @@ public class SYMBOL_TABLE
 
 	public TYPE findInScope(String name)
 	{
-		SYMBOL_TABLE_ENTRY e = top;
+		SymbolTableEntry e = top;
 		int i = top_index; // inner scope index
 		while (e != null && e.name != "SCOPE-BOUNDARY")
 		{
@@ -66,14 +85,14 @@ public class SYMBOL_TABLE
 
 	public TYPE_FUNCTION findFunc()
 	{
-		SYMBOL_TABLE_ENTRY e = top;
+		SymbolTableEntry e = top;
 		while (e != null && !(e.type instanceof TYPE_FUNCTION)) { e = e.prevtop; }
 		return e != null ? (TYPE_FUNCTION)e.type : null;
 	}
 
 	public boolean isGlobalScope()
 	{
-		SYMBOL_TABLE_ENTRY e = top;
+		SymbolTableEntry e = top;
 		while (e != null && e.name != "SCOPE-BOUNDARY") { e = e.prevtop; }
 		return e == null; // no SCOPE-BOUNDARY in table
 	}
@@ -108,7 +127,7 @@ public class SYMBOL_TABLE
 		int i=0;
 		int j=0;
 		String dirname="./FOLDER_5_OUTPUT/";
-		String filename=String.format("SYMBOL_TABLE_%d_IN_GRAPHVIZ_DOT_FORMAT.txt",n++);
+		String filename=String.format("SymbolTable_%d_IN_GRAPHVIZ_DOT_FORMAT.txt",n++);
 
 		try
 		{
@@ -134,7 +153,7 @@ public class SYMBOL_TABLE
 					fileWriter.format("hashTable:f%d -> node_%d_0:f0;\n",i,i);
 				}
 				j=0;
-				for (SYMBOL_TABLE_ENTRY it=table[i];it!=null;it=it.next)
+				for (SymbolTableEntry it=table[i];it!=null;it=it.next)
 				{
 					/* [4b] Print entry(i,it) node */
 					fileWriter.format("node_%d_%d ",i,j);
@@ -165,15 +184,15 @@ public class SYMBOL_TABLE
 		}		
 	}
 	
-	private static SYMBOL_TABLE instance = null;
+	private static SymbolTable instance = null;
 
-	protected SYMBOL_TABLE() {}
+	protected SymbolTable() {}
 
-	public static SYMBOL_TABLE getInstance()
+	public static SymbolTable getInstance()
 	{
 		if (instance == null)
 		{
-			instance = new SYMBOL_TABLE();
+			instance = new SymbolTable();
 
 			// enter primitive types
 			instance.enter("int", TYPE_INT.getInstance());

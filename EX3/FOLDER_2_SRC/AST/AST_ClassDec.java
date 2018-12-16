@@ -1,6 +1,6 @@
 package AST;
 import TYPES.*;
-import SYMBOL_TABLE.*;
+import SymbolTable.*;
 
 public class AST_ClassDec extends AST_Dec
 {
@@ -24,34 +24,34 @@ public class AST_ClassDec extends AST_Dec
 
     public TYPE SemantMe() throws Exception
 	{
-		if (!SYMBOL_TABLE.getInstance().isGlobalScope()) { throw new SemanticException(); }
+		if (!SymbolTable.getInstance().isGlobalScope()) { throw new SemanticException(); }
 
 		TYPE_CLASS baseType = null;
 		if (baseName != null)
 		{
-			TYPE t = SYMBOL_TABLE.getInstance().find(baseName);
+			TYPE t = SymbolTable.getInstance().find(baseName);
 			if (!(t instanceof TYPE_CLASS)) { throw new SemanticException(); }
 			baseType = (TYPE_CLASS)t;
 		}
 
 		// enter the class type to that we could field of same type
 		TYPE_CLASS classType = new TYPE_CLASS(baseType, className, null);
-		SYMBOL_TABLE.getInstance().enter(className, classType);
+		SymbolTable.getInstance().enter(className, classType);
 
-		SYMBOL_TABLE.getInstance().beginScope();
+		SymbolTable.getInstance().beginScope();
 		TYPE_LIST fieldsTypes = fields.SemantDeclaration();
 		if (baseType != null)
 		{
 			for (TYPE_LIST t = baseType.fields; t != null; t = t.tail)
 			{
-				if (SYMBOL_TABLE.getInstance().findInScope(t.head.name) == null)
+				if (SymbolTable.getInstance().findInScope(t.head.name) == null)
 				{
-					SYMBOL_TABLE.getInstance().enter(t.head.name, t.head instanceof TYPE_CLASS_VAR_DEC ? ((TYPE_CLASS_VAR_DEC)t.head).varType : t.head);
+					SymbolTable.getInstance().enter(t.head.name, t.head instanceof TYPE_CLASS_VAR_DEC ? ((TYPE_CLASS_VAR_DEC)t.head).varType : t.head);
 				}
 			}
 		}
 		fields.SemantBody();
-		SYMBOL_TABLE.getInstance().endScope();
+		SymbolTable.getInstance().endScope();
 
 		classType.fields = fieldsTypes;
 		return classType;

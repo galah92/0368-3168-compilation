@@ -1,6 +1,6 @@
 package AST;
 import TYPES.*;
-import SYMBOL_TABLE.*;
+import SymbolTable.*;
 
 public class AST_StmtIf extends AST_Stmt
 {
@@ -28,9 +28,9 @@ public class AST_StmtIf extends AST_Stmt
 	{
 		if (cond.SemantMe() != TYPE_INT.getInstance()) { throw new SemanticException(); }
 
-		SYMBOL_TABLE.getInstance().beginScope();
+		SymbolTable.getInstance().beginScope();
 		body.SemantMe();
-		SYMBOL_TABLE.getInstance().endScope();
+		SymbolTable.getInstance().endScope();
 		
 		return null;
 	}	

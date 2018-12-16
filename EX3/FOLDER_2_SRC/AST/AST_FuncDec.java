@@ -1,6 +1,6 @@
 package AST;
 import TYPES.*;
-import SYMBOL_TABLE.*;
+import SymbolTable.*;
 
 public class AST_FuncDec extends AST_ClassField
 {
@@ -33,22 +33,22 @@ public class AST_FuncDec extends AST_ClassField
 		// specifically, we need to throw if:
 		// names are equals && (params are different || retType is different)
 
-		TYPE retType = SYMBOL_TABLE.getInstance().find(retTypeName);
+		TYPE retType = SymbolTable.getInstance().find(retTypeName);
 		if (retType == null) { throw new SemanticException(); }
 
 		TYPE_LIST paramsTypes = params != null ? params.SemantDeclaration(): null;
 
 		TYPE_FUNCTION funcType = new TYPE_FUNCTION(retType, funcName, paramsTypes);
-		SYMBOL_TABLE.getInstance().enter(funcName, funcType);
+		SymbolTable.getInstance().enter(funcName, funcType);
 		return funcType;
 	}
 
 	public void SemantBody() throws Exception
 	{
-		SYMBOL_TABLE.getInstance().beginScope();
+		SymbolTable.getInstance().beginScope();
 		if (params != null) params.SemantBody();
 		if (body != null) { body.SemantMe(); }
-		SYMBOL_TABLE.getInstance().endScope();
+		SymbolTable.getInstance().endScope();
 	}
 
 	public TYPE_FUNCTION SemantMe() throws Exception

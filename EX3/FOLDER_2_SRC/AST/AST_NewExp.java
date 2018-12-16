@@ -1,6 +1,6 @@
 package AST;
 import TYPES.*;
-import SYMBOL_TABLE.*;
+import SymbolTable.*;
 
 public class AST_NewExp extends AST_Exp
 {
@@ -22,7 +22,7 @@ public class AST_NewExp extends AST_Exp
 	public TYPE SemantMe() throws Exception
 	{
         if (exp != null && exp.SemantMe() != TYPE_INT.getInstance()) { throw new SemanticException(); }
-        TYPE newExpType = SYMBOL_TABLE.getInstance().find(type);
+        TYPE newExpType = SymbolTable.getInstance().find(type);
         if (newExpType == null) { throw new SemanticException(); }
         return newExpType;
 	}

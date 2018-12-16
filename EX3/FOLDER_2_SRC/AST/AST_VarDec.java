@@ -1,6 +1,6 @@
 package AST;
 import TYPES.*;
-import SYMBOL_TABLE.*;
+import SymbolTable.*;
 
 public class AST_VarDec extends AST_ClassField
 {
@@ -24,9 +24,9 @@ public class AST_VarDec extends AST_ClassField
 
 	public TYPE SemantDeclaration() throws Exception
 	{
-		if (SYMBOL_TABLE.getInstance().findInScope(varName) != null) { throw new SemanticException(); }
+		if (SymbolTable.getInstance().findInScope(varName) != null) { throw new SemanticException(); }
 		
-		TYPE varType = SYMBOL_TABLE.getInstance().find(varTypeName);
+		TYPE varType = SymbolTable.getInstance().find(varTypeName);
 		if (varType == null) { throw new SemanticException(); }
 
 		TYPE initValType = initVal != null ? initVal.SemantMe() : null;
@@ -46,7 +46,7 @@ public class AST_VarDec extends AST_ClassField
 			}
 		}
 
-		SYMBOL_TABLE.getInstance().enter(varName, varType);
+		SymbolTable.getInstance().enter(varName, varType);
 		return new TYPE_CLASS_VAR_DEC(varType, varName);
 	}
 

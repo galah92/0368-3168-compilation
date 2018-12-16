@@ -1,6 +1,6 @@
 package AST;
 import TYPES.*;
-import SYMBOL_TABLE.*;
+import SymbolTable.*;
 
 public class AST_ParamsList extends AST_Node
 {
@@ -25,26 +25,26 @@ public class AST_ParamsList extends AST_Node
 
 	public TYPE_LIST SemantDeclaration() throws Exception
 	{
-		TYPE paramType = SYMBOL_TABLE.getInstance().find(paramTypeName);
+		TYPE paramType = SymbolTable.getInstance().find(paramTypeName);
 		if (paramType == null) { throw new SemanticException(); }
 		return new TYPE_LIST(paramType, tail != null ? tail.SemantDeclaration() : null);
 	}
 
 	public void SemantBody() throws Exception
 	{
-		TYPE paramType = SYMBOL_TABLE.getInstance().find(paramTypeName);
+		TYPE paramType = SymbolTable.getInstance().find(paramTypeName);
 		if (paramType == null) { throw new SemanticException(); }
-		if (SYMBOL_TABLE.getInstance().findInScope(paramName) != null) { throw new SemanticException(); }
-		SYMBOL_TABLE.getInstance().enter(paramName, paramType);
+		if (SymbolTable.getInstance().findInScope(paramName) != null) { throw new SemanticException(); }
+		SymbolTable.getInstance().enter(paramName, paramType);
 		if (tail != null) tail.SemantBody();
 	}
 
     public TYPE_LIST SemantMe() throws Exception
 	{
-		TYPE paramType = SYMBOL_TABLE.getInstance().find(paramTypeName);
+		TYPE paramType = SymbolTable.getInstance().find(paramTypeName);
 		if (paramType == null) { throw new SemanticException(); }
-		if (SYMBOL_TABLE.getInstance().findInScope(paramName) != null) { throw new SemanticException(); }
-		SYMBOL_TABLE.getInstance().enter(paramName, paramType);
+		if (SymbolTable.getInstance().findInScope(paramName) != null) { throw new SemanticException(); }
+		SymbolTable.getInstance().enter(paramName, paramType);
 		return new TYPE_LIST(paramType, tail != null ? tail.SemantMe() : null);
 	}
 }

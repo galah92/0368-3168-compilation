@@ -1,6 +1,6 @@
 package AST;
 import TYPES.*;
-import SYMBOL_TABLE.*;
+import SymbolTable.*;
 
 public class AST_StmtReturn extends AST_Stmt
 {
@@ -20,7 +20,7 @@ public class AST_StmtReturn extends AST_Stmt
 	}
 	public TYPE SemantMe() throws Exception
 	{
-		TYPE_FUNCTION funcType = SYMBOL_TABLE.getInstance().findFunc();
+		TYPE_FUNCTION funcType = SymbolTable.getInstance().findFunc();
 		if (funcType == null) { throw new SemanticException(); }
 		TYPE expType = exp != null ? exp.SemantMe() : TYPE_VOID.getInstance();
 		if (funcType.retType != expType) { throw new SemanticException(); }

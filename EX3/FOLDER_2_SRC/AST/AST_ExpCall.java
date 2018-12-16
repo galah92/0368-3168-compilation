@@ -1,6 +1,6 @@
 package AST;
 import TYPES.*;
-import SYMBOL_TABLE.*;
+import SymbolTable.*;
 
 public class AST_ExpCall extends AST_Exp
 {
@@ -40,7 +40,7 @@ public class AST_ExpCall extends AST_Exp
 		}
 
 		// deal with global functions
-		TYPE t = SYMBOL_TABLE.getInstance().find(funcName);
+		TYPE t = SymbolTable.getInstance().find(funcName);
 		if (t == null && !(t instanceof TYPE_FUNCTION)) { throw new SemanticException(); }
 		TYPE_FUNCTION funcType = (TYPE_FUNCTION)t;
 		return funcType.retType;

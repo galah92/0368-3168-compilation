@@ -13,7 +13,7 @@ JFlex_CUP_GENERATED_FILES = ${JFlex_GENERATED_FILE} ${CUP_GENERATED_FILES}
 SRC_FILES                 = ${SRC_DIR}/*.java              \
                             ${SRC_DIR}/AST/*.java          \
                             ${SRC_DIR}/TYPES/*.java        \
-                            ${SRC_DIR}/SYMBOL_TABLE/*.java
+                            ${SRC_DIR}/SymbolTable/*.java
 EXTERNAL_JAR_FILES        = ${EXTERNAL_JARS_DIR}/java-cup-11b-runtime.jar
 MANIFEST_FILE             = ${MANIFEST_DIR}/MANIFEST.MF
 
@@ -51,36 +51,36 @@ everything: clean compile
 	java -jar COMPILER ${INPUT} ${OUTPUT}
 	dot -Tjpeg -o${OUTPUT_DIR}/AST.jpeg ${OUTPUT_DIR}/AST_IN_GRAPHVIZ_DOT_FORMAT.txt
 #	eog ${OUTPUT_DIR}/AST.jpeg &
-	dot -Tjpeg -o${OUTPUT_DIR}/SYMBOL_TABLE_0.jpeg  ${OUTPUT_DIR}/SYMBOL_TABLE_0_IN_GRAPHVIZ_DOT_FORMAT.txt
-	@dot -Tjpeg -o${OUTPUT_DIR}/SYMBOL_TABLE_1.jpeg  ${OUTPUT_DIR}/SYMBOL_TABLE_1_IN_GRAPHVIZ_DOT_FORMAT.txt
-	@dot -Tjpeg -o${OUTPUT_DIR}/SYMBOL_TABLE_2.jpeg  ${OUTPUT_DIR}/SYMBOL_TABLE_2_IN_GRAPHVIZ_DOT_FORMAT.txt
-	@dot -Tjpeg -o${OUTPUT_DIR}/SYMBOL_TABLE_3.jpeg  ${OUTPUT_DIR}/SYMBOL_TABLE_3_IN_GRAPHVIZ_DOT_FORMAT.txt
-	@dot -Tjpeg -o${OUTPUT_DIR}/SYMBOL_TABLE_4.jpeg  ${OUTPUT_DIR}/SYMBOL_TABLE_4_IN_GRAPHVIZ_DOT_FORMAT.txt
-	@dot -Tjpeg -o${OUTPUT_DIR}/SYMBOL_TABLE_5.jpeg  ${OUTPUT_DIR}/SYMBOL_TABLE_5_IN_GRAPHVIZ_DOT_FORMAT.txt
-	@dot -Tjpeg -o${OUTPUT_DIR}/SYMBOL_TABLE_6.jpeg  ${OUTPUT_DIR}/SYMBOL_TABLE_6_IN_GRAPHVIZ_DOT_FORMAT.txt
-	@dot -Tjpeg -o${OUTPUT_DIR}/SYMBOL_TABLE_7.jpeg  ${OUTPUT_DIR}/SYMBOL_TABLE_7_IN_GRAPHVIZ_DOT_FORMAT.txt
-	@dot -Tjpeg -o${OUTPUT_DIR}/SYMBOL_TABLE_8.jpeg  ${OUTPUT_DIR}/SYMBOL_TABLE_8_IN_GRAPHVIZ_DOT_FORMAT.txt
-	@dot -Tjpeg -o${OUTPUT_DIR}/SYMBOL_TABLE_9.jpeg  ${OUTPUT_DIR}/SYMBOL_TABLE_9_IN_GRAPHVIZ_DOT_FORMAT.txt
-	@dot -Tjpeg -o${OUTPUT_DIR}/SYMBOL_TABLE_10.jpeg ${OUTPUT_DIR}/SYMBOL_TABLE_10_IN_GRAPHVIZ_DOT_FORMAT.txt
-	@dot -Tjpeg -o${OUTPUT_DIR}/SYMBOL_TABLE_11.jpeg ${OUTPUT_DIR}/SYMBOL_TABLE_11_IN_GRAPHVIZ_DOT_FORMAT.txt
-	@dot -Tjpeg -o${OUTPUT_DIR}/SYMBOL_TABLE_12.jpeg ${OUTPUT_DIR}/SYMBOL_TABLE_12_IN_GRAPHVIZ_DOT_FORMAT.txt
-	@dot -Tjpeg -o${OUTPUT_DIR}/SYMBOL_TABLE_13.jpeg ${OUTPUT_DIR}/SYMBOL_TABLE_13_IN_GRAPHVIZ_DOT_FORMAT.txt
-	@dot -Tjpeg -o${OUTPUT_DIR}/SYMBOL_TABLE_14.jpeg ${OUTPUT_DIR}/SYMBOL_TABLE_14_IN_GRAPHVIZ_DOT_FORMAT.txt
-	@dot -Tjpeg -o${OUTPUT_DIR}/SYMBOL_TABLE_15.jpeg ${OUTPUT_DIR}/SYMBOL_TABLE_15_IN_GRAPHVIZ_DOT_FORMAT.txt
-	@dot -Tjpeg -o${OUTPUT_DIR}/SYMBOL_TABLE_16.jpeg ${OUTPUT_DIR}/SYMBOL_TABLE_16_IN_GRAPHVIZ_DOT_FORMAT.txt
-	@dot -Tjpeg -o${OUTPUT_DIR}/SYMBOL_TABLE_17.jpeg ${OUTPUT_DIR}/SYMBOL_TABLE_17_IN_GRAPHVIZ_DOT_FORMAT.txt
-	@dot -Tjpeg -o${OUTPUT_DIR}/SYMBOL_TABLE_18.jpeg ${OUTPUT_DIR}/SYMBOL_TABLE_18_IN_GRAPHVIZ_DOT_FORMAT.txt
-	@dot -Tjpeg -o${OUTPUT_DIR}/SYMBOL_TABLE_19.jpeg ${OUTPUT_DIR}/SYMBOL_TABLE_19_IN_GRAPHVIZ_DOT_FORMAT.txt
-	@dot -Tjpeg -o${OUTPUT_DIR}/SYMBOL_TABLE_20.jpeg ${OUTPUT_DIR}/SYMBOL_TABLE_20_IN_GRAPHVIZ_DOT_FORMAT.txt
-	@dot -Tjpeg -o${OUTPUT_DIR}/SYMBOL_TABLE_21.jpeg ${OUTPUT_DIR}/SYMBOL_TABLE_21_IN_GRAPHVIZ_DOT_FORMAT.txt
-	@dot -Tjpeg -o${OUTPUT_DIR}/SYMBOL_TABLE_22.jpeg ${OUTPUT_DIR}/SYMBOL_TABLE_22_IN_GRAPHVIZ_DOT_FORMAT.txt
-	@dot -Tjpeg -o${OUTPUT_DIR}/SYMBOL_TABLE_23.jpeg ${OUTPUT_DIR}/SYMBOL_TABLE_23_IN_GRAPHVIZ_DOT_FORMAT.txt
-	@dot -Tjpeg -o${OUTPUT_DIR}/SYMBOL_TABLE_24.jpeg ${OUTPUT_DIR}/SYMBOL_TABLE_24_IN_GRAPHVIZ_DOT_FORMAT.txt
-	@dot -Tjpeg -o${OUTPUT_DIR}/SYMBOL_TABLE_25.jpeg ${OUTPUT_DIR}/SYMBOL_TABLE_25_IN_GRAPHVIZ_DOT_FORMAT.txt
-	@dot -Tjpeg -o${OUTPUT_DIR}/SYMBOL_TABLE_26.jpeg ${OUTPUT_DIR}/SYMBOL_TABLE_26_IN_GRAPHVIZ_DOT_FORMAT.txt
-	@dot -Tjpeg -o${OUTPUT_DIR}/SYMBOL_TABLE_27.jpeg ${OUTPUT_DIR}/SYMBOL_TABLE_27_IN_GRAPHVIZ_DOT_FORMAT.txt
-	@dot -Tjpeg -o${OUTPUT_DIR}/SYMBOL_TABLE_28.jpeg ${OUTPUT_DIR}/SYMBOL_TABLE_28_IN_GRAPHVIZ_DOT_FORMAT.txt
-	@dot -Tjpeg -o${OUTPUT_DIR}/SYMBOL_TABLE_29.jpeg ${OUTPUT_DIR}/SYMBOL_TABLE_29_IN_GRAPHVIZ_DOT_FORMAT.txt
-	@dot -Tjpeg -o${OUTPUT_DIR}/SYMBOL_TABLE_30.jpeg ${OUTPUT_DIR}/SYMBOL_TABLE_30_IN_GRAPHVIZ_DOT_FORMAT.txt
-#	eog ${OUTPUT_DIR}/SYMBOL_TABLE_0.jpeg &
+	dot -Tjpeg -o${OUTPUT_DIR}/SymbolTable_0.jpeg  ${OUTPUT_DIR}/SymbolTable_0_IN_GRAPHVIZ_DOT_FORMAT.txt
+	@dot -Tjpeg -o${OUTPUT_DIR}/SymbolTable_1.jpeg  ${OUTPUT_DIR}/SymbolTable_1_IN_GRAPHVIZ_DOT_FORMAT.txt
+	@dot -Tjpeg -o${OUTPUT_DIR}/SymbolTable_2.jpeg  ${OUTPUT_DIR}/SymbolTable_2_IN_GRAPHVIZ_DOT_FORMAT.txt
+	@dot -Tjpeg -o${OUTPUT_DIR}/SymbolTable_3.jpeg  ${OUTPUT_DIR}/SymbolTable_3_IN_GRAPHVIZ_DOT_FORMAT.txt
+	@dot -Tjpeg -o${OUTPUT_DIR}/SymbolTable_4.jpeg  ${OUTPUT_DIR}/SymbolTable_4_IN_GRAPHVIZ_DOT_FORMAT.txt
+	@dot -Tjpeg -o${OUTPUT_DIR}/SymbolTable_5.jpeg  ${OUTPUT_DIR}/SymbolTable_5_IN_GRAPHVIZ_DOT_FORMAT.txt
+	@dot -Tjpeg -o${OUTPUT_DIR}/SymbolTable_6.jpeg  ${OUTPUT_DIR}/SymbolTable_6_IN_GRAPHVIZ_DOT_FORMAT.txt
+	@dot -Tjpeg -o${OUTPUT_DIR}/SymbolTable_7.jpeg  ${OUTPUT_DIR}/SymbolTable_7_IN_GRAPHVIZ_DOT_FORMAT.txt
+	@dot -Tjpeg -o${OUTPUT_DIR}/SymbolTable_8.jpeg  ${OUTPUT_DIR}/SymbolTable_8_IN_GRAPHVIZ_DOT_FORMAT.txt
+	@dot -Tjpeg -o${OUTPUT_DIR}/SymbolTable_9.jpeg  ${OUTPUT_DIR}/SymbolTable_9_IN_GRAPHVIZ_DOT_FORMAT.txt
+	@dot -Tjpeg -o${OUTPUT_DIR}/SymbolTable_10.jpeg ${OUTPUT_DIR}/SymbolTable_10_IN_GRAPHVIZ_DOT_FORMAT.txt
+	@dot -Tjpeg -o${OUTPUT_DIR}/SymbolTable_11.jpeg ${OUTPUT_DIR}/SymbolTable_11_IN_GRAPHVIZ_DOT_FORMAT.txt
+	@dot -Tjpeg -o${OUTPUT_DIR}/SymbolTable_12.jpeg ${OUTPUT_DIR}/SymbolTable_12_IN_GRAPHVIZ_DOT_FORMAT.txt
+	@dot -Tjpeg -o${OUTPUT_DIR}/SymbolTable_13.jpeg ${OUTPUT_DIR}/SymbolTable_13_IN_GRAPHVIZ_DOT_FORMAT.txt
+	@dot -Tjpeg -o${OUTPUT_DIR}/SymbolTable_14.jpeg ${OUTPUT_DIR}/SymbolTable_14_IN_GRAPHVIZ_DOT_FORMAT.txt
+	@dot -Tjpeg -o${OUTPUT_DIR}/SymbolTable_15.jpeg ${OUTPUT_DIR}/SymbolTable_15_IN_GRAPHVIZ_DOT_FORMAT.txt
+	@dot -Tjpeg -o${OUTPUT_DIR}/SymbolTable_16.jpeg ${OUTPUT_DIR}/SymbolTable_16_IN_GRAPHVIZ_DOT_FORMAT.txt
+	@dot -Tjpeg -o${OUTPUT_DIR}/SymbolTable_17.jpeg ${OUTPUT_DIR}/SymbolTable_17_IN_GRAPHVIZ_DOT_FORMAT.txt
+	@dot -Tjpeg -o${OUTPUT_DIR}/SymbolTable_18.jpeg ${OUTPUT_DIR}/SymbolTable_18_IN_GRAPHVIZ_DOT_FORMAT.txt
+	@dot -Tjpeg -o${OUTPUT_DIR}/SymbolTable_19.jpeg ${OUTPUT_DIR}/SymbolTable_19_IN_GRAPHVIZ_DOT_FORMAT.txt
+	@dot -Tjpeg -o${OUTPUT_DIR}/SymbolTable_20.jpeg ${OUTPUT_DIR}/SymbolTable_20_IN_GRAPHVIZ_DOT_FORMAT.txt
+	@dot -Tjpeg -o${OUTPUT_DIR}/SymbolTable_21.jpeg ${OUTPUT_DIR}/SymbolTable_21_IN_GRAPHVIZ_DOT_FORMAT.txt
+	@dot -Tjpeg -o${OUTPUT_DIR}/SymbolTable_22.jpeg ${OUTPUT_DIR}/SymbolTable_22_IN_GRAPHVIZ_DOT_FORMAT.txt
+	@dot -Tjpeg -o${OUTPUT_DIR}/SymbolTable_23.jpeg ${OUTPUT_DIR}/SymbolTable_23_IN_GRAPHVIZ_DOT_FORMAT.txt
+	@dot -Tjpeg -o${OUTPUT_DIR}/SymbolTable_24.jpeg ${OUTPUT_DIR}/SymbolTable_24_IN_GRAPHVIZ_DOT_FORMAT.txt
+	@dot -Tjpeg -o${OUTPUT_DIR}/SymbolTable_25.jpeg ${OUTPUT_DIR}/SymbolTable_25_IN_GRAPHVIZ_DOT_FORMAT.txt
+	@dot -Tjpeg -o${OUTPUT_DIR}/SymbolTable_26.jpeg ${OUTPUT_DIR}/SymbolTable_26_IN_GRAPHVIZ_DOT_FORMAT.txt
+	@dot -Tjpeg -o${OUTPUT_DIR}/SymbolTable_27.jpeg ${OUTPUT_DIR}/SymbolTable_27_IN_GRAPHVIZ_DOT_FORMAT.txt
+	@dot -Tjpeg -o${OUTPUT_DIR}/SymbolTable_28.jpeg ${OUTPUT_DIR}/SymbolTable_28_IN_GRAPHVIZ_DOT_FORMAT.txt
+	@dot -Tjpeg -o${OUTPUT_DIR}/SymbolTable_29.jpeg ${OUTPUT_DIR}/SymbolTable_29_IN_GRAPHVIZ_DOT_FORMAT.txt
+	@dot -Tjpeg -o${OUTPUT_DIR}/SymbolTable_30.jpeg ${OUTPUT_DIR}/SymbolTable_30_IN_GRAPHVIZ_DOT_FORMAT.txt
+#	eog ${OUTPUT_DIR}/SymbolTable_0.jpeg &
 	
