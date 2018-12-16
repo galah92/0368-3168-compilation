@@ -173,7 +173,7 @@ public class SYMBOL_TABLE
 			instance.enter("int", TYPE_INT.getInstance());
 			instance.enter("string", TYPE_STRING.getInstance());
 
-			/* [2] How should we handle void ??? */
+			// TODO: this is bad! as one can create a variable of type "void"
 			instance.enter("void", TYPE_VOID.getInstance());
 
 			// enter lib functions

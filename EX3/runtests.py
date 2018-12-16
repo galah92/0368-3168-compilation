@@ -2,6 +2,8 @@ from pathlib import Path
 import subprocess
 
 
+subprocess.run(['make'])
+
 for path in Path('FOLDER_4_INPUT').glob('TEST*.txt'):
 
     n = int(path.name[5:7])
@@ -11,6 +13,9 @@ for path in Path('FOLDER_4_INPUT').glob('TEST*.txt'):
     subprocess.run(['java', '-jar', 'COMPILER', path, output_file], stdout=subprocess.PIPE)
     
     output_content = output_file.open().readline().rstrip()
-    expected_content = expected_file.open().readline().rstrip() 
+    expected_content = expected_file.open().readline().rstrip()
     print(f'{n}: Expected: {expected_content}\tGot: {output_content}')
+
+    if output_content != expected_content:
+        break
 

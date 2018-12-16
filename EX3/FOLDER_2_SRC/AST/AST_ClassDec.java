@@ -24,6 +24,8 @@ public class AST_ClassDec extends AST_Dec
 
     public TYPE SemantMe() throws Exception
 	{
+		if (!SYMBOL_TABLE.getInstance().isGlobalScope()) { throw new Exception(); }
+
 		TYPE_CLASS baseType = null;
 		if (baseName != null)
 		{
@@ -32,13 +34,13 @@ public class AST_ClassDec extends AST_Dec
 			baseType = (TYPE_CLASS)t;
 		}
 
-		if (!SYMBOL_TABLE.getInstance().isGlobalScope()) { throw new Exception(); }
 		SYMBOL_TABLE.getInstance().beginScope();
 		TYPE_LIST fieldsTypes = fields.SemantDeclaration();
 		fields.SemantBody();
 		SYMBOL_TABLE.getInstance().endScope();
 
-		SYMBOL_TABLE.getInstance().enter(className, new TYPE_CLASS(baseType, className, fieldsTypes));
-		return null;		
+		TYPE_CLASS classType = new TYPE_CLASS(baseType, className, fieldsTypes);
+		SYMBOL_TABLE.getInstance().enter(className, classType);
+		return classType;
 	}
 }
