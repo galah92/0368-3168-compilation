@@ -79,7 +79,7 @@ non terminal AST_Var var;
 non terminal AST_ExpCall callExp;
 non terminal AST_ExpBinOp binopExp;
 non terminal AST_ExpPrimitive primitiveExp;
-non terminal AST_ExpList expListComma;
+non terminal AST_ExpList expList;
 non terminal AST_NewExp newExp;
 non terminal AST_Stmt stmt;
 non terminal AST_StmtList stmtList;
@@ -106,6 +106,9 @@ paramsList  ::=     ID:id1 ID:id2 COMMA paramsList:list {: RESULT = new AST_Para
 
 cFieldList  ::=     cField:field cFieldList:list        {: RESULT = new AST_ClassFieldList(field, list); RESULT.lineNumber = fieldleft; :} |
                     cField:field                        {: RESULT = new AST_ClassFieldList(field, null); RESULT.lineNumber = fieldleft; :} ;
+
+expList     ::=     exp:e COMMA expList:list            {: RESULT = new AST_ExpList(e, list); RESULT.lineNumber = eleft; :} |
+                    exp:e                               {: RESULT = new AST_ExpList(e, null); RESULT.lineNumber = eleft; :} ;
 
 decList		::=		dec:d decList:l	{: RESULT = new AST_DecList(d, l); RESULT.lineNumber = dleft; :} |
                     dec:d			{: RESULT = new AST_DecList(d, null); RESULT.lineNumber = dleft; :}
@@ -150,18 +153,16 @@ binopExp	::=		exp:e1 PLUS exp:e2		{: RESULT = new AST_ExpBinOp(e1, e2, '+'); RES
                     exp:e1 EQ exp:e2		{: RESULT = new AST_ExpBinOp(e1, e2, '='); RESULT.lineNumber = e1left; :}
                     ;
 
-callExp		::=		ID:funcName LPAREN expListComma:args RPAREN             {: RESULT = new AST_ExpCall(funcName, null, args); RESULT.lineNumber = funcNameleft; :} |
-                    var:v DOT ID:funcName LPAREN expListComma:args RPAREN   {: RESULT = new AST_ExpCall(funcName, v, args); RESULT.lineNumber = funcNameleft; :}
+callExp		::=		ID:funcName LPAREN RPAREN                           {: RESULT = new AST_ExpCall(funcName, null, null); RESULT.lineNumber = funcNameleft; :} |
+                    ID:funcName LPAREN expList:args RPAREN              {: RESULT = new AST_ExpCall(funcName, null, args); RESULT.lineNumber = funcNameleft; :} |
+                    var:v DOT ID:funcName LPAREN RPAREN                 {: RESULT = new AST_ExpCall(funcName, v, null); RESULT.lineNumber = funcNameleft; :} |
+                    var:v DOT ID:funcName LPAREN expList:args RPAREN    {: RESULT = new AST_ExpCall(funcName, v, args); RESULT.lineNumber = funcNameleft; :}
                     ;
 
 primitiveExp    ::=     INT:i			        {: RESULT = new AST_ExpInt(i); RESULT.lineNumber = ileft; :} |
                         MINUS INT:i			    {: RESULT = new AST_ExpInt(-i); RESULT.lineNumber = ileft; :} |
                         STRING:s		        {: RESULT = new AST_ExpString(s); RESULT.lineNumber = sleft; :} |
                         NIL:n	                {: RESULT = new AST_ExpNil(); RESULT.lineNumber = nleft; :}
-                        ;
-
-expListComma	::=		exp:e COMMA expListComma:el	{: RESULT = new AST_ExpList(e,el); RESULT.lineNumber = eleft; :} |
-                        exp:e						{: RESULT = new AST_ExpList(e,null); RESULT.lineNumber = eleft; :}
                         ;
 
 stmtList	::=		stmt:s stmtList:l	{: RESULT = new AST_StmtList(s,l); RESULT.lineNumber = sleft; :} |
