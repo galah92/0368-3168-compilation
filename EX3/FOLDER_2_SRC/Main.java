@@ -19,10 +19,15 @@ public class Main
 			AST.SemantMe(); // will exit here if error exists
 			writer.println("OK");
     	}
+		catch (AST_Node.SemanticException e)
+		{
+			e.printStackTrace();
+			if (writer != null) { writer.println("ERROR(" + e.lineNumber + ")"); }
+		}
 		catch (Exception e)
 		{
 			e.printStackTrace();
-			if (writer != null) { writer.println("ERROR"); }
+			if (writer != null) { writer.println("UnknownError"); }
 		}
 		finally
 		{

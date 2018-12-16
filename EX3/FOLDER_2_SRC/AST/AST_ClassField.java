@@ -2,15 +2,9 @@ package AST;
 import TYPES.*;
 import SYMBOL_TABLE.*;
 
-public class AST_ClassField extends AST_Dec
+public abstract class AST_ClassField extends AST_Dec
 {
-    public TYPE SemantDeclaration() throws Exception
-	{
-		return null;
-	}
+    public abstract TYPE SemantDeclaration() throws Exception;
 
-	public void SemantBody() throws Exception
-	{
-		
-	}
+	public abstract void SemantBody() throws Exception;
 }

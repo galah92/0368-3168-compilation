@@ -33,6 +33,11 @@ public class AST_VarDec extends AST_ClassField
 		return new TYPE_CLASS_VAR_DEC(varType, varName);
 	}
 
+	public void SemantBody() throws Exception
+	{
+		// nothing to do here
+	}
+
 	public TYPE SemantMe() throws Exception
 	{
 		TYPE varType = SemantDeclaration();

@@ -13,6 +13,17 @@ public class AST_StmtWhile extends AST_Stmt
 		this.body = body;
 	}
 
+	public void PrintMe()
+	{
+		if (cond != null) cond.PrintMe();
+		if (body != null) body.PrintMe();
+
+		AST_GRAPHVIZ.getInstance().logNode(SerialNumber, "StmtWhile");
+		
+		if (cond != null) AST_GRAPHVIZ.getInstance().logEdge(SerialNumber, cond.SerialNumber);
+		if (body != null) AST_GRAPHVIZ.getInstance().logEdge(SerialNumber, body.SerialNumber);
+	}
+
 	public TYPE SemantMe() throws Exception
 	{
 		if (cond.SemantMe() != TYPE_INT.getInstance()) { throw new Exception(); }
