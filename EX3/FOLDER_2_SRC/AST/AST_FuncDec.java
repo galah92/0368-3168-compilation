@@ -29,14 +29,19 @@ public class AST_FuncDec extends AST_ClassField
 
 	public TypeFunc SemantDeclaration() throws Exception
 	{
-		// TODO: check for method overloading
-		// specifically, we need to throw if:
-		// names are equals && (params are different || retType is different)
-
 		Type retType = SymbolTable.find(retTypeName);
 		if (retType == null) { throw new SemanticException(); }
 
 		TypeList paramsTypes = params != null ? params.SemantDeclaration(): null;
+
+		Type t = SymbolTable.find(funcName);
+		if (t != null)
+		{
+			if (!(t instanceof TypeFunc)) { throw new SemanticException(); }
+			TypeFunc overloadedFuncType = (TypeFunc)t;
+			if (overloadedFuncType.retType != retType) { throw new SemanticException(); }
+			// TODO: should also check if params are different and throw if they are
+		}
 
 		TypeFunc funcType = new TypeFunc(retType, funcName, paramsTypes);
 		SymbolTable.enter(funcName, funcType);

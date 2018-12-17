@@ -33,13 +33,12 @@ public class AST_ClassDec extends AST_Dec
 			if (!(t instanceof TypeClass)) { throw new SemanticException(); }
 			baseType = (TypeClass)t;
 		}
-
+		
 		// enter the class Type to that we could field of same Type
 		TypeClass classType = new TypeClass(baseType, className, null);
 		SymbolTable.enter(className, classType);
 
 		SymbolTable.beginScope();
-		TypeList fieldsTypes = fields.SemantDeclaration();
 		if (baseType != null)
 		{
 			for (TypeList t = baseType.fields; t != null; t = t.tail)
@@ -50,6 +49,7 @@ public class AST_ClassDec extends AST_Dec
 				}
 			}
 		}
+		TypeList fieldsTypes = fields.SemantDeclaration();
 		fields.SemantBody();
 		SymbolTable.endScope();
 
