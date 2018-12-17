@@ -18,6 +18,6 @@ public class AST_VarSimple extends AST_Var
 	
 	public Type SemantMe() throws Exception
 	{
-		return SymbolTable.getInstance().find(varName);
+		return SymbolTable.find(varName);
 	}
 }

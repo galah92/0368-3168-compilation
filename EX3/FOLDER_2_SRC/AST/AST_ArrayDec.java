@@ -21,11 +21,11 @@ public class AST_ArrayDec extends AST_Dec
 
 	public Type SemantMe() throws Exception
 	{
-		if (!SymbolTable.getInstance().isGlobalScope()) { throw new SemanticException(); }
-		if (SymbolTable.getInstance().find(arrName) != null) { throw new SemanticException(); }
-		Type arrType = SymbolTable.getInstance().find(arrTypeName);
+		if (!SymbolTable.isGlobalScope()) { throw new SemanticException(); }
+		if (SymbolTable.find(arrName) != null) { throw new SemanticException(); }
+		Type arrType = SymbolTable.find(arrTypeName);
 		if (arrType == null) { throw new SemanticException(); }
-		SymbolTable.getInstance().enter(arrName, new TypeArray(arrType, arrName));
+		SymbolTable.enter(arrName, new TypeArray(arrType, arrName));
 		return null;
 	}
 

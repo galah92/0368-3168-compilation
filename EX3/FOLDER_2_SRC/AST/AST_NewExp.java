@@ -22,7 +22,7 @@ public class AST_NewExp extends AST_Exp
 	public Type SemantMe() throws Exception
 	{
         if (exp != null && exp.SemantMe() != TypeInt.getInstance()) { throw new SemanticException(); }
-        Type newExpType = SymbolTable.getInstance().find(Type);
+        Type newExpType = SymbolTable.find(Type);
         if (newExpType == null) { throw new SemanticException(); }
         return newExpType;
 	}

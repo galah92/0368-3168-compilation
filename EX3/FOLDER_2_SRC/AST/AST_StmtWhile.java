@@ -27,9 +27,9 @@ public class AST_StmtWhile extends AST_Stmt
 	public Type SemantMe() throws Exception
 	{
 		if (cond.SemantMe() != TypeInt.getInstance()) { throw new SemanticException(); }
-		SymbolTable.getInstance().beginScope();
+		SymbolTable.beginScope();
 		body.SemantMe();
-		SymbolTable.getInstance().endScope();
+		SymbolTable.endScope();
 		return null;
 	}
 

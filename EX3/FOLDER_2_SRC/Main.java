@@ -2,6 +2,7 @@ import java.io.*;
 import java.io.PrintWriter;
 import java_cup.runtime.Symbol;
 import AST.*;
+import SymbolTable.*;
 
 public class Main
 {
@@ -10,6 +11,7 @@ public class Main
 		PrintWriter writer = null;
 		try
 		{
+			SymbolTable.Init();
 			AST_Node.initFile();
 			writer = new PrintWriter(argv[1]);
 			Lexer lexer = new Lexer(new FileReader(argv[0]));

@@ -24,9 +24,9 @@ public class AST_VarDec extends AST_ClassField
 
 	public Type SemantDeclaration() throws Exception
 	{
-		if (SymbolTable.getInstance().findInScope(varName) != null) { throw new SemanticException(); }
+		if (SymbolTable.findInScope(varName) != null) { throw new SemanticException(); }
 		
-		Type varType = SymbolTable.getInstance().find(varTypeName);
+		Type varType = SymbolTable.find(varTypeName);
 		if (varType == null) { throw new SemanticException(); }
 
 		Type initValType = initVal != null ? initVal.SemantMe() : null;
@@ -46,7 +46,7 @@ public class AST_VarDec extends AST_ClassField
 			}
 		}
 
-		SymbolTable.getInstance().enter(varName, varType);
+		SymbolTable.enter(varName, varType);
 		return new TypeClassVar(varType, varName);
 	}
 

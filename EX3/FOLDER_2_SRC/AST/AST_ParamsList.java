@@ -25,26 +25,26 @@ public class AST_ParamsList extends AST_Node
 
 	public TypeList SemantDeclaration() throws Exception
 	{
-		Type paramType = SymbolTable.getInstance().find(paramTypeName);
+		Type paramType = SymbolTable.find(paramTypeName);
 		if (paramType == null) { throw new SemanticException(); }
 		return new TypeList(paramType, tail != null ? tail.SemantDeclaration() : null);
 	}
 
 	public void SemantBody() throws Exception
 	{
-		Type paramType = SymbolTable.getInstance().find(paramTypeName);
+		Type paramType = SymbolTable.find(paramTypeName);
 		if (paramType == null) { throw new SemanticException(); }
-		if (SymbolTable.getInstance().findInScope(paramName) != null) { throw new SemanticException(); }
-		SymbolTable.getInstance().enter(paramName, paramType);
+		if (SymbolTable.findInScope(paramName) != null) { throw new SemanticException(); }
+		SymbolTable.enter(paramName, paramType);
 		if (tail != null) tail.SemantBody();
 	}
 
     public TypeList SemantMe() throws Exception
 	{
-		Type paramType = SymbolTable.getInstance().find(paramTypeName);
+		Type paramType = SymbolTable.find(paramTypeName);
 		if (paramType == null) { throw new SemanticException(); }
-		if (SymbolTable.getInstance().findInScope(paramName) != null) { throw new SemanticException(); }
-		SymbolTable.getInstance().enter(paramName, paramType);
+		if (SymbolTable.findInScope(paramName) != null) { throw new SemanticException(); }
+		SymbolTable.enter(paramName, paramType);
 		return new TypeList(paramType, tail != null ? tail.SemantMe() : null);
 	}
 }

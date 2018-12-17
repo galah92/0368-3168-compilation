@@ -4,7 +4,7 @@ import TYPES.*;
 
 public class SymbolTable
 {
-	private class Entry
+	private static class Entry
 	{
 		public String name;
 		public Type type;
@@ -24,11 +24,11 @@ public class SymbolTable
 
 	private static final int TABLE_SIZE = 13;
 	
-	private Entry[] table = new Entry[TABLE_SIZE];
-	private Entry top;
-	private int numEntries = 0;
+	private static Entry[] table = new Entry[TABLE_SIZE];
+	private static Entry top;
+	private static int numEntries = 0;
 	
-	private int hash(String s)
+	private static int hash(String s)
 	{
 		if (s.charAt(0) == 'l') { return 1; }
 		if (s.charAt(0) == 'm') { return 1; }
@@ -41,14 +41,14 @@ public class SymbolTable
 		return 12;
 	}
 
-	public void enter(String name, Type t)
+	public static void enter(String name, Type t)
 	{
 		int hashVal = hash(name);
 		table[hashVal] = top = new Entry(name, t, table[hashVal], top, numEntries++);
 		PrintMe();
 	}
 
-	public Type find(String name)
+	public static Type find(String name)
 	{
 		for (Entry e = table[hash(name)]; e != null; e = e.next)
 		{
@@ -57,7 +57,7 @@ public class SymbolTable
 		return null;
 	}
 
-	public Type findInScope(String name)
+	public static Type findInScope(String name)
 	{
 		Entry e = top;
 		int i = numEntries; // inner scope index
@@ -73,27 +73,27 @@ public class SymbolTable
 		return null;
 	}
 
-	public TypeFunc findFunc()
+	public static TypeFunc findFunc()
 	{
 		Entry e = top;
 		while (e != null && !(e.type instanceof TypeFunc)) { e = e.prevtop; }
 		return e != null ? (TypeFunc)e.type : null;
 	}
 
-	public boolean isGlobalScope()
+	public static boolean isGlobalScope()
 	{
 		Entry e = top;
 		while (e != null && !(e.type instanceof TypeScope)) { e = e.prevtop; }
 		return e == null; // no TypeScope in table
 	}
 
-	public void beginScope()
+	public static void beginScope()
 	{
 		enter("SCOPE-BOUNDARY", new TypeScope("NONE"));
 		PrintMe();
 	}
 
-	public void endScope()
+	public static void endScope()
 	{
 		// pop until a TypeScope is hit
 		while (!(top.type instanceof TypeScope))
@@ -112,7 +112,7 @@ public class SymbolTable
 	
 	public static int printCount = 0;
 	
-	public void PrintMe()
+	public static void PrintMe()
 	{
 		String dirname = "./FOLDER_5_OUTPUT/";
 		String filename = String.format("SymbolTable_%d_IN_GRAPHVIZ_DOT_FORMAT.txt", printCount++);
@@ -152,32 +152,22 @@ public class SymbolTable
 			e.printStackTrace();
 		}		
 	}
-	
-	private static SymbolTable instance = null;
 
-	protected SymbolTable() {}
-
-	public static SymbolTable getInstance()
+	public static void Init()
 	{
-		if (instance == null)
-		{
-			instance = new SymbolTable();
+		// enter primitive types
+		enter("int", TypeInt.getInstance());
+		enter("string", TypeString.getInstance());
 
-			// enter primitive types
-			instance.enter("int", TypeInt.getInstance());
-			instance.enter("string", TypeString.getInstance());
+		// TODO: this is bad! as one can create a variable of Type "void"
+		enter("void", TypeVoid.getInstance());
 
-			// TODO: this is bad! as one can create a variable of Type "void"
-			instance.enter("void", TypeVoid.getInstance());
-
-			// enter lib functions
-			TypeFunc printIntFunc = new TypeFunc(TypeVoid.getInstance(), "PrintInt", new TypeList(TypeInt.getInstance(), null));
-			TypeFunc printStringFunc = new TypeFunc(TypeVoid.getInstance(), "PrintString", new TypeList(TypeInt.getInstance(), null));
-			TypeFunc printTraceFunc = new TypeFunc(TypeVoid.getInstance(), "PrintTrace", null);
-			instance.enter("PrintInt", printIntFunc);
-			instance.enter("PrintString", printStringFunc);
-			instance.enter("PrintTrace", printTraceFunc);
-		}
-		return instance;
+		// enter lib functions
+		TypeFunc printIntFunc = new TypeFunc(TypeVoid.getInstance(), "PrintInt", new TypeList(TypeInt.getInstance(), null));
+		TypeFunc printStringFunc = new TypeFunc(TypeVoid.getInstance(), "PrintString", new TypeList(TypeInt.getInstance(), null));
+		TypeFunc printTraceFunc = new TypeFunc(TypeVoid.getInstance(), "PrintTrace", null);
+		enter("PrintInt", printIntFunc);
+		enter("PrintString", printStringFunc);
+		enter("PrintTrace", printTraceFunc);
 	}
 }

@@ -20,7 +20,7 @@ public class AST_StmtReturn extends AST_Stmt
 	}
 	public Type SemantMe() throws Exception
 	{
-		TypeFunc funcType = SymbolTable.getInstance().findFunc();
+		TypeFunc funcType = SymbolTable.findFunc();
 		if (funcType == null) { throw new SemanticException(); }
 		Type expType = exp != null ? exp.SemantMe() : TypeVoid.getInstance();
 		if (funcType.retType != expType) { throw new SemanticException(); }

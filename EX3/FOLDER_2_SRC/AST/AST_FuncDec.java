@@ -33,22 +33,22 @@ public class AST_FuncDec extends AST_ClassField
 		// specifically, we need to throw if:
 		// names are equals && (params are different || retType is different)
 
-		Type retType = SymbolTable.getInstance().find(retTypeName);
+		Type retType = SymbolTable.find(retTypeName);
 		if (retType == null) { throw new SemanticException(); }
 
 		TypeList paramsTypes = params != null ? params.SemantDeclaration(): null;
 
 		TypeFunc funcType = new TypeFunc(retType, funcName, paramsTypes);
-		SymbolTable.getInstance().enter(funcName, funcType);
+		SymbolTable.enter(funcName, funcType);
 		return funcType;
 	}
 
 	public void SemantBody() throws Exception
 	{
-		SymbolTable.getInstance().beginScope();
+		SymbolTable.beginScope();
 		if (params != null) params.SemantBody();
 		if (body != null) { body.SemantMe(); }
-		SymbolTable.getInstance().endScope();
+		SymbolTable.endScope();
 	}
 
 	public TypeFunc SemantMe() throws Exception

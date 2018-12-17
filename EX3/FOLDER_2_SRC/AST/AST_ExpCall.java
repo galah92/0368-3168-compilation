@@ -40,7 +40,7 @@ public class AST_ExpCall extends AST_Exp
 		}
 
 		// deal with global functions
-		Type t = SymbolTable.getInstance().find(funcName);
+		Type t = SymbolTable.find(funcName);
 		if (t == null && !(t instanceof TypeFunc)) { throw new SemanticException(); }
 		TypeFunc funcType = (TypeFunc)t;
 		return funcType.retType;
