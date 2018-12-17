@@ -29,21 +29,21 @@ public class AST_ExpBinOp extends AST_Exp
 		Type t1 = left.SemantMe();
 		Type t2 = right.SemantMe();
 
-		if (t1 == TypeInt.getInstance() && t2 == TypeInt.getInstance())
+		if (t1 == Type.INT && t2 == Type.INT)
 		{
-			return TypeInt.getInstance();
+			return Type.INT;
 		}
-		else if ((op == '+') && (t1 == TypeString.getInstance()) && (t2 == TypeString.getInstance()))
+		else if ((op == '+') && (t1 == Type.STRING) && (t2 == Type.STRING))
 		{
-			return TypeString.getInstance();
+			return Type.STRING;
 		}
 		else if (op == '=')
 		{
 			if (t1 == t2) { return t1; }
 			if ((t1 == null || t2 == null))
 			{
-				if (t1 instanceof TypeClass || t1 instanceof TypeArray) { return TypeInt.getInstance(); }
-				if (t2 instanceof TypeClass || t2 instanceof TypeArray) { return TypeInt.getInstance(); }
+				if (t1 instanceof TypeClass || t1 instanceof TypeArray) { return Type.INT; }
+				if (t2 instanceof TypeClass || t2 instanceof TypeArray) { return Type.INT; }
 				throw new SemanticException();
 			}
 		}

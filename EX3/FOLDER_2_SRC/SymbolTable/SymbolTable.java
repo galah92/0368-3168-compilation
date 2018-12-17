@@ -156,16 +156,16 @@ public class SymbolTable
 	public static void Init()
 	{
 		// enter primitive types
-		enter("int", TypeInt.getInstance());
-		enter("string", TypeString.getInstance());
+		enter("int", Type.INT);
+		enter("string", Type.STRING);
 
 		// TODO: this is bad! as one can create a variable of Type "void"
-		enter("void", TypeVoid.getInstance());
+		enter("void", Type.VOID);
 
 		// enter lib functions
-		TypeFunc printIntFunc = new TypeFunc(TypeVoid.getInstance(), "PrintInt", new TypeList(TypeInt.getInstance(), null));
-		TypeFunc printStringFunc = new TypeFunc(TypeVoid.getInstance(), "PrintString", new TypeList(TypeInt.getInstance(), null));
-		TypeFunc printTraceFunc = new TypeFunc(TypeVoid.getInstance(), "PrintTrace", null);
+		TypeFunc printIntFunc = new TypeFunc(Type.VOID, "PrintInt", new TypeList(Type.INT, null));
+		TypeFunc printStringFunc = new TypeFunc(Type.VOID, "PrintString", new TypeList(Type.INT, null));
+		TypeFunc printTraceFunc = new TypeFunc(Type.VOID, "PrintTrace", null);
 		enter("PrintInt", printIntFunc);
 		enter("PrintString", printStringFunc);
 		enter("PrintTrace", printTraceFunc);

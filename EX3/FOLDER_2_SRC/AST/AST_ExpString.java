@@ -16,6 +16,6 @@ public class AST_ExpString extends AST_ExpPrimitive
 	}
 	public Type SemantMe() throws Exception
 	{
-		return TypeString.getInstance();
+		return Type.STRING;
 	}
 }

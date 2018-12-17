@@ -22,7 +22,7 @@ public class AST_VarArrayElement extends AST_Var
 
 	public Type SemantMe() throws Exception
 	{
-		if (index.SemantMe() != TypeInt.getInstance()) { throw new SemanticException(); }
+		if (index.SemantMe() != Type.INT) { throw new SemanticException(); }
 		Type arrType = var.SemantMe();
 		if (!(arrType instanceof TypeArray)) { throw new SemanticException(); }
 		return ((TypeArray)arrType).elementType;
