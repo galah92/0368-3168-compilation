@@ -61,7 +61,7 @@ public class SymbolTable
 	{
 		Entry e = top;
 		int i = numEntries; // inner scope index
-		while (e != null && !(e.type instanceof TypeScope))
+		while (e != null && !(e.type == Type.SCOPE))
 		{
 			i--;
 			e = e.prevtop;
@@ -83,20 +83,20 @@ public class SymbolTable
 	public static boolean isGlobalScope()
 	{
 		Entry e = top;
-		while (e != null && !(e.type instanceof TypeScope)) { e = e.prevtop; }
+		while (e != null && !(e.type == Type.SCOPE)) { e = e.prevtop; }
 		return e == null; // no TypeScope in table
 	}
 
 	public static void beginScope()
 	{
-		enter("SCOPE-BOUNDARY", new TypeScope("NONE"));
+		enter("SCOPE-BOUNDARY", Type.SCOPE);
 		PrintMe();
 	}
 
 	public static void endScope()
 	{
-		// pop until a TypeScope is hit
-		while (!(top.type instanceof TypeScope))
+		// pop until a Type.SCOPE is hit
+		while (!(top.type == Type.SCOPE))
 		{
 			table[hash(top.name)] = top.next;
 			numEntries--;
