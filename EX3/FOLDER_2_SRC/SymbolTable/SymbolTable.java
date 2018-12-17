@@ -80,6 +80,13 @@ public class SymbolTable
 		return e != null ? (TypeFunc)e.type : null;
 	}
 
+	public static TypeClass findClass()
+	{
+		Entry e = top;
+		while (e != null && !(e.type instanceof TypeClass)) { e = e.prevtop; }
+		return e != null ? (TypeClass)e.type : null;
+	}
+
 	public static boolean isGlobalScope()
 	{
 		Entry e = top;

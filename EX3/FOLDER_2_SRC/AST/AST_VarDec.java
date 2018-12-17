@@ -32,6 +32,11 @@ public class AST_VarDec extends AST_ClassField
 		Type initValType = initVal != null ? initVal.SemantMe() : null;
 		if (initValType != null)
 		{
+			TypeClass classType = SymbolTable.findClass();
+			if (classType != null && classType.fields == null) // we're in the middle of ClassDec
+			{
+				if (!(initVal instanceof AST_ExpPrimitive)) { throw new SemanticException(varType + ", " + initValType); }
+			}
 			if (varType instanceof TypeArray)
 			{
 				if (((TypeArray)varType).elementType != initValType) { throw new SemanticException(varType + ", " + initValType); }
