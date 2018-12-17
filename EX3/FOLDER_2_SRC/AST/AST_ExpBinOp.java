@@ -39,12 +39,18 @@ public class AST_ExpBinOp extends AST_Exp
 		}
 		else if (op == '=')
 		{
-			if (t1 == t2) { return t1; }
+			if (t1 == t2) { return Type.INT; }
 			if ((t1 == null || t2 == null))
 			{
 				if (t1 instanceof TypeClass || t1 instanceof TypeArray) { return Type.INT; }
 				if (t2 instanceof TypeClass || t2 instanceof TypeArray) { return Type.INT; }
 				throw new SemanticException();
+			}
+			if (t1 instanceof TypeClass && t1 instanceof TypeClass)
+			{
+				if (((TypeClass)t1).isInheritingFrom(t2.name)) { return Type.INT; }
+				if (((TypeClass)t2).isInheritingFrom(t1.name)) { return Type.INT; }
+				throw new SemanticException(t1 + ", " + t2);
 			}
 		}
 		throw new SemanticException(t1 + ", " + t2);
