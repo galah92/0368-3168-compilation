@@ -39,7 +39,7 @@ public class AST_ClassDec extends AST_Dec
 		SymbolTable.enter(className, classType);
 
 		SymbolTable.beginScope();
-		if (baseType != null)
+		while (baseType != null)
 		{
 			for (TypeList t = baseType.fields; t != null; t = t.tail)
 			{
@@ -48,6 +48,7 @@ public class AST_ClassDec extends AST_Dec
 					SymbolTable.enter(t.head.name, t.head instanceof TypeClassVar ? ((TypeClassVar)t.head).varType : t.head);
 				}
 			}
+			baseType = baseType.base;
 		}
 		TypeList fieldsTypes = fields.SemantDeclaration();
 		fields.SemantBody();
