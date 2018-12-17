@@ -6,21 +6,19 @@ public class SymbolTable
 {
 	private class Entry
 	{
-		int index;
 		public String name;
 		public Type type;
-		public Entry prevtop;
 		public Entry next;
-		public int prevtop_index;
+		public Entry prevtop;
+		public int listIndex;
 		
-		public Entry(String name, Type Type, int index, Entry next, Entry prevtop, int prevtop_index)
+		public Entry(String name, Type Type, Entry next, Entry prevtop, int listIndex)
 		{
-			this.index = index;
 			this.name = name;
 			this.type = Type;
 			this.next = next;
 			this.prevtop = prevtop;
-			this.prevtop_index = prevtop_index;
+			this.listIndex = listIndex;
 		}
 	}
 
@@ -46,7 +44,7 @@ public class SymbolTable
 	public void enter(String name, Type t)
 	{
 		int hashVal = hash(name);
-		table[hashVal] = top = new Entry(name, t, hashVal, table[hashVal], top, numEntries++);
+		table[hashVal] = top = new Entry(name, t, table[hashVal], top, numEntries++);
 		PrintMe();
 	}
 
@@ -68,7 +66,7 @@ public class SymbolTable
 			i--;
 			e = e.prevtop;
 		}
-		for (e = table[hash(name)]; e != null && e.prevtop_index > i; e = e.next)
+		for (e = table[hash(name)]; e != null && e.listIndex > i; e = e.next)
 		{
 			if (name.equals(e.name)) return e.type;
 		}
@@ -100,12 +98,12 @@ public class SymbolTable
 		// pop until a TypeScope is hit
 		while (!(top.type instanceof TypeScope))
 		{
-			table[top.index] = top.next;
+			table[hash(top.name)] = top.next;
 			numEntries--;
 			top = top.prevtop;
 		}
 		// pop TypeScope itself
-		table[top.index] = top.next;
+		table[hash(top.name)] = top.next;
 		numEntries--;
 		top = top.prevtop;
 
@@ -136,7 +134,7 @@ public class SymbolTable
 				for (Entry it = table[i]; it != null; it = it.next)
 				{
 					fileWriter.format("node_%d_%d ",i,j);
-					fileWriter.format("[label=\"<f0>%s|<f1>%s|<f2>prevtop=%d|<f3>next\"];\n", it.name, it.type.name, it.prevtop_index);
+					fileWriter.format("[label=\"<f0>%s|<f1>%s|<f2>prevtop=%d|<f3>next\"];\n", it.name, it.type.name, it.listIndex);
 
 					if (it.next != null)
 					{
