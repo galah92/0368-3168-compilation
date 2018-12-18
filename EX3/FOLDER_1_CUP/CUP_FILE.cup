@@ -14,7 +14,8 @@ parser code
     }
     public void report_error(String message, Object info)
     {
-        writer.println("ParserError(" + lexer.getLine() + ", " + lexer.getCharPos() + "): " + message);
+        // writer.println("ParserError(" + lexer.getLine() + ", " + lexer.getCharPos() + ")");
+        writer.println("ERROR(" + lexer.getLine() + ")");
         writer.close();
         System.exit(0);
     }
