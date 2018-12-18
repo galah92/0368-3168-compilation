@@ -166,9 +166,6 @@ public class SymbolTable
 		enter("int", Type.INT);
 		enter("string", Type.STRING);
 
-		// TODO: this is bad! as one can create a variable of Type "void"
-		enter("void", Type.VOID);
-
 		// enter lib functions
 		TypeFunc printIntFunc = new TypeFunc(Type.VOID, "PrintInt", new TypeList(Type.INT, null));
 		TypeFunc printStringFunc = new TypeFunc(Type.VOID, "PrintString", new TypeList(Type.INT, null));

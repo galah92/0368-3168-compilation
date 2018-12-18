@@ -17,7 +17,5 @@ public class Type
 	public static final Type INT = new Type("int");
 	public static final Type STRING = new Type("string");
 	public static final Type NIL = new Type("nil");
-
-	// TODO: this is BAD! there is no such type, must fix
 	public static final Type VOID = new Type("void");
 }

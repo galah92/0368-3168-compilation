@@ -29,9 +29,9 @@ public class AST_FuncDec extends AST_ClassField
 
 	public TypeFunc SemantDeclaration() throws Exception
 	{
-		// Type retType = retTypeName == Type.VOID.name ? Type.VOID : SymbolTable.find(retTypeName);
-		Type retType = SymbolTable.find(retTypeName);
-		if (retType == null) { throw new SemanticException(); }
+		Type retType = retTypeName == Type.VOID.name ? Type.VOID : SymbolTable.find(retTypeName);
+		// Type retType = SymbolTable.find(retTypeName);
+		// if (retType == null) { throw new SemanticException(); }
 
 		TypeList paramsTypes = params != null ? params.SemantDeclaration(): null;
 
