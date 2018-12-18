@@ -87,6 +87,13 @@ public class SymbolTable
 		return e != null ? (TypeClass)e.type : null;
 	}
 
+	public static Type findTypeName(String typeName)
+	{
+		Entry e = top;
+		while (e != null && !(e.type.name.equals(typeName))) { e = e.prevtop; }
+		return e != null ? e.type : null;
+	}
+
 	public static boolean isGlobalScope()
 	{
 		Entry e = top;

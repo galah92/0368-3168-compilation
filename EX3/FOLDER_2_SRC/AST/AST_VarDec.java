@@ -26,8 +26,11 @@ public class AST_VarDec extends AST_ClassField
 	{
 		if (SymbolTable.findInScope(varName) != null) { throw new SemanticException(); }
 		
-		Type varType = SymbolTable.find(varTypeName);
+		Type varType = SymbolTable.findTypeName(varTypeName);
 		if (varType == null) { throw new SemanticException(); }
+
+		TypeClass classType = SymbolTable.findClass();
+		boolean isSemantingClass = classType != null && classType.fields == null;
 
 		Type initValType = initVal != null ? initVal.SemantMe() : null;
 		if (initValType != null)
@@ -37,8 +40,7 @@ public class AST_VarDec extends AST_ClassField
 				if (varType == Type.INT || varType == Type.STRING) { throw new SemanticException(); }
 				return new TypeClassVar(varType, varName);
 			}
-			TypeClass classType = SymbolTable.findClass();
-			if (classType != null && classType.fields == null) // we're in the middle of ClassDec
+			if (isSemantingClass) // we're in the middle of ClassDec
 			{
 				if (!(initVal instanceof AST_ExpPrimitive)) { throw new SemanticException(varType + ", " + initValType); }
 			}
