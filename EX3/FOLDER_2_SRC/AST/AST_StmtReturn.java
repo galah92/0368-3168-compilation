@@ -22,7 +22,11 @@ public class AST_StmtReturn extends AST_Stmt
 		TypeFunc funcType = SymbolTable.findFunc();
 		if (funcType == null) { throw new SemanticException(); }
 		Type expType = exp != null ? exp.SemantMe() : Type.VOID;
-		if (funcType.retType != expType) { throw new SemanticException(funcType.retType + ", " + expType); }
+		if (funcType.retType != expType) {
+			if (!(expType == Type.NIL) || !(funcType.retType instanceof TypeArray)){
+				throw new SemanticException(funcType.retType + ", " + expType); 
+			}
+		}
 		return expType;
 	}
 
