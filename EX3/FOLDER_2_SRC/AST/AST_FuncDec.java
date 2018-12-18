@@ -60,18 +60,13 @@ public class AST_FuncDec extends AST_ClassField
 		return funcType;
 	}
 
-	public void OverrideFuncDecCheck(Type t, Type retType, TypeList paramsTypes) throws Exception
+	public void OverrideFuncDecCheck(Type t, Type retType, TypeList argsTypes) throws Exception
 	{
 		if (!(t instanceof TypeFunc)) { throw new SemanticException(); }
 		TypeFunc overloadedFuncType = (TypeFunc)t;
 		if (!(SymbolTable.isInScope(TypeScope.CLASS))) { throw new SemanticException(); }
 		if (overloadedFuncType.retType != retType) { throw new SemanticException(); }
-		TypeList overloadedParamsType = (TypeList) overloadedFuncType.params;
-		if ((overloadedParamsType == null) ^ (paramsTypes == null)) { throw new SemanticException(); }
-		for (TypeList p1 = (TypeList) overloadedParamsType, p2 = (TypeList) paramsTypes; p1 != null; p1 = p1.tail, p2 = p2.tail)
-		{
-			if (p1.head != p2.head) { throw new SemanticException(); }
-		}
+		if (!(overloadedFuncType.isValidArgs(argsTypes))) { throw new SemanticException(); }
 	}
 
 }
