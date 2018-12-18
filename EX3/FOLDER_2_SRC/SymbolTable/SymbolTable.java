@@ -60,7 +60,7 @@ public class SymbolTable
 	public static Type findInScope(String name)
 	{
 		Entry e = top;
-		int i = numEntries; // inner scope index
+		int i = numEntries - 1; // inner scope index
 		while (e != null && !(e.type == Type.SCOPE))
 		{
 			i--;
