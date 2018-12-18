@@ -33,7 +33,7 @@ public class AST_ExpCall extends AST_Exp
 		if (instanceName != null)
 		{
 			Type t = instanceName.SemantMe();
-			if (!(t instanceof TypeClass)) { throw new SemanticException(); }
+			if (!(t instanceof TypeClass)) { throw new SemanticException(t.name); }
 			TypeClass instanceType = (TypeClass)t;
 			TypeFunc tf = instanceType.getFuncField(funcName);
 			if (tf != null) { return tf.retType; }

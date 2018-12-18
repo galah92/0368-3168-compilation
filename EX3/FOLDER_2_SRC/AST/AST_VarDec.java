@@ -32,6 +32,11 @@ public class AST_VarDec extends AST_ClassField
 		Type initValType = initVal != null ? initVal.SemantMe() : null;
 		if (initValType != null)
 		{
+			if (initValType == Type.NIL)
+			{
+				if (varType == Type.INT || varType == Type.STRING) { throw new SemanticException(); }
+				return new TypeClassVar(varType, varName);
+			}
 			TypeClass classType = SymbolTable.findClass();
 			if (classType != null && classType.fields == null) // we're in the middle of ClassDec
 			{

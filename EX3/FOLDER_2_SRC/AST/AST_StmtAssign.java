@@ -29,24 +29,11 @@ public class AST_StmtAssign extends AST_Stmt
 		if (var != null) varType = var.SemantMe();
 		if (exp != null) expType = exp.SemantMe();
 		
-		if (expType == null) return null;
-
-		// if (exp instanceof AST_NewExp)
-		// {
-		// 	// if RHS is array, then expType is the integral Type,
-		// 	// so we must compare it with the integral Type of LHS
-		// 	Type integralVarType = varType instanceof TypeArray ? ((TypeArray)varType).elementType : varType;
-		// 	if (expType instanceof TypeClass)
-		// 	{
-		// 		if (!((TypeClass)expType).isInheritingFrom(integralVarType.name)) { throw new SemanticException(integralVarType + ", " + expType); }
-		// 	}
-		// 	else
-		// 	{
-		// 		if (expType != integralVarType) { throw new SemanticException(integralVarType + ", " + expType); }
-		// 	}
-		// }
-		// else if (varType != expType) { throw new SemanticException(varType.name + ", " + expType.name); }
-
+		if (expType == Type.NIL)
+		{
+			if (varType == Type.INT || varType == Type.STRING) { throw new SemanticException(); }
+			return varType;
+		}
 
 		Type integralVarType = (exp instanceof AST_NewExp && varType instanceof TypeArray) ? ((TypeArray)varType).elementType : varType;
 		if (expType instanceof TypeClass)
