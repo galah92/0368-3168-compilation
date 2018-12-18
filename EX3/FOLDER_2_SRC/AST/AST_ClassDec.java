@@ -33,6 +33,8 @@ public class AST_ClassDec extends AST_Dec
 			if (!(t instanceof TypeClass)) { throw new SemanticException(); }
 			baseType = (TypeClass)t;
 		}
+
+		if (SymbolTable.find(className) != null) { throw new SemanticException("symbol already defined"); }
 		
 		// enter the class Type to that we could field of same Type
 		TypeClass classType = new TypeClass(baseType, className, null);
