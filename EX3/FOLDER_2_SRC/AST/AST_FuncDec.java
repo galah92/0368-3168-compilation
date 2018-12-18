@@ -1,8 +1,6 @@
 package AST;
 import TYPES.*;
 
-import javax.lang.model.element.TypeElement;
-
 import SymbolTable.*;
 
 public class AST_FuncDec extends AST_ClassField
@@ -35,10 +33,10 @@ public class AST_FuncDec extends AST_ClassField
 		Type retType = retTypeName.equals(Type.VOID.name) ? Type.VOID : SymbolTable.find(retTypeName);
 
 		TypeList paramsTypes = params != null ? params.SemantDeclaration(): null;
-		Type t = SymbolTable.find(funcName);
-		if (t != null)
+		Type func = SymbolTable.findInScope(funcName);
+		if (func != null)
 		{
-			OverrideFuncDecCheck(t, retType, paramsTypes);
+			OverrideFuncDecCheck(func, retType, paramsTypes);
 		}
 		TypeFunc funcType = new TypeFunc(retType, funcName, paramsTypes);
 		SymbolTable.enter(funcName, funcType);
@@ -60,10 +58,10 @@ public class AST_FuncDec extends AST_ClassField
 		return funcType;
 	}
 
-	public void OverrideFuncDecCheck(Type t, Type retType, TypeList argsTypes) throws Exception
+	public void OverrideFuncDecCheck(Type func, Type retType, TypeList argsTypes) throws Exception
 	{
-		if (!(t instanceof TypeFunc)) { throw new SemanticException(); }
-		TypeFunc overloadedFuncType = (TypeFunc)t;
+		if (!(func instanceof TypeFunc)) { throw new SemanticException(); }
+		TypeFunc overloadedFuncType = (TypeFunc)func;
 		if (!(SymbolTable.isInScope(TypeScope.CLASS))) { throw new SemanticException(); }
 		if (overloadedFuncType.retType != retType) { throw new SemanticException(); }
 		if (!(overloadedFuncType.isValidArgs(argsTypes))) { throw new SemanticException(); }
