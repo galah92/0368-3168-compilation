@@ -18,9 +18,21 @@ public class TypeFunc extends Type
 		TypeList arg = argsTypes;
 		while (param != null && arg != null)
 		{
-			if (arg.head != Type.NIL && arg.head != param.head) { return false; }
+			if (arg.head != Type.NIL)
+			{
+				if (arg.head instanceof TypeClass && param.head instanceof TypeClass)
+				{
+					if (!((TypeClass)arg.head).isInheritingFrom(param.head.name)) { return false; }
+				}
+				else if (arg.head != param.head) { return false; }
+			}
+			else
+			{
+				if (!(param.head instanceof TypeClass || param.head instanceof TypeArray)) { return false; }
+			}
+
 			boolean isParamClassOrArray = param.head instanceof TypeClass || param.head instanceof TypeArray;
-			if (arg.head == Type.NIL && !isParamClassOrArray) { return false; }
+
 			param = param.tail;
 			arg = arg.tail;
 		}
