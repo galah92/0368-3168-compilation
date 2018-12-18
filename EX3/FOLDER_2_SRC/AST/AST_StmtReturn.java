@@ -23,7 +23,9 @@ public class AST_StmtReturn extends AST_Stmt
 		if (funcType == null) { throw new SemanticException(); }
 		Type expType = exp != null ? exp.SemantMe() : Type.VOID;
 		if (funcType.retType != expType) {
-			if (!(expType == Type.NIL) || !(funcType.retType instanceof TypeArray)){
+			if (!(expType == Type.NIL) || 
+				(!(funcType.retType instanceof TypeArray) &&
+				!(funcType.retType instanceof TypeClass))) {
 				throw new SemanticException(funcType.retType + ", " + expType); 
 			}
 		}
