@@ -48,21 +48,6 @@ public class AST_ExpCall extends AST_Exp
 		if (funcType == null) { throw new SemanticException("function symbol not found"); }
 
 		if (!funcType.isValidArgs(argsTypes)) { throw new SemanticException("invalid arguments to function"); }
-
-		// // deal with class methods
-		// if (instanceName != null)
-		// {
-		// 	Type t = instanceName.SemantMe();
-		// 	if (!(t instanceof TypeClass)) { throw new SemanticException(t.name); }
-		// 	TypeClass instanceType = (TypeClass)t;
-		// 	TypeFunc tf = instanceType.getFuncField(funcName);
-		// 	if (tf != null) { return tf.retType; }
-		// }
-
-		// // deal with global functions
-		// Type t = SymbolTable.find(funcName);
-		// if (t == null && !(t instanceof TypeFunc)) { throw new SemanticException(); }
-		// TypeFunc funcType = (TypeFunc)t;
 		return funcType.retType;
 	}
 }
