@@ -67,17 +67,10 @@ public class AST_FuncDec extends AST_ClassField
 		if (!(SymbolTable.isInScope(TypeScope.CLASS))) { throw new SemanticException(); }
 		if (overloadedFuncType.retType != retType) { throw new SemanticException(); }
 		TypeList overloadedParamsType = (TypeList) overloadedFuncType.params;
-		
 		if ((overloadedParamsType == null) ^ (paramsTypes == null)) { throw new SemanticException(); }
-		if (overloadedParamsType != null)
+		for (TypeList p1 = (TypeList) overloadedParamsType, p2 = (TypeList) paramsTypes; p1 != null; p1 = p1.tail, p2 = p2.tail)
 		{
-			TypeList p1 = (TypeList) overloadedParamsType;
-			TypeList p2 = (TypeList) paramsTypes;
-			while (p1.head != null){
-				if (p1.head != p2.head) { throw new SemanticException(); }
-				p1.head = p1.tail;
-				p2.head = p2.tail;
-			}
+			if (p1.head != p2.head) { throw new SemanticException(); }
 		}
 	}
 
