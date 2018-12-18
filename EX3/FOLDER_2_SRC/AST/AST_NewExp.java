@@ -21,9 +21,19 @@ public class AST_NewExp extends AST_Exp
 
 	public Type SemantMe() throws Exception
 	{
-        if (exp != null && exp.SemantMe() != Type.INT) { throw new SemanticException(); }
+        // type must be known
         Type newExpType = SymbolTable.find(type);
         if (newExpType == null) { throw new SemanticException(); }
+
+        if (exp != null) // new array
+        {
+            if (exp.SemantMe() != Type.INT) { throw new SemanticException(); }
+        }
+        else // new class
+        {
+            if (newExpType == Type.INT || newExpType == Type.STRING) { throw new SemanticException(); }
+        }
+
         return newExpType;
 	}
 }
