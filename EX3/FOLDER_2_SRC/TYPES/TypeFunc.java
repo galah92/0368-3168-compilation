@@ -11,4 +11,17 @@ public class TypeFunc extends Type
 		this.retType = retType;
 		this.params = params;
 	}
+
+	public boolean isValidArgs(TypeList argsTypes)
+	{
+		TypeList param = params;
+		TypeList arg = argsTypes;
+		while (param != null && arg != null)
+		{
+			if (arg.head != param.head) { return false; }
+			param = param.tail;
+			arg = arg.tail;
+		}
+		return param == null && arg == null;
+	}
 }

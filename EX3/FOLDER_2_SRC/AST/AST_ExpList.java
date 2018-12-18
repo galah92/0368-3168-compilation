@@ -16,17 +16,13 @@ public class AST_ExpList extends AST_Node
 	{
 		if (head != null) head.PrintMe();
 		if (tail != null) tail.PrintMe();
-
 		logNode("ExpList");
-
 		if (head != null) logEdge(head);
 		if (tail != null) logEdge(tail);
 	}
 
-	public Type SemantMe() throws Exception
+	public TypeList SemantMe() throws Exception
 	{
-		if (head != null) head.SemantMe();
-		if (tail != null) tail.SemantMe();
-		return null;
+		return new TypeList(head.SemantMe(), tail != null ? tail.SemantMe() : null);
 	}
 }

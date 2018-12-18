@@ -27,22 +27,42 @@ public class AST_ExpCall extends AST_Exp
 
 	public Type SemantMe() throws Exception
 	{
-		TypeList argsTypes = args != null ? (TypeList)args.SemantMe() : null;
+		TypeList argsTypes = args != null ? args.SemantMe() : null;
 
-		// deal with class methods
-		if (instanceName != null)
+		TypeFunc funcType = null;
+
+		if (instanceName != null) // class methods
 		{
 			Type t = instanceName.SemantMe();
 			if (!(t instanceof TypeClass)) { throw new SemanticException(t.name); }
 			TypeClass instanceType = (TypeClass)t;
-			TypeFunc tf = instanceType.getFuncField(funcName);
-			if (tf != null) { return tf.retType; }
+			funcType = instanceType.getFuncField(funcName);
+		}
+		else // global functions
+		{
+			Type t = SymbolTable.find(funcName);
+			if (t == null && !(t instanceof TypeFunc)) { throw new SemanticException(); }
+			funcType = (TypeFunc)t;
 		}
 
-		// deal with global functions
-		Type t = SymbolTable.find(funcName);
-		if (t == null && !(t instanceof TypeFunc)) { throw new SemanticException(); }
-		TypeFunc funcType = (TypeFunc)t;
+		if (funcType == null) { throw new SemanticException("function symbol not found"); }
+
+		if (!funcType.isValidArgs(argsTypes)) { throw new SemanticException("invalid arguments to function"); }
+
+		// // deal with class methods
+		// if (instanceName != null)
+		// {
+		// 	Type t = instanceName.SemantMe();
+		// 	if (!(t instanceof TypeClass)) { throw new SemanticException(t.name); }
+		// 	TypeClass instanceType = (TypeClass)t;
+		// 	TypeFunc tf = instanceType.getFuncField(funcName);
+		// 	if (tf != null) { return tf.retType; }
+		// }
+
+		// // deal with global functions
+		// Type t = SymbolTable.find(funcName);
+		// if (t == null && !(t instanceof TypeFunc)) { throw new SemanticException(); }
+		// TypeFunc funcType = (TypeFunc)t;
 		return funcType.retType;
 	}
 }
