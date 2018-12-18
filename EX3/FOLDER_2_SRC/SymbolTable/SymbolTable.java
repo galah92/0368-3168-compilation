@@ -61,7 +61,7 @@ public class SymbolTable
 	{
 		Entry e = top;
 		int i = numEntries - 1; // inner scope index
-		while (e != null && !(e.type instanceof TypeScope))
+		while (e != null && !(e.type instanceof Type.Scope))
 		{
 			i--;
 			e = e.prevtop;
@@ -97,33 +97,33 @@ public class SymbolTable
 	public static boolean isGlobalScope()
 	{
 		Entry e = top;
-		while (e != null && !(e.type instanceof TypeScope)) { e = e.prevtop; }
-		return e == null; // no TypeScope in table
+		while (e != null && !(e.type instanceof Type.Scope)) { e = e.prevtop; }
+		return e == null; // no Type in table
 	}
 
-	public static boolean isInScope(TypeScope typeScope)
+	public static boolean isInScope(Type.Scope scopeType)
 	{
 		Entry e = top;
-		while (e != null && e.type != typeScope) { e = e.prevtop; }
-		return e != null; // if e.type == TypeScope.CLASS we're in class scope
+		while (e != null && e.type != scopeType) { e = e.prevtop; }
+		return e != null; // if e.type == Type.CLASS we're in class scope
 	}
 
-	public static void beginScope(TypeScope type)
+	public static void beginScope(Type.Scope scopeType)
 	{
-		enter(type.name, type);
+		enter(scopeType.name, scopeType);
 		PrintMe();
 	}
 
 	public static void endScope()
 	{
-		// pop until a TypeScope is hit
-		while (!(top.type instanceof TypeScope))
+		// pop until a Type.Scope is hit
+		while (!(top.type instanceof Type.Scope))
 		{
 			table[hash(top.name)] = top.next;
 			numEntries--;
 			top = top.prevtop;
 		}
-		// pop TypeScope itself
+		// pop Type.Scope itself
 		table[hash(top.name)] = top.next;
 		numEntries--;
 		top = top.prevtop;

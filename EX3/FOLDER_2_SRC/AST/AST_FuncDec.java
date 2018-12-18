@@ -46,7 +46,7 @@ public class AST_FuncDec extends AST_ClassField
 
 	public void SemantBody() throws Exception
 	{
-		SymbolTable.beginScope(TypeScope.FUNC);
+		SymbolTable.beginScope(Type.Scope.FUNC);
 		if (params != null) params.SemantBody();
 		if (body != null) { body.SemantMe(); }
 		SymbolTable.endScope();
@@ -63,7 +63,7 @@ public class AST_FuncDec extends AST_ClassField
 	{
 		if (!(func instanceof TypeFunc)) { throw new SemanticException(); }
 		TypeFunc overloadedFuncType = (TypeFunc)func;
-		if (!(SymbolTable.isInScope(TypeScope.CLASS))) { throw new SemanticException(); }
+		if (!(SymbolTable.isInScope(Type.Scope.CLASS))) { throw new SemanticException(); }
 		if (overloadedFuncType.retType != retType) { throw new SemanticException(); }
 		if (!(overloadedFuncType.isValidArgs(argsTypes))) { throw new SemanticException(); }
 	}

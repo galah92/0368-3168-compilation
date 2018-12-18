@@ -3,8 +3,8 @@ import subprocess
 
 
 subprocess.run(['make'])
-i = 0
-for path in sorted(Path('tests/input').glob('*.txt')):
+i = 126
+for path in sorted(Path('tests/input').glob('*.txt'))[i:]:
     output_file = Path('tests/output') / path.name
     expected_file = Path('tests/expected_output') / path.name
     result = subprocess.run(['java', '-jar', 'COMPILER', path, output_file], stderr=subprocess.PIPE)
@@ -15,5 +15,4 @@ for path in sorted(Path('tests/input').glob('*.txt')):
     if output_content != expected_content:
         print(result.stderr.decode())
         break
-    i += 1    
-
+    i += 1

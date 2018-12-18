@@ -40,7 +40,7 @@ public class AST_ClassDec extends AST_Dec
 		TypeClass classType = new TypeClass(baseType, className, null);
 		SymbolTable.enter(className, classType);
 
-		SymbolTable.beginScope(TypeScope.CLASS);
+		SymbolTable.beginScope(Type.Scope.CLASS);
 		while (baseType != null)
 		{
 			for (TypeList t = baseType.fields; t != null; t = t.tail)

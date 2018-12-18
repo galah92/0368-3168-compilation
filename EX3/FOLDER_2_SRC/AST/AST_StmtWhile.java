@@ -27,7 +27,7 @@ public class AST_StmtWhile extends AST_Stmt
 	public Type SemantMe() throws Exception
 	{
 		if (cond.SemantMe() != Type.INT) { throw new SemanticException(); }
-		SymbolTable.beginScope(TypeScope.WHILE);
+		SymbolTable.beginScope(Type.Scope.WHILE);
 		body.SemantMe();
 		SymbolTable.endScope();
 		return null;

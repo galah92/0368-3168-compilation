@@ -8,12 +8,24 @@ public class Type
 	
 	public Type(String name) { this.name = name; }
 
-	public static final Type SCOPE = new Type("SCOPE-BOUNDARY");
-
-	// priminite types
-	public static final Type INT = new Type("int");
-	public static final Type STRING = new Type("string");
-
 	public static final Type NIL = new Type("nil");
 	public static final Type VOID = new Type("void");
+
+	public static class Primitive extends Type
+	{
+		protected Primitive(String name) { this.name = name; }
+	}
+
+	public static final Primitive INT = new Primitive("int");
+	public static final Primitive STRING = new Primitive("string");
+
+	public static class Scope extends Type
+	{
+		protected Scope(String name) { this.name = name; }
+
+		public static final Scope CLASS = new Scope("SCOPE-Class");
+		public static final Scope FUNC = new Scope("SCOPE-Func");
+		public static final Scope IF = new Scope("SCOPE-If");
+		public static final Scope WHILE = new Scope("SCOPE-While");
+	}
 }

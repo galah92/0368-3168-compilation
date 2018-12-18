@@ -28,7 +28,7 @@ public class AST_StmtIf extends AST_Stmt
 	{
 		if (cond.SemantMe() != Type.INT) { throw new SemanticException(); }
 
-		SymbolTable.beginScope(TypeScope.IF);
+		SymbolTable.beginScope(Type.Scope.IF);
 		body.SemantMe();
 		SymbolTable.endScope();
 		
