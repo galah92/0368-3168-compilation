@@ -1,5 +1,8 @@
 package AST;
 import TYPES.*;
+
+import javax.lang.model.element.TypeElement;
+
 import SymbolTable.*;
 
 public class AST_FuncDec extends AST_ClassField
@@ -36,10 +39,7 @@ public class AST_FuncDec extends AST_ClassField
 		Type t = SymbolTable.find(funcName);
 		if (t != null)
 		{
-			if (!(t instanceof TypeFunc)) { throw new SemanticException(); }
-			TypeFunc overloadedFuncType = (TypeFunc)t;
-			if (overloadedFuncType.retType != retType) { throw new SemanticException(); }
-			// TODO: should also check if params are different and throw if they are
+			OverrideFuncDecCheck(t, retType, paramsTypes);
 		}
 
 		TypeFunc funcType = new TypeFunc(retType, funcName, paramsTypes);
@@ -60,6 +60,26 @@ public class AST_FuncDec extends AST_ClassField
 		TypeFunc funcType = SemantDeclaration();
 		SemantBody();
 		return funcType;
+	}
+
+	public void OverrideFuncDecCheck(Type t, Type retType, TypeList paramsTypes) throws Exception
+	{
+		if (!(t instanceof TypeFunc)) { throw new SemanticException(); }
+			TypeFunc overloadedFuncType = (TypeFunc)t;
+			if (overloadedFuncType.retType != retType) { throw new SemanticException(); }
+			TypeList overloadedParamsType = (TypeList) overloadedFuncType.params;
+			
+			if ((overloadedParamsType == null) ^ (paramsTypes == null)) { throw new SemanticException(); }
+			if (overloadedParamsType != null)
+			{
+				TypeList p1 = (TypeList) overloadedParamsType;
+				TypeList p2 = (TypeList) paramsTypes;
+				while (p1.head != null){
+					if (p1.head != p2.head) { throw new SemanticException(); }
+					p1.head = p1.tail;
+					p2.head = p2.tail;
+				}
+			}
 	}
 
 }
