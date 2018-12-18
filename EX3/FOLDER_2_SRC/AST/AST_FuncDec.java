@@ -34,6 +34,7 @@ public class AST_FuncDec extends AST_ClassField
 
 		TypeList paramsTypes = params != null ? params.SemantDeclaration(): null;
 		Type func = SymbolTable.findInScope(funcName);
+		func = func == null ? SymbolTable.find(funcName) : func;
 		if (func != null)
 		{
 			OverrideFuncDecCheck(func, retType, paramsTypes);
