@@ -25,6 +25,7 @@ public class AST_VarDec extends AST_ClassField
 	public Type SemantDeclaration() throws Exception
 	{
 		if (SymbolTable.findInScope(varName) != null) { throw new SemanticException(); }
+		if (SymbolTable.findTypeName(varName) != null) { throw new SemanticException("variable name defined as type"); }
 		
 		Type varType = SymbolTable.findTypeName(varTypeName);
 		if (varType == null) { throw new SemanticException(); }
