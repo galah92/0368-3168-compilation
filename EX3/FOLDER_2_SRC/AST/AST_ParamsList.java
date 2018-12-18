@@ -34,7 +34,7 @@ public class AST_ParamsList extends AST_Node
 	{
 		Type paramType = SymbolTable.find(paramTypeName);
 		if (paramType == null) { throw new SemanticException(); }
-		if (SymbolTable.findInScope(paramName) != null) { throw new SemanticException(); }
+		// if (SymbolTable.findInScope(paramName) != null) { throw new SemanticException(); }
 		SymbolTable.enter(paramName, paramType);
 		if (tail != null) tail.SemantBody();
 	}
