@@ -11,7 +11,7 @@ public class SymbolTable
 		public Entry next;
 		public Entry prevtop;
 		public int listIndex;
-		
+
 		public Entry(String name, Type Type, Entry next, Entry prevtop, int listIndex)
 		{
 			this.name = name;
@@ -23,11 +23,11 @@ public class SymbolTable
 	}
 
 	private static final int TABLE_SIZE = 13;
-	
+
 	private static Entry[] table = new Entry[TABLE_SIZE];
 	private static Entry top;
 	private static int numEntries = 0;
-	
+
 	private static int hash(String s)
 	{
 		if (s.charAt(0) == 'l') { return 1; }
@@ -53,7 +53,7 @@ public class SymbolTable
 		for (Entry e = table[hash(name)]; e != null; e = e.next)
 		{
 			if (name.equals(e.name)) return e.type;
-		}	
+		}
 		return null;
 	}
 
@@ -91,6 +91,8 @@ public class SymbolTable
 	{
 		Entry e = top;
 		while (e != null && !(e.type.name.equals(typeName))) { e = e.prevtop; }
+		if(e != null && e.type instanceof TypeFunc)
+			return null;
 		return e != null ? e.type : null;
 	}
 
@@ -130,9 +132,9 @@ public class SymbolTable
 
 		PrintMe();
 	}
-	
+
 	public static int printCount = 0;
-	
+
 	public static void PrintMe()
 	{
 		String dirname = "./FOLDER_5_OUTPUT/";
@@ -147,7 +149,7 @@ public class SymbolTable
 			fileWriter.print("hashTable [label=\"");
 			for (int i = 0; i < TABLE_SIZE - 1; i++) { fileWriter.format("<f%d>\n%d\n|", i, i); }
 			fileWriter.format("<f%d>\n%d\n\"];\n", TABLE_SIZE - 1, TABLE_SIZE - 1);
-		
+
 			for (int i = 0; i < TABLE_SIZE; i++)
 			{
 				if (table[i] != null) { fileWriter.format("hashTable:f%d -> node_%d_0:f0;\n", i, i); }
@@ -171,7 +173,7 @@ public class SymbolTable
 		catch (Exception e)
 		{
 			e.printStackTrace();
-		}		
+		}
 	}
 
 	public static void Init()
