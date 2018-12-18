@@ -35,13 +35,11 @@ public class AST_FuncDec extends AST_ClassField
 		Type retType = retTypeName.equals(Type.VOID.name) ? Type.VOID : SymbolTable.find(retTypeName);
 
 		TypeList paramsTypes = params != null ? params.SemantDeclaration(): null;
-
 		Type t = SymbolTable.find(funcName);
 		if (t != null)
 		{
 			OverrideFuncDecCheck(t, retType, paramsTypes);
 		}
-
 		TypeFunc funcType = new TypeFunc(retType, funcName, paramsTypes);
 		SymbolTable.enter(funcName, funcType);
 		return funcType;
@@ -65,21 +63,22 @@ public class AST_FuncDec extends AST_ClassField
 	public void OverrideFuncDecCheck(Type t, Type retType, TypeList paramsTypes) throws Exception
 	{
 		if (!(t instanceof TypeFunc)) { throw new SemanticException(); }
-			TypeFunc overloadedFuncType = (TypeFunc)t;
-			if (overloadedFuncType.retType != retType) { throw new SemanticException(); }
-			TypeList overloadedParamsType = (TypeList) overloadedFuncType.params;
-			
-			if ((overloadedParamsType == null) ^ (paramsTypes == null)) { throw new SemanticException(); }
-			if (overloadedParamsType != null)
-			{
-				TypeList p1 = (TypeList) overloadedParamsType;
-				TypeList p2 = (TypeList) paramsTypes;
-				while (p1.head != null){
-					if (p1.head != p2.head) { throw new SemanticException(); }
-					p1.head = p1.tail;
-					p2.head = p2.tail;
-				}
+		TypeFunc overloadedFuncType = (TypeFunc)t;
+		if (!(SymbolTable.isInScope(TypeScope.CLASS))) { throw new SemanticException(); }
+		if (overloadedFuncType.retType != retType) { throw new SemanticException(); }
+		TypeList overloadedParamsType = (TypeList) overloadedFuncType.params;
+		
+		if ((overloadedParamsType == null) ^ (paramsTypes == null)) { throw new SemanticException(); }
+		if (overloadedParamsType != null)
+		{
+			TypeList p1 = (TypeList) overloadedParamsType;
+			TypeList p2 = (TypeList) paramsTypes;
+			while (p1.head != null){
+				if (p1.head != p2.head) { throw new SemanticException(); }
+				p1.head = p1.tail;
+				p2.head = p2.tail;
 			}
+		}
 	}
 
 }
