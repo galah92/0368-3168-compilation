@@ -34,8 +34,11 @@ public class AST_FuncDec extends AST_ClassField
 		Type retType = retTypeName.equals(Type.VOID.name) ? Type.VOID : SymbolTable.find(retTypeName);
 		TypeList paramsTypes = params != null ? params.SemantDeclaration(): null;
 		Type func = SymbolTable.findInScope(funcName);
-		if (func != null)
+		if (func == null)
 		{
+			func = SymbolTable.find(funcName);
+			if (func != null && (func instanceof TypeClass)) { throw new SemanticException(); }
+		} else {
 			if (!(func instanceof TypeFunc)) { throw new SemanticException(); }
 			if (!(SymbolTable.isInScope(Type.Scope.CLASS))) { throw new SemanticException(); }
 			TypeClass currentClass = SymbolTable.findClass();
