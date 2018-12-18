@@ -7,7 +7,7 @@ public class AST_VarDec extends AST_ClassField
 	public String varTypeName;
 	public String varName;
 	public AST_Exp initVal;
-	
+
 	public AST_VarDec(String varTypeName, String varName, AST_Exp initVal)
 	{
         this.varTypeName = varTypeName;
@@ -26,7 +26,7 @@ public class AST_VarDec extends AST_ClassField
 	{
 		if (SymbolTable.findInScope(varName) != null) { throw new SemanticException("variable name already defined"); }
 		if (SymbolTable.findTypeName(varName) != null) { throw new SemanticException("variable name defined as type"); }
-		
+
 		Type varType = SymbolTable.findTypeName(varTypeName);
 		if (varType == null) { throw new SemanticException("variable type not defined"); }
 
@@ -39,6 +39,7 @@ public class AST_VarDec extends AST_ClassField
 			if (initValType == Type.NIL)
 			{
 				if (varType == Type.INT || varType == Type.STRING) { throw new SemanticException(); }
+				SymbolTable.enter(varName, varType); //TODO: CHeck if neccessry
 				return new TypeClassVar(varType, varName);
 			}
 			if (isSemantingClass) // we're in the middle of ClassDec
@@ -73,5 +74,5 @@ public class AST_VarDec extends AST_ClassField
 		Type varType = SemantDeclaration();
 		return varType;
 	}
-	
+
 }

@@ -35,7 +35,7 @@ public class AST_ClassDec extends AST_Dec
 		}
 
 		if (SymbolTable.find(className) != null) { throw new SemanticException("symbol already defined"); }
-		
+
 		// enter the class Type to that we could field of same Type
 		TypeClass classType = new TypeClass(baseType, className, null);
 		SymbolTable.enter(className, classType);
@@ -53,10 +53,10 @@ public class AST_ClassDec extends AST_Dec
 			baseType = baseType.base;
 		}
 		TypeList fieldsTypes = fields.SemantDeclaration();
+		classType.fields = fieldsTypes;
 		fields.SemantBody();
 		SymbolTable.endScope();
 
-		classType.fields = fieldsTypes;
 		return classType;
 	}
 }
