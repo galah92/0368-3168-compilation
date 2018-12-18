@@ -55,15 +55,10 @@ terminal RETURN;
 terminal WHILE;
 terminal IF;
 terminal NEW;
-terminal COMMENT;
 
 terminal String STRING;
 terminal String ID;
 terminal Integer INT;
-
-terminal ILLEGAL_CHARACTER;
-terminal ILLEGAL_INTEGER;
-terminal ILLEGAL_COMMENT;
 
 /* NON TERMINALS */
 non terminal AST_DecList decList;

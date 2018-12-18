@@ -50,12 +50,12 @@ BadEndOfLineComment = "//"[^CommentContent]
 
 {Comment}					{}
 {INTEGER}					{ return symbol(TokenNames.INT, new Short(yytext()).intValue()); }
-{BadInteger}				{ return symbol(TokenNames.ILLEGAL_INTEGER); }
-{UnclosedComment}			{ return symbol(TokenNames.ILLEGAL_CHARACTER); }
-{BadEndOfLineComment}		{ return symbol(TokenNames.ILLEGAL_CHARACTER); }
+{BadInteger}				{}
+{UnclosedComment}			{}
+{BadEndOfLineComment}		{}
 {ID}						{ return symbol(TokenNames.ID, new String(yytext())); }   
 {STRING}					{ return symbol(TokenNames.STRING, new String(yytext())); }
-{WhiteSpace}				{ /* just skip what was found, do nothing */ }
+{WhiteSpace}				{}
 <<EOF>>						{ return symbol(TokenNames.EOF); }
 
 "("				{ return symbol(TokenNames.LPAREN); }
@@ -76,6 +76,6 @@ BadEndOfLineComment = "//"[^CommentContent]
 "<"				{ return symbol(TokenNames.LT); }
 ">"				{ return symbol(TokenNames.GT); }
 
-[^]				{ return symbol(TokenNames.ILLEGAL_CHARACTER); }
+[^]				{}
 
 }
