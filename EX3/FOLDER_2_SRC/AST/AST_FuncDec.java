@@ -49,7 +49,7 @@ public class AST_FuncDec extends AST_ClassField
 
 	public void SemantBody() throws Exception
 	{
-		SymbolTable.beginScope();
+		SymbolTable.beginScope(TypeScope.FUNC);
 		if (params != null) params.SemantBody();
 		if (body != null) { body.SemantMe(); }
 		SymbolTable.endScope();
