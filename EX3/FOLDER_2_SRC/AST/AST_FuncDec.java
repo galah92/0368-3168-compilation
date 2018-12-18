@@ -1,7 +1,8 @@
 package AST;
 import TYPES.*;
-
+import javafx.scene.layout.RowConstraintsBuilder;
 import SymbolTable.*;
+
 
 public class AST_FuncDec extends AST_ClassField
 {
@@ -9,6 +10,7 @@ public class AST_FuncDec extends AST_ClassField
 	public String funcName;
 	public AST_ParamsList params;
 	public AST_StmtList body;
+	public TypeFunc funcType;
 	
 	public AST_FuncDec(String retTypeName, String funcName, AST_ParamsList params, AST_StmtList body)
 	{
@@ -31,15 +33,18 @@ public class AST_FuncDec extends AST_ClassField
 	public TypeFunc SemantDeclaration() throws Exception
 	{
 		Type retType = retTypeName.equals(Type.VOID.name) ? Type.VOID : SymbolTable.find(retTypeName);
-
 		TypeList paramsTypes = params != null ? params.SemantDeclaration(): null;
 		Type func = SymbolTable.findInScope(funcName);
-		func = func == null ? SymbolTable.find(funcName) : func;
 		if (func != null)
 		{
+			if (!(func instanceof TypeFunc)) { throw new SemanticException(); }
+			if (!(SymbolTable.isInScope(Type.Scope.CLASS))) { throw new SemanticException(); }
+			TypeClass currentClass = SymbolTable.findClass();
+			TypeClass funcClass = ((TypeFunc)func).cls;
+			if (currentClass == funcClass) { throw new SemanticException(); } // func declerated before
 			OverrideFuncDecCheck(func, retType, paramsTypes);
 		}
-		TypeFunc funcType = new TypeFunc(retType, funcName, paramsTypes);
+		funcType = new TypeFunc(retType, funcName, paramsTypes, SymbolTable.findClass());
 		SymbolTable.enter(funcName, funcType);
 		return funcType;
 	}
@@ -47,23 +52,23 @@ public class AST_FuncDec extends AST_ClassField
 	public void SemantBody() throws Exception
 	{
 		SymbolTable.beginScope(Type.Scope.FUNC);
+		SymbolTable.enter(funcName, funcType);
 		if (params != null) params.SemantBody();
-		if (body != null) { body.SemantMe(); }
+		if (body != null) { body.SemantMe(); 
+		}
 		SymbolTable.endScope();
 	}
 
 	public TypeFunc SemantMe() throws Exception
 	{
-		TypeFunc funcType = SemantDeclaration();
+		funcType = SemantDeclaration();
 		SemantBody();
 		return funcType;
 	}
 
 	public void OverrideFuncDecCheck(Type func, Type retType, TypeList argsTypes) throws Exception
 	{
-		if (!(func instanceof TypeFunc)) { throw new SemanticException(); }
 		TypeFunc overloadedFuncType = (TypeFunc)func;
-		if (!(SymbolTable.isInScope(Type.Scope.CLASS))) { throw new SemanticException(); }
 		if (overloadedFuncType.retType != retType) { throw new SemanticException(); }
 		if (!(overloadedFuncType.isValidArgs(argsTypes))) { throw new SemanticException(); }
 	}
