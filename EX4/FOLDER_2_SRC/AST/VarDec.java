@@ -15,9 +15,9 @@ public class VarDec extends ClassField
 		this.initVal = initVal;
 	}
 
-	public void toGraphviz()
+	public void logGraphviz()
 	{
-		if (initVal != null) initVal.toGraphviz();
+		if (initVal != null) initVal.logGraphviz();
 		logNode(String.format("VarDec\n%s\n%s", varName, varTypeName));
 		if (initVal != null) logEdge(initVal);
 	}

@@ -15,10 +15,10 @@ public class ExpBinOp extends Exp
 		this.op = op;
 	}
 
-	public void toGraphviz()
+	public void logGraphviz()
 	{
-		if (left != null) left.toGraphviz();
-		if (right != null) right.toGraphviz();
+		if (left != null) left.logGraphviz();
+		if (right != null) right.logGraphviz();
 
 		logNode(String.format("ExpBinOp\n%s", op));
 		if (left  != null) logEdge(left);

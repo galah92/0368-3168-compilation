@@ -15,10 +15,10 @@ public class ExpCall extends Exp
 		this.args = args;
 	}
 
-	public void toGraphviz()
+	public void logGraphviz()
 	{
-		if (args != null) args.toGraphviz();
-		if (instanceName != null) instanceName.toGraphviz();
+		if (args != null) args.logGraphviz();
+		if (instanceName != null) instanceName.logGraphviz();
 
 		logNode(String.format("ExpCall\n%s", funcName));
 		if (args != null) logEdge(args);

@@ -16,9 +16,9 @@ public class ClassDec extends Dec
 		this.fields = fields;
 	}
 
-	public void toGraphviz()
+	public void logGraphviz()
 	{
-        if (fields != null) fields.toGraphviz();
+        if (fields != null) fields.logGraphviz();
 		logNode(String.format("ClassDec\n%s\n%s", className, baseName));
 		logEdge(fields);
 	}

@@ -13,10 +13,10 @@ public class StmtAssign extends Stmt
 		this.exp = exp;
 	}
 
-	public void toGraphviz()
+	public void logGraphviz()
 	{
-		if (var != null) var.toGraphviz();
-		if (exp != null) exp.toGraphviz();
+		if (var != null) var.logGraphviz();
+		if (exp != null) exp.logGraphviz();
 
 		logNode("ASSIGN\nleft := right\n");
 		logEdge(var);

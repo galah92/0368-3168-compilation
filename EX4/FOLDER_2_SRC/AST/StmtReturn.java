@@ -11,9 +11,9 @@ public class StmtReturn extends Stmt
 		this.exp = exp;
 	}
 
-	public void toGraphviz()
+	public void logGraphviz()
 	{
-		if (exp != null) exp.toGraphviz();
+		if (exp != null) exp.logGraphviz();
 		logNode("StmtReturn");
 		if (exp != null) logEdge(exp);
 	}

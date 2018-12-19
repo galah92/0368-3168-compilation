@@ -19,10 +19,10 @@ public class FuncDec extends ClassField
 		this.body = body;
 	}
 
-	public void toGraphviz()
+	public void logGraphviz()
 	{
-		if (params != null) params.toGraphviz();
-		if (body != null) body.toGraphviz();
+		if (params != null) params.logGraphviz();
+		if (body != null) body.logGraphviz();
 
 		logNode(String.format("FuncDec\n%s\n%s", retTypeName, funcName));
 		if (params != null) logEdge(params);

@@ -13,10 +13,10 @@ public class StmtWhile extends Stmt
 		this.body = body;
 	}
 
-	public void toGraphviz()
+	public void logGraphviz()
 	{
-		if (cond != null) cond.toGraphviz();
-		if (body != null) body.toGraphviz();
+		if (cond != null) cond.logGraphviz();
+		if (body != null) body.logGraphviz();
 
 		logNode("StmtWhile");
 		

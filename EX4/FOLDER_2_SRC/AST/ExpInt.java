@@ -10,7 +10,7 @@ public class ExpInt extends ExpPrimitive
 		this.value = value;
 	}
 
-	public void toGraphviz()
+	public void logGraphviz()
 	{
 		logNode(String.format("ExpInt\n%s",value));
 	}

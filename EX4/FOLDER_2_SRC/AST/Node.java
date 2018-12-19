@@ -7,7 +7,7 @@ public abstract class Node
 {
 	public int lineNumber;
 	
-	public abstract void toGraphviz();
+	public abstract void logGraphviz();
 
 	public abstract Type Semant() throws Exception;
 
@@ -22,34 +22,28 @@ public abstract class Node
 	private static int instanceCount = 0;
 	public final int instanceNumber = instanceCount++;
 
-	private static PrintWriter fileWriter;
-
-	public static void initFile() throws Exception
-	{
-		String dirname = "./FOLDER_5_OUTPUT/";
-		String filename = "IN_GRAPHVIZ_DOT_FORMAT.txt";
-		fileWriter = new PrintWriter(dirname + filename);
-		fileWriter.println("digraph");
-		fileWriter.println("{");
-		fileWriter.println("graph [ordering = \"out\"]");
-	}
+	private static final StringBuilder sb = new StringBuilder();
 
 	public void logNode(String nodeName)
 	{
-		if (fileWriter == null) { return; }
-		fileWriter.format("v%d [label = \"%s\"];\n", instanceNumber, nodeName);
+		sb.append(String.format("v%d [label = \"%s\"];\n", instanceNumber, nodeName));
 	}
 
 	public void logEdge(Node otherNode)
 	{
-		if (fileWriter == null) { return; }
-		fileWriter.format("v%d -> v%d;\n", instanceNumber, otherNode.instanceNumber);
+		sb.append(String.format("v%d -> v%d;\n", instanceNumber, otherNode.instanceNumber));
 	}
 	
-	public static void saveFile()
+	public static void toGraphviz() throws Exception
 	{
-		if (fileWriter == null) { return; }
-		fileWriter.println("}");
-		fileWriter.close();
+		String dirname = "./FOLDER_5_OUTPUT/";
+		String filename = "IN_GRAPHVIZ_DOT_FORMAT.txt";
+		PrintWriter writer = new PrintWriter(dirname + filename);
+		writer.println("digraph");
+		writer.println("{");
+		writer.println("graph [ordering = \"out\"]");
+		writer.println(sb.toString());
+		writer.println("}");
+		writer.close();
 	}
 }

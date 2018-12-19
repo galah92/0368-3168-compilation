@@ -13,7 +13,7 @@ public class NewExp extends Exp
         this.exp = exp;
     }
 
-    public void toGraphviz()
+    public void logGraphviz()
 	{
 		logNode(String.format("NewExp\n%s", type));
         if (exp != null) logEdge(exp);

@@ -9,16 +9,15 @@ public class Main
 		PrintWriter writer = null;
 		try
 		{
-			SymbolStack.Init();
-			AST.Node.initFile();
+			SymbolStack.init();
 			writer = new PrintWriter(argv[1]);
-			Lexer lexer = new Lexer(new FileReader(argv[0]));
-			Parser parser = new Parser(lexer, writer);
+			Parser parser = new Parser(argv[0], writer);
 			AST.Node tree = (AST.Node)parser.parse().value;
-			tree.toGraphviz();
+			tree.logGraphviz();
 			tree.Semant();
 			writer.println("OK");
 			SymbolStack.toGraphviz();
+			AST.Node.toGraphviz();
     	}
 		catch (AST.Node.SemanticException e)
 		{
@@ -32,7 +31,6 @@ public class Main
 		}
 		finally
 		{
-			AST.Node.saveFile();
 			if (writer != null) { writer.close(); }
 		}
 	}

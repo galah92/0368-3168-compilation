@@ -11,7 +11,7 @@ public class VarSimple extends Var
 		this.varName = varName;
 	}
 
-	public void toGraphviz()
+	public void logGraphviz()
 	{
 		logNode(String.format("VarSimple\n(%s)", varName));
 	}

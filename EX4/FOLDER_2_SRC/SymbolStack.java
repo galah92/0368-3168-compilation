@@ -24,7 +24,7 @@ public class SymbolStack
 	public static void enter(String name, Type t)
 	{
         stack.push(new Symbol(name, t));
-        updateGraphviz();
+        logGraphviz();
 	}
 
 	public static Type find(String name)
@@ -94,16 +94,16 @@ public class SymbolStack
     public static void beginScope(Type.Scope scopeType)
 	{
 		enter(scopeType.name, scopeType);
-        updateGraphviz();
+        logGraphviz();
 	}
 
     public static void endScope()
 	{
         while (!(stack.pop().type instanceof Type.Scope));
-        updateGraphviz();
+        logGraphviz();
 	}
 
-    public static void Init()
+    public static void init()
 	{
 		// enter primitive types
 		enter("int", Type.INT);
@@ -121,7 +121,7 @@ public class SymbolStack
     private static final StringBuilder sb = new StringBuilder();
     private static int sbAppendCount = 0;
 
-    private static void updateGraphviz()
+    private static void logGraphviz()
     {
         sb.append(String.format("node_%d [label=\"<head>%d", sbAppendCount, sbAppendCount++));
         Iterator<Symbol> it = stack.descendingIterator();

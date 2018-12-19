@@ -13,10 +13,10 @@ public class VarArrayElement extends Var
 		this.index = index;
 	}
 
-	public void toGraphviz()
+	public void logGraphviz()
 	{
-		var.toGraphviz();
-		index.toGraphviz();
+		var.logGraphviz();
+		index.logGraphviz();
 		logNode(String.format("VarArrayElement\n%s", index));
 		logEdge(var);
 	}

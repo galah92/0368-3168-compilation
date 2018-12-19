@@ -14,10 +14,10 @@ public class ClassFieldList extends Node
 		this.tail = tail;
 	}
 
-	public void toGraphviz()
+	public void logGraphviz()
 	{
-        classField.toGraphviz();
-		if (tail != null) tail.toGraphviz();
+        classField.logGraphviz();
+		if (tail != null) tail.logGraphviz();
 
 		logNode("ClassFieldList\n");
         logEdge(classField);

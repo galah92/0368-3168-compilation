@@ -11,9 +11,9 @@ public class StmtVarDec extends Stmt
 		this.var = var;
 	}
 	
-	public void toGraphviz()
+	public void logGraphviz()
 	{
-		var.toGraphviz();
+		var.logGraphviz();
 		logNode(String.format("StmtVarDec"));
 		logEdge(var);
 	}

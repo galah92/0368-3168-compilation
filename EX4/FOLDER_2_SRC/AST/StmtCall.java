@@ -11,9 +11,9 @@ public class StmtCall extends Stmt
 		this.callExp = callExp;
 	}
 
-	public void toGraphviz()
+	public void logGraphviz()
 	{
-		callExp.toGraphviz();
+		callExp.logGraphviz();
 		logNode(String.format("StmtCall"));
 		logEdge(callExp);
 	}

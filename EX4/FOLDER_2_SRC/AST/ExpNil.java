@@ -3,7 +3,7 @@ import TYPES.*;
 
 public class ExpNil extends ExpPrimitive
 {
-	public void toGraphviz()
+	public void logGraphviz()
 	{
 		logNode(String.format("ExpNil"));
 	}

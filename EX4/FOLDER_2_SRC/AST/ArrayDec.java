@@ -14,7 +14,7 @@ public class ArrayDec extends Dec
 		this.arrTypeName = arrTypeName;
 	}
 
-	public void toGraphviz()
+	public void logGraphviz()
 	{
 		logNode(String.format("ArrayDec\n%s\n%s", arrName, arrTypeName));
 	}

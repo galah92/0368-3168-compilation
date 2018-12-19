@@ -13,9 +13,9 @@ public class VarClassField extends Var
 		this.fieldName = fieldName;
 	}
 
-	public void toGraphviz()
+	public void logGraphviz()
 	{
-		className.toGraphviz();
+		className.logGraphviz();
 		logNode(String.format("VarClassField\n%s", fieldName));
 		logEdge(className);
 	}

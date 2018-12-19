@@ -12,10 +12,10 @@ public class ExpList extends Node
 		this.tail = tail;
 	}
 	
-	public void toGraphviz()
+	public void logGraphviz()
 	{
-		if (head != null) head.toGraphviz();
-		if (tail != null) tail.toGraphviz();
+		if (head != null) head.logGraphviz();
+		if (tail != null) tail.logGraphviz();
 		logNode("ExpList");
 		if (head != null) logEdge(head);
 		if (tail != null) logEdge(tail);

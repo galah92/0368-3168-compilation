@@ -10,7 +10,7 @@ public class ExpString extends ExpPrimitive
 		this.value = value;
 	}
 
-	public void toGraphviz()
+	public void logGraphviz()
 	{
 		logNode(String.format("ExpString\n%s", value.replace('"','\'')));
 	}

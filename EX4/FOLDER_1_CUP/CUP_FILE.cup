@@ -1,4 +1,4 @@
-import java.io.PrintWriter;
+import java.io.*;
 import java_cup.runtime.*;
 
 parser code 
@@ -6,9 +6,9 @@ parser code
     public Lexer lexer;
     public PrintWriter writer;
 
-    public Parser(Lexer lexer, PrintWriter writer)
+    public Parser(String inFile, PrintWriter writer) throws Exception
     {
-        this.lexer = lexer;
+        this.lexer = new Lexer(new FileReader(inFile));
         this.writer = writer;
     }
     public void report_error(String message, Object info)

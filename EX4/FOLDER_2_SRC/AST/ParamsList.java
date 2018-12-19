@@ -15,9 +15,9 @@ public class ParamsList extends Node
 		this.tail = tail;
 	}
 
-	public void toGraphviz()
+	public void logGraphviz()
 	{
-		if (tail != null) tail.toGraphviz();
+		if (tail != null) tail.logGraphviz();
 
 		logNode(String.format("ParamsList\n%s\n%s", paramName, paramTypeName));
 		if (tail != null) logEdge(tail);
