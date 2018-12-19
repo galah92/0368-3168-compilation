@@ -1,6 +1,4 @@
 import java.io.*;
-import java.io.PrintWriter;
-import java_cup.runtime.Symbol;
 import SymbolTable.*;
 
 public class Main
