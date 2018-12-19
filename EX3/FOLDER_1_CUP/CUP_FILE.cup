@@ -1,6 +1,5 @@
 import java.io.PrintWriter;
 import java_cup.runtime.*;
-import AST.*;
 
 parser code 
 {:
@@ -61,24 +60,24 @@ terminal String ID;
 terminal Integer INT;
 
 /* NON TERMINALS */
-non terminal DecList decList;
-non terminal Dec dec;
-non terminal VarDec varDec;
-non terminal FuncDec funcDec;
-non terminal ClassDec classDec;
-non terminal ArrayDec arrayDec;
-non terminal ParamsList paramsList;
-non terminal ClassField cField;
-non terminal ClassFieldList cFieldList;
-non terminal Exp exp;
-non terminal Var var;
-non terminal ExpCall callExp;
-non terminal ExpBinOp binopExp;
-non terminal ExpPrimitive primitiveExp;
-non terminal ExpList expList;
-non terminal NewExp newExp;
-non terminal Stmt stmt;
-non terminal StmtList stmtList;
+non terminal AST.DecList decList;
+non terminal AST.Dec dec;
+non terminal AST.VarDec varDec;
+non terminal AST.FuncDec funcDec;
+non terminal AST.ClassDec classDec;
+non terminal AST.ArrayDec arrayDec;
+non terminal AST.ParamsList paramsList;
+non terminal AST.ClassField cField;
+non terminal AST.ClassFieldList cFieldList;
+non terminal AST.Exp exp;
+non terminal AST.Var var;
+non terminal AST.ExpCall callExp;
+non terminal AST.ExpBinOp binopExp;
+non terminal AST.ExpPrimitive primitiveExp;
+non terminal AST.ExpList expList;
+non terminal AST.NewExp newExp;
+non terminal AST.Stmt stmt;
+non terminal AST.StmtList stmtList;
 
 /* OPERATOR PRECEDENCE */
 precedence nonassoc ASSIGN;
@@ -97,17 +96,17 @@ precedence left     DOT;
 start with decList;
 
 
-paramsList  ::=     ID:id1 ID:id2 COMMA paramsList:list {: RESULT = new ParamsList(id1, id2, list); RESULT.lineNumber = id1left; :} |
-                    ID:id1 ID:id2                       {: RESULT = new ParamsList(id1, id2, null); RESULT.lineNumber = id1left; :} ;
+paramsList  ::=     ID:id1 ID:id2 COMMA paramsList:list {: RESULT = new AST.ParamsList(id1, id2, list); RESULT.lineNumber = id1left; :} |
+                    ID:id1 ID:id2                       {: RESULT = new AST.ParamsList(id1, id2, null); RESULT.lineNumber = id1left; :} ;
 
-cFieldList  ::=     cField:field cFieldList:list        {: RESULT = new ClassFieldList(field, list); RESULT.lineNumber = fieldleft; :} |
-                    cField:field                        {: RESULT = new ClassFieldList(field, null); RESULT.lineNumber = fieldleft; :} ;
+cFieldList  ::=     cField:field cFieldList:list        {: RESULT = new AST.ClassFieldList(field, list); RESULT.lineNumber = fieldleft; :} |
+                    cField:field                        {: RESULT = new AST.ClassFieldList(field, null); RESULT.lineNumber = fieldleft; :} ;
 
-expList     ::=     exp:e COMMA expList:list            {: RESULT = new ExpList(e, list); RESULT.lineNumber = eleft; :} |
-                    exp:e                               {: RESULT = new ExpList(e, null); RESULT.lineNumber = eleft; :} ;
+expList     ::=     exp:e COMMA expList:list            {: RESULT = new AST.ExpList(e, list); RESULT.lineNumber = eleft; :} |
+                    exp:e                               {: RESULT = new AST.ExpList(e, null); RESULT.lineNumber = eleft; :} ;
 
-decList		::=		dec:d decList:l	{: RESULT = new DecList(d, l); RESULT.lineNumber = dleft; :} |
-                    dec:d			{: RESULT = new DecList(d, null); RESULT.lineNumber = dleft; :}
+decList		::=		dec:d decList:l	{: RESULT = new AST.DecList(d, l); RESULT.lineNumber = dleft; :} |
+                    dec:d			{: RESULT = new AST.DecList(d, null); RESULT.lineNumber = dleft; :}
                     ;
 
 dec			::=		varDec:d		{: RESULT = d; RESULT.lineNumber = dleft; :} |
@@ -115,18 +114,18 @@ dec			::=		varDec:d		{: RESULT = d; RESULT.lineNumber = dleft; :} |
                     classDec:d		{: RESULT = d; RESULT.lineNumber = dleft; :} |
                     arrayDec:d		{: RESULT = d; RESULT.lineNumber = dleft; :}
                     ;
-varDec		::=		ID:type ID:var SEMICOLON	                {: RESULT = new VarDec(type, var, null); RESULT.lineNumber = typeleft; :} |
-                    ID:type ID:var ASSIGN exp:e SEMICOLON       {: RESULT = new VarDec(type, var, e); RESULT.lineNumber = typeleft; :} |
-                    ID:type ID:var ASSIGN newExp:e SEMICOLON    {: RESULT = new VarDec(type, var, e); RESULT.lineNumber = typeleft; :}
+varDec		::=		ID:type ID:var SEMICOLON	                {: RESULT = new AST.VarDec(type, var, null); RESULT.lineNumber = typeleft; :} |
+                    ID:type ID:var ASSIGN exp:e SEMICOLON       {: RESULT = new AST.VarDec(type, var, e); RESULT.lineNumber = typeleft; :} |
+                    ID:type ID:var ASSIGN newExp:e SEMICOLON    {: RESULT = new AST.VarDec(type, var, e); RESULT.lineNumber = typeleft; :}
                     ;
-funcDec		::=		ID:ret ID:name LPAREN paramsList:p RPAREN LBRACE stmtList:body RBRACE   {: RESULT = new FuncDec(ret, name, p, body); RESULT.lineNumber = retleft; :} |
-                    ID:ret ID:name LPAREN RPAREN LBRACE stmtList:body RBRACE                {: RESULT = new FuncDec(ret,name,null,body); RESULT.lineNumber = retleft; :}
+funcDec		::=		ID:ret ID:name LPAREN paramsList:p RPAREN LBRACE stmtList:body RBRACE   {: RESULT = new AST.FuncDec(ret, name, p, body); RESULT.lineNumber = retleft; :} |
+                    ID:ret ID:name LPAREN RPAREN LBRACE stmtList:body RBRACE                {: RESULT = new AST.FuncDec(ret,name,null,body); RESULT.lineNumber = retleft; :}
                     ;
-classDec	::=		CLASS ID:name LBRACE cFieldList:l RBRACE	                {: RESULT = new ClassDec(name, null, l); RESULT.lineNumber = lleft; :} |
-                    CLASS ID:name EXTENDS ID:base LBRACE cFieldList:l RBRACE	{: RESULT = new ClassDec(name, base, l); RESULT.lineNumber = lleft; :}
+classDec	::=		CLASS ID:name LBRACE cFieldList:l RBRACE	                {: RESULT = new AST.ClassDec(name, null, l); RESULT.lineNumber = lleft; :} |
+                    CLASS ID:name EXTENDS ID:base LBRACE cFieldList:l RBRACE	{: RESULT = new AST.ClassDec(name, base, l); RESULT.lineNumber = lleft; :}
                     ;
 
-arrayDec    ::=     ARRAY ID:name EQ ID:Type LBRACK RBRACK                        {: RESULT = new ArrayDec(name, Type); RESULT.lineNumber = nameleft; :};
+arrayDec    ::=     ARRAY ID:name EQ ID:Type LBRACK RBRACK                        {: RESULT = new AST.ArrayDec(name, Type); RESULT.lineNumber = nameleft; :};
 
 exp			::=		var:v		            {: RESULT = v; RESULT.lineNumber = vleft; :} |
                     LPAREN exp:e RPAREN		{: RESULT = e; RESULT.lineNumber = eleft; :} |
@@ -135,48 +134,48 @@ exp			::=		var:v		            {: RESULT = v; RESULT.lineNumber = vleft; :} |
                     primitiveExp:e          {: RESULT = e; RESULT.lineNumber = eleft; :}
                     ;
 
-var		::=		    ID:name						{: RESULT = new VarSimple(name); RESULT.lineNumber = nameleft; :} |
-                    var:v DOT ID:fieldName		{: RESULT = new VarClassField(v, fieldName); RESULT.lineNumber = vleft; :} |
-                    var:v LBRACK exp:e RBRACK	{: RESULT = new VarArrayElement(v,e); RESULT.lineNumber = vleft; :}
+var		::=		    ID:name						{: RESULT = new AST.VarSimple(name); RESULT.lineNumber = nameleft; :} |
+                    var:v DOT ID:fieldName		{: RESULT = new AST.VarClassField(v, fieldName); RESULT.lineNumber = vleft; :} |
+                    var:v LBRACK exp:e RBRACK	{: RESULT = new AST.VarArrayElement(v,e); RESULT.lineNumber = vleft; :}
                     ;
 
-binopExp	::=		exp:e1 PLUS exp:e2		{: RESULT = new ExpBinOp(e1, e2, '+'); RESULT.lineNumber = e1left; :} |
-                    exp:e1 MINUS exp:e2 	{: RESULT = new ExpBinOp(e1, e2, '-'); RESULT.lineNumber = e1left; :} |
-                    exp:e1 TIMES exp:e2 	{: RESULT = new ExpBinOp(e1, e2, '*'); RESULT.lineNumber = e1left; :} |
-                    exp:e1 DIVIDE exp:e2 	{: RESULT = new ExpBinOp(e1, e2, '/'); RESULT.lineNumber = e1left; :} |
-                    exp:e1 LT exp:e2		{: RESULT = new ExpBinOp(e1, e2, '<'); RESULT.lineNumber = e1left; :} |
-                    exp:e1 GT exp:e2		{: RESULT = new ExpBinOp(e1, e2, '>'); RESULT.lineNumber = e1left; :} |
-                    exp:e1 EQ exp:e2		{: RESULT = new ExpBinOp(e1, e2, '='); RESULT.lineNumber = e1left; :}
+binopExp	::=		exp:e1 PLUS exp:e2		{: RESULT = new AST.ExpBinOp(e1, e2, '+'); RESULT.lineNumber = e1left; :} |
+                    exp:e1 MINUS exp:e2 	{: RESULT = new AST.ExpBinOp(e1, e2, '-'); RESULT.lineNumber = e1left; :} |
+                    exp:e1 TIMES exp:e2 	{: RESULT = new AST.ExpBinOp(e1, e2, '*'); RESULT.lineNumber = e1left; :} |
+                    exp:e1 DIVIDE exp:e2 	{: RESULT = new AST.ExpBinOp(e1, e2, '/'); RESULT.lineNumber = e1left; :} |
+                    exp:e1 LT exp:e2		{: RESULT = new AST.ExpBinOp(e1, e2, '<'); RESULT.lineNumber = e1left; :} |
+                    exp:e1 GT exp:e2		{: RESULT = new AST.ExpBinOp(e1, e2, '>'); RESULT.lineNumber = e1left; :} |
+                    exp:e1 EQ exp:e2		{: RESULT = new AST.ExpBinOp(e1, e2, '='); RESULT.lineNumber = e1left; :}
                     ;
 
-callExp		::=		ID:funcName LPAREN RPAREN                           {: RESULT = new ExpCall(funcName, null, null); RESULT.lineNumber = funcNameleft; :} |
-                    ID:funcName LPAREN expList:args RPAREN              {: RESULT = new ExpCall(funcName, null, args); RESULT.lineNumber = funcNameleft; :} |
-                    var:v DOT ID:funcName LPAREN RPAREN                 {: RESULT = new ExpCall(funcName, v, null); RESULT.lineNumber = funcNameleft; :} |
-                    var:v DOT ID:funcName LPAREN expList:args RPAREN    {: RESULT = new ExpCall(funcName, v, args); RESULT.lineNumber = funcNameleft; :}
+callExp		::=		ID:funcName LPAREN RPAREN                           {: RESULT = new AST.ExpCall(funcName, null, null); RESULT.lineNumber = funcNameleft; :} |
+                    ID:funcName LPAREN expList:args RPAREN              {: RESULT = new AST.ExpCall(funcName, null, args); RESULT.lineNumber = funcNameleft; :} |
+                    var:v DOT ID:funcName LPAREN RPAREN                 {: RESULT = new AST.ExpCall(funcName, v, null); RESULT.lineNumber = funcNameleft; :} |
+                    var:v DOT ID:funcName LPAREN expList:args RPAREN    {: RESULT = new AST.ExpCall(funcName, v, args); RESULT.lineNumber = funcNameleft; :}
                     ;
 
-primitiveExp    ::=     INT:i           {: RESULT = new ExpInt(i); RESULT.lineNumber = ileft; :} |
-                        MINUS INT:i     {: RESULT = new ExpInt(-i); RESULT.lineNumber = ileft; :} |
-                        STRING:s        {: RESULT = new ExpString(s); RESULT.lineNumber = sleft; :} |
-                        NIL:n           {: RESULT = new ExpNil(); RESULT.lineNumber = nleft; :}
+primitiveExp    ::=     INT:i           {: RESULT = new AST.ExpInt(i); RESULT.lineNumber = ileft; :} |
+                        MINUS INT:i     {: RESULT = new AST.ExpInt(-i); RESULT.lineNumber = ileft; :} |
+                        STRING:s        {: RESULT = new AST.ExpString(s); RESULT.lineNumber = sleft; :} |
+                        NIL:n           {: RESULT = new AST.ExpNil(); RESULT.lineNumber = nleft; :}
                         ;
 
-stmtList	::=		stmt:s stmtList:l	{: RESULT = new StmtList(s,l); RESULT.lineNumber = sleft; :} |
-                    stmt:s  			{: RESULT = new StmtList(s,null); RESULT.lineNumber = sleft; :}
+stmtList	::=		stmt:s stmtList:l	{: RESULT = new AST.StmtList(s,l); RESULT.lineNumber = sleft; :} |
+                    stmt:s  			{: RESULT = new AST.StmtList(s,null); RESULT.lineNumber = sleft; :}
                     ;
                     
-stmt		::=		varDec:v                                                    {: RESULT = new StmtVarDec(v); RESULT.lineNumber = vleft; :} |
-                    var:v ASSIGN exp:e SEMICOLON						    	{: RESULT = new StmtAssign(v,e); RESULT.lineNumber = vleft; :} |
-                    var:v ASSIGN newExp:e SEMICOLON						    	{: RESULT = new StmtAssign(v,e); RESULT.lineNumber = vleft; :} |
-                    RETURN:r SEMICOLON									        {: RESULT = new StmtReturn(null); RESULT.lineNumber = rleft; :} |
-                    RETURN exp:e SEMICOLON									    {: RESULT = new StmtReturn(e); RESULT.lineNumber = eleft; :} |
-                    IF    LPAREN exp:cond RPAREN LBRACE stmtList:body RBRACE	{: RESULT = new StmtIf(cond,body); RESULT.lineNumber = condleft; :} |
-                    WHILE LPAREN exp:cond RPAREN LBRACE stmtList:body RBRACE	{: RESULT = new StmtWhile(cond,body); RESULT.lineNumber = condleft; :} |
-                    callExp:callExp SEMICOLON									{: RESULT = new StmtCall(callExp); RESULT.lineNumber = callExpleft; :}
+stmt		::=		varDec:v                                                    {: RESULT = new AST.StmtVarDec(v); RESULT.lineNumber = vleft; :} |
+                    var:v ASSIGN exp:e SEMICOLON						    	{: RESULT = new AST.StmtAssign(v,e); RESULT.lineNumber = vleft; :} |
+                    var:v ASSIGN newExp:e SEMICOLON						    	{: RESULT = new AST.StmtAssign(v,e); RESULT.lineNumber = vleft; :} |
+                    RETURN:r SEMICOLON									        {: RESULT = new AST.StmtReturn(null); RESULT.lineNumber = rleft; :} |
+                    RETURN exp:e SEMICOLON									    {: RESULT = new AST.StmtReturn(e); RESULT.lineNumber = eleft; :} |
+                    IF    LPAREN exp:cond RPAREN LBRACE stmtList:body RBRACE	{: RESULT = new AST.StmtIf(cond,body); RESULT.lineNumber = condleft; :} |
+                    WHILE LPAREN exp:cond RPAREN LBRACE stmtList:body RBRACE	{: RESULT = new AST.StmtWhile(cond,body); RESULT.lineNumber = condleft; :} |
+                    callExp:callExp SEMICOLON									{: RESULT = new AST.StmtCall(callExp); RESULT.lineNumber = callExpleft; :}
                     ;
 
-newExp      ::=     NEW ID:type                         {: RESULT = new NewExp(type, null); RESULT.lineNumber = typeleft; :} |
-                    NEW ID:type LBRACK exp:e RBRACK     {: RESULT = new NewExp(type, e); RESULT.lineNumber = typeleft; :}
+newExp      ::=     NEW ID:type                         {: RESULT = new AST.NewExp(type, null); RESULT.lineNumber = typeleft; :} |
+                    NEW ID:type LBRACK exp:e RBRACK     {: RESULT = new AST.NewExp(type, e); RESULT.lineNumber = typeleft; :}
                     ;
 
 cField      ::=     varDec:d                         {: RESULT = d; RESULT.lineNumber = dleft; :} |
