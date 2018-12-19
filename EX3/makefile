@@ -49,7 +49,7 @@ compile: clean
 	
 everything: clean compile
 	java -jar COMPILER ${INPUT} ${OUTPUT}
-	dot -Tjpeg -o${OUTPUT_DIR}/AST.jpeg ${OUTPUT_DIR}/AST_IN_GRAPHVIZ_DOT_FORMAT.txt
+	dot -Tjpeg -o${OUTPUT_DIR}/AST.jpeg ${OUTPUT_DIR}/IN_GRAPHVIZ_DOT_FORMAT.txt
 #	eog ${OUTPUT_DIR}/AST.jpeg &
 	dot -Tjpeg -o${OUTPUT_DIR}/SymbolTable_0.jpeg  ${OUTPUT_DIR}/SymbolTable_0_IN_GRAPHVIZ_DOT_FORMAT.txt
 	@dot -Tjpeg -o${OUTPUT_DIR}/SymbolTable_1.jpeg  ${OUTPUT_DIR}/SymbolTable_1_IN_GRAPHVIZ_DOT_FORMAT.txt

@@ -1,7 +1,6 @@
 import java.io.*;
 import java.io.PrintWriter;
 import java_cup.runtime.Symbol;
-import AST.*;
 import SymbolTable.*;
 
 public class Main
@@ -12,17 +11,16 @@ public class Main
 		try
 		{
 			SymbolTable.Init();
-			AST_Node.initFile();
+			AST.Node.initFile();
 			writer = new PrintWriter(argv[1]);
 			Lexer lexer = new Lexer(new FileReader(argv[0]));
 			Parser parser = new Parser(lexer, writer);
-			AST_Node AST = (AST_Node) parser.parse().value;
-			AST.toGraphviz();
-			AST_Node.saveFile();
-			AST.Semant(); // will exit here if error exists
+			AST.Node tree = (AST.Node)parser.parse().value;
+			tree.toGraphviz();
+			tree.Semant();
 			writer.println("OK");
     	}
-		catch (AST_Node.SemanticException e)
+		catch (AST.Node.SemanticException e)
 		{
 			e.printStackTrace();
 			if (writer != null) { writer.println("ERROR(" + e.getLineNumber() + ")"); }
@@ -34,6 +32,7 @@ public class Main
 		}
 		finally
 		{
+			AST.Node.saveFile();
 			if (writer != null) { writer.close(); }
 		}
 	}
