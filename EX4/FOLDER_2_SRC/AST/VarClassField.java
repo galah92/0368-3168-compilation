@@ -1,6 +1,6 @@
 package AST;
 import TYPES.*;
-import SymbolTable.*;
+import SymbolStack.*;
 
 public class VarClassField extends Var
 {

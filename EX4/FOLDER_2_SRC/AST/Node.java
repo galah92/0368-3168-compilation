@@ -1,6 +1,7 @@
 package AST;
 import java.io.*;
 import TYPES.*;
+import SymbolStack.*;
 
 public abstract class Node
 {

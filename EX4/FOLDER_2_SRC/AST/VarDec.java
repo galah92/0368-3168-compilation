@@ -1,6 +1,6 @@
 package AST;
 import TYPES.*;
-import SymbolTable.*;
+import SymbolStack.*;
 
 public class VarDec extends ClassField
 {
@@ -24,13 +24,13 @@ public class VarDec extends ClassField
 
 	public Type SemantDeclaration() throws Exception
 	{
-		if (SymbolTable.findInScope(varName) != null) { throw new SemanticException("variable name already defined"); }
-		if (SymbolTable.findTypeName(varName) != null) { throw new SemanticException("variable name defined as type"); }
+		if (SymbolStack.findInScope(varName) != null) { throw new SemanticException("variable name already defined"); }
+		if (SymbolStack.findTypeName(varName) != null) { throw new SemanticException("variable name defined as type"); }
 
-		Type varType = SymbolTable.findTypeName(varTypeName);
+		Type varType = SymbolStack.findTypeName(varTypeName);
 		if (varType == null) { throw new SemanticException("variable type not defined"); }
 
-		TypeClass classType = SymbolTable.findClass();
+		TypeClass classType = SymbolStack.findClass();
 		boolean isSemantingClass = classType != null && classType.fields == null;
 
 		Type initValType = initVal != null ? initVal.Semant() : null;
@@ -39,7 +39,7 @@ public class VarDec extends ClassField
 			if (initValType == Type.NIL)
 			{
 				if (varType == Type.INT || varType == Type.STRING) { throw new SemanticException(); }
-				SymbolTable.enter(varName, varType); //TODO: CHeck if neccessry
+				SymbolStack.enter(varName, varType); //TODO: CHeck if neccessry
 				return new TypeClassVar(varType, varName);
 			}
 			if (isSemantingClass) // we're in the middle of ClassDec
@@ -60,7 +60,7 @@ public class VarDec extends ClassField
 			}
 		}
 
-		SymbolTable.enter(varName, varType);
+		SymbolStack.enter(varName, varType);
 		return new TypeClassVar(varType, varName);
 	}
 

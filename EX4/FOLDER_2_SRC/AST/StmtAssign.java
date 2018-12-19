@@ -1,5 +1,6 @@
 package AST;
 import TYPES.*;
+import SymbolStack.*;
 
 public class StmtAssign extends Stmt
 {

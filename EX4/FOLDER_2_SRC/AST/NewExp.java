@@ -1,6 +1,6 @@
 package AST;
 import TYPES.*;
-import SymbolTable.*;
+import SymbolStack.*;
 
 public class NewExp extends Exp
 {
@@ -22,7 +22,7 @@ public class NewExp extends Exp
 	public Type Semant() throws Exception
 	{
         // type must be known
-        Type newExpType = SymbolTable.find(type);
+        Type newExpType = SymbolStack.find(type);
         if (newExpType == null) { throw new SemanticException(); }
 
         if (exp != null) // new array

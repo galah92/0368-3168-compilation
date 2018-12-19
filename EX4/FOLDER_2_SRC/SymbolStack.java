@@ -1,3 +1,5 @@
+package SymbolStack;
+
 import java.util.*;
 import java.io.*;
 import TYPES.*;
@@ -121,10 +123,12 @@ public class SymbolStack
 
     private static void updateGraphviz()
     {
-        sb.append(String.format("node_%d [label=\"<head>", sbAppendCount++));
-        for (Symbol symbol : stack)
+        sb.append(String.format("node_%d [label=\"<head>%d", sbAppendCount, sbAppendCount++));
+        Iterator<Symbol> it = stack.descendingIterator();
+        while (it.hasNext())
         {
-            sb.append(String.format(" | [%s] %s", symbol.type.name, symbol.name));
+            Symbol sym = it.next();
+            sb.append(String.format(" | [%s] %s \\l", sym.type.name, sym.name));
         }
         sb.append("\"];\n");
     }

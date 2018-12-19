@@ -1,6 +1,6 @@
 package AST;
 import TYPES.*;
-import SymbolTable.*;
+import SymbolStack.*;
 
 
 public class FuncDec extends ClassField
@@ -31,34 +31,34 @@ public class FuncDec extends ClassField
 
 	public TypeFunc SemantDeclaration() throws Exception
 	{
-		Type retType = retTypeName.equals(Type.VOID.name) ? Type.VOID : SymbolTable.find(retTypeName);
+		Type retType = retTypeName.equals(Type.VOID.name) ? Type.VOID : SymbolStack.find(retTypeName);
 		TypeList paramsTypes = params != null ? params.SemantDeclaration(): null;
-		Type func = SymbolTable.findInScope(funcName);
+		Type func = SymbolStack.findInScope(funcName);
 		if (func == null)
 		{
-			func = SymbolTable.find(funcName);
+			func = SymbolStack.find(funcName);
 			if (func != null && (func instanceof TypeClass)) { throw new SemanticException(); }
 		} else {
 			if (!(func instanceof TypeFunc)) { throw new SemanticException(); }
-			if (!(SymbolTable.isInScope(Type.Scope.CLASS))) { throw new SemanticException(); }
-			TypeClass currentClass = SymbolTable.findClass();
+			if (!(SymbolStack.isInScope(Type.Scope.CLASS))) { throw new SemanticException(); }
+			TypeClass currentClass = SymbolStack.findClass();
 			TypeClass funcClass = ((TypeFunc)func).cls;
 			if (currentClass == funcClass) { throw new SemanticException(); } // func declerated before
 			OverrideFuncDecCheck(func, retType, paramsTypes);
 		}
-		funcType = new TypeFunc(retType, funcName, paramsTypes, SymbolTable.findClass());
-		SymbolTable.enter(funcName, funcType);
+		funcType = new TypeFunc(retType, funcName, paramsTypes, SymbolStack.findClass());
+		SymbolStack.enter(funcName, funcType);
 		return funcType;
 	}
 
 	public void SemantBody() throws Exception
 	{
-		SymbolTable.beginScope(Type.Scope.FUNC);
-		SymbolTable.enter(funcName, funcType);
+		SymbolStack.beginScope(Type.Scope.FUNC);
+		SymbolStack.enter(funcName, funcType);
 		if (params != null) params.SemantBody();
 		if (body != null) { body.Semant(); 
 		}
-		SymbolTable.endScope();
+		SymbolStack.endScope();
 	}
 
 	public TypeFunc Semant() throws Exception

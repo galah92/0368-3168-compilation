@@ -1,6 +1,6 @@
 package AST;
 import TYPES.*;
-import SymbolTable.*;
+import SymbolStack.*;
 
 public class ParamsList extends Node
 {
@@ -25,26 +25,26 @@ public class ParamsList extends Node
 
 	public TypeList SemantDeclaration() throws Exception
 	{
-		Type paramType = SymbolTable.find(paramTypeName);
+		Type paramType = SymbolStack.find(paramTypeName);
 		if (paramType == null) { throw new SemanticException(); }
 		return new TypeList(paramType, tail != null ? tail.SemantDeclaration() : null);
 	}
 
 	public void SemantBody() throws Exception
 	{
-		Type paramType = SymbolTable.find(paramTypeName);
+		Type paramType = SymbolStack.find(paramTypeName);
 		if (paramType == null) { throw new SemanticException(); }
-		// if (SymbolTable.findInScope(paramName) != null) { throw new SemanticException(); }
-		SymbolTable.enter(paramName, paramType);
+		// if (SymbolStack.findInScope(paramName) != null) { throw new SemanticException(); }
+		SymbolStack.enter(paramName, paramType);
 		if (tail != null) tail.SemantBody();
 	}
 
     public TypeList Semant() throws Exception
 	{
-		Type paramType = SymbolTable.find(paramTypeName);
+		Type paramType = SymbolStack.find(paramTypeName);
 		if (paramType == null) { throw new SemanticException(); }
-		if (SymbolTable.findInScope(paramName) != null) { throw new SemanticException(); }
-		SymbolTable.enter(paramName, paramType);
+		if (SymbolStack.findInScope(paramName) != null) { throw new SemanticException(); }
+		SymbolStack.enter(paramName, paramType);
 		return new TypeList(paramType, tail != null ? tail.Semant() : null);
 	}
 }

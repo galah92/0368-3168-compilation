@@ -1,6 +1,7 @@
 package AST;
 import TYPES.*;
-import SymbolTable.*;
+import SymbolStack.*;
+
 
 public abstract class ClassField extends Dec
 {

@@ -1,6 +1,6 @@
 package AST;
 import TYPES.*;
-import SymbolTable.*;
+import SymbolStack.*;
 
 public class StmtReturn extends Stmt
 {
@@ -19,7 +19,7 @@ public class StmtReturn extends Stmt
 	}
 	public Type Semant() throws Exception
 	{
-		TypeFunc funcType = SymbolTable.findFunc();
+		TypeFunc funcType = SymbolStack.findFunc();
 		if (funcType == null) { throw new SemanticException(); }
 		Type expType = exp != null ? exp.Semant() : Type.VOID;
 		if (funcType.retType != expType) {

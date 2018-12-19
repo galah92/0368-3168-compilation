@@ -1,6 +1,6 @@
 package AST;
 import TYPES.*;
-import SymbolTable.*;
+import SymbolStack.*;
 
 public class ExpCall extends Exp
 {
@@ -40,7 +40,7 @@ public class ExpCall extends Exp
 		}
 		else // global functions
 		{
-			Type t = SymbolTable.find(funcName);
+			Type t = SymbolStack.find(funcName);
 			if (t == null && !(t instanceof TypeFunc)) { throw new SemanticException(); }
 			funcType = (TypeFunc)t;
 		}

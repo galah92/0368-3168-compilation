@@ -1,5 +1,6 @@
 import java.io.*;
-import SymbolTable.*;
+import SymbolStack.*;
+
 
 public class Main
 {
@@ -8,7 +9,7 @@ public class Main
 		PrintWriter writer = null;
 		try
 		{
-			SymbolTable.Init();
+			SymbolStack.Init();
 			AST.Node.initFile();
 			writer = new PrintWriter(argv[1]);
 			Lexer lexer = new Lexer(new FileReader(argv[0]));
@@ -17,6 +18,7 @@ public class Main
 			tree.toGraphviz();
 			tree.Semant();
 			writer.println("OK");
+			SymbolStack.toGraphviz();
     	}
 		catch (AST.Node.SemanticException e)
 		{
