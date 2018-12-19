@@ -13,7 +13,7 @@ public class AST_ArrayDec extends AST_Dec
 		this.arrTypeName = arrTypeName;
 	}
 
-	public void PrintMe()
+	public void toGraphviz()
 	{
 		logNode(String.format("ArrayDec\n%s\n%s", arrName, arrTypeName));
 	}

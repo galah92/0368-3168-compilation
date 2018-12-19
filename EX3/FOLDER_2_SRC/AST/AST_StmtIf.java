@@ -13,10 +13,10 @@ public class AST_StmtIf extends AST_Stmt
 		this.body = body;
 	}
 
-	public void PrintMe()
+	public void toGraphviz()
 	{
-		if (cond != null) cond.PrintMe();
-		if (body != null) body.PrintMe();
+		if (cond != null) cond.toGraphviz();
+		if (body != null) body.toGraphviz();
 
 		logNode("StmtIf");
 		

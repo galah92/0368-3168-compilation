@@ -10,9 +10,9 @@ public class AST_StmtVarDec extends AST_Stmt
 		this.var = var;
 	}
 	
-	public void PrintMe()
+	public void toGraphviz()
 	{
-		var.PrintMe();
+		var.toGraphviz();
 		logNode(String.format("StmtVarDec"));
 		logEdge(var);
 	}

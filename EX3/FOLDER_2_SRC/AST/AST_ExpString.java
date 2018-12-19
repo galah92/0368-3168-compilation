@@ -10,7 +10,7 @@ public class AST_ExpString extends AST_ExpPrimitive
 		this.value = value;
 	}
 
-	public void PrintMe()
+	public void toGraphviz()
 	{
 		logNode(String.format("ExpString\n%s", value.replace('"','\'')));
 	}

@@ -17,7 +17,7 @@ public class Main
 			Lexer lexer = new Lexer(new FileReader(argv[0]));
 			Parser parser = new Parser(lexer, writer);
 			AST_Node AST = (AST_Node) parser.parse().value;
-			AST.PrintMe();
+			AST.toGraphviz();
 			AST_Node.saveFile();
 			AST.Semant(); // will exit here if error exists
 			writer.println("OK");

@@ -15,9 +15,9 @@ public class AST_ClassDec extends AST_Dec
 		this.fields = fields;
 	}
 
-	public void PrintMe()
+	public void toGraphviz()
 	{
-        if (fields != null) fields.PrintMe();
+        if (fields != null) fields.toGraphviz();
 		logNode(String.format("ClassDec\n%s\n%s", className, baseName));
 		logEdge(fields);
 	}

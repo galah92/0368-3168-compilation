@@ -19,10 +19,10 @@ public class AST_FuncDec extends AST_ClassField
 		this.body = body;
 	}
 
-	public void PrintMe()
+	public void toGraphviz()
 	{
-		if (params != null) params.PrintMe();
-		if (body != null) body.PrintMe();
+		if (params != null) params.toGraphviz();
+		if (body != null) body.toGraphviz();
 
 		logNode(String.format("FuncDec\n%s\n%s", retTypeName, funcName));
 		if (params != null) logEdge(params);

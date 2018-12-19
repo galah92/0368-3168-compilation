@@ -12,10 +12,10 @@ public class AST_ExpList extends AST_Node
 		this.tail = tail;
 	}
 	
-	public void PrintMe()
+	public void toGraphviz()
 	{
-		if (head != null) head.PrintMe();
-		if (tail != null) tail.PrintMe();
+		if (head != null) head.toGraphviz();
+		if (tail != null) tail.toGraphviz();
 		logNode("ExpList");
 		if (head != null) logEdge(head);
 		if (tail != null) logEdge(tail);

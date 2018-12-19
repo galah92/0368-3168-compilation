@@ -15,9 +15,9 @@ public class AST_ParamsList extends AST_Node
 		this.tail = tail;
 	}
 
-	public void PrintMe()
+	public void toGraphviz()
 	{
-		if (tail != null) tail.PrintMe();
+		if (tail != null) tail.toGraphviz();
 
 		logNode(String.format("ParamsList\n%s\n%s", paramName, paramTypeName));
 		if (tail != null) logEdge(tail);

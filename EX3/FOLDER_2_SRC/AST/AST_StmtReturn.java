@@ -11,9 +11,9 @@ public class AST_StmtReturn extends AST_Stmt
 		this.exp = exp;
 	}
 
-	public void PrintMe()
+	public void toGraphviz()
 	{
-		if (exp != null) exp.PrintMe();
+		if (exp != null) exp.toGraphviz();
 		logNode("StmtReturn");
 		if (exp != null) logEdge(exp);
 	}

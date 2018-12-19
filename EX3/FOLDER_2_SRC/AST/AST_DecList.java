@@ -12,10 +12,10 @@ public class AST_DecList extends AST_Node
 		this.tail = tail;
 	}
 
-	public void PrintMe()
+	public void toGraphviz()
 	{
-		if (head != null) head.PrintMe();
-		if (tail != null) tail.PrintMe();
+		if (head != null) head.toGraphviz();
+		if (tail != null) tail.toGraphviz();
 
 		logNode("DecList");
 		if (head != null) logEdge(head);

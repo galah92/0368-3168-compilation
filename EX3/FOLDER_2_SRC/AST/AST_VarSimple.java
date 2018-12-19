@@ -11,7 +11,7 @@ public class AST_VarSimple extends AST_Var
 		this.varName = varName;
 	}
 
-	public void PrintMe()
+	public void toGraphviz()
 	{
 		logNode(String.format("VarSimple\n(%s)", varName));
 	}

@@ -3,7 +3,7 @@ import TYPES.*;
 
 public class AST_ExpNil extends AST_ExpPrimitive
 {
-	public void PrintMe()
+	public void toGraphviz()
 	{
 		logNode(String.format("ExpNil"));
 	}

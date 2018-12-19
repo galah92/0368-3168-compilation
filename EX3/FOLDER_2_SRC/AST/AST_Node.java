@@ -6,7 +6,7 @@ public abstract class AST_Node
 {
 	public int lineNumber;
 	
-	public abstract void PrintMe();
+	public abstract void toGraphviz();
 
 	public abstract Type Semant() throws Exception;
 
@@ -28,9 +28,9 @@ public abstract class AST_Node
 		String dirname = "./FOLDER_5_OUTPUT/";
 		String filename = "AST_IN_GRAPHVIZ_DOT_FORMAT.txt";
 		fileWriter = new PrintWriter(dirname + filename);
-		fileWriter.print("digraph\n");
-		fileWriter.print("{\n");
-		fileWriter.print("graph [ordering = \"out\"]\n");
+		fileWriter.println("digraph");
+		fileWriter.println("{");
+		fileWriter.println("graph [ordering = \"out\"]");
 	}
 
 	public void logNode(String nodeName)
@@ -48,7 +48,7 @@ public abstract class AST_Node
 	public static void saveFile()
 	{
 		if (fileWriter == null) { return; }
-		fileWriter.print("}\n");
+		fileWriter.println("}");
 		fileWriter.close();
 	}
 }

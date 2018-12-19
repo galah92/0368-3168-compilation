@@ -13,9 +13,9 @@ public class AST_VarClassField extends AST_Var
 		this.fieldName = fieldName;
 	}
 
-	public void PrintMe()
+	public void toGraphviz()
 	{
-		className.PrintMe();
+		className.toGraphviz();
 		logNode(String.format("VarClassField\n%s", fieldName));
 		logEdge(className);
 	}

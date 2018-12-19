@@ -14,10 +14,10 @@ public class AST_ExpBinOp extends AST_Exp
 		this.op = op;
 	}
 
-	public void PrintMe()
+	public void toGraphviz()
 	{
-		if (left != null) left.PrintMe();
-		if (right != null) right.PrintMe();
+		if (left != null) left.toGraphviz();
+		if (right != null) right.toGraphviz();
 
 		logNode(String.format("ExpBinOp\n%s", op));
 		if (left  != null) logEdge(left);

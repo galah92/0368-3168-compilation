@@ -13,7 +13,7 @@ public class AST_NewExp extends AST_Exp
         this.exp = exp;
     }
 
-    public void PrintMe()
+    public void toGraphviz()
 	{
 		logNode(String.format("NewExp\n%s", type));
         if (exp != null) logEdge(exp);

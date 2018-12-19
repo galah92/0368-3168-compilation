@@ -15,9 +15,9 @@ public class AST_VarDec extends AST_ClassField
 		this.initVal = initVal;
 	}
 
-	public void PrintMe()
+	public void toGraphviz()
 	{
-		if (initVal != null) initVal.PrintMe();
+		if (initVal != null) initVal.toGraphviz();
 		logNode(String.format("VarDec\n%s\n%s", varName, varTypeName));
 		if (initVal != null) logEdge(initVal);
 	}

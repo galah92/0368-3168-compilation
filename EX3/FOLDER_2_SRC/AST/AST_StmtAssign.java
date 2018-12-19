@@ -12,10 +12,10 @@ public class AST_StmtAssign extends AST_Stmt
 		this.exp = exp;
 	}
 
-	public void PrintMe()
+	public void toGraphviz()
 	{
-		if (var != null) var.PrintMe();
-		if (exp != null) exp.PrintMe();
+		if (var != null) var.toGraphviz();
+		if (exp != null) exp.toGraphviz();
 
 		logNode("ASSIGN\nleft := right\n");
 		logEdge(var);

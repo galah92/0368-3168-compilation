@@ -45,7 +45,7 @@ public class SymbolTable
 	{
 		int hashVal = hash(name);
 		table[hashVal] = top = new Entry(name, t, table[hashVal], top, numEntries++);
-		PrintMe();
+		toGraphviz();
 	}
 
 	public static Type find(String name)
@@ -113,7 +113,7 @@ public class SymbolTable
 	public static void beginScope(Type.Scope scopeType)
 	{
 		enter(scopeType.name, scopeType);
-		PrintMe();
+		toGraphviz();
 	}
 
 	public static void endScope()
@@ -130,12 +130,12 @@ public class SymbolTable
 		numEntries--;
 		top = top.prevtop;
 
-		PrintMe();
+		toGraphviz();
 	}
 
 	public static int printCount = 0;
 
-	public static void PrintMe()
+	public static void toGraphviz()
 	{
 		String dirname = "./FOLDER_5_OUTPUT/";
 		String filename = String.format("SymbolTable_%d_IN_GRAPHVIZ_DOT_FORMAT.txt", printCount++);

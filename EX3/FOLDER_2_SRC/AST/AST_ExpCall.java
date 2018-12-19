@@ -15,10 +15,10 @@ public class AST_ExpCall extends AST_Exp
 		this.args = args;
 	}
 
-	public void PrintMe()
+	public void toGraphviz()
 	{
-		if (args != null) args.PrintMe();
-		if (instanceName != null) instanceName.PrintMe();
+		if (args != null) args.toGraphviz();
+		if (instanceName != null) instanceName.toGraphviz();
 
 		logNode(String.format("ExpCall\n%s", funcName));
 		if (args != null) logEdge(args);

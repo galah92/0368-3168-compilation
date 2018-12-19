@@ -12,10 +12,10 @@ public class AST_VarArrayElement extends AST_Var
 		this.index = index;
 	}
 
-	public void PrintMe()
+	public void toGraphviz()
 	{
-		var.PrintMe();
-		index.PrintMe();
+		var.toGraphviz();
+		index.toGraphviz();
 		logNode(String.format("VarArrayElement\n%s", index));
 		logEdge(var);
 	}

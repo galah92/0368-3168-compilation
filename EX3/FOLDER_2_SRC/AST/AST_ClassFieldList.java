@@ -13,10 +13,10 @@ public class AST_ClassFieldList extends AST_Node
 		this.tail = tail;
 	}
 
-	public void PrintMe()
+	public void toGraphviz()
 	{
-        classField.PrintMe();
-		if (tail != null) tail.PrintMe();
+        classField.toGraphviz();
+		if (tail != null) tail.toGraphviz();
 
 		logNode("ClassFieldList\n");
         logEdge(classField);

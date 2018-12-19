@@ -10,9 +10,9 @@ public class AST_StmtCall extends AST_Stmt
 		this.callExp = callExp;
 	}
 
-	public void PrintMe()
+	public void toGraphviz()
 	{
-		callExp.PrintMe();
+		callExp.toGraphviz();
 		logNode(String.format("StmtCall"));
 		logEdge(callExp);
 	}
