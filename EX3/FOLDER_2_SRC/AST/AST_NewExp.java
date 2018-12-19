@@ -19,7 +19,7 @@ public class AST_NewExp extends AST_Exp
         if (exp != null) logEdge(exp);
 	}
 
-	public Type SemantMe() throws Exception
+	public Type Semant() throws Exception
 	{
         // type must be known
         Type newExpType = SymbolTable.find(type);
@@ -27,7 +27,7 @@ public class AST_NewExp extends AST_Exp
 
         if (exp != null) // new array
         {
-            if (exp.SemantMe() != Type.INT) { throw new SemanticException(); }
+            if (exp.Semant() != Type.INT) { throw new SemanticException(); }
         }
         else // new class
         {

@@ -2,9 +2,7 @@ package TYPES;
 
 public class Type
 {
-	public String name;
-
-	public Type() {}
+	public final String name;
 	
 	public Type(String name) { this.name = name; }
 
@@ -13,7 +11,7 @@ public class Type
 
 	public static class Primitive extends Type
 	{
-		protected Primitive(String name) { this.name = name; }
+		protected Primitive(String name) { super(name); }
 	}
 
 	public static final Primitive INT = new Primitive("int");
@@ -21,7 +19,7 @@ public class Type
 
 	public static class Scope extends Type
 	{
-		protected Scope(String name) { this.name = name; }
+		protected Scope(String name) { super(name); }
 
 		public static final Scope CLASS = new Scope("SCOPE-Class");
 		public static final Scope FUNC = new Scope("SCOPE-Func");

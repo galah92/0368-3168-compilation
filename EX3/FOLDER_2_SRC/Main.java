@@ -19,7 +19,7 @@ public class Main
 			AST_Node AST = (AST_Node) parser.parse().value;
 			AST.PrintMe();
 			AST_Node.saveFile();
-			AST.SemantMe(); // will exit here if error exists
+			AST.Semant(); // will exit here if error exists
 			writer.println("OK");
     	}
 		catch (AST_Node.SemanticException e)

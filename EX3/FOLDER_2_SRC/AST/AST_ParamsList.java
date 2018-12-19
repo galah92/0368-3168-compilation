@@ -39,12 +39,12 @@ public class AST_ParamsList extends AST_Node
 		if (tail != null) tail.SemantBody();
 	}
 
-    public TypeList SemantMe() throws Exception
+    public TypeList Semant() throws Exception
 	{
 		Type paramType = SymbolTable.find(paramTypeName);
 		if (paramType == null) { throw new SemanticException(); }
 		if (SymbolTable.findInScope(paramName) != null) { throw new SemanticException(); }
 		SymbolTable.enter(paramName, paramType);
-		return new TypeList(paramType, tail != null ? tail.SemantMe() : null);
+		return new TypeList(paramType, tail != null ? tail.Semant() : null);
 	}
 }

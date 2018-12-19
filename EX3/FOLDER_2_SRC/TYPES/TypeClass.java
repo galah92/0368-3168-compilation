@@ -7,7 +7,7 @@ public class TypeClass extends Type
 	
 	public TypeClass(TypeClass base, String name, TypeList fields)
 	{
-		this.name = name;
+		super(name);
 		this.base = base;
 		this.fields = fields;
 	}

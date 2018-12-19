@@ -17,11 +17,11 @@ public class AST_StmtReturn extends AST_Stmt
 		logNode("StmtReturn");
 		if (exp != null) logEdge(exp);
 	}
-	public Type SemantMe() throws Exception
+	public Type Semant() throws Exception
 	{
 		TypeFunc funcType = SymbolTable.findFunc();
 		if (funcType == null) { throw new SemanticException(); }
-		Type expType = exp != null ? exp.SemantMe() : Type.VOID;
+		Type expType = exp != null ? exp.Semant() : Type.VOID;
 		if (funcType.retType != expType) {
 			if (!(expType == Type.NIL) || 
 				(!(funcType.retType instanceof TypeArray) &&

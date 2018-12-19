@@ -24,11 +24,11 @@ public class AST_StmtWhile extends AST_Stmt
 		if (body != null) logEdge(body);
 	}
 
-	public Type SemantMe() throws Exception
+	public Type Semant() throws Exception
 	{
-		if (cond.SemantMe() != Type.INT) { throw new SemanticException(); }
+		if (cond.Semant() != Type.INT) { throw new SemanticException(); }
 		SymbolTable.beginScope(Type.Scope.WHILE);
-		body.SemantMe();
+		body.Semant();
 		SymbolTable.endScope();
 		return null;
 	}

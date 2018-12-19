@@ -14,7 +14,7 @@ public class AST_ExpString extends AST_ExpPrimitive
 	{
 		logNode(String.format("ExpString\n%s", value.replace('"','\'')));
 	}
-	public Type SemantMe() throws Exception
+	public Type Semant() throws Exception
 	{
 		return Type.STRING;
 	}

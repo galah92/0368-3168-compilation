@@ -33,7 +33,7 @@ public class AST_VarDec extends AST_ClassField
 		TypeClass classType = SymbolTable.findClass();
 		boolean isSemantingClass = classType != null && classType.fields == null;
 
-		Type initValType = initVal != null ? initVal.SemantMe() : null;
+		Type initValType = initVal != null ? initVal.Semant() : null;
 		if (initValType != null)
 		{
 			if (initValType == Type.NIL)
@@ -69,7 +69,7 @@ public class AST_VarDec extends AST_ClassField
 		// nothing to do here
 	}
 
-	public Type SemantMe() throws Exception
+	public Type Semant() throws Exception
 	{
 		Type varType = SemantDeclaration();
 		return varType;

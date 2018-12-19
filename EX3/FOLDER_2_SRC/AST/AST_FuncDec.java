@@ -56,12 +56,12 @@ public class AST_FuncDec extends AST_ClassField
 		SymbolTable.beginScope(Type.Scope.FUNC);
 		SymbolTable.enter(funcName, funcType);
 		if (params != null) params.SemantBody();
-		if (body != null) { body.SemantMe(); 
+		if (body != null) { body.Semant(); 
 		}
 		SymbolTable.endScope();
 	}
 
-	public TypeFunc SemantMe() throws Exception
+	public TypeFunc Semant() throws Exception
 	{
 		funcType = SemantDeclaration();
 		SemantBody();

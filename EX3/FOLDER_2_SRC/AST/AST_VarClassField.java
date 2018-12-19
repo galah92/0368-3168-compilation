@@ -19,9 +19,9 @@ public class AST_VarClassField extends AST_Var
 		logNode(String.format("VarClassField\n%s", fieldName));
 		logEdge(className);
 	}
-	public Type SemantMe() throws Exception
+	public Type Semant() throws Exception
 	{
-		Type t = className.SemantMe();
+		Type t = className.Semant();
 		if (!(t instanceof TypeClass)) { throw new SemanticException(); }
 		TypeClass typeClass = (TypeClass)t;
 		return typeClass.getVarField(fieldName);

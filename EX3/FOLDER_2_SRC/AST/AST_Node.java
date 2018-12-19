@@ -8,7 +8,7 @@ public abstract class AST_Node
 	
 	public abstract void PrintMe();
 
-	public abstract Type SemantMe() throws Exception;
+	public abstract Type Semant() throws Exception;
 
 	public class SemanticException extends Exception
 	{

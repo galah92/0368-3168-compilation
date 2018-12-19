@@ -7,6 +7,7 @@ public class TypeList extends Type
 
 	public TypeList(Type head, TypeList tail)
 	{
+		super(null);
 		this.head = head;
 		this.tail = tail;
 	}

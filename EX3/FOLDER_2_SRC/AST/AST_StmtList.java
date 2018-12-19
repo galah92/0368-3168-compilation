@@ -23,10 +23,10 @@ public class AST_StmtList extends AST_Node
 		if (tail != null) logEdge(tail);
 	}
 	
-	public Type SemantMe() throws Exception
+	public Type Semant() throws Exception
 	{
-		if (head != null) head.SemantMe();
-		if (tail != null) tail.SemantMe();
+		if (head != null) head.Semant();
+		if (tail != null) tail.Semant();
 		return null;
 	}
 }

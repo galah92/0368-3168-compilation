@@ -21,13 +21,13 @@ public class AST_StmtAssign extends AST_Stmt
 		logEdge(var);
 		logEdge(exp);
 	}
-	public Type SemantMe() throws Exception
+	public Type Semant() throws Exception
 	{
 		Type varType = null;
 		Type expType = null;
 		
-		if (var != null) varType = var.SemantMe();
-		if (exp != null) expType = exp.SemantMe();
+		if (var != null) varType = var.Semant();
+		if (exp != null) expType = exp.Semant();
 		
 		if (expType == Type.NIL)
 		{

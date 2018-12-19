@@ -6,7 +6,7 @@ public class TypeClassVar extends Type
 	
 	public TypeClassVar(Type varType, String name)
 	{
+		super(name);
 		this.varType = varType;
-		this.name = name;
 	}
 }

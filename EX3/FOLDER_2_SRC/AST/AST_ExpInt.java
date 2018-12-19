@@ -15,7 +15,7 @@ public class AST_ExpInt extends AST_ExpPrimitive
 		logNode(String.format("ExpInt\n%s",value));
 	}
 	
-	public Type SemantMe() throws Exception
+	public Type Semant() throws Exception
 	{
 		return Type.INT;
 	}

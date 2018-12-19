@@ -20,10 +20,10 @@ public class AST_VarArrayElement extends AST_Var
 		logEdge(var);
 	}
 
-	public Type SemantMe() throws Exception
+	public Type Semant() throws Exception
 	{
-		if (index.SemantMe() != Type.INT) { throw new SemanticException(); }
-		Type arrType = var.SemantMe();
+		if (index.Semant() != Type.INT) { throw new SemanticException(); }
+		Type arrType = var.Semant();
 		if (!(arrType instanceof TypeArray)) { throw new SemanticException(); }
 		return ((TypeArray)arrType).elementType;
 	}

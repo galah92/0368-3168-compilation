@@ -22,7 +22,7 @@ public class AST_ClassDec extends AST_Dec
 		logEdge(fields);
 	}
 
-    public Type SemantMe() throws Exception
+    public Type Semant() throws Exception
 	{
 		if (!SymbolTable.isGlobalScope()) { throw new SemanticException(); }
 

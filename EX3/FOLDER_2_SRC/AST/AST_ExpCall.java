@@ -25,15 +25,15 @@ public class AST_ExpCall extends AST_Exp
 		if (instanceName != null) logEdge(instanceName);
 	}
 
-	public Type SemantMe() throws Exception
+	public Type Semant() throws Exception
 	{
-		TypeList argsTypes = args != null ? args.SemantMe() : null;
+		TypeList argsTypes = args != null ? args.Semant() : null;
 
 		TypeFunc funcType = null;
 
 		if (instanceName != null) // class methods
 		{
-			Type t = instanceName.SemantMe();
+			Type t = instanceName.Semant();
 			if (!(t instanceof TypeClass)) { throw new SemanticException(t.name); }
 			TypeClass instanceType = (TypeClass)t;
 			funcType = instanceType.getFuncField(funcName);

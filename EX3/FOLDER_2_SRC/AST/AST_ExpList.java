@@ -21,8 +21,8 @@ public class AST_ExpList extends AST_Node
 		if (tail != null) logEdge(tail);
 	}
 
-	public TypeList SemantMe() throws Exception
+	public TypeList Semant() throws Exception
 	{
-		return new TypeList(head.SemantMe(), tail != null ? tail.SemantMe() : null);
+		return new TypeList(head.Semant(), tail != null ? tail.Semant() : null);
 	}
 }

@@ -16,7 +16,7 @@ public class AST_VarSimple extends AST_Var
 		logNode(String.format("VarSimple\n(%s)", varName));
 	}
 	
-	public Type SemantMe() throws Exception
+	public Type Semant() throws Exception
 	{
 		return SymbolTable.find(varName);
 	}

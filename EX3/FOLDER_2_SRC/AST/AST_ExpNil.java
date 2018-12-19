@@ -8,7 +8,7 @@ public class AST_ExpNil extends AST_ExpPrimitive
 		logNode(String.format("ExpNil"));
 	}
 	
-	public Type SemantMe() throws Exception
+	public Type Semant() throws Exception
 	{
         return Type.NIL;
 	}

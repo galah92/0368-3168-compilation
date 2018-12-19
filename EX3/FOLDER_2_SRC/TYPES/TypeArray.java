@@ -6,7 +6,7 @@ public class TypeArray extends Type
 	
 	public TypeArray(Type elementType, String name)
 	{
+		super(name);
 		this.elementType = elementType;
-		this.name = name;
 	}
 }

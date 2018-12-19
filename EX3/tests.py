@@ -3,7 +3,7 @@ import subprocess
 
 
 subprocess.run(['make'])
-i = 126
+i = 0
 for path in sorted(Path('tests/input').glob('*.txt'))[i:]:
     output_file = Path('tests/output') / path.name
     expected_file = Path('tests/expected_output') / path.name

@@ -17,9 +17,9 @@ public class AST_StmtCall extends AST_Stmt
 		logEdge(callExp);
 	}
 
-	public Type SemantMe() throws Exception
+	public Type Semant() throws Exception
 	{
-		return callExp.SemantMe();
+		return callExp.Semant();
 	}
 
 }

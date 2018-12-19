@@ -8,14 +8,14 @@ public class TypeFunc extends Type
 	
 	public TypeFunc(Type retType, String name, TypeList params)
 	{
-		this.name = name;
+		super(name);
 		this.retType = retType;
 		this.params = params;
 	}
 
 	public TypeFunc(Type retType, String name, TypeList params, TypeClass cls)
 	{
-		this.name = name;
+		super(name);
 		this.retType = retType;
 		this.params = params;
 		this.cls = cls;

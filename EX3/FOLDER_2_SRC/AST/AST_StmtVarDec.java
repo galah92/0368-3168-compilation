@@ -17,9 +17,9 @@ public class AST_StmtVarDec extends AST_Stmt
 		logEdge(var);
 	}
 
-	public Type SemantMe() throws Exception
+	public Type Semant() throws Exception
 	{
-		return var.SemantMe();
+		return var.Semant();
 	}
 	
 }

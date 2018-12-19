@@ -24,10 +24,10 @@ public class AST_ExpBinOp extends AST_Exp
 		if (right != null) logEdge(right);
 	}
 
-	public Type SemantMe() throws Exception
+	public Type Semant() throws Exception
 	{
-		Type t1 = left.SemantMe();
-		Type t2 = right.SemantMe();
+		Type t1 = left.Semant();
+		Type t2 = right.Semant();
 
 		if (t1 == Type.INT && t2 == Type.INT)
 		{

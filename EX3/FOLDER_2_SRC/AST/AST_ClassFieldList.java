@@ -35,9 +35,9 @@ public class AST_ClassFieldList extends AST_Node
 		if (tail != null) tail.SemantBody();
 	}
 
-    public TypeList SemantMe() throws Exception
+    public TypeList Semant() throws Exception
 	{
-		Type classFieldType = classField.SemantMe();
-		return new TypeList(classFieldType, tail != null ? tail.SemantMe() : null);
+		Type classFieldType = classField.Semant();
+		return new TypeList(classFieldType, tail != null ? tail.Semant() : null);
 	}
 }

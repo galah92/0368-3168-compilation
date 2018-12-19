@@ -18,7 +18,7 @@ public class AST_ArrayDec extends AST_Dec
 		logNode(String.format("ArrayDec\n%s\n%s", arrName, arrTypeName));
 	}
 
-	public Type SemantMe() throws Exception
+	public Type Semant() throws Exception
 	{
 		if (!SymbolTable.isGlobalScope()) { throw new SemanticException(); }
 		if (SymbolTable.find(arrName) != null) { throw new SemanticException(); }
