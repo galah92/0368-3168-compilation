@@ -1,6 +1,6 @@
 package AST;
 import TYPES.*;
-import SymbolStack.*;
+import pcomp.*;
 
 public class VarSimple extends Var
 {
@@ -18,6 +18,6 @@ public class VarSimple extends Var
 	
 	public Type Semant() throws Exception
 	{
-		return SymbolStack.find(varName);
+		return SymbolTable.find(varName);
 	}
 }

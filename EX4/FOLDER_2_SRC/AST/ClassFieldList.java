@@ -1,6 +1,6 @@
 package AST;
 import TYPES.*;
-import SymbolStack.*;
+import pcomp.*;
 
 
 public class ClassFieldList extends Node

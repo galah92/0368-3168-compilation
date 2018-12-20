@@ -1,6 +1,6 @@
 package AST;
 import TYPES.*;
-import SymbolStack.*;
+import pcomp.*;
 
 public class StmtIf extends Stmt
 {
@@ -28,9 +28,9 @@ public class StmtIf extends Stmt
 	{
 		if (cond.Semant() != Type.INT) { throw new SemanticException(); }
 
-		SymbolStack.beginScope(Type.Scope.IF);
+		SymbolTable.beginScope(Type.Scope.IF);
 		body.Semant();
-		SymbolStack.endScope();
+		SymbolTable.endScope();
 		
 		return null;
 	}	

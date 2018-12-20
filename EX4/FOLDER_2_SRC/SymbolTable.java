@@ -1,10 +1,10 @@
-package SymbolStack;
+package pcomp;
 
 import java.util.*;
 import java.io.*;
 import TYPES.*;
 
-public class SymbolStack
+public class SymbolTable
 {
 
     private static class Symbol
@@ -136,7 +136,7 @@ public class SymbolStack
     public static void toGraphviz() throws Exception
     {
         String dirPath = "./FOLDER_5_OUTPUT/";
-		String fileName = "SymbolStackGraphviz.txt";
+		String fileName = "SymbolTableGraphviz.txt";
         PrintWriter writer = new PrintWriter(dirPath + fileName);
 
         writer.println("digraph structs {");

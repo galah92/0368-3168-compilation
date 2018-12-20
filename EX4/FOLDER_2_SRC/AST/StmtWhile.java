@@ -1,6 +1,6 @@
 package AST;
 import TYPES.*;
-import SymbolStack.*;
+import pcomp.*;
 
 public class StmtWhile extends Stmt
 {
@@ -27,9 +27,9 @@ public class StmtWhile extends Stmt
 	public Type Semant() throws Exception
 	{
 		if (cond.Semant() != Type.INT) { throw new SemanticException(); }
-		SymbolStack.beginScope(Type.Scope.WHILE);
+		SymbolTable.beginScope(Type.Scope.WHILE);
 		body.Semant();
-		SymbolStack.endScope();
+		SymbolTable.endScope();
 		return null;
 	}
 

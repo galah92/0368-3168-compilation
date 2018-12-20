@@ -49,4 +49,4 @@ compile: clean
 everything: clean compile
 	java -jar COMPILER ${INPUT} ${OUTPUT}
 	dot -Tjpeg -o${OUTPUT_DIR}/AST.jpeg ${OUTPUT_DIR}/IN_GRAPHVIZ_DOT_FORMAT.txt
-	dot -Tjpeg -o${OUTPUT_DIR}/SymbolStackGraphviz.jpeg ${OUTPUT_DIR}/SymbolStackGraphviz.txt
+	dot -Tjpeg -o${OUTPUT_DIR}/SymbolTableGraphviz.jpeg ${OUTPUT_DIR}/SymbolTableGraphviz.txt

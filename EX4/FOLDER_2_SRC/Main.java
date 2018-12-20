@@ -1,5 +1,5 @@
 import java.io.*;
-import SymbolStack.*;
+import pcomp.*;
 
 
 public class Main
@@ -9,14 +9,14 @@ public class Main
 		PrintWriter writer = null;
 		try
 		{
-			SymbolStack.init();
+			SymbolTable.init();
 			writer = new PrintWriter(argv[1]);
 			Parser parser = new Parser(argv[0], writer);
 			AST.Node tree = (AST.Node)parser.parse().value;
 			tree.logGraphviz();
 			tree.Semant();
 			writer.println("OK");
-			SymbolStack.toGraphviz();
+			SymbolTable.toGraphviz();
 			AST.Node.toGraphviz();
     	}
 		catch (AST.Node.SemanticException e)

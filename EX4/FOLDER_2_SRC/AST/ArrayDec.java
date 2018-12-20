@@ -1,6 +1,6 @@
 package AST;
 import TYPES.*;
-import SymbolStack.*;
+import pcomp.*;
 
 
 public class ArrayDec extends Dec
@@ -21,11 +21,11 @@ public class ArrayDec extends Dec
 
 	public Type Semant() throws Exception
 	{
-		if (!SymbolStack.isGlobalScope()) { throw new SemanticException(); }
-		if (SymbolStack.find(arrName) != null) { throw new SemanticException(); }
-		Type arrType = SymbolStack.findTypeName(arrTypeName);
+		if (!SymbolTable.isGlobalScope()) { throw new SemanticException(); }
+		if (SymbolTable.find(arrName) != null) { throw new SemanticException(); }
+		Type arrType = SymbolTable.findTypeName(arrTypeName);
 		if (arrType == null) { throw new SemanticException(); }
-		SymbolStack.enter(arrName, new TypeArray(arrType, arrName));
+		SymbolTable.enter(arrName, new TypeArray(arrType, arrName));
 		return null;
 	}
 

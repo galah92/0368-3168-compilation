@@ -1,7 +1,7 @@
 package AST;
 import java.io.*;
 import TYPES.*;
-import SymbolStack.*;
+import pcomp.*;
 
 public abstract class Node
 {
@@ -19,19 +19,19 @@ public abstract class Node
 		public int getLineNumber() { return lineNumber + 1; }
 	}
 
-	private static int instanceCount = 0;
-	public final int instanceNumber = instanceCount++;
+	private static int serialCounter = 0;
+	public final int serialNum = serialCounter++;
 
 	private static final StringBuilder sb = new StringBuilder();
 
 	public void logNode(String nodeName)
 	{
-		sb.append(String.format("v%d [label = \"%s\"];\n", instanceNumber, nodeName));
+		sb.append(String.format("v%d [label = \"%s\"];\n", serialNum, nodeName));
 	}
 
 	public void logEdge(Node otherNode)
 	{
-		sb.append(String.format("v%d -> v%d;\n", instanceNumber, otherNode.instanceNumber));
+		sb.append(String.format("v%d -> v%d;\n", serialNum, otherNode.serialNum));
 	}
 	
 	public static void toGraphviz() throws Exception
