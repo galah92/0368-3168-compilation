@@ -54,7 +54,7 @@ public class StmtAssign extends Stmt
 	public TempReg IRme()
 	{
 		TempReg src = exp.IRme();
-		IR.getInstance().Add_IRcommand(new IRcommand_Store(((VarSimple)var).varName, src));
+		IR.add(new IRcommand_Store(((VarSimple)var).varName, src));
 
 		return null;
 	}

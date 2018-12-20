@@ -25,7 +25,7 @@ public class ExpInt extends ExpPrimitive
 	public TempReg IRme()
 	{
 		TempReg t = new TempReg();
-		IR.getInstance().Add_IRcommand(new IRcommandConstInt(t,value));
+		IR.add(new IRcommandConstInt(t,value));
 		return t;
 	}
 }

@@ -39,15 +39,15 @@ public class StmtWhile extends Stmt
 		String label_end   = IRcommand.getLabel("end");
 		String label_start = IRcommand.getLabel("start");
 	
-		IR.getInstance().Add_IRcommand(new IRcommand_Label(label_start));
+		IR.add(new IRcommand_Label(label_start));
 
 		TempReg cond_temp = cond.IRme();
-		IR.getInstance().Add_IRcommand(new IRcommand_Jump_If_Eq_To_Zero(cond_temp,label_end));
+		IR.add(new IRcommand_Jump_If_Eq_To_Zero(cond_temp,label_end));
 
 		body.IRme();
 
-		IR.getInstance().Add_IRcommand(new IRcommand_Jump_Label(label_start));		
-		IR.getInstance().Add_IRcommand(new IRcommand_Label(label_end));
+		IR.add(new IRcommand_Jump_Label(label_start));		
+		IR.add(new IRcommand_Label(label_end));
 
 		return null;
 	}

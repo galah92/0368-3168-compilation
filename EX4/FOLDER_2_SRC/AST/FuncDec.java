@@ -78,7 +78,7 @@ public class FuncDec extends ClassField
 
 	public TempReg IRme()
 	{
-		IR.getInstance().Add_IRcommand(new IRcommand_Label("main"));		
+		IR.add(new IRcommand_Label("main"));		
 		if (body != null) body.IRme();
 		return null;
 	}

@@ -69,19 +69,19 @@ public class ExpBinOp extends Exp
 		
 		if (op == '+')
 		{
-			IR.getInstance().Add_IRcommand(new IRcommand_Binop_Add_Integers(dst, t1, t2));
+			IR.add(new IRcommand_Binop_Add_Integers(dst, t1, t2));
 		}
 		if (op == '*')
 		{
-			IR.getInstance().Add_IRcommand(new IRcommand_Binop_Mul_Integers(dst, t1, t2));
+			IR.add(new IRcommand_Binop_Mul_Integers(dst, t1, t2));
 		}
 		if (op == '=')
 		{
-			IR.getInstance().Add_IRcommand(new IRcommand_Binop_EQ_Integers(dst, t1, t2));
+			IR.add(new IRcommand_Binop_EQ_Integers(dst, t1, t2));
 		}
 		if (op == '<')
 		{
-			IR.getInstance().Add_IRcommand(new IRcommand_Binop_LT_Integers(dst, t1, t2));
+			IR.add(new IRcommand_Binop_LT_Integers(dst, t1, t2));
 		}
 		return dst;
 	}

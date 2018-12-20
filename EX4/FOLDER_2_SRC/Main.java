@@ -23,7 +23,7 @@ public class Main
 			MIPSGen.init("./FOLDER_5_OUTPUT/MIPS.txt");
 			tree.IRme();
 			
-			IR.getInstance().MIPSme();
+			IR.MIPSme();
 			MIPSGen.toFile();
 			writer.println("OK");
     	}

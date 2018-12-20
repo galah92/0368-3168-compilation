@@ -79,11 +79,11 @@ public class VarDec extends ClassField
 
 	public TempReg IRme()
 	{
-		IR.getInstance().Add_IRcommand(new IRcommand_Allocate(varName));
+		IR.add(new IRcommand_Allocate(varName));
 		
 		if (initVal != null)
 		{
-			IR.getInstance().Add_IRcommand(new IRcommand_Store(varName, initVal.IRme()));
+			IR.add(new IRcommand_Store(varName, initVal.IRme()));
 		}
 		return null;
 	}

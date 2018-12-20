@@ -25,7 +25,7 @@ public class VarSimple extends Var
 	public TempReg IRme()
 	{
 		TempReg t = new TempReg();
-		IR.getInstance().Add_IRcommand(new IRcommand_Load(t,varName));
+		IR.add(new IRcommand_Load(t,varName));
 		return t;
 	}
 }

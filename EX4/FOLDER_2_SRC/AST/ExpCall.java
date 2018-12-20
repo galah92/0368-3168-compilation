@@ -58,7 +58,7 @@ public class ExpCall extends Exp
 		
 		if (args != null) { t = args.head.IRme(); }
 		
-		IR.getInstance().Add_IRcommand(new IRcommand_PrintInt(t));
+		IR.add(new IRcommand_PrintInt(t));
 		
 		return null;
 	}
