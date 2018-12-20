@@ -29,6 +29,6 @@ public class IRcommand_Jump_If_Eq_To_Zero extends IRcommand
 	/***************/
 	public void MIPSme()
 	{
-		sir_MIPS_a_lot.getInstance().beqz(t,label_name);
+		MIPSGen.beqz(t,label_name);
 	}
 }

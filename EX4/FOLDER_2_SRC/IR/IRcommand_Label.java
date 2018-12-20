@@ -27,6 +27,6 @@ public class IRcommand_Label extends IRcommand
 	/***************/
 	public void MIPSme()
 	{
-		sir_MIPS_a_lot.getInstance().label(label_name);
+		MIPSGen.label(label_name);
 	}
 }

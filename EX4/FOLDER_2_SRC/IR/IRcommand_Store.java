@@ -16,6 +16,6 @@ public class IRcommand_Store extends IRcommand
 	
 	public void MIPSme()
 	{
-		sir_MIPS_a_lot.getInstance().store(var_name,src);
+		MIPSGen.store(var_name,src);
 	}
 }
