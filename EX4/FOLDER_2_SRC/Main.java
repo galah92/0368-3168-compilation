@@ -1,5 +1,7 @@
 import java.io.*;
 import pcomp.*;
+import IR.*;
+import MIPS.*;
 
 
 public class Main
@@ -15,6 +17,9 @@ public class Main
 			AST.Node tree = (AST.Node)parser.parse().value;
 			tree.logGraphviz();
 			tree.Semant();
+			tree.IRme();
+			IR.getInstance().MIPSme();
+			sir_MIPS_a_lot.getInstance().finalizeFile();
 			writer.println("OK");
 			SymbolTable.toGraphviz();
 			AST.Node.toGraphviz();
