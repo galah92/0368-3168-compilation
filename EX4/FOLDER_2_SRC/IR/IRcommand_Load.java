@@ -1,7 +1,7 @@
 package IR;
 
 import pcomp.*;
-import MIPS.*;
+
 
 public class IRcommand_Load extends IRcommand
 {

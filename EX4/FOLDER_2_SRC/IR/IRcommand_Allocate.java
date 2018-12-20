@@ -1,17 +1,7 @@
-/***********/
-/* PACKAGE */
-/***********/
 package IR;
 
-/*******************/
-/* GENERAL IMPORTS */
-/*******************/
-
-/*******************/
-/* PROJECT IMPORTS */
-/*******************/
 import pcomp.*;
-import MIPS.*;
+
 
 public class IRcommand_Allocate extends IRcommand
 {

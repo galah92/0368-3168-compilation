@@ -11,7 +11,7 @@ package IR;
 /* PROJECT IMPORTS */
 /*******************/
 import pcomp.*;
-import MIPS.*;
+
 
 public class IRcommand_Label extends IRcommand
 {

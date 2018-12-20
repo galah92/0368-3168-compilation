@@ -1,7 +1,6 @@
 import java.io.*;
 import pcomp.*;
 import IR.*;
-import MIPS.*;
 
 
 public class Main
@@ -23,6 +22,7 @@ public class Main
 
 			MIPSGen.init("./FOLDER_5_OUTPUT/MIPS.txt");
 			tree.IRme();
+			
 			IR.getInstance().MIPSme();
 			MIPSGen.toFile();
 			writer.println("OK");

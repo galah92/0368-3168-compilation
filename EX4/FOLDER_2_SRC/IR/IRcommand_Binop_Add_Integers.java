@@ -1,7 +1,7 @@
 package IR;
 
 import pcomp.*;
-import MIPS.*;
+
 
 public class IRcommand_Binop_Add_Integers extends IRcommand
 {

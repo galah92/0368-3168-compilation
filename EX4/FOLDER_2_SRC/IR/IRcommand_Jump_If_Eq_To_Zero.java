@@ -11,7 +11,7 @@ package IR;
 /* PROJECT IMPORTS */
 /*******************/
 import pcomp.*;
-import MIPS.*;
+
 
 public class IRcommand_Jump_If_Eq_To_Zero extends IRcommand
 {

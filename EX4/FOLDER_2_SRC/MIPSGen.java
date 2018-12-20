@@ -1,6 +1,5 @@
-package MIPS;
+package pcomp;
 import java.io.*;
-import pcomp.*;
 
 public class MIPSGen
 {
