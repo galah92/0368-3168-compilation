@@ -1,5 +1,7 @@
 package AST;
 import TYPES.*;
+import IR.*;
+import pcomp.*;
 
 public class StmtList extends Node
 {
@@ -27,6 +29,14 @@ public class StmtList extends Node
 	{
 		if (head != null) head.Semant();
 		if (tail != null) tail.Semant();
+		return null;
+	}
+
+	public TempReg IRme()
+	{
+		if (head != null) head.IRme();
+		if (tail != null) tail.IRme();
+		
 		return null;
 	}
 }

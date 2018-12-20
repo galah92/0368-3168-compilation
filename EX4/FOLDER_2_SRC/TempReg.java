@@ -1,6 +1,6 @@
 package pcomp;
 
-class TempReg
+public class TempReg
 {
     private int serialCounter = 0;
 

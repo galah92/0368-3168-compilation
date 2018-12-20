@@ -1,6 +1,7 @@
 package AST;
 import TYPES.*;
 import pcomp.*;
+import IR.*;
 
 public class StmtAssign extends Stmt
 {
@@ -48,5 +49,13 @@ public class StmtAssign extends Stmt
 
 
 		return varType;
+	}
+
+	public TempReg IRme()
+	{
+		TempReg src = exp.IRme();
+		IR.getInstance().Add_IRcommand(new IRcommand_Store(((VarSimple)var).varName, src));
+
+		return null;
 	}
 }

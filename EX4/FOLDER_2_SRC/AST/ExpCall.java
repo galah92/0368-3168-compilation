@@ -1,6 +1,7 @@
 package AST;
 import TYPES.*;
 import pcomp.*;
+import IR.*;
 
 public class ExpCall extends Exp
 {
@@ -49,5 +50,16 @@ public class ExpCall extends Exp
 
 		if (!funcType.isValidArgs(argsTypes)) { throw new SemanticException("invalid arguments to function"); }
 		return funcType.retType;
+	}
+
+	public TempReg IRme()
+	{
+		TempReg t = null;
+		
+		if (args != null) { t = args.head.IRme(); }
+		
+		IR.getInstance().Add_IRcommand(new IRcommand_PrintInt(t));
+		
+		return null;
 	}
 }

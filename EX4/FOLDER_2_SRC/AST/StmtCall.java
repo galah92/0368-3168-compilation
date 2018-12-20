@@ -1,6 +1,7 @@
 package AST;
 import TYPES.*;
 import pcomp.*;
+import IR.*;
 
 public class StmtCall extends Stmt
 {
@@ -21,6 +22,13 @@ public class StmtCall extends Stmt
 	public Type Semant() throws Exception
 	{
 		return callExp.Semant();
+	}
+
+	public TempReg IRme()
+	{
+		if (callExp != null) callExp.IRme();
+		
+		return null;
 	}
 
 }

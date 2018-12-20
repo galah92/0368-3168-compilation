@@ -1,5 +1,8 @@
 package AST;
 import TYPES.*;
+import pcomp.*;
+import IR.*;
+
 
 public class DecList extends Node
 {
@@ -27,5 +30,13 @@ public class DecList extends Node
 		if (head != null) head.Semant();
 		if (tail != null) tail.Semant();
 		return null;
+	}
+
+	public TempReg IRme()
+	{
+		if (head != null) head.IRme();
+		if (tail != null) tail.IRme();
+		
+		return null;			
 	}
 }

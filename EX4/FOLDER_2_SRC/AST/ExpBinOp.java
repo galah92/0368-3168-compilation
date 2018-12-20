@@ -1,6 +1,7 @@
 package AST;
 import TYPES.*;
 import pcomp.*;
+import IR.*;
 
 public class ExpBinOp extends Exp
 {
@@ -55,6 +56,42 @@ public class ExpBinOp extends Exp
 			}
 		}
 		throw new SemanticException(t1 + ", " + t2);
+	}
+
+	public TempReg IRme()
+	{
+		TempReg t1 = null;
+		TempReg t2 = null;
+		TempReg dst = new TempReg();
+				
+		if (left  != null) t1 = left.IRme();
+		if (right != null) t2 = right.IRme();
+		
+		if (op == '+')
+		{
+			IR.
+			getInstance().
+			Add_IRcommand(new IRcommand_Binop_Add_Integers(dst,t1,t2));
+		}
+		if (op == '*')
+		{
+			IR.
+			getInstance().
+			Add_IRcommand(new IRcommand_Binop_Mul_Integers(dst,t1,t2));
+		}
+		if (op == '=')
+		{
+			IR.
+			getInstance().
+			Add_IRcommand(new IRcommand_Binop_EQ_Integers(dst,t1,t2));
+		}
+		if (op == '<')
+		{
+			IR.
+			getInstance().
+			Add_IRcommand(new IRcommand_Binop_LT_Integers(dst,t1,t2));
+		}
+		return dst;
 	}
 
 }

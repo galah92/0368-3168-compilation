@@ -10,15 +10,15 @@ package IR;
 /*******************/
 /* PROJECT IMPORTS */
 /*******************/
-import TEMP.*;
+import pcomp.*;
 import MIPS.*;
 
 public class IRcommandConstInt extends IRcommand
 {
-	TEMP t;
+	TempReg t;
 	int value;
 	
-	public IRcommandConstInt(TEMP t,int value)
+	public IRcommandConstInt(TempReg t,int value)
 	{
 		this.t = t;
 		this.value = value;

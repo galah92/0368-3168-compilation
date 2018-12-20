@@ -10,7 +10,7 @@ package IR;
 /*******************/
 /* PROJECT IMPORTS */
 /*******************/
-import TEMP.*;
+import pcomp.*;
 import MIPS.*;
 
 public class IRcommand_Jump_Label extends IRcommand

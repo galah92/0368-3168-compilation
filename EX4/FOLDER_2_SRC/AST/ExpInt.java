@@ -1,5 +1,7 @@
 package AST;
 import TYPES.*;
+import pcomp.*;
+import IR.*;
 
 public class ExpInt extends ExpPrimitive
 {
@@ -18,5 +20,12 @@ public class ExpInt extends ExpPrimitive
 	public Type Semant() throws Exception
 	{
 		return Type.INT;
+	}
+
+	public TempReg IRme()
+	{
+		TempReg t = new TempReg();
+		IR.getInstance().Add_IRcommand(new IRcommandConstInt(t,value));
+		return t;
 	}
 }

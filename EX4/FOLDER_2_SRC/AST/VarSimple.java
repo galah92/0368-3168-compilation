@@ -1,6 +1,7 @@
 package AST;
 import TYPES.*;
 import pcomp.*;
+import IR.*;
 
 public class VarSimple extends Var
 {
@@ -19,5 +20,12 @@ public class VarSimple extends Var
 	public Type Semant() throws Exception
 	{
 		return SymbolTable.find(varName);
+	}
+
+	public TempReg IRme()
+	{
+		TempReg t = new TempReg();
+		IR.getInstance().Add_IRcommand(new IRcommand_Load(t,varName));
+		return t;
 	}
 }

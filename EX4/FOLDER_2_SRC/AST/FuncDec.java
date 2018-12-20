@@ -1,6 +1,7 @@
 package AST;
 import TYPES.*;
 import pcomp.*;
+import IR.*;
 
 
 public class FuncDec extends ClassField
@@ -73,6 +74,13 @@ public class FuncDec extends ClassField
 		TypeFunc overloadedFuncType = (TypeFunc)func;
 		if (overloadedFuncType.retType != retType) { throw new SemanticException(); }
 		if (!(overloadedFuncType.isValidArgs(argsTypes))) { throw new SemanticException(); }
+	}
+
+	public TempReg IRme()
+	{
+		IR.getInstance().Add_IRcommand(new IRcommand_Label("main"));		
+		if (body != null) body.IRme();
+		return null;
 	}
 
 }

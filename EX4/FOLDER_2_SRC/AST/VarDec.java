@@ -1,6 +1,8 @@
 package AST;
 import TYPES.*;
 import pcomp.*;
+import IR.*;
+
 
 public class VarDec extends ClassField
 {
@@ -73,6 +75,17 @@ public class VarDec extends ClassField
 	{
 		Type varType = SemantDeclaration();
 		return varType;
+	}
+
+	public TempReg IRme()
+	{
+		IR.getInstance().Add_IRcommand(new IRcommand_Allocate(varName));
+		
+		if (initVal != null)
+		{
+			IR.getInstance().Add_IRcommand(new IRcommand_Store(varName, initVal.IRme()));
+		}
+		return null;
 	}
 
 }

@@ -11,6 +11,8 @@ public abstract class Node
 
 	public abstract Type Semant() throws Exception;
 
+	public TempReg IRme() { return null; }
+
 	public class SemanticException extends Exception
 	{
 		public SemanticException() { super(); }
