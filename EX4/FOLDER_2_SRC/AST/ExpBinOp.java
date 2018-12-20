@@ -58,14 +58,14 @@ public class ExpBinOp extends Exp
 		throw new SemanticException(t1 + ", " + t2);
 	}
 
-	public TempReg IRme()
+	public TempReg toIR()
 	{
 		TempReg t1 = null;
 		TempReg t2 = null;
 		TempReg dst = new TempReg();
 				
-		if (left  != null) t1 = left.IRme();
-		if (right != null) t2 = right.IRme();
+		if (left  != null) t1 = left.toIR();
+		if (right != null) t2 = right.toIR();
 		
 		if (op == '+')
 		{

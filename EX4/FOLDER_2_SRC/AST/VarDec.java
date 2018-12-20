@@ -77,13 +77,13 @@ public class VarDec extends ClassField
 		return varType;
 	}
 
-	public TempReg IRme()
+	public TempReg toIR()
 	{
 		IR.add(new IRcommand_Allocate(varName));
 		
 		if (initVal != null)
 		{
-			IR.add(new IRcommand_Store(varName, initVal.IRme()));
+			IR.add(new IRcommand_Store(varName, initVal.toIR()));
 		}
 		return null;
 	}

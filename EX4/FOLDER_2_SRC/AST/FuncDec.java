@@ -76,10 +76,10 @@ public class FuncDec extends ClassField
 		if (!(overloadedFuncType.isValidArgs(argsTypes))) { throw new SemanticException(); }
 	}
 
-	public TempReg IRme()
+	public TempReg toIR()
 	{
 		IR.add(new IRcommand_Label("main"));		
-		if (body != null) body.IRme();
+		if (body != null) body.toIR();
 		return null;
 	}
 

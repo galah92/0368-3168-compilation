@@ -16,7 +16,7 @@ public class IRcommand_Binop_LT_Integers extends IRcommand
 		this.t2 = t2;
 	}
 	
-	public void MIPSme()
+	public void toMIPS()
 	{
 		String label_end = getLabel("end");
 		String label_AssignOne = getLabel("AssignOne");

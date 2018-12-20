@@ -25,7 +25,7 @@ public class IRcommand_Jump_Label extends IRcommand
 	/***************/
 	/* MIPS me !!! */
 	/***************/
-	public void MIPSme()
+	public void toMIPS()
 	{
 		MIPSGen.jump(label_name);
 	}

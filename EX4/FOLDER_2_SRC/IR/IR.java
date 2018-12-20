@@ -8,8 +8,8 @@ public class IR
 
 	public static void add(IRcommand cmd) { commands.add(cmd); }
 	
-	public static void MIPSme()
+	public static void toMIPS()
 	{
-		for (IRcommand comm : commands) { comm.MIPSme(); }
+		for (IRcommand comm : commands) { comm.toMIPS(); }
 	}
 }

@@ -11,7 +11,7 @@ public abstract class Node
 
 	public abstract Type Semant() throws Exception;
 
-	public TempReg IRme() { return null; }
+	public TempReg toIR() { return null; }
 
 	public class SemanticException extends Exception
 	{
@@ -36,11 +36,10 @@ public abstract class Node
 		sb.append(String.format("v%d -> v%d;\n", serialNum, otherNode.serialNum));
 	}
 	
-	public static void toGraphviz() throws Exception
+	public void toGraphviz(String outFile) throws Exception
 	{
-		String dirname = "./FOLDER_5_OUTPUT/";
-		String filename = "IN_GRAPHVIZ_DOT_FORMAT.txt";
-		PrintWriter writer = new PrintWriter(dirname + filename);
+		logGraphviz();
+		PrintWriter writer = new PrintWriter(outFile);
 		writer.println("digraph");
 		writer.println("{");
 		writer.println("graph [ordering = \"out\"]");

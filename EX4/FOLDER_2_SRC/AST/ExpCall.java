@@ -52,11 +52,11 @@ public class ExpCall extends Exp
 		return funcType.retType;
 	}
 
-	public TempReg IRme()
+	public TempReg toIR()
 	{
 		TempReg t = null;
 		
-		if (args != null) { t = args.head.IRme(); }
+		if (args != null) { t = args.head.toIR(); }
 		
 		IR.add(new IRcommand_PrintInt(t));
 		

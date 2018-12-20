@@ -13,18 +13,15 @@ public class Main
 			writer = new PrintWriter(argv[1]);
 			Parser parser = new Parser(argv[0], writer);
 			AST.Node tree = (AST.Node)parser.parse().value;
-			tree.logGraphviz();
-			AST.Node.toGraphviz();
 
 			SymbolTable.init();
 			tree.Semant();
-			SymbolTable.toGraphviz();
-
-			MIPSGen.init("./FOLDER_5_OUTPUT/MIPS.txt");
-			tree.IRme();
+			tree.toIR();
+			IR.toMIPS();
 			
-			IR.MIPSme();
-			MIPSGen.toFile();
+			tree.toGraphviz("./FOLDER_5_OUTPUT/AST.txt");
+			SymbolTable.toGraphviz("./FOLDER_5_OUTPUT/SymbolTable.txt");
+			MIPSGen.toFile("./FOLDER_5_OUTPUT/MIPS.txt");
 			writer.println("OK");
     	}
 		catch (AST.Node.SemanticException e)

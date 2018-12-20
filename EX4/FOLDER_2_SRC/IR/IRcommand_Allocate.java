@@ -12,10 +12,7 @@ public class IRcommand_Allocate extends IRcommand
 		this.var_name = var_name;
 	}
 	
-	/***************/
-	/* MIPS me !!! */
-	/***************/
-	public void MIPSme()
+	public void toMIPS()
 	{
 		MIPSGen.allocate(var_name);
 	}

@@ -27,7 +27,7 @@ public class IRcommandConstInt extends IRcommand
 	/***************/
 	/* MIPS me !!! */
 	/***************/
-	public void MIPSme()
+	public void toMIPS()
 	{
 		MIPSGen.li(t,value);
 	}

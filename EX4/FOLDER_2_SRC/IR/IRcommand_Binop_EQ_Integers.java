@@ -29,7 +29,7 @@ public class IRcommand_Binop_EQ_Integers extends IRcommand
 	/***************/
 	/* MIPS me !!! */
 	/***************/
-	public void MIPSme()
+	public void toMIPS()
 	{
 		/*******************************/
 		/* [1] Allocate 3 fresh labels */

@@ -133,23 +133,18 @@ public class SymbolTable
         sb.append("\"];\n");
     }
 
-    public static void toGraphviz() throws Exception
+    public static void toGraphviz(String outFile) throws Exception
     {
-        String dirPath = "./FOLDER_5_OUTPUT/";
-		String fileName = "SymbolTableGraphviz.txt";
-        PrintWriter writer = new PrintWriter(dirPath + fileName);
-
+        PrintWriter writer = new PrintWriter(outFile);
         writer.println("digraph structs {");
         writer.println("rankdir = LR");
         writer.println("node [shape=record];");
         writer.println();
-
         for (int i = 0; i < sbAppendCount - 1; i++)
         {
             sb.append(String.format("node_%d:head -> node_%d:head\n", i, i + 1));
         }
         writer.println(sb.toString());
-
         writer.println("}");
         writer.close();
     }

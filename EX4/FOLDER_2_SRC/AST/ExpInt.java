@@ -22,7 +22,7 @@ public class ExpInt extends ExpPrimitive
 		return Type.INT;
 	}
 
-	public TempReg IRme()
+	public TempReg toIR()
 	{
 		TempReg t = new TempReg();
 		IR.add(new IRcommandConstInt(t,value));

@@ -16,7 +16,7 @@ public class IRcommand_Binop_Add_Integers extends IRcommand
 		this.t2 = t2;
 	}
 
-	public void MIPSme()
+	public void toMIPS()
 	{
 		MIPSGen.add(dst,t1,t2);
 	}

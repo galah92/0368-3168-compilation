@@ -22,7 +22,7 @@ public class VarSimple extends Var
 		return SymbolTable.find(varName);
 	}
 
-	public TempReg IRme()
+	public TempReg toIR()
 	{
 		TempReg t = new TempReg();
 		IR.add(new IRcommand_Load(t,varName));

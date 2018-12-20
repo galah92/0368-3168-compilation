@@ -51,9 +51,9 @@ public class StmtAssign extends Stmt
 		return varType;
 	}
 
-	public TempReg IRme()
+	public TempReg toIR()
 	{
-		TempReg src = exp.IRme();
+		TempReg src = exp.toIR();
 		IR.add(new IRcommand_Store(((VarSimple)var).varName, src));
 
 		return null;

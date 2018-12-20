@@ -32,10 +32,10 @@ public class DecList extends Node
 		return null;
 	}
 
-	public TempReg IRme()
+	public TempReg toIR()
 	{
-		if (head != null) head.IRme();
-		if (tail != null) tail.IRme();
+		if (head != null) head.toIR();
+		if (tail != null) tail.toIR();
 		
 		return null;			
 	}

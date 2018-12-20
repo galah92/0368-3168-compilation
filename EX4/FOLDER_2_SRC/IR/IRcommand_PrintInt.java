@@ -25,7 +25,7 @@ public class IRcommand_PrintInt extends IRcommand
 	/***************/
 	/* MIPS me !!! */
 	/***************/
-	public void MIPSme()
+	public void toMIPS()
 	{
 		MIPSGen.print_int(t);
 	}

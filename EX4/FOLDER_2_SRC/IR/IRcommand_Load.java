@@ -14,7 +14,7 @@ public class IRcommand_Load extends IRcommand
 		this.var_name = var_name;
 	}
 	
-	public void MIPSme()
+	public void toMIPS()
 	{
 		MIPSGen.load(dst,var_name);
 	}

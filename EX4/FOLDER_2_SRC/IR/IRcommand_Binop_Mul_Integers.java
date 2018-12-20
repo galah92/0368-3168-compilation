@@ -28,7 +28,7 @@ public class IRcommand_Binop_Mul_Integers extends IRcommand
 	/***************/
 	/* MIPS me !!! */
 	/***************/
-	public void MIPSme()
+	public void toMIPS()
 	{
 		MIPSGen.mul(dst,t1,t2);
 	}

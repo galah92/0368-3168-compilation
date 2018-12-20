@@ -34,17 +34,17 @@ public class StmtWhile extends Stmt
 		return null;
 	}
 
-	public TempReg IRme()
+	public TempReg toIR()
 	{
 		String label_end   = IRcommand.getLabel("end");
 		String label_start = IRcommand.getLabel("start");
 	
 		IR.add(new IRcommand_Label(label_start));
 
-		TempReg cond_temp = cond.IRme();
+		TempReg cond_temp = cond.toIR();
 		IR.add(new IRcommand_Jump_If_Eq_To_Zero(cond_temp,label_end));
 
-		body.IRme();
+		body.toIR();
 
 		IR.add(new IRcommand_Jump_Label(label_start));		
 		IR.add(new IRcommand_Label(label_end));
