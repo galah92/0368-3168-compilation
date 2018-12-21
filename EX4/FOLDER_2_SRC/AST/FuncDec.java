@@ -42,8 +42,8 @@ public class FuncDec extends ClassField
 			if (func != null && (func instanceof TypeClass)) { throw new SemanticException(); }
 		} else {
 			if (!(func instanceof TypeFunc)) { throw new SemanticException(); }
-			if (!(SymbolTable.isInScope(Type.Scope.CLASS))) { throw new SemanticException(); }
 			TypeClass currentClass = SymbolTable.findClass();
+			if (currentClass == null) { throw new SemanticException("function already declared: " + funcName); }
 			TypeClass funcClass = ((TypeFunc)func).cls;
 			if (currentClass == funcClass) { throw new SemanticException(); } // func declerated before
 			OverrideFuncDecCheck(func, retType, paramsTypes);

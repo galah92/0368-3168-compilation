@@ -58,10 +58,9 @@ public class SymbolTable
 	{
 		for (Symbol symbol : stack)
         {
-            if (symbol.type instanceof Type.Scope) { break; }
+            if (symbol.type instanceof Type.Scope) { return null; }
             if (symbol.name.equals(name)) { return symbol.type; }
         }
-        return null;
 	}
 
     public static Type findTypeName(String typeName)
@@ -80,15 +79,6 @@ public class SymbolTable
             if (symbol.type instanceof Type.Scope) { return false; }
         }
         return true;
-	}
-
-	public static boolean isInScope(Type.Scope scopeType)
-	{
-		for (Symbol symbol : stack)
-        {
-            if (symbol.type == scopeType) { return true; }
-        }
-        return false;
 	}
 
     public static void beginScope(Type.Scope scopeType)
