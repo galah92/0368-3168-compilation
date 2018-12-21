@@ -1,15 +1,5 @@
-/***********/
-/* PACKAGE */
-/***********/
 package IR;
 
-/*******************/
-/* GENERAL IMPORTS */
-/*******************/
-
-/*******************/
-/* PROJECT IMPORTS */
-/*******************/
 import pcomp.*;
 
 
@@ -24,9 +14,6 @@ public class IRcommand_Jump_If_Eq_To_Zero extends IRcommand
 		this.label_name = label_name;
 	}
 	
-	/***************/
-	/* MIPS me !!! */
-	/***************/
 	public void toMIPS()
 	{
 		MIPSGen.beqz(t,label_name);

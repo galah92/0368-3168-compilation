@@ -1,15 +1,5 @@
-/***********/
-/* PACKAGE */
-/***********/
 package IR;
 
-/*******************/
-/* GENERAL IMPORTS */
-/*******************/
-
-/*******************/
-/* PROJECT IMPORTS */
-/*******************/
 import pcomp.*;
 
 
@@ -22,9 +12,6 @@ public class IRcommand_Jump_Label extends IRcommand
 		this.label_name = label_name;
 	}
 	
-	/***************/
-	/* MIPS me !!! */
-	/***************/
 	public void toMIPS()
 	{
 		MIPSGen.jump(label_name);

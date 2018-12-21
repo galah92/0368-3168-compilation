@@ -1,17 +1,6 @@
-/***********/
-/* PACKAGE */
-/***********/
 package IR;
 
-/*******************/
-/* GENERAL IMPORTS */
-/*******************/
-
-/*******************/
-/* PROJECT IMPORTS */
-/*******************/
 import pcomp.*;
-
 
 public class IRcommand_PrintInt extends IRcommand
 {
@@ -22,9 +11,6 @@ public class IRcommand_PrintInt extends IRcommand
 		this.t = t;
 	}
 	
-	/***************/
-	/* MIPS me !!! */
-	/***************/
 	public void toMIPS()
 	{
 		MIPSGen.print_int(t);

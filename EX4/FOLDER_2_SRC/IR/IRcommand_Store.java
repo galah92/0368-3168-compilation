@@ -2,7 +2,6 @@ package IR;
 
 import pcomp.*;
 
-
 public class IRcommand_Store extends IRcommand
 {
 	String var_name;
@@ -16,6 +15,6 @@ public class IRcommand_Store extends IRcommand
 	
 	public void toMIPS()
 	{
-		MIPSGen.store(var_name,src);
+		MIPSGen.store(var_name, src);
 	}
 }

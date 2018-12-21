@@ -1,15 +1,5 @@
-/***********/
-/* PACKAGE */
-/***********/
 package IR;
 
-/*******************/
-/* GENERAL IMPORTS */
-/*******************/
-
-/*******************/
-/* PROJECT IMPORTS */
-/*******************/
 import pcomp.*;
 
 
@@ -25,9 +15,7 @@ public class IRcommand_Binop_Mul_Integers extends IRcommand
 		this.t1 = t1;
 		this.t2 = t2;
 	}
-	/***************/
-	/* MIPS me !!! */
-	/***************/
+
 	public void toMIPS()
 	{
 		MIPSGen.mul(dst,t1,t2);

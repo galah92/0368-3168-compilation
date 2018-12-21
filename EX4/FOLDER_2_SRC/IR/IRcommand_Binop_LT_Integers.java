@@ -28,7 +28,6 @@ public class IRcommand_Binop_LT_Integers extends IRcommand
 		MIPSGen.bge(t1, t2, label_AssignZero);
 
 		/* [3] label_AssignOne: */
-		/*                      */
 		/*         t3 := 1      */
 		/*         goto end;    */
 		MIPSGen.label(label_AssignOne);
@@ -36,10 +35,8 @@ public class IRcommand_Binop_LT_Integers extends IRcommand
 		MIPSGen.jump(label_end);
 
 		/* [4] label_AssignZero: */
-		/*                       */
 		/*         t3 := 1       */
 		/*         goto end;     */
-		/*                       */
 		MIPSGen.label(label_AssignZero);
 		MIPSGen.li(dst, 0);
 		MIPSGen.jump(label_end);
