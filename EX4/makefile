@@ -28,6 +28,7 @@ CUP_GENERATED_PARSER_NAME      = Parser
 CUP_GENERATED_SYMBOLS_FILENAME = TokenNames
 
 CUP_FLAGS =                                \
+-nosummary                                 \
 -nowarn                                    \
 -parser  ${CUP_GENERATED_PARSER_NAME}      \
 -symbols ${CUP_GENERATED_SYMBOLS_FILENAME} 

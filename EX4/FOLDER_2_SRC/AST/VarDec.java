@@ -28,7 +28,8 @@ public class VarDec extends ClassField
 	{
 		if (varName.equals(Type.VOID.name)) { throw new SemanticException("invalid variable name: " + varName); }
 		if (SymbolTable.findInScope(varName) != null) { throw new SemanticException("variable name already defined"); }
-		if (SymbolTable.findTypeName(varName) != null) { throw new SemanticException("variable name defined as type"); }
+		Type t = SymbolTable.findTypeName(varName);
+		if (t != null && !(t instanceof TypeFunc)) { throw new SemanticException("variable name defined as type"); }
 
 		Type varType = SymbolTable.findTypeName(varTypeName);
 		if (varType == null) { throw new SemanticException("variable type not defined"); }
