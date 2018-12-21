@@ -58,9 +58,10 @@ public class SymbolTable
 	{
 		for (Symbol symbol : stack)
         {
-            if (symbol.type instanceof Type.Scope) { return null; }
+            if (symbol.type instanceof Type.Scope) { break; }
             if (symbol.name.equals(name)) { return symbol.type; }
         }
+        return null;
 	}
 
     public static Type findTypeName(String typeName)
