@@ -26,6 +26,7 @@ public class VarDec extends ClassField
 
 	public Type SemantDeclaration() throws Exception
 	{
+		if (varName.equals(Type.VOID.name)) { throw new SemanticException("invalid variable name: " + varName); }
 		if (SymbolTable.findInScope(varName) != null) { throw new SemanticException("variable name already defined"); }
 		if (SymbolTable.findTypeName(varName) != null) { throw new SemanticException("variable name defined as type"); }
 

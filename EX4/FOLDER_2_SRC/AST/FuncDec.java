@@ -32,6 +32,7 @@ public class FuncDec extends ClassField
 
 	public TypeFunc SemantDeclaration() throws Exception
 	{
+		if (funcName.equals(Type.VOID.name)) { throw new SemanticException("invalid function name: " + funcName); }
 		Type retType = retTypeName.equals(Type.VOID.name) ? Type.VOID : SymbolTable.find(retTypeName);
 		TypeList paramsTypes = params != null ? params.SemantDeclaration(): null;
 		Type func = SymbolTable.findInScope(funcName);
