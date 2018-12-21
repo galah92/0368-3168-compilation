@@ -7,13 +7,8 @@ OUTPUT_DIR        = FOLDER_5_OUTPUT
 EXTERNAL_JARS_DIR = FOLDER_7_EXTERNAL_JARS
 MANIFEST_DIR      = FOLDER_8_MANIFEST
 
-JFlex_GENERATED_FILE      = ${SRC_DIR}/Lexer.java
-CUP_GENERATED_FILES       = ${SRC_DIR}/Parser.java ${SRC_DIR}/TokenNames.java
-JFlex_CUP_GENERATED_FILES = ${JFlex_GENERATED_FILE} ${CUP_GENERATED_FILES}
-SRC_FILES                 = ${SRC_DIR}/*.java              \
-                            ${SRC_DIR}/IR/*.java           \
-                            ${SRC_DIR}/AST/*.java          \
-                            ${SRC_DIR}/TYPES/*.java
+JFlex_CUP_GENERATED_FILES = ${SRC_DIR}/Lexer.java ${SRC_DIR}/Parser.java ${SRC_DIR}/TokenNames.java
+SRC_FILES                 = ${SRC_DIR}/*.java ${SRC_DIR}/IR/*.java ${SRC_DIR}/AST/*.java ${SRC_DIR}/TYPES/*.java
 EXTERNAL_JAR_FILES        = ${EXTERNAL_JARS_DIR}/java-cup-11b-runtime.jar
 MANIFEST_FILE             = ${MANIFEST_DIR}/MANIFEST.MF
 
@@ -22,16 +17,9 @@ JFlex_FLAGS    = -q
 JFlex_DEST_DIR = ${SRC_DIR}
 JFlex_FILE     = ${JFlex_DIR}/LEX_FILE.lex
 
-CUP_PROGRAM                    = java -jar ${EXTERNAL_JARS_DIR}/java-cup-11b.jar 
-CUP_FILE                       = ${CUP_DIR}/CUP_FILE.cup
-CUP_GENERATED_PARSER_NAME      = Parser
-CUP_GENERATED_SYMBOLS_FILENAME = TokenNames
-
-CUP_FLAGS =                                \
--nosummary                                 \
--nowarn                                    \
--parser  ${CUP_GENERATED_PARSER_NAME}      \
--symbols ${CUP_GENERATED_SYMBOLS_FILENAME} 
+CUP_PROGRAM = java -jar ${EXTERNAL_JARS_DIR}/java-cup-11b.jar
+CUP_FLAGS   = -nosummary -nowarn -parser Parser -symbols TokenNames
+CUP_FILE    = ${CUP_DIR}/CUP_FILE.cup
 
 INPUT    = ${INPUT_DIR}/Input.txt
 OUTPUT   = ${OUTPUT_DIR}/SemanticStatus.txt
