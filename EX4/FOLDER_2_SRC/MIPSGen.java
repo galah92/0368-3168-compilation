@@ -21,13 +21,18 @@ public class MIPSGen
 
 	public static void print_int(TempReg t)
 	{
-		int idx=t.serialNum;
-		// sb.append(String.format("\taddi $a0,Temp_%d,0\n",idx));
-		sb.append(String.format("\tmove $a0,Temp_%d\n",idx));
+		sb.append(String.format("\tmove $a0,Temp_%d\n", t.serialNum));
 		sb.append(String.format("\tli $v0,1\n"));
 		sb.append(String.format("\tsyscall\n"));
-		sb.append(String.format("\tli $a0,32\n"));
-		sb.append(String.format("\tli $v0,11\n"));
+		// sb.append(String.format("\tli $a0,32\n"));
+		// sb.append(String.format("\tli $v0,11\n"));
+		// sb.append(String.format("\tsyscall\n"));
+	}
+
+	public static void print_string(TempReg t)
+	{
+		sb.append(String.format("\tmove $a0,Temp_%d\n", t.serialNum));
+		sb.append(String.format("\tli $v0,4\n"));
 		sb.append(String.format("\tsyscall\n"));
 	}
 	

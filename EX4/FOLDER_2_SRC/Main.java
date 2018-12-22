@@ -16,12 +16,12 @@ public class Main
 
 			SymbolTable.init();
 			tree.Semant();
-			// tree.toIR();
-			// IR.toMIPS();
+			tree.toIR();
+			IR.toMIPS();
 			
 			tree.toGraphviz("./FOLDER_5_OUTPUT/AST.txt");
 			SymbolTable.toGraphviz("./FOLDER_5_OUTPUT/SymbolTable.txt");
-			// MIPSGen.toFile("./FOLDER_5_OUTPUT/MIPS.txt");
+			MIPSGen.toFile("./FOLDER_5_OUTPUT/MIPS.txt");
 			writer.println("OK");
     	}
 		catch (AST.Node.SemanticException e)
