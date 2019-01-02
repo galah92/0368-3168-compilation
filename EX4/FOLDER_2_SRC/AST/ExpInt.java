@@ -24,8 +24,8 @@ public class ExpInt extends ExpPrimitive
 
 	public TempReg toIR()
 	{
-		TempReg t = new TempReg();
-		IR.add(new IRcommandConstInt(t,value));
-		return t;
+		TempReg reg = new TempReg();
+		IR.add(new IRcommandConstInt(reg, value));
+		return reg;
 	}
 }
