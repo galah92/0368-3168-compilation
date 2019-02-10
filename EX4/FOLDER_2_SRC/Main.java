@@ -1,10 +1,10 @@
-import java.io.*;
 import pcomp.*;
+import java.io.*;
 import IR.*;
-
 
 public class Main
 {
+
 	static public void main(String argv[])
 	{
 		PrintWriter writer = null;
@@ -13,9 +13,9 @@ public class Main
 			writer = new PrintWriter(argv[1]);
 			Parser parser = new Parser(argv[0], writer);
 			AST.Node tree = (AST.Node)parser.parse().value;
-
 			SymbolTable.init();
 			tree.Semant();
+
 			tree.toIR();
 			IR.toMIPS();
 			

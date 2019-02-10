@@ -60,12 +60,9 @@ public class ExpBinOp extends Exp
 
 	public TempReg toIR()
 	{
-		TempReg t1 = null;
-		TempReg t2 = null;
+		TempReg t1 = left.toIR();
+		TempReg t2 = right.toIR();
 		TempReg dst = new TempReg();
-				
-		if (left  != null) t1 = left.toIR();
-		if (right != null) t2 = right.toIR();
 		
 		if (op == '+')
 		{
