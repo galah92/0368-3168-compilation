@@ -59,7 +59,8 @@ public class ExpCall extends Exp
 		if (args != null) { t = args.head.toIR(); }
 		
 		IR.add(new IRcommand_PrintInt(t));
-		
-		return null;
+
+		TempReg retVal = new TempReg();
+		return retVal;
 	}
 }
