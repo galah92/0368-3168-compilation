@@ -79,6 +79,7 @@ public class VarDec extends ClassField
 		return varType;
 	}
 
+	@Override
 	public TempReg toIR()
 	{
 		IR.add(new IRcommand_Allocate(varName));

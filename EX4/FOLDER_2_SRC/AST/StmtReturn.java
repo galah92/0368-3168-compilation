@@ -17,6 +17,7 @@ public class StmtReturn extends Stmt
 		logNode("StmtReturn");
 		if (exp != null) logEdge(exp);
 	}
+
 	public Type Semant() throws Exception
 	{
 		TypeFunc funcType = SymbolTable.findFunc();
@@ -30,6 +31,14 @@ public class StmtReturn extends Stmt
 			}
 		}
 		return expType;
+	}
+
+	@Override
+	public TempReg toIR()
+	{
+		// TODO: implement
+		TempReg tmp = exp == null ? null : exp.toIR();
+		return null;
 	}
 
 }

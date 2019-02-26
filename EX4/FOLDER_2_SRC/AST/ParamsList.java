@@ -47,4 +47,12 @@ public class ParamsList extends Node
 		SymbolTable.enter(paramName, paramType);
 		return new TypeList(paramType, tail != null ? tail.Semant() : null);
 	}
+	
+	@Override
+	public TempReg toIR()
+	{
+		return null;
+	}
+
+
 }

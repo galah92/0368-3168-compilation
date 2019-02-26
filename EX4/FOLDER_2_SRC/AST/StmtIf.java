@@ -33,5 +33,13 @@ public class StmtIf extends Stmt
 		SymbolTable.endScope();
 		
 		return null;
-	}	
+	}
+
+	@Override
+	public TempReg toIR()
+	{
+		// TODO: implement
+		return null;
+	}
+	
 }

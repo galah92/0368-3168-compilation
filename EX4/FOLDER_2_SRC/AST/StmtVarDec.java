@@ -20,7 +20,14 @@ public class StmtVarDec extends Stmt
 
 	public Type Semant() throws Exception
 	{
+		SymbolTable.findFunc().numLocals++;
 		return var.Semant();
+	}
+
+	@Override
+	public TempReg toIR()
+	{
+		return var.toIR();
 	}
 	
 }

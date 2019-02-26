@@ -12,6 +12,7 @@ public class FuncDec extends ClassField
     public String funcName;
     public ParamsList params;
     public StmtList body;
+    public Deque<Stmt> body2 = new ArrayDeque<Stmt>();
     public TypeFunc funcType;
     
     public FuncDec(String retTypeName, String funcName, ParamsList params, StmtList body)
@@ -20,6 +21,7 @@ public class FuncDec extends ClassField
         this.funcName = funcName;
         this.params = params;
         this.body = body;
+        for (StmtList it = body; it != null; it = it.tail) { body2.add(it.head); }
     }
 
     public void logGraphviz()
@@ -78,13 +80,13 @@ public class FuncDec extends ClassField
         if (!(overloadedFuncType.isValidArgs(argsTypes))) { throw new SemanticException(); }
     }
 
+    @Override
     public TempReg toIR()
     {
         IR.add(new IRcommand_Label(funcName));
-        int numLocals = funcType.params2.size();
-        IR.add(new IRcommand_FuncPrologue(numLocals));
+        IR.add(new IRcommand_FuncPrologue(funcType.numLocals));
         if (body != null) body.toIR();
-        IR.add(new IRcommand_FuncEpilogue(numLocals));
+        IR.add(new IRcommand_FuncEpilogue(funcType.numLocals));
         return null;
     }
 

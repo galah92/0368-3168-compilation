@@ -34,6 +34,7 @@ public class StmtWhile extends Stmt
 		return null;
 	}
 
+	@Override
 	public TempReg toIR()
 	{
 		String label_end   = IRcommand.getLabel("end");

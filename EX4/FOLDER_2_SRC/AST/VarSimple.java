@@ -22,6 +22,7 @@ public class VarSimple extends Var
 		return SymbolTable.find(varName);
 	}
 
+	@Override
 	public TempReg toIR()
 	{
 		TempReg t = new TempReg();

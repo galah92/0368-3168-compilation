@@ -11,7 +11,14 @@ public abstract class Node
 
 	public abstract Type Semant() throws Exception;
 
-	public TempReg toIR() { return null; }
+	// TODO: eventually toIR should be abstract
+	// public abstract TempReg toIR();
+
+	public TempReg toIR()
+	{
+		System.out.println("UNIMPLEMENTED toIR():" + this);
+		return null;
+	}
 
 	public class SemanticException extends Exception
 	{

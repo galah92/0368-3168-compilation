@@ -32,11 +32,11 @@ public class DecList extends Node
 		return null;
 	}
 
+	@Override
 	public TempReg toIR()
 	{
 		if (head != null) head.toIR();
 		if (tail != null) tail.toIR();
-		
-		return null;			
+		return null;
 	}
 }
