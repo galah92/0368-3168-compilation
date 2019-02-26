@@ -1,5 +1,5 @@
 package AST;
-import TYPES.*;
+
 import pcomp.*;
 
 public class ParamsList extends Node

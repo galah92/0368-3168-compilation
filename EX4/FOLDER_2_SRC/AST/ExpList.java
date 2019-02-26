@@ -1,5 +1,5 @@
 package AST;
-import TYPES.*;
+
 import IR.*;
 import pcomp.*;
 

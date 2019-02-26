@@ -1,5 +1,7 @@
 package AST;
-import TYPES.*;
+
+import pcomp.*;
+
 
 public abstract class Dec extends Node
 {

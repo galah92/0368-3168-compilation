@@ -1,6 +1,6 @@
 package AST;
 import java.io.*;
-import TYPES.*;
+
 import pcomp.*;
 
 public abstract class Node

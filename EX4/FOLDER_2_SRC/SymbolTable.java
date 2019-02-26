@@ -2,7 +2,7 @@ package pcomp;
 
 import java.util.*;
 import java.io.*;
-import TYPES.*;
+
 
 public class SymbolTable
 {

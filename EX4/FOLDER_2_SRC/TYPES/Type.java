@@ -1,4 +1,4 @@
-package TYPES;
+package pcomp;
 
 public class Type
 {
