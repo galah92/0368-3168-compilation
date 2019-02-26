@@ -2,6 +2,7 @@ package AST;
 import TYPES.*;
 import pcomp.*;
 
+
 public class NewExp extends Exp
 {
     String type;
@@ -36,4 +37,12 @@ public class NewExp extends Exp
 
         return newExpType;
 	}
+
+    @Override
+	public TempReg toIR()
+	{
+		// TODO: implement
+		return null;
+	}
+    
 }

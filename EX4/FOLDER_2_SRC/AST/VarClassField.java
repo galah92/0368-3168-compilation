@@ -2,8 +2,10 @@ package AST;
 import TYPES.*;
 import pcomp.*;
 
+
 public class VarClassField extends Var
 {
+
 	public Var className;
 	public String fieldName;
 	
@@ -19,6 +21,7 @@ public class VarClassField extends Var
 		logNode(String.format("VarClassField\n%s", fieldName));
 		logEdge(className);
 	}
+
 	public Type Semant() throws Exception
 	{
 		Type t = className.Semant();
@@ -26,4 +29,12 @@ public class VarClassField extends Var
 		TypeClass typeClass = (TypeClass)t;
 		return typeClass.getVarField(fieldName);
 	}
+
+	@Override
+	public TempReg toIR()
+	{
+		// TODO: implement
+		return null;
+	}
+    
 }

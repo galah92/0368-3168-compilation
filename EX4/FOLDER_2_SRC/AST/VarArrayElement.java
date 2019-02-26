@@ -2,8 +2,10 @@ package AST;
 import TYPES.*;
 import pcomp.*;
 
+
 public class VarArrayElement extends Var
 {
+
 	public Var var;
 	public Exp index;
 
@@ -27,6 +29,13 @@ public class VarArrayElement extends Var
 		Type arrType = var.Semant();
 		if (!(arrType instanceof TypeArray)) { throw new SemanticException(); }
 		return ((TypeArray)arrType).elementType;
+	}
+
+	@Override
+	public TempReg toIR()
+	{
+		// TODO: implement
+		return null;
 	}
 
 }

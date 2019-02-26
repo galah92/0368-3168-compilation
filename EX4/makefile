@@ -81,4 +81,5 @@ everything: clean compile
 	@sed -i 's/\bTemp_37\b/$$t5/g' ${OUTPUT_DIR}/MIPS.txt
 	@sed -i 's/\bTemp_38\b/$$t6/g' ${OUTPUT_DIR}/MIPS.txt
 	@sed -i 's/\bTemp_39\b/$$t7/g' ${OUTPUT_DIR}/MIPS.txt
+	@sed -i 's/\bTemp_40\b/$$t7/g' ${OUTPUT_DIR}/MIPS.txt
 	spim -f ${OUTPUT_DIR}/MIPS.txt #> ${OUTPUT_DIR}/MIPS_OUTPUT.txt	
