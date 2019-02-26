@@ -18,25 +18,21 @@ public class StmtList extends Node
 	{
 		if (head != null) head.logGraphviz();
 		if (tail != null) tail.logGraphviz();
-
-		logNode("STMT\nLIST\n");
-		
+		logNode("StmtList");
 		if (head != null) logEdge(head);
 		if (tail != null) logEdge(tail);
 	}
 	
-	public Type Semant() throws Exception
+	public TypeList Semant() throws Exception
 	{
-		if (head != null) head.Semant();
-		if (tail != null) tail.Semant();
-		return null;
+		return new TypeList(head.Semant(), tail != null ? tail.Semant() : null);
 	}
 
+	@Override
 	public TempReg toIR()
 	{
 		if (head != null) head.toIR();
 		if (tail != null) tail.toIR();
-		
 		return null;
 	}
 }
