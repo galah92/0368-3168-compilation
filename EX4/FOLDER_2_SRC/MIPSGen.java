@@ -145,6 +145,8 @@ public class MIPSGen
         writer.printf("\tlw	$fp, ($fp)\n");
         // deallocate place for ra & fp
         writer.printf("\taddi $sp, $sp, 8\n");
+        // jump back
+        writer.printf("\tjr $ra\n");
     }
 
 }
