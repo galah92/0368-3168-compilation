@@ -1,17 +1,13 @@
 package TYPES;
+import java.util.*;
+
 
 public class TypeFunc extends Type
 {
 	public Type retType;
 	public TypeList params;
 	public TypeClass cls;
-	
-	public TypeFunc(Type retType, String name, TypeList params)
-	{
-		super(name);
-		this.retType = retType;
-		this.params = params;
-	}
+	public Deque<Type> params2 = new ArrayDeque<Type>();
 
 	public TypeFunc(Type retType, String name, TypeList params, TypeClass cls)
 	{
@@ -19,7 +15,10 @@ public class TypeFunc extends Type
 		this.retType = retType;
 		this.params = params;
 		this.cls = cls;
-
+		for (TypeList it = params; it != null; it = it.tail)
+		{
+			params2.add(it.head);
+		}
 	}
 
 	public boolean isValidArgs(TypeList argsTypes)

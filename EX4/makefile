@@ -21,6 +21,7 @@ CUP_PROGRAM = java -jar ${EXTERNAL_JARS_DIR}/java-cup-11b.jar
 CUP_FLAGS   = -nosummary -nowarn -parser Parser -symbols TokenNames
 CUP_FILE    = ${CUP_DIR}/CUP_FILE.cup
 
+# INPUT    = ${INPUT_DIR}/TEST_01_Print_Primes.txt
 INPUT    = ${INPUT_DIR}/Input.txt
 OUTPUT   = ${OUTPUT_DIR}/SemanticStatus.txt
 
