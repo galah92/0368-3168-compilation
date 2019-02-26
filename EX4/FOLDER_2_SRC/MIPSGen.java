@@ -9,15 +9,15 @@ public class MIPSGen
 
 	public static void toFile(String outFile) throws Exception
 	{
-		writer.println(".data");
-		writer.println("string_access_violation: .asciiz \"Access Violation\"");
-		writer.println("string_illegal_div_by_0: .asciiz \"Illegal Division By Zero\"");
-		writer.println("string_invalid_ptr_dref: .asciiz \"Invalid Pointer Dereference\"");
 		writer.print("\tli $v0,10\n");
 		writer.print("\tsyscall\n");
 		writer.close();
 
 		PrintWriter fileWriter = new PrintWriter(outFile);
+		fileWriter.println(".data");
+		fileWriter.println("string_access_violation: .asciiz \"Access Violation\"");
+		fileWriter.println("string_illegal_div_by_0: .asciiz \"Illegal Division By Zero\"");
+		fileWriter.println("string_invalid_ptr_dref: .asciiz \"Invalid Pointer Dereference\"");
 		fileWriter.append(stringWriter.toString());
 		fileWriter.close();
 	}
@@ -27,9 +27,9 @@ public class MIPSGen
 		writer.printf("\tmove $a0,Temp_%d\n", t.serialNum);
 		writer.printf("\tli $v0,1\n");
 		writer.printf("\tsyscall\n");
-		// writer.printf("\tli $a0,32\n");
-		// writer.printf("\tli $v0,11\n");
-		// writer.printf("\tsyscall\n");
+		writer.printf("\tli $a0,32\n");
+		writer.printf("\tli $v0,11\n");
+		writer.printf("\tsyscall\n");
 	}
 
 	public static void print_string(TempReg t)
