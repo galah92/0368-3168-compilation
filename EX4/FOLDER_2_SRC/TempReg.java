@@ -3,9 +3,9 @@ package pcomp;
 
 public class TempReg
 {
-    private static int serialCounter = 0;
+    private static int counter = 0;
 
-    public final int serialNum = serialCounter++;
+    public final int id = counter++;
 
     public static final TempReg ZeroReg = new TempReg();
 }

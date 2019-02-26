@@ -24,7 +24,7 @@ public class MIPSGen
 
     public static void print_int(TempReg t)
     {
-        writer.printf("\tmove $a0,Temp_%d\n", t.serialNum);
+        writer.printf("\tmove $a0,Temp_%d\n", t.id);
         writer.printf("\tli $v0,1\n");
         writer.printf("\tsyscall\n");
         writer.printf("\tli $a0,32\n");
@@ -34,7 +34,7 @@ public class MIPSGen
 
     public static void print_string(TempReg t)
     {
-        writer.printf("\tmove $a0,Temp_%d\n", t.serialNum);
+        writer.printf("\tmove $a0,Temp_%d\n", t.id);
         writer.printf("\tli $v0,4\n");
         writer.printf("\tsyscall\n");
     }
@@ -47,33 +47,32 @@ public class MIPSGen
 
     public static void load(TempReg dst, String var_name)
     {
-        writer.printf("\tlw Temp_%d,global_%s\n", dst.serialNum, var_name);
+        writer.printf("\tlw Temp_%d, global_%s\n", dst.id, var_name);
     }
 
     public static void store(String var_name, TempReg src)
     {
-        writer.printf("\tsw Temp_%d,global_%s\n", src.serialNum, var_name);
+        writer.printf("\tsw Temp_%d, global_%s\n", src.id, var_name);
     }
 
     public static void li(TempReg t, int value)
     {
-        writer.printf("\tli Temp_%d,%d\n", t.serialNum, value);
+        writer.printf("\tli Temp_%d, %d\n", t.id, value);
     }
 
-    public static void add(TempReg dst, TempReg oprnd1, TempReg oprnd2)
+    public static void add(TempReg dst, TempReg reg1, TempReg reg2)
     {
-        writer.printf("\tadd Temp_%d,Temp_%d,Temp_%d\n",
-                      dst.serialNum,
-                      oprnd1.serialNum,
-                      oprnd2.serialNum);
+        writer.printf("\tadd Temp_%d, Temp_%d, Temp_%d\n", dst.id, reg1.id, reg2.id);
     }
 
-    public static void mul(TempReg dst, TempReg oprnd1, TempReg oprnd2)
+    public static void addi(TempReg dst, TempReg reg1, int imm)
     {
-        writer.printf("\tmul Temp_%d,Temp_%d,Temp_%d\n",
-                      dst.serialNum,
-                      oprnd1.serialNum,
-                      oprnd2.serialNum);
+        writer.printf("\tadd Temp_%d, Temp_%d, Temp_%d\n", dst.id, reg1.id, imm);
+    }
+
+    public static void mul(TempReg dst, TempReg reg1, TempReg reg2)
+    {
+        writer.printf("\tmul Temp_%d, Temp_%d, Temp_%d\n", dst.id, reg1.id, reg2.id);
     }
 
     public static void label(String inlabel)
@@ -88,41 +87,34 @@ public class MIPSGen
         writer.printf("\tj %s\n", inlabel);
     }	
 
-    public static void blt(TempReg oprnd1, TempReg oprnd2, String label)
+    public static void blt(TempReg reg1, TempReg reg2, String label)
     {
-        writer.printf("\tblt Temp_%d,Temp_%d,%s\n",
-                      oprnd1.serialNum,
-                      oprnd2.serialNum,
-                      label);
+        writer.printf("\tblt Temp_%d, Temp_%d, %s\n", reg1.id, reg2.id, label);
     }
 
-    public static void bge(TempReg oprnd1, TempReg oprnd2, String label)
+    public static void bge(TempReg reg1, TempReg reg2, String label)
     {
-        writer.printf("\tbge Temp_%d,Temp_%d,%s\n",
-                      oprnd1.serialNum,
-                      oprnd2.serialNum,
-                      label);
+        writer.printf("\tbge Temp_%d, Temp_%d, %s\n", reg1.id, reg2.id, label);
     }
 
-    public static void bne(TempReg oprnd1,TempReg oprnd2,String label)
+    public static void bne(TempReg reg1,TempReg reg2,String label)
     {
-        writer.printf("\tbne Temp_%d,Temp_%d,%s\n",
-                      oprnd1.serialNum,
-                      oprnd2.serialNum,
-                      label);
+        writer.printf("\tbne Temp_%d, Temp_%d, %s\n", reg1.id, reg2.id, label);
     }
 
-    public static void beq(TempReg oprnd1,TempReg oprnd2,String label)
+    public static void beq(TempReg reg1,TempReg reg2,String label)
     {
-        writer.printf("\tbeq Temp_%d,Temp_%d,%s\n",
-                      oprnd1.serialNum,
-                      oprnd2.serialNum,
-                      label);
+        writer.printf("\tbeq Temp_%d, Temp_%d, %s\n", reg1.id, reg2.id, label);
     }
 
-    public static void beqz(TempReg oprnd1, String label)
+    public static void beqz(TempReg reg1, String label)
     {
-        writer.printf("\tbeq Temp_%d,$zero,%s\n", oprnd1.serialNum, label);
+        writer.printf("\tbeq Temp_%d, $zero,%s\n", reg1.id, label);
+    }
+
+    public static void la(TempReg reg, String label)
+    {
+        writer.printf("\tla Temp_%d, %s\n", reg.id, label);
     }
 
     public static void func_prologue(int numLocals)

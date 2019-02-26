@@ -12,11 +12,13 @@ public class ExpString extends ExpPrimitive
         this.value = value;
     }
 
+    @Override
     public void logGraphviz()
     {
-        logNode(String.format("ExpString\n%s", value.replace('"','\'')));
+        logNode(String.format("ExpString\n%s", value.replace('"', '\'')));
     }
 
+    @Override
     public Type Semant() throws Exception
     {
         return Type.STRING;
@@ -28,4 +30,5 @@ public class ExpString extends ExpPrimitive
 		// TODO: implement
 		return null;
 	}
+    
 }
