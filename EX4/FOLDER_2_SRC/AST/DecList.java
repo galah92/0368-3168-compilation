@@ -1,7 +1,7 @@
 package AST;
 
 import pcomp.*;
-import IR.*;
+
 
 
 public class DecList extends Node

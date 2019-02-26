@@ -1,6 +1,6 @@
 package AST;
 
-import IR.*;
+
 import pcomp.*;
 
 public class StmtList extends Node

@@ -1,6 +1,5 @@
-package IR;
+package pcomp;
 
-import pcomp.*;
 
 public class IRcommand_FuncPrologue extends IRcommand
 {

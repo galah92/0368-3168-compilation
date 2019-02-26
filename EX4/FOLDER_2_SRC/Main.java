@@ -1,6 +1,6 @@
 import pcomp.*;
 import java.io.*;
-import IR.*;
+
 
 public class Main
 {

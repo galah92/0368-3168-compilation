@@ -1,6 +1,4 @@
-package IR;
-
-import pcomp.*;
+package pcomp;
 
 
 public class IRcommand_Binop_Add_Integers extends IRcommand

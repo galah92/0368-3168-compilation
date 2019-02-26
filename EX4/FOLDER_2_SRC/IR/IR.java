@@ -1,4 +1,4 @@
-package IR;
+package pcomp;
 
 import java.util.*;
 

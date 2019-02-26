@@ -1,6 +1,6 @@
 package AST;
 
-import IR.*;
+
 import pcomp.*;
 
 

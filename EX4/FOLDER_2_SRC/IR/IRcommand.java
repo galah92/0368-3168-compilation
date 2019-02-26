@@ -1,4 +1,5 @@
-package IR;
+package pcomp;
+
 
 public abstract class IRcommand
 {
