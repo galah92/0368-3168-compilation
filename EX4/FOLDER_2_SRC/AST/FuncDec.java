@@ -83,10 +83,10 @@ public class FuncDec extends ClassField
     @Override
     public TempReg toIR()
     {
-        IR.add(new IRcommand_Label(funcName));
-        IR.add(new IRcommand_FuncPrologue(funcType.numLocals));
+        IR.add(new IRComm_Label(funcName));
+        IR.add(new IRComm_FuncPrologue(funcType.numLocals));
         if (body != null) body.toIR();
-        IR.add(new IRcommand_FuncEpilogue(funcType.numLocals));
+        IR.add(new IRComm_FuncEpilogue(funcType.numLocals));
         return null;
     }
 

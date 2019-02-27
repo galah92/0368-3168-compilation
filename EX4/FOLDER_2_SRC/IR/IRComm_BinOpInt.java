@@ -1,7 +1,7 @@
 package pcomp;
 
 
-public class IRcommand_BinOpInt extends IRcommand
+public class IRComm_BinOpInt extends IRComm
 {
 
     public char op;
@@ -9,7 +9,7 @@ public class IRcommand_BinOpInt extends IRcommand
 	public TempReg t2;
 	public TempReg dst;
 
-	public IRcommand_BinOpInt(char op, TempReg dst, TempReg t1, TempReg t2)
+	public IRComm_BinOpInt(char op, TempReg dst, TempReg t1, TempReg t2)
 	{
         this.op = op;
 		this.dst = dst;

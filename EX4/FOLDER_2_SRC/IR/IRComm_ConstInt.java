@@ -1,12 +1,12 @@
 package pcomp;
 
 
-public class IRcommandConstInt extends IRcommand
+public class IRComm_ConstInt extends IRComm
 {
 	TempReg t;
 	int value;
 	
-	public IRcommandConstInt(TempReg t, int value)
+	public IRComm_ConstInt(TempReg t, int value)
 	{
 		this.t = t;
 		this.value = value;

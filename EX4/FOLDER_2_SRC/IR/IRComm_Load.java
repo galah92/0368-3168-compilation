@@ -1,12 +1,12 @@
 package pcomp;
 
 
-public class IRcommand_Load extends IRcommand
+public class IRComm_Load extends IRComm
 {
 	TempReg dst;
 	String var_name;
 	
-	public IRcommand_Load(TempReg dst,String var_name)
+	public IRComm_Load(TempReg dst,String var_name)
 	{
 		this.dst = dst;
 		this.var_name = var_name;

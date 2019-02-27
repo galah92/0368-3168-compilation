@@ -40,11 +40,11 @@ public class StmtIf extends Stmt
     @Override
     public TempReg toIR()
     {
-        String endIfLabel = IRcommand.getLabel("endIf");
+        String endIfLabel = IRComm.getLabel("endIf");
         TempReg condTemp = cond.toIR();
-        IR.add(new IRcommand_Jump_If_Eq_To_Zero(condTemp, endIfLabel));
+        IR.add(new IRComm_Jump_If_Eq_To_Zero(condTemp, endIfLabel));
         body.toIR();
-        IR.add(new IRcommand_Label(endIfLabel));
+        IR.add(new IRComm_Label(endIfLabel));
         return null;
     }
 

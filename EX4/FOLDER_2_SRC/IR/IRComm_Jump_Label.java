@@ -1,11 +1,11 @@
 package pcomp;
 
 
-public class IRcommand_Jump_Label extends IRcommand
+public class IRComm_Jump_Label extends IRComm
 {
 	String label_name;
 	
-	public IRcommand_Jump_Label(String label_name)
+	public IRComm_Jump_Label(String label_name)
 	{
 		this.label_name = label_name;
 	}

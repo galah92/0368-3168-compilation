@@ -1,7 +1,7 @@
 package pcomp;
 
 
-public abstract class IRcommand
+public abstract class IRComm
 {
 
 	private static int labelCounter = 0;

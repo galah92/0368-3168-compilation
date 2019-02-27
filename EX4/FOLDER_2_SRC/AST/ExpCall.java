@@ -62,7 +62,7 @@ public class ExpCall extends Exp
         switch (funcName)
         {
         case "PrintInt":
-            IR.add(new IRcommand_PrintInt(firstArg));
+            IR.add(new IRComm_PrintInt(firstArg));
             return TempReg.ZeroReg;
         case "PrintString":
             System.out.println("PrintString not supported yet");

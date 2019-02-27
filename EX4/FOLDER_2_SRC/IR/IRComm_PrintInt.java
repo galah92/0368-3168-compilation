@@ -1,12 +1,12 @@
 package pcomp;
 
 
-public class IRcommand_PrintInt extends IRcommand
+public class IRComm_PrintInt extends IRComm
 {
 
 	TempReg t;
 	
-	public IRcommand_PrintInt(TempReg t)
+	public IRComm_PrintInt(TempReg t)
 	{
 		this.t = t;
 	}

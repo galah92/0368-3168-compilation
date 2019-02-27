@@ -82,11 +82,11 @@ public class VarDec extends ClassField
 	@Override
 	public TempReg toIR()
 	{
-		IR.add(new IRcommand_Allocate(varName));
+		IR.add(new IRComm_Allocate(varName));
 		
 		if (initVal != null)
 		{
-			IR.add(new IRcommand_Store(varName, initVal.toIR()));
+			IR.add(new IRComm_Store(varName, initVal.toIR()));
 		}
 		return null;
 	}

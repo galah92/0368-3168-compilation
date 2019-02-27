@@ -1,11 +1,11 @@
 package pcomp;
 
 
-public class IRcommand_FuncPrologue extends IRcommand
+public class IRComm_FuncPrologue extends IRComm
 {
 	int numLocals;
 	
-	public IRcommand_FuncPrologue(int numLocals)
+	public IRComm_FuncPrologue(int numLocals)
 	{
 		this.numLocals = numLocals;
 	}
