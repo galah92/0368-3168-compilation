@@ -60,13 +60,6 @@ public class MIPSGen
     public static void jr(String rs) { writer.printf("\tjr %s\n", rs); }
 
     public static void syscall() { writer.printf("\tsyscall\n"); }
-
-    public static void print_string(TempReg t)
-    {
-        writer.printf("\tmove $a0,Temp_%d\n", t.id);
-        writer.printf("\tli $v0,4\n");
-        writer.printf("\tsyscall\n");
-    }
     
     public static void allocate(String var_name)
     {
