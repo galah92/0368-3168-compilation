@@ -6,48 +6,48 @@ import pcomp.*;
 
 public class ClassFieldList extends Node
 {
-    public ClassField value;
-    public ClassFieldList next;
+    public ClassField head;
+    public ClassFieldList tail;
 
-    public ClassFieldList(ClassField value, ClassFieldList next)
+    public ClassFieldList(ClassField head, ClassFieldList tail)
     {
-        this.value = value;
-        this.next = next;
+        this.head = head;
+        this.tail = tail;
     }
 
     public void logGraphviz()
     {
-        value.logGraphviz();
-        if (next != null) next.logGraphviz();
+        head.logGraphviz();
+        if (tail != null) tail.logGraphviz();
 
         logNode("ClassFieldList\n");
-        logEdge(value);
-        if (next != null) logEdge(next);
+        logEdge(head);
+        if (tail != null) logEdge(tail);
     }
 
     public TypeList SemantDeclaration() throws Exception
     {
-        Type valueType = value.SemantDeclaration();
-        return new TypeList(valueType, next != null ? next.SemantDeclaration() : null);
+        Type headType = head.SemantDeclaration();
+        return new TypeList(headType, tail != null ? tail.SemantDeclaration() : null);
     }
 
     public void SemantBody() throws Exception
     {
-        value.SemantBody();
-        if (next != null) next.SemantBody();
+        head.SemantBody();
+        if (tail != null) tail.SemantBody();
     }
 
     public TypeList Semant() throws Exception
     {
-        Type valueType = value.Semant();
-        return new TypeList(valueType, next != null ? next.Semant() : null);
+        Type headType = head.Semant();
+        return new TypeList(headType, tail != null ? tail.Semant() : null);
     }
 
     @Override
     public TempReg toIR()
     {
-        if (value != null) value.toIR();
-        if (next != null) next.toIR();
+        if (head != null) head.toIR();
+        if (tail != null) tail.toIR();
         return null;
     }
 

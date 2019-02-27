@@ -20,11 +20,11 @@ public class TypeClass extends Type
 
 	public Type getVarField(String varFieldName)
 	{
-		for (TypeList it = fields; it != null; it = it.next)
+		for (TypeList it = fields; it != null; it = it.tail)
 		{
-			if (it.value instanceof TypeClassMember)
+			if (it.head instanceof TypeClassMember)
 			{
-				TypeClassMember varFieldType = (TypeClassMember)it.value;
+				TypeClassMember varFieldType = (TypeClassMember)it.head;
 				if (varFieldName.equals(varFieldType.name)) { return varFieldType.varType; }
 			}
 		}
@@ -34,11 +34,11 @@ public class TypeClass extends Type
 
 	public TypeFunc getFuncField(String funcFieldName)
 	{
-		for (TypeList it = fields; it != null; it = it.next)
+		for (TypeList it = fields; it != null; it = it.tail)
 		{
-			if (it.value instanceof TypeFunc)
+			if (it.head instanceof TypeFunc)
 			{
-				TypeFunc funcFieldType = (TypeFunc)it.value;
+				TypeFunc funcFieldType = (TypeFunc)it.head;
 				if (funcFieldName.equals(funcFieldType.name)) { return funcFieldType; }
 			}
 		}

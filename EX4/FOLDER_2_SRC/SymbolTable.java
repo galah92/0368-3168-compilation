@@ -114,7 +114,7 @@ public class SymbolTable
 
     private static void logGraphviz()
     {
-        sb.append(String.format("node_%d [label=\"<value>%d", sbAppendCount, sbAppendCount++));
+        sb.append(String.format("node_%d [label=\"<head>%d", sbAppendCount, sbAppendCount++));
         Iterator<Symbol> it = stack.descendingIterator();
         while (it.hasNext())
         {
@@ -133,7 +133,7 @@ public class SymbolTable
         writer.println();
         for (int i = 0; i < sbAppendCount - 1; i++)
         {
-            sb.append(String.format("node_%d:value -> node_%d:value\n", i, i + 1));
+            sb.append(String.format("node_%d:head -> node_%d:head\n", i, i + 1));
         }
         writer.println(sb.toString());
         writer.println("}");

@@ -17,9 +17,9 @@ public class TypeFunc extends Type
 		this.retType = retType;
 		this.params = params;
 		this.cls = cls;
-		for (TypeList it = params; it != null; it = it.next)
+		for (TypeList it = params; it != null; it = it.tail)
 		{
-			params2.add(it.value);
+			params2.add(it.head);
 		}
 	}
 
@@ -29,23 +29,23 @@ public class TypeFunc extends Type
 		TypeList arg = argsTypes;
 		while (param != null && arg != null)
 		{
-			if (arg.value != Type.NIL)
+			if (arg.head != Type.NIL)
 			{
-				if (arg.value instanceof TypeClass && param.value instanceof TypeClass)
+				if (arg.head instanceof TypeClass && param.head instanceof TypeClass)
 				{
-					if (!((TypeClass)arg.value).isInheritingFrom(param.value.name)) { return false; }
+					if (!((TypeClass)arg.head).isInheritingFrom(param.head.name)) { return false; }
 				}
-				else if (arg.value != param.value) { return false; }
+				else if (arg.head != param.head) { return false; }
 			}
 			else
 			{
-				if (!(param.value instanceof TypeClass || param.value instanceof TypeArray)) { return false; }
+				if (!(param.head instanceof TypeClass || param.head instanceof TypeArray)) { return false; }
 			}
 
-			boolean isParamClassOrArray = param.value instanceof TypeClass || param.value instanceof TypeArray;
+			boolean isParamClassOrArray = param.head instanceof TypeClass || param.head instanceof TypeArray;
 
-			param = param.next;
-			arg = arg.next;
+			param = param.tail;
+			arg = arg.tail;
 		}
 		return param == null && arg == null;
 	}

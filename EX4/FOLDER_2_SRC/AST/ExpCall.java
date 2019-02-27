@@ -58,7 +58,7 @@ public class ExpCall extends Exp
     public TempReg toIR()
     {
         TempReg firstArg = null;
-        if (args != null) { firstArg = args.value.toIR(); }
+        if (args != null) { firstArg = args.head.toIR(); }
         switch (funcName)
         {
         case "PrintInt":

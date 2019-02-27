@@ -2,13 +2,13 @@ package pcomp;
 
 public class TypeList extends Type
 {
-	public Type value;
-	public TypeList next;
+	public Type head;
+	public TypeList tail;
 
-	public TypeList(Type value, TypeList next)
+	public TypeList(Type head, TypeList tail)
 	{
 		super(null);
-		this.value = value;
-		this.next = next;
+		this.head = head;
+		this.tail = tail;
 	}
 }
