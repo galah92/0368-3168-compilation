@@ -9,6 +9,7 @@ public class TypeFunc extends Type
 	public TypeClass cls;
 	public Deque<Type> params2 = new ArrayDeque<Type>();
 	public int numLocals = 0;
+	// public ArrayList<String
 
 	public TypeFunc(Type retType, String name, TypeList params, TypeClass cls)
 	{

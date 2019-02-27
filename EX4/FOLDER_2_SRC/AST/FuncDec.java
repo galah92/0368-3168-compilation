@@ -12,7 +12,7 @@ public class FuncDec extends ClassField
     public String funcName;
     public ParamsList params;
     public StmtList body;
-    public Deque<Stmt> body2 = new ArrayDeque<Stmt>();
+    public ArrayList<Stmt> body2 = new ArrayList<Stmt>();
     public TypeFunc funcType;
     
     public FuncDec(String retTypeName, String funcName, ParamsList params, StmtList body)
@@ -21,17 +21,23 @@ public class FuncDec extends ClassField
         this.funcName = funcName;
         this.params = params;
         this.body = body;
-        for (StmtList it = body; it != null; it = it.tail) { body2.add(it.head); }
+        for (StmtList it = body; it != null; it = it.next) { body2.add(it.value); }
     }
 
     public void logGraphviz()
     {
         if (params != null) params.logGraphviz();
-        if (body != null) body.logGraphviz();
+        // if (body != null) body.logGraphviz();
+        for (Stmt stmt : body2) { stmt.logGraphviz(); }
 
         logNode(String.format("FuncDec\n%s\n%s", retTypeName, funcName));
         if (params != null) logEdge(params);
-        if (body != null) logEdge(body);
+        // if (body != null) logEdge(body);
+        logEdge(body2.get(0));
+        for (int i = 0; i < body2.size() - 1; i++)
+        {
+            body2.get(i).logEdge(body2.get(i + 1));
+        }
     }
 
     public TypeFunc SemantDeclaration() throws Exception
@@ -62,14 +68,14 @@ public class FuncDec extends ClassField
         SymbolTable.beginScope(Type.Scope.FUNC);
         SymbolTable.enter(funcName, funcType);
         if (params != null) params.SemantBody();
-        if (body != null) { body.Semant();  }
+        for (Stmt stmt : body2) { stmt.Semant(); }
         SymbolTable.endScope();
     }
 
     public TypeFunc Semant() throws Exception
     {
         funcType = SemantDeclaration();
-        SemantBody();
+        for (Stmt stmt : body2) { stmt.Semant(); }
         return funcType;
     }
 
@@ -85,7 +91,8 @@ public class FuncDec extends ClassField
     {
         IR.add(new IRComm_Label(funcName));
         IR.add(new IRComm_FuncPrologue(funcType.numLocals));
-        if (body != null) body.toIR();
+        StmtList it = body;
+        for (Stmt stmt : body2) { stmt.toIR(); }
         IR.add(new IRComm_FuncEpilogue(funcType.numLocals));
         return null;
     }
