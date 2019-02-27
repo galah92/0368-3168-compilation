@@ -1,10 +1,10 @@
 package pcomp;
 
-public class TypeClassMember extends Type
+public class TypeClassVar extends Type
 {
 	public Type varType;
 	
-	public TypeClassMember(Type varType, String name)
+	public TypeClassVar(Type varType, String name)
 	{
 		super(name);
 		this.varType = varType;

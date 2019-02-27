@@ -19,16 +19,14 @@ public class VarSimple extends Var
 	
 	public Type Semant() throws Exception
 	{
-		Type varType = SymbolTable.find(varName);
-		if (varType == null) { throw new SemanticException("unknown identifier: " + varName); }
-		return varType;
+		return SymbolTable.find(varName);
 	}
 
 	@Override
 	public TempReg toIR()
 	{
 		TempReg t = new TempReg();
-		IR.add(new IRComm_Load(t, varName));
+		IR.add(new IRComm_Load(t,varName));
 		return t;
 	}
 }

@@ -20,8 +20,7 @@ public class StmtVarDec extends Stmt
 
 	public Type Semant() throws Exception
 	{
-		TypeFunc func = SymbolTable.findFunc();
-		if (func != null) { func.numLocals++; }
+		SymbolTable.findFunc().numLocals++;
 		return var.Semant();
 	}
 

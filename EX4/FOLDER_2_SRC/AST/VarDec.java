@@ -44,7 +44,7 @@ public class VarDec extends ClassField
 			{
 				if (varType == Type.INT || varType == Type.STRING) { throw new SemanticException(); }
 				SymbolTable.enter(varName, varType); //TODO: CHeck if neccessry
-				return new TypeClassMember(varType, varName);
+				return new TypeClassVar(varType, varName);
 			}
 			if (isSemantingClass) // we're in the middle of ClassDec
 			{
@@ -65,7 +65,7 @@ public class VarDec extends ClassField
 		}
 
 		SymbolTable.enter(varName, varType);
-		return new TypeClassMember(varType, varName);
+		return new TypeClassVar(varType, varName);
 	}
 
 	public void SemantBody() throws Exception

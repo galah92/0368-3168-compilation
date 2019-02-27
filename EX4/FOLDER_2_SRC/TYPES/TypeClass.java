@@ -22,9 +22,9 @@ public class TypeClass extends Type
 	{
 		for (TypeList it = fields; it != null; it = it.tail)
 		{
-			if (it.head instanceof TypeClassMember)
+			if (it.head instanceof TypeClassVar)
 			{
-				TypeClassMember varFieldType = (TypeClassMember)it.head;
+				TypeClassVar varFieldType = (TypeClassVar)it.head;
 				if (varFieldName.equals(varFieldType.name)) { return varFieldType.varType; }
 			}
 		}

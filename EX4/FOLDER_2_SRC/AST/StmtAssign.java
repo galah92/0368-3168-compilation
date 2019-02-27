@@ -19,7 +19,7 @@ public class StmtAssign extends Stmt
 		if (var != null) var.logGraphviz();
 		if (exp != null) exp.logGraphviz();
 
-		logNode("StmtAssign");
+		logNode("ASSIGN\nleft := right\n");
 		logEdge(var);
 		logEdge(exp);
 	}

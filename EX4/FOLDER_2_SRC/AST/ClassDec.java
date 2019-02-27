@@ -48,7 +48,7 @@ public class ClassDec extends Dec
             {
                 if (SymbolTable.findInScope(t.head.name) == null)
                 {
-                    SymbolTable.enter(t.head.name, t.head instanceof TypeClassMember ? ((TypeClassMember)t.head).varType : t.head);
+                    SymbolTable.enter(t.head.name, t.head instanceof TypeClassVar ? ((TypeClassVar)t.head).varType : t.head);
                 }
             }
             baseType = baseType.base;
