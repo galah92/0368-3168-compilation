@@ -23,6 +23,22 @@ public class MIPSGen
         fileWriter.close();
     }
 
+    public static final String zero = "zero";  // the value 0, not changeable
+
+    // value from expression evaluation or function return
+    public static final String v0 = "$v0";
+    public static final String v1 = "$v1";
+
+    // first four arguments to a function/subroutine, if needed
+    public static final String a0 = "$a0";
+    public static final String a1 = "$a1";
+    public static final String a2 = "$a2";
+    public static final String a3 = "$a3";
+
+    public static final String sp = "$sp";  // stack pointer (top of stack)
+    public static final String fp = "$fp";  // frame pointer (bottom of current stack frame)
+    public static final String ra = "$ra";  // return address of most recent caller
+
     public static void add(TempReg dst, TempReg reg1, TempReg reg2)
     {
         writer.printf("\tadd Temp_%d, Temp_%d, Temp_%d\n", dst.id, reg1.id, reg2.id);
@@ -60,16 +76,6 @@ public class MIPSGen
 
     public static void syscall()
     {
-        writer.printf("\tsyscall\n");
-    }
-
-    public static void print_int(TempReg t)
-    {
-        writer.printf("\tmove $a0, Temp_%d\n", t.id);
-        writer.printf("\tli $v0,1\n");
-        writer.printf("\tsyscall\n");
-        writer.printf("\tli $a0,32\n");
-        writer.printf("\tli $v0,11\n");
         writer.printf("\tsyscall\n");
     }
 

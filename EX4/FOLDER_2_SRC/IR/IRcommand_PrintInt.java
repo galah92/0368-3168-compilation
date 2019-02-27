@@ -11,14 +11,16 @@ public class IRcommand_PrintInt extends IRcommand
 		this.t = t;
 	}
 	
+	@Override
 	public void toMIPS()
 	{
-		// MIPSGen.print_int(t);
-		MIPSGen.move("$a0", t);
-		MIPSGen.li("$v0", 1);
+		// print_int
+		MIPSGen.move(MIPSGen.a0, t);
+		MIPSGen.li(MIPSGen.v0, 1);
 		MIPSGen.syscall();
-		MIPSGen.li("$a0", 32);
-		MIPSGen.li("$v0", 11);
+		// print_char (whitespace)
+		MIPSGen.li(MIPSGen.a0, 32);
+		MIPSGen.li(MIPSGen.v0, 11);
 		MIPSGen.syscall();
 	}
 

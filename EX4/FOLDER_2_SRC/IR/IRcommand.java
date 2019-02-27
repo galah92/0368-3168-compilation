@@ -3,6 +3,7 @@ package pcomp;
 
 public abstract class IRcommand
 {
+
 	private static int labelCounter = 0;
 	
 	public static String getLabel(String name)
@@ -11,4 +12,5 @@ public abstract class IRcommand
 	}
 
 	public abstract void toMIPS();
+	
 }

@@ -3,6 +3,7 @@ package pcomp;
 
 public class IRcommand_Binop_LT_Integers extends IRcommand
 {
+
 	public TempReg t1;
 	public TempReg t2;
 	public TempReg dst;
@@ -14,6 +15,7 @@ public class IRcommand_Binop_LT_Integers extends IRcommand
 		this.t2 = t2;
 	}
 	
+	@Override
 	public void toMIPS()
 	{
 		String label_end = getLabel("end");
@@ -42,4 +44,5 @@ public class IRcommand_Binop_LT_Integers extends IRcommand
 		/* [5] label_end: */
 		MIPSGen.label(label_end);
 	}
+
 }

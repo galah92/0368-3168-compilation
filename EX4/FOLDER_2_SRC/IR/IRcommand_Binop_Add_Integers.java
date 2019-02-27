@@ -3,6 +3,7 @@ package pcomp;
 
 public class IRcommand_Binop_Add_Integers extends IRcommand
 {
+
 	public TempReg t1;
 	public TempReg t2;
 	public TempReg dst;
@@ -14,8 +15,10 @@ public class IRcommand_Binop_Add_Integers extends IRcommand
 		this.t2 = t2;
 	}
 
+	@Override
 	public void toMIPS()
 	{
 		MIPSGen.add(dst, t1, t2);
 	}
+
 }

@@ -3,17 +3,19 @@ package pcomp;
 
 public class IRcommand_Binop_EQ_Integers extends IRcommand
 {
+
 	public TempReg t1;
 	public TempReg t2;
 	public TempReg dst;
 
-	public IRcommand_Binop_EQ_Integers(TempReg dst,TempReg t1,TempReg t2)
+	public IRcommand_Binop_EQ_Integers(TempReg dst, TempReg t1, TempReg t2)
 	{
 		this.dst = dst;
 		this.t1 = t1;
 		this.t2 = t2;
 	}
 	
+	@Override
 	public void toMIPS()
 	{
 		String label_end        = getLabel("end");
@@ -42,4 +44,5 @@ public class IRcommand_Binop_EQ_Integers extends IRcommand
 		/* [5] label_end: */
 		MIPSGen.label(label_end);
 	}
+	
 }
