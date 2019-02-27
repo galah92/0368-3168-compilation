@@ -57,12 +57,22 @@ public class ExpCall extends Exp
     @Override
     public TempReg toIR()
     {
-        TempReg t = null;
-        
-        if (args != null) { t = args.head.toIR(); }
-        
-        IR.add(new IRcommand_PrintInt(t));
-
+        TempReg firstArg = null;
+        if (args != null) { firstArg = args.head.toIR(); }
+        switch (funcName)
+        {
+        case "PrintInt":
+            IR.add(new IRcommand_PrintInt(firstArg));
+            return TempReg.ZeroReg;
+        case "PrintString":
+            System.out.println("PrintString not supported yet");
+            return TempReg.ZeroReg;
+        case "PrintTrace":
+            System.out.println("PrintTrace not supported yet");
+            return TempReg.ZeroReg;
+        default:
+            System.out.println("Default func call should go here");
+        }
         TempReg retVal = new TempReg();
         return retVal;
     }
