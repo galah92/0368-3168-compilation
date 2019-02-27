@@ -25,7 +25,7 @@ public class ArrayDec extends Dec
         if (SymbolTable.find(arrName) != null) { throw new SemanticException(); }
         Type arrType = SymbolTable.findTypeName(arrTypeName);
         if (arrType == null) { throw new SemanticException(); }
-        SymbolTable.enter(arrName, new TypeArray(arrType, arrName));
+        SymbolTable.enter(arrName, new TypeArray(arrType));
         return null;
     }
 

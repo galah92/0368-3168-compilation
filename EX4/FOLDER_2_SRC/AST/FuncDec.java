@@ -52,7 +52,7 @@ public class FuncDec extends ClassField
             if (currentClass == funcClass) { throw new SemanticException(); } // func declerated before
             OverrideFuncDecCheck(func, retType, paramsTypes);
         }
-        funcType = new TypeFunc(retType, funcName, paramsTypes, SymbolTable.findClass());
+        funcType = new TypeFunc(retType, paramsTypes, SymbolTable.findClass());
         SymbolTable.enter(funcName, funcType);
         return funcType;
     }

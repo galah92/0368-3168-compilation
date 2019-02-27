@@ -5,9 +5,9 @@ public class TypeClass extends Type
 	public TypeClass base;
 	public TypeList fields;
 	
-	public TypeClass(TypeClass base, String name, TypeList fields)
+	public TypeClass(TypeClass base, TypeList fields)
 	{
-		super(name);
+		super("Class");
 		this.base = base;
 		this.fields = fields;
 	}

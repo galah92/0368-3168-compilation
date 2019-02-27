@@ -4,9 +4,9 @@ public class TypeArray extends Type
 {
 	public Type elementType;
 	
-	public TypeArray(Type elementType, String name)
+	public TypeArray(Type elementType)
 	{
-		super(name);
+		super("Array");
 		this.elementType = elementType;
 	}
 }
