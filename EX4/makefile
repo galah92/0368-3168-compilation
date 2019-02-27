@@ -37,7 +37,7 @@ compile: clean
 	javac -cp ${EXTERNAL_JAR_FILES} -d ${BIN_DIR} ${SRC_FILES}
 	jar cfm COMPILER ${MANIFEST_FILE} -C ${BIN_DIR} .
 	
-everything: clean compile
+test:
 	java -jar COMPILER ${INPUT} ${OUTPUT}
 	dot -Tjpeg -o${OUTPUT_DIR}/AST.jpeg ${OUTPUT_DIR}/AST.txt
 	dot -Tjpeg -o${OUTPUT_DIR}/SymbolTable.jpeg ${OUTPUT_DIR}/SymbolTable.txt
@@ -83,3 +83,5 @@ everything: clean compile
 	@sed -i 's/\bTemp_39\b/$$t7/g' ${OUTPUT_DIR}/MIPS.txt
 	@sed -i 's/\bTemp_40\b/$$t7/g' ${OUTPUT_DIR}/MIPS.txt
 	spim -f ${OUTPUT_DIR}/MIPS.txt #> ${OUTPUT_DIR}/MIPS_OUTPUT.txt	
+
+everything: clean compile test
