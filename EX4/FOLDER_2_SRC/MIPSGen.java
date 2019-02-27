@@ -1,6 +1,7 @@
 package pcomp;
 import java.io.*;
 
+
 public class MIPSGen
 {
 
@@ -22,9 +23,49 @@ public class MIPSGen
         fileWriter.close();
     }
 
+    public static void add(TempReg dst, TempReg reg1, TempReg reg2)
+    {
+        writer.printf("\tadd Temp_%d, Temp_%d, Temp_%d\n", dst.id, reg1.id, reg2.id);
+    }
+
+    public static void addi(TempReg dst, TempReg reg1, int imm)
+    {
+        writer.printf("\tadd Temp_%d, Temp_%d, Temp_%d\n", dst.id, reg1.id, imm);
+    }
+
+    public static void mul(TempReg dst, TempReg reg1, TempReg reg2)
+    {
+        writer.printf("\tmul Temp_%d, Temp_%d, Temp_%d\n", dst.id, reg1.id, reg2.id);
+    }
+
+    public static void move(TempReg dst, TempReg reg1)
+    {
+        writer.printf("\tmove Temp_%d, Temp_%d\n", dst.id, reg1.id);
+    }
+
+    public static void move(String dst, TempReg reg1)
+    {
+        writer.printf("\tmove %s, Temp_%d\n", dst, reg1.id);
+    }
+
+    public static void li(TempReg d, int addr)
+    {
+        writer.printf("\tli Temp_%d, %d\n", d.id, addr);
+    }
+
+    public static void li(String d, int addr)
+    {
+        writer.printf("\tli %s, %d\n", d, addr);
+    }
+
+    public static void syscall()
+    {
+        writer.printf("\tsyscall\n");
+    }
+
     public static void print_int(TempReg t)
     {
-        writer.printf("\tmove $a0,Temp_%d\n", t.id);
+        writer.printf("\tmove $a0, Temp_%d\n", t.id);
         writer.printf("\tli $v0,1\n");
         writer.printf("\tsyscall\n");
         writer.printf("\tli $a0,32\n");
@@ -53,26 +94,6 @@ public class MIPSGen
     public static void store(String var_name, TempReg src)
     {
         writer.printf("\tsw Temp_%d, global_%s\n", src.id, var_name);
-    }
-
-    public static void li(TempReg t, int value)
-    {
-        writer.printf("\tli Temp_%d, %d\n", t.id, value);
-    }
-
-    public static void add(TempReg dst, TempReg reg1, TempReg reg2)
-    {
-        writer.printf("\tadd Temp_%d, Temp_%d, Temp_%d\n", dst.id, reg1.id, reg2.id);
-    }
-
-    public static void addi(TempReg dst, TempReg reg1, int imm)
-    {
-        writer.printf("\tadd Temp_%d, Temp_%d, Temp_%d\n", dst.id, reg1.id, imm);
-    }
-
-    public static void mul(TempReg dst, TempReg reg1, TempReg reg2)
-    {
-        writer.printf("\tmul Temp_%d, Temp_%d, Temp_%d\n", dst.id, reg1.id, reg2.id);
     }
 
     public static void label(String inlabel)

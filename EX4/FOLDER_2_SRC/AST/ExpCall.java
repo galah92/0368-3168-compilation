@@ -5,62 +5,66 @@ import pcomp.*;
 
 public class ExpCall extends Exp
 {
-	public String funcName;
-	public Var instanceName;
-	public ExpList args;
 
-	public ExpCall(String funcName, Var instanceName, ExpList args)
-	{
-		this.funcName = funcName;
-		this.instanceName = instanceName;
-		this.args = args;
-	}
+    public String funcName;
+    public Var instanceName;
+    public ExpList args;
 
-	public void logGraphviz()
-	{
-		if (args != null) args.logGraphviz();
-		if (instanceName != null) instanceName.logGraphviz();
+    public ExpCall(String funcName, Var instanceName, ExpList args)
+    {
+        this.funcName = funcName;
+        this.instanceName = instanceName;
+        this.args = args;
+    }
 
-		logNode(String.format("ExpCall\n%s", funcName));
-		if (args != null) logEdge(args);
-		if (instanceName != null) logEdge(instanceName);
-	}
+    public void logGraphviz()
+    {
+        if (args != null) args.logGraphviz();
+        if (instanceName != null) instanceName.logGraphviz();
 
-	public Type Semant() throws Exception
-	{
-		TypeList argsTypes = args != null ? args.Semant() : null;
+        logNode(String.format("ExpCall\n%s", funcName));
+        if (args != null) logEdge(args);
+        if (instanceName != null) logEdge(instanceName);
+    }
 
-		TypeFunc funcType = null;
+    @Override
+    public Type Semant() throws Exception
+    {
+        TypeList argsTypes = args != null ? args.Semant() : null;
 
-		if (instanceName != null) // class methods
-		{
-			Type t = instanceName.Semant();
-			if (!(t instanceof TypeClass)) { throw new SemanticException(t.name); }
-			TypeClass instanceType = (TypeClass)t;
-			funcType = instanceType.getFuncField(funcName);
-		}
-		else // global functions
-		{
-			Type t = SymbolTable.find(funcName);
-			if (t == null && !(t instanceof TypeFunc)) { throw new SemanticException(); }
-			funcType = (TypeFunc)t;
-		}
+        TypeFunc funcType = null;
 
-		if (funcType == null) { throw new SemanticException("function symbol not found"); }
+        if (instanceName != null) // class methods
+        {
+            Type t = instanceName.Semant();
+            if (!(t instanceof TypeClass)) { throw new SemanticException(t.name); }
+            TypeClass instanceType = (TypeClass)t;
+            funcType = instanceType.getFuncField(funcName);
+        }
+        else // global functions
+        {
+            Type t = SymbolTable.find(funcName);
+            if (t == null && !(t instanceof TypeFunc)) { throw new SemanticException(); }
+            funcType = (TypeFunc)t;
+        }
 
-		if (!funcType.isValidArgs(argsTypes)) { throw new SemanticException("invalid arguments to function"); }
-		return funcType.retType;
-	}
+        if (funcType == null) { throw new SemanticException("function symbol not found"); }
 
-	public TempReg toIR()
-	{
-		TempReg t = null;
-		
-		if (args != null) { t = args.head.toIR(); }
-		
-		IR.add(new IRcommand_PrintInt(t));
+        if (!funcType.isValidArgs(argsTypes)) { throw new SemanticException("invalid arguments to function"); }
+        return funcType.retType;
+    }
 
-		TempReg retVal = new TempReg();
-		return retVal;
-	}
+    @Override
+    public TempReg toIR()
+    {
+        TempReg t = null;
+        
+        if (args != null) { t = args.head.toIR(); }
+        
+        IR.add(new IRcommand_PrintInt(t));
+
+        TempReg retVal = new TempReg();
+        return retVal;
+    }
+
 }
