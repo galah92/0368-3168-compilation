@@ -19,14 +19,15 @@ public class VarSimple extends Var
     
     public Type Semant() throws Exception
     {
-        return SymbolTable.find(varName);
+        Type varType = SymbolTable.find(varName);
+        return varType;
     }
 
     @Override
     public TempReg toIR()
     {
         TempReg t = new TempReg();
-        IR.add(new IRComm_Load(t,varName));
+        IR.add(new IRComm_Load(t, varName));
         return t;
     }
 }

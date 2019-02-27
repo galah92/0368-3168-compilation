@@ -49,6 +49,7 @@ public class MIPSGen
 
     public static void move(TempReg dst, TempReg reg1) { writer.printf("\tmove Temp_%d, Temp_%d\n", dst.id, reg1.id); }
     public static void move(String dst, TempReg reg1) { writer.printf("\tmove %s, Temp_%d\n", dst, reg1.id); }
+    public static void move(String rd, String rs) { writer.printf("\tmove %s, %s\n", rd, rs); }
 
     public static void li(TempReg d, int imm) { writer.printf("\tli Temp_%d, %d\n", d.id, imm); }
     public static void li(String d, int imm) { writer.printf("\tli %s, %d\n", d, imm); }
@@ -56,6 +57,7 @@ public class MIPSGen
     public static void lw(String rd, String addr) { writer.printf("\tlw %s, %s\n", rd, addr); }
 
     public static void sw(String rs, String addr) { writer.printf("\tsw %s, %s\n", rs, addr); }
+    public static void sw(TempReg rs, String addr) { writer.printf("\tsw Temp_%d, %s\n", rs.id, addr); }
 
     public static void jr(String rs) { writer.printf("\tjr %s\n", rs); }
 
@@ -105,7 +107,7 @@ public class MIPSGen
         writer.printf("\tsw	$fp, 0($sp)\n");
         writer.printf("\tsw	$ra, 4($sp)\n");
         // set fp = sp
-        writer.printf("\taddi $fp, $sp, 0\n");
+        writer.printf("\tmove $fp, $sp\n");
 	    // allocate stack frame
         writer.printf("\taddi $sp, $sp, %d\n", -WORD * numLocals);
     }

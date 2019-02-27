@@ -7,18 +7,6 @@ import java.io.*;
 public class SymbolTable
 {
 
-    private static class Symbol
-    {
-        String name;
-        Type type;
-
-        public Symbol(String name, Type type)
-        {
-            this.name = name;
-            this.type = type;
-        }
-    }
-
     private static final Deque<Symbol> stack = new ArrayDeque<Symbol>();
 
 	public static void enter(String name, Type t)
@@ -80,6 +68,15 @@ public class SymbolTable
             if (symbol.type instanceof Type.Scope) { return false; }
         }
         return true;
+	}
+
+    public static boolean isScope(String scopeName)
+	{
+		for (Symbol symbol : stack)
+        {
+            if (scopeName.equals(symbol.name)) { return true; }
+        }
+        return false;
 	}
 
     public static void beginScope(Type.Scope scopeType)
