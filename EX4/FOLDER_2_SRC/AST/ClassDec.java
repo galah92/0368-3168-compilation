@@ -44,11 +44,11 @@ public class ClassDec extends Dec
         SymbolTable.beginScope(Type.Scope.CLASS);
         while (baseType != null)
         {
-            for (TypeList t = baseType.fields; t != null; t = t.tail)
+            for (TypeList t = baseType.fields; t != null; t = t.next)
             {
-                if (SymbolTable.findInScope(t.head.name) == null)
+                if (SymbolTable.findInScope(t.value.name) == null)
                 {
-                    SymbolTable.enter(t.head.name, t.head instanceof TypeClassMember ? ((TypeClassMember)t.head).varType : t.head);
+                    SymbolTable.enter(t.value.name, t.value instanceof TypeClassMember ? ((TypeClassMember)t.value).varType : t.value);
                 }
             }
             baseType = baseType.base;

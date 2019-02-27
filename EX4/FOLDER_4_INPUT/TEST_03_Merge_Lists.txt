@@ -1,7 +1,7 @@
 class IntList
 {
-    int head;
-    IntList tail;
+    int value;
+    IntList next;
 }
 
 IntList MergeLists(IntList l1, IntList l2)
@@ -15,17 +15,17 @@ IntList MergeLists(IntList l1, IntList l2)
         return l1;
     }
     
-    if (l1.head < l2.head)
+    if (l1.value < l2.value)
     {
         IntList l3 := l1;
-        l3.tail := MergeLists(l1.tail,l2);
+        l3.next := MergeLists(l1.next,l2);
         return l3;
     }
     
-    if (l2.head < l1.head)
+    if (l2.value < l1.value)
     {
         IntList l3 := l2;
-        l3.tail := MergeLists(l1,l2.tail);
+        l3.next := MergeLists(l1,l2.next);
         return l3;
     }
     
@@ -46,31 +46,31 @@ void main()
     IntList C := new IntList;
     IntList D := new IntList;
        
-    a.head := 34;
-    b.head := 70;
-    c.head := 92;
-    d.head := 96;
+    a.value := 34;
+    b.value := 70;
+    c.value := 92;
+    d.value := 96;
 
-    A.head := 12;
-    B.head := 50;
-    C.head := 97;
-    D.head := 99;
+    A.value := 12;
+    B.value := 50;
+    C.value := 97;
+    D.value := 99;
 
-    a.tail := b;
-    b.tail := c;
-    c.tail := d;
-    d.tail := nil;
+    a.next := b;
+    b.next := c;
+    c.next := d;
+    d.next := nil;
 
-    A.tail := B;
-    B.tail := C;
-    C.tail := D;
-    D.tail := nil;
+    A.next := B;
+    B.next := C;
+    C.next := D;
+    D.next := nil;
     
     IntList l := MergeLists(a,A);
     
     while (1 - (l = nil))
     {
-        PrintInt(l.head);
-        l := l.tail;
+        PrintInt(l.value);
+        l := l.next;
     }
 }

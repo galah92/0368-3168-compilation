@@ -7,28 +7,28 @@ public class ParamsList extends Node
 {
 	public String paramTypeName;
 	public String paramName;
-	public ParamsList tail;
+	public ParamsList next;
 
-	public ParamsList(String paramTypeName, String paramName, ParamsList tail)
+	public ParamsList(String paramTypeName, String paramName, ParamsList next)
 	{
 		this.paramTypeName = paramTypeName;
 		this.paramName = paramName;
-		this.tail = tail;
+		this.next = next;
 	}
 
 	public void logGraphviz()
 	{
-		if (tail != null) tail.logGraphviz();
+		if (next != null) next.logGraphviz();
 
 		logNode(String.format("ParamsList\n%s\n%s", paramName, paramTypeName));
-		if (tail != null) logEdge(tail);
+		if (next != null) logEdge(next);
 	}
 
 	public TypeList SemantDeclaration() throws Exception
 	{
 		Type paramType = SymbolTable.find(paramTypeName);
 		if (paramType == null) { throw new SemanticException(); }
-		return new TypeList(paramType, tail != null ? tail.SemantDeclaration() : null);
+		return new TypeList(paramType, next != null ? next.SemantDeclaration() : null);
 	}
 
 	public void SemantBody() throws Exception
@@ -37,7 +37,7 @@ public class ParamsList extends Node
 		if (paramType == null) { throw new SemanticException(); }
 		// if (SymbolTable.findInScope(paramName) != null) { throw new SemanticException(); }
 		SymbolTable.enter(paramName, paramType);
-		if (tail != null) tail.SemantBody();
+		if (next != null) next.SemantBody();
 	}
 
     public TypeList Semant() throws Exception
@@ -46,7 +46,7 @@ public class ParamsList extends Node
 		if (paramType == null) { throw new SemanticException(); }
 		if (SymbolTable.findInScope(paramName) != null) { throw new SemanticException(); }
 		SymbolTable.enter(paramName, paramType);
-		return new TypeList(paramType, tail != null ? tail.Semant() : null);
+		return new TypeList(paramType, next != null ? next.Semant() : null);
 	}
 	
 	@Override
