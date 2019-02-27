@@ -73,22 +73,9 @@ public class ExpBinOp extends Exp
 			if (op == '=') { System.out.println("Strings comparison not supported yet"); }
 			if (op == '+') { System.out.println("Strings concatination not supported yet"); }
 		}
-		
-		if (op == '+')
+		else
 		{
-			IR.add(new IRcommand_Binop_Add_Integers(dst, t1, t2));
-		}
-		if (op == '*')
-		{
-			IR.add(new IRcommand_Binop_Mul_Integers(dst, t1, t2));
-		}
-		if (op == '=')
-		{
-			IR.add(new IRcommand_Binop_EQ_Integers(dst, t1, t2));
-		}
-		if (op == '<')
-		{
-			IR.add(new IRcommand_Binop_LT_Integers(dst, t1, t2));
+			IR.add(new IRcommand_BinOpInt(op, dst, t1, t2));
 		}
 		return dst;
 	}
