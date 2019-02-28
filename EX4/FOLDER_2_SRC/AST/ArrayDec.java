@@ -23,8 +23,8 @@ public class ArrayDec extends Dec
     {
         if (!SymbolTable.isGlobalScope()) { throw new SemanticException(); }
         if (SymbolTable.find(arrName) != null) { throw new SemanticException(); }
-        Type arrType = SymbolTable.findTypeName(arrTypeName);
-        if (arrType == null) { throw new SemanticException(); }
+        Type arrType = SymbolTable.find(arrTypeName);
+        if (arrType == null) { throw new SemanticException("type not defined: " + arrType); }
         SymbolTable.enter(arrName, new TypeArray(arrType));
         return null;
     }

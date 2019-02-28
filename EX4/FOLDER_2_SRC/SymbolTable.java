@@ -52,15 +52,6 @@ public class SymbolTable
         return null;
 	}
 
-    public static Type findTypeName(String typeName)
-	{
-		for (Symbol symbol : stack)
-        {
-            if (symbol.type.name.equals(typeName)) { return symbol.type; }
-        }
-        return null;
-	}
-
     public static boolean isGlobalScope()
 	{
 		for (Symbol symbol : stack)
