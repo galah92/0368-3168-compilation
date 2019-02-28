@@ -4,8 +4,8 @@ package pcomp;
 public class Symbol
 {
 
-    String name;
-    Type type;
+    public String name;
+    public Type type;
 
     public Symbol(String name, Type type)
     {

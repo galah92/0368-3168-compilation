@@ -7,8 +7,8 @@ public class TypeFunc extends Type
 	public Type retType;
 	public TypeList params;
 	public TypeClass cls;
-	public Deque<Type> params2 = new ArrayDeque<Type>();
-	public Deque<Symbol> locals = new ArrayDeque<Symbol>();
+	public List<Symbol> params2 = new ArrayList<Symbol>();
+	public List<Symbol> locals = new ArrayList<Symbol>();
 	public int numLocals = 0;
 	
 
@@ -18,10 +18,6 @@ public class TypeFunc extends Type
 		this.retType = retType;
 		this.params = params;
 		this.cls = cls;
-		for (TypeList it = params; it != null; it = it.tail)
-		{
-			params2.add(it.head);
-		}
 	}
 
 	public boolean isValidArgs(TypeList argsTypes)

@@ -34,8 +34,8 @@ public class ParamsList extends Node
 	public void SemantBody() throws Exception
 	{
 		Type paramType = SymbolTable.find(paramTypeName);
-		if (paramType == null) { throw new SemanticException(); }
-		// if (SymbolTable.findInScope(paramName) != null) { throw new SemanticException(); }
+		if (paramType == null) { throw new SemanticException("type definition not found:" + paramTypeName); }
+		SymbolTable.findFunc().params2.add(new Symbol(paramName, paramType));
 		SymbolTable.enter(paramName, paramType);
 		if (tail != null) tail.SemantBody();
 	}
