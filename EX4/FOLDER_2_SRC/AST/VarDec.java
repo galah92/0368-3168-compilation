@@ -57,7 +57,7 @@ public class VarDec extends ClassField
             }
             else if (initValType instanceof TypeClass)
             {
-                if (!((TypeClass)initValType).isInheritingFrom(varType.name)) { throw new SemanticException(varType + ", " + initValType); }
+                if (!((TypeClass)initValType).isInheritingFrom((TypeClass)varType)) { throw new SemanticException("type mismatch: " + varName); }
             }
             else
             {

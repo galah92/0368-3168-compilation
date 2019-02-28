@@ -40,7 +40,7 @@ public class StmtAssign extends Stmt
 		Type integralVarType = (exp instanceof NewExp && varType instanceof TypeArray) ? ((TypeArray)varType).elementType : varType;
 		if (expType instanceof TypeClass)
 		{
-			if (!((TypeClass)expType).isInheritingFrom(integralVarType.name)) { throw new SemanticException(integralVarType + ", " + expType); }
+			if (!((TypeClass)expType).isInheritingFrom((TypeClass)integralVarType)) { throw new SemanticException(integralVarType + ", " + expType); }
 		}
 		else
 		{

@@ -15,10 +15,10 @@ public class TypeClass extends Type
 		this.fields = fields;
 	}
 
-	public boolean isInheritingFrom(String ancestor)
+	public boolean isInheritingFrom(TypeClass other)
 	{
-		if (ancestor.equals(name)) { return true; }
-		return base != null ? base.isInheritingFrom(ancestor) : false;
+		if (this == other) { return true; }
+		return base != null ? base.isInheritingFrom(other) : false;
 	}
 
 	public Type getVarField(String varFieldName)

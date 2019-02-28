@@ -30,7 +30,7 @@ public class TypeFunc extends Type
 			{
 				if (arg.head instanceof TypeClass && param.head instanceof TypeClass)
 				{
-					if (!((TypeClass)arg.head).isInheritingFrom(param.head.name)) { return false; }
+					if (!((TypeClass)arg.head).isInheritingFrom((TypeClass)param.head)) { return false; }
 				}
 				else if (arg.head != param.head) { return false; }
 			}
