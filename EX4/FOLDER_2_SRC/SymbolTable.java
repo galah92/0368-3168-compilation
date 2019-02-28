@@ -106,6 +106,14 @@ public class SymbolTable
 		enter("PrintTrace", printTraceFunc);
 	}
 
+    public static void printDebug()
+    {
+        for (Symbol symbol : stack)
+        {
+            System.out.printf("[%s] %s\n", symbol.type.name, symbol.name);
+        }
+    }
+
     private static final StringBuilder sb = new StringBuilder();
     private static int sbAppendCount = 0;
 

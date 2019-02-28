@@ -32,8 +32,8 @@ public class VarDec extends ClassField
         if (varName.equals(Type.VOID.name)) { throw new SemanticException("invalid variable name: " + varName); }
         if (SymbolTable.findInScope(varName) != null) { throw new SemanticException("variable name already defined"); }
 
-        Type varType = SymbolTable.findTypeName(varTypeName);
-        if (varType == null) { throw new SemanticException("variable type not defined"); }
+        Type varType = SymbolTable.find(varTypeName);
+        if (varType == null) { throw new SemanticException("variable type not defined: " + varTypeName); }
 
         TypeClass classType = SymbolTable.findClass();
         boolean isSemantingClass = classType != null && classType.fields == null;
@@ -43,7 +43,7 @@ public class VarDec extends ClassField
         {
             if (initValType == Type.NIL)
             {
-                if (varType == Type.INT || varType == Type.STRING) { throw new SemanticException(); }
+                if (varType == Type.INT || varType == Type.STRING) { throw new SemanticException("assign NIL to primitive"); }
                 SymbolTable.enter(varName, varType); //TODO: CHeck if neccessry
                 return new TypeClassVar(varType, varName);
             }
