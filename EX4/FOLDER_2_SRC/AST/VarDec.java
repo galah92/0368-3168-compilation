@@ -9,7 +9,7 @@ public class VarDec extends ClassField
     public String varTypeName;
     public String varName;
     public Exp initVal;
-    public int id = -1;
+    public int numLocal = -1;
 
     public VarDec(String varTypeName, String varName, Exp initVal)
     {
@@ -40,7 +40,7 @@ public class VarDec extends ClassField
         if (SymbolTable.isScope(Type.Scope.FUNC.name))  // local variable
         {
             TypeFunc funcType = SymbolTable.findFunc();
-            id = funcType.locals.size();
+            numLocal = funcType.locals.size();
             funcType.locals.add(new Symbol(varName, varType));
         }
         else if (SymbolTable.isScope(Type.Scope.CLASS.name))  // class member
@@ -93,17 +93,20 @@ public class VarDec extends ClassField
     @Override
     public TempReg toIR()
     {
-        if (id == -1)
+        System.out.println("numLocal = " + numLocal);
+        TempReg valReg = initVal == null ? TempReg.ZeroReg : initVal.toIR();
+        if (numLocal == -1)
         {
-            IR.add(new IRComm_Allocate(varName));
-            if (initVal != null)
-            {
-                IR.add(new IRComm_Store(varName, initVal.toIR()));
-            }
+            IR.add(new IR.Stack.set(valReg, numLocal + 1));
+            // IR.add(new IRComm_Allocate(varName));
+            // if (initVal != null)
+            // {
+            //     IR.add(new IRComm_Store(varName, initVal.toIR()));
+            // }
         }
         else  // local variable?
         {
-            IR.add(new IRComm_StoreLocal(initVal == null ? TempReg.ZeroReg : initVal.toIR(), id));
+            IR.add(new IRComm_StoreLocal(initVal == null ? TempReg.ZeroReg : initVal.toIR(), numLocal));
         }
         return null;
     }

@@ -11,7 +11,8 @@ public class IRComm_Store extends IRComm
 		this.src = src;
 		this.var_name = var_name;
 	}
-	
+
+	@Override	
 	public void toMIPS()
 	{
 		MIPSGen.store(var_name, src);

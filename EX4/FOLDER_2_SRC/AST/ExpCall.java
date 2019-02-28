@@ -10,12 +10,14 @@ public class ExpCall extends Exp
     public String funcName;
     public Var instanceName;
     public ExpList args;
+    public List<Exp> args2 = new ArrayList<Exp>();
 
     public ExpCall(String funcName, Var instanceName, ExpList args)
     {
         this.funcName = funcName;
         this.instanceName = instanceName;
         this.args = args;
+        for (ExpList it = args; it != null; it = it.tail) { args2.add(args.head); }
     }
 
     public void logGraphviz()
@@ -80,7 +82,10 @@ public class ExpCall extends Exp
             System.out.println("PrintTrace not supported yet");
             return TempReg.ZeroReg;
         default:
-            System.out.println("Default func call should go here");
+            IR.add(new IR.Stack.claim(args2.size()));
+            for (int i = 0; i < args2.size(); i++) { IR.add(new IR.Stack.set(args2.get(i).toIR(), i)); }
+            IR.add(new IR.jal(funcName));
+            IR.add(new IR.Stack.release(args2.size()));
         }
         TempReg retVal = new TempReg();
         return retVal;

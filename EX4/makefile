@@ -21,8 +21,8 @@ CUP_PROGRAM = java -jar ${EXTERNAL_JARS_DIR}/java-cup-11b.jar
 CUP_FLAGS   = -nosummary -nowarn -parser Parser -symbols TokenNames
 CUP_FILE    = ${CUP_DIR}/CUP_FILE.cup
 
-INPUT    = ${INPUT_DIR}/TEST_01_Print_Primes.txt
-# INPUT    = ${INPUT_DIR}/Input.txt
+# INPUT    = ${INPUT_DIR}/TEST_01_Print_Primes.txt
+INPUT    = ${INPUT_DIR}/Input.txt
 OUTPUT   = ${OUTPUT_DIR}/SemanticStatus.txt
 
 default: compile
@@ -39,6 +39,8 @@ compile: clean
 	
 test:
 	java -jar COMPILER ${INPUT} ${OUTPUT}
+
+test_run:
 	dot -Tjpeg -o${OUTPUT_DIR}/AST.jpeg ${OUTPUT_DIR}/AST.txt
 	dot -Tjpeg -o${OUTPUT_DIR}/SymbolTable.jpeg ${OUTPUT_DIR}/SymbolTable.txt
 	@sed -i 's/\bTemp_0\b/$$t0/g'  ${OUTPUT_DIR}/MIPS.txt
@@ -82,6 +84,7 @@ test:
 	@sed -i 's/\bTemp_38\b/$$t6/g' ${OUTPUT_DIR}/MIPS.txt
 	@sed -i 's/\bTemp_39\b/$$t7/g' ${OUTPUT_DIR}/MIPS.txt
 	@sed -i 's/\bTemp_40\b/$$t7/g' ${OUTPUT_DIR}/MIPS.txt
+	@sed -i 's/\bTemp_41\b/$$t7/g' ${OUTPUT_DIR}/MIPS.txt
 	spim -f ${OUTPUT_DIR}/MIPS.txt #> ${OUTPUT_DIR}/MIPS_OUTPUT.txt	
 
-everything: clean compile test
+everything: clean compile test test_run

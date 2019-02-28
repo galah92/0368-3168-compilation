@@ -6,7 +6,7 @@ public class MIPSGen
 {
 
     private static final StringWriter stringWriter = new StringWriter();
-    private static final PrintWriter writer = new PrintWriter(stringWriter);
+    public static final PrintWriter writer = new PrintWriter(stringWriter);
 
     public static void toFile(String outFile) throws Exception
     {
@@ -15,11 +15,12 @@ public class MIPSGen
         writer.close();
 
         PrintWriter fileWriter = new PrintWriter(outFile);
+        fileWriter.append(stringWriter.toString());
+        fileWriter.println();
         fileWriter.println(".data");
         fileWriter.println("string_access_violation: .asciiz \"Access Violation\"");
         fileWriter.println("string_illegal_div_by_0: .asciiz \"Illegal Division By Zero\"");
         fileWriter.println("string_invalid_ptr_dref: .asciiz \"Invalid Pointer Dereference\"");
-        fileWriter.append(stringWriter.toString());
         fileWriter.close();
     }
 
@@ -43,7 +44,7 @@ public class MIPSGen
 
     public static void add(TempReg dst, TempReg reg1, TempReg reg2) { writer.printf("\tadd Temp_%d, Temp_%d, Temp_%d\n", dst.id, reg1.id, reg2.id); }
 
-    public static void addi(TempReg rd, TempReg rs, int imm) { writer.printf("\taddi Temp_%d, Temp_%d, Temp_%d\n", rd.id, rs.id, imm); }
+    public static void addi(String rd, String rs, int imm) { writer.printf("\taddi %s, %s, %d\n", rd, rs, imm); }
 
     public static void mul(TempReg dst, TempReg reg1, TempReg reg2) { writer.printf("\tmul Temp_%d, Temp_%d, Temp_%d\n", dst.id, reg1.id, reg2.id); }
 
@@ -65,7 +66,7 @@ public class MIPSGen
     
     public static void allocate(String var_name)
     {
-        writer.printf(".data\n");
+        // writer.printf(".data\n");
         writer.printf("\tglobal_%s: .word 721\n",var_name);
     }
 

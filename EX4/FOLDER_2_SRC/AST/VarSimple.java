@@ -7,7 +7,7 @@ import java.util.*;
 public class VarSimple extends Var
 {
     public String varName;
-    public int id = -1;
+    public int numLocal = -1;
     public int numParam = -1;
     
     public VarSimple(String varName)
@@ -33,7 +33,7 @@ public class VarSimple extends Var
             {
                 if (varName.equals(funcLocals.get(i).name))
                 {
-                    id = i;
+                    numLocal = i;
                 }
             }
             List<Symbol> funcParams = SymbolTable.findFunc().params;
@@ -55,10 +55,18 @@ public class VarSimple extends Var
         TempReg reg = new TempReg();
         if (numParam != -1)
         {
-
+            IR.add(new IR.Stack.get(reg, numParam + 2));
+            return reg;
         }
-        // System.out.println(varName + " : " + id);
-        IR.add(new IRComm_Load(reg, varName));
+        else if (numLocal != -1)
+        {
+            IR.add(new IR.Stack.get(reg, -numParam));
+            return reg;
+        }
+        else
+        {
+            IR.add(new IRComm_Load(reg, varName));
+        }
         return reg;
     }
 }
