@@ -83,7 +83,6 @@ public class MIPSGen
     public static void label(String inlabel)
     {
         writer.println();
-        if (inlabel.equals("main")) { writer.printf(".text\n"); }
         writer.printf("%s:\n", inlabel);
     }	
 

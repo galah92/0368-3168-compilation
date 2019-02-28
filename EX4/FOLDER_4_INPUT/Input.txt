@@ -1,7 +1,7 @@
 
 void foo()
 {
-    PrintInt(99);
+    PrintInt(1);
 }
 
 void goo(int x)
@@ -11,12 +11,36 @@ void goo(int x)
 
 void koo()
 {
-    int y := 40;
+    int y := 3;
+    PrintInt(y);
+    int z := 4;
+    PrintInt(z);
+    int t := 5;
+    PrintInt(t);
+}
+
+void boo(int x, int y)
+{
+    PrintInt(x);
+    PrintInt(y);
+}
+
+void doo(int x, int y)
+{
+    int z := 12;
+    int w := 13;
+    PrintInt(x);
+    PrintInt(y);
+    PrintInt(z);
+    PrintInt(w);
 }
 
 void main()
 {
     foo();
-    goo(10);
+    goo(2);
     koo();
+    boo(6, 7);
+    boo(8, 9);
+    doo(10, 11);
 }

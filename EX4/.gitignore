@@ -13,3 +13,4 @@ input/
 output/
 expected_output/
 run_tests.sh
+runtests.py

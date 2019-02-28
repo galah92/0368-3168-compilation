@@ -64,6 +64,28 @@ public class IR
 
 	}
 
+	public static class frameSet extends IRComm
+	{
+		TempReg src;
+		int offset;
+		public frameSet(TempReg src, int offset) { this.src = src; this.offset = offset; }
+		public void toMIPS()
+		{
+			MIPSGen.writer.printf("\tsw Temp_%d, %d($fp)\n", src.id, offset * MIPSGen.WORD);
+		}
+	}
+
+	public static class frameGet extends IRComm
+	{
+		TempReg dst;
+		int offset;
+		public frameGet(TempReg dst, int offset) { this.dst = dst; this.offset = offset; }
+		public void toMIPS()
+		{
+			MIPSGen.writer.printf("\tlw Temp_%d, %d($fp)\n", dst.id, offset * MIPSGen.WORD);
+		}
+	}
+
 	public static class push extends IRComm
 	{
 		TempReg src;

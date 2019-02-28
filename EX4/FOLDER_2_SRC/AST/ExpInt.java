@@ -5,7 +5,7 @@ import pcomp.*;
 
 public class ExpInt extends ExpPrimitive
 {
-	public int value;
+	private int value;
 	
 	public ExpInt(int value)
 	{
@@ -14,7 +14,7 @@ public class ExpInt extends ExpPrimitive
 
 	public void logGraphviz()
 	{
-		logNode(String.format("ExpInt\n%s",value));
+		logNode(String.format("ExpInt\n%s", value));
 	}
 	
 	public Type Semant() throws Exception

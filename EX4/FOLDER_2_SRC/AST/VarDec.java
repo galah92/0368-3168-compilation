@@ -93,11 +93,9 @@ public class VarDec extends ClassField
     @Override
     public TempReg toIR()
     {
-        System.out.println("numLocal = " + numLocal);
         TempReg valReg = initVal == null ? TempReg.ZeroReg : initVal.toIR();
         if (numLocal == -1)
         {
-            IR.add(new IR.Stack.set(valReg, numLocal + 1));
             // IR.add(new IRComm_Allocate(varName));
             // if (initVal != null)
             // {
@@ -106,7 +104,8 @@ public class VarDec extends ClassField
         }
         else  // local variable?
         {
-            IR.add(new IRComm_StoreLocal(initVal == null ? TempReg.ZeroReg : initVal.toIR(), numLocal));
+            IR.add(new IR.Stack.set(valReg, numLocal - 1));
+            // IR.add(new IRComm_StoreLocal(initVal == null ? TempReg.ZeroReg : initVal.toIR(), numLocal));
         }
         return null;
     }

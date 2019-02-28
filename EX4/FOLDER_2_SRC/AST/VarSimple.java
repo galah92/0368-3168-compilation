@@ -55,12 +55,12 @@ public class VarSimple extends Var
         TempReg reg = new TempReg();
         if (numParam != -1)
         {
-            IR.add(new IR.Stack.get(reg, numParam + 2));
+            IR.add(new IR.frameGet(reg, numParam + 2));
             return reg;
         }
         else if (numLocal != -1)
         {
-            IR.add(new IR.Stack.get(reg, -numParam));
+            IR.add(new IR.Stack.get(reg, numLocal - 1));
             return reg;
         }
         else

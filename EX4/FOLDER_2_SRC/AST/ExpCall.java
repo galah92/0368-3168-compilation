@@ -17,7 +17,7 @@ public class ExpCall extends Exp
         this.funcName = funcName;
         this.instanceName = instanceName;
         this.args = args;
-        for (ExpList it = args; it != null; it = it.tail) { args2.add(args.head); }
+        for (ExpList it = args; it != null; it = it.tail) { args2.add(it.head); }
     }
 
     public void logGraphviz()
@@ -68,15 +68,13 @@ public class ExpCall extends Exp
     @Override
     public TempReg toIR()
     {
-        TempReg firstArg = null;
-        if (args != null) { firstArg = args.head.toIR(); }
         switch (funcName)
         {
         case "PrintInt":
-            IR.add(new IRComm_SysCalls.PrintInt(firstArg));
+            IR.add(new IRComm_SysCalls.PrintInt(args2.get(0).toIR()));
             return TempReg.ZeroReg;
         case "PrintString":
-            IR.add(new IRComm_SysCalls.PrintString(firstArg));
+            IR.add(new IRComm_SysCalls.PrintString(args2.get(0).toIR()));
             return TempReg.ZeroReg;
         case "PrintTrace":
             System.out.println("PrintTrace not supported yet");
