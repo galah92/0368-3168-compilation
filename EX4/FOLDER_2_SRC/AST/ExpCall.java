@@ -33,22 +33,28 @@ public class ExpCall extends Exp
         TypeList argsTypes = args != null ? args.Semant() : null;
 
         TypeFunc funcType = null;
+        TypeClass classType = SymbolTable.findClass();
 
-        if (instanceName != null) // class methods
+        if (instanceName != null) // class variable method
         {
             Type t = instanceName.Semant();
-            if (!(t instanceof TypeClass)) { throw new SemanticException(t.name); }
+            if (!(t instanceof TypeClass)) { throw new SemanticException("symbol is not of class type: " + instanceName); }
             TypeClass instanceType = (TypeClass)t;
             funcType = instanceType.getFuncField(funcName);
+            if (funcType == null) { throw new SemanticException("symbol not found: " + funcName); }
         }
-        else // global functions
+        else if (classType != null) // own class method
+        {
+            funcType = classType.getFuncField(funcName);
+        }
+        
+        if (funcType == null) // global functions
         {
             Type t = SymbolTable.find(funcName);
-            if (t == null && !(t instanceof TypeFunc)) { throw new SemanticException(); }
+            if (t == null) { throw new SemanticException("symbol not found: " + funcName); }
+            if (!(t instanceof TypeFunc)) { throw new SemanticException("symbol is not a function: " + funcName); }
             funcType = (TypeFunc)t;
         }
-
-        if (funcType == null) { throw new SemanticException("function symbol not found: " + funcName); }
 
         if (!funcType.isValidArgs(argsTypes)) { throw new SemanticException("invalid arguments to function"); }
         return funcType.retType;
