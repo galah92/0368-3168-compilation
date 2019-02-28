@@ -10,7 +10,6 @@ public class FuncDec extends ClassField
     public String funcName;
     public ParamsList params;
     public StmtList body;
-    public Deque<Stmt> body2 = new ArrayDeque<Stmt>();
     public TypeFunc funcType;
     
     public FuncDec(String retTypeName, String funcName, ParamsList params, StmtList body)
@@ -19,9 +18,9 @@ public class FuncDec extends ClassField
         this.funcName = funcName;
         this.params = params;
         this.body = body;
-        for (StmtList it = body; it != null; it = it.tail) { body2.add(it.head); }
     }
 
+    @Override
     public void logGraphviz()
     {
         if (params != null) params.logGraphviz();
@@ -31,11 +30,11 @@ public class FuncDec extends ClassField
         if (body != null) logEdge(body);
     }
 
+    @Override
     public TypeFunc SemantDeclaration() throws Exception
     {
         if (funcName.equals(Type.VOID.name)) { throw new SemanticException("invalid function name: " + funcName); }
         Type retType = retTypeName.equals(Type.VOID.name) ? Type.VOID : SymbolTable.find(retTypeName);
-        TypeList paramsTypes = params != null ? params.SemantDeclaration(): null;
 
         TypeClass classType = SymbolTable.findClass();
         if (classType != null)
@@ -49,8 +48,6 @@ public class FuncDec extends ClassField
             }
         }
 
-        funcType = new TypeFunc(retType, paramsTypes);
-
         Type func = SymbolTable.findInScope(funcName);
         if (func == null)
         {
@@ -63,12 +60,14 @@ public class FuncDec extends ClassField
             if (classType == null) { throw new SemanticException("function already declared: " + funcName); }
         }
 
+        funcType = new TypeFunc(retType);
         if (classType != null) { classType.methods.add(new Symbol(funcName, funcType)); }
-        
         SymbolTable.enter(funcName, funcType);
+        if (params != null) params.SemantDeclaration();
         return funcType;
     }
 
+    @Override
     public void SemantBody() throws Exception
     {
         SymbolTable.beginScope(Type.Scope.FUNC);
@@ -78,6 +77,7 @@ public class FuncDec extends ClassField
         SymbolTable.endScope();
     }
 
+    @Override
     public TypeFunc Semant() throws Exception
     {
         funcType = SemantDeclaration();
@@ -85,20 +85,14 @@ public class FuncDec extends ClassField
         return funcType;
     }
 
-    public void OverrideFuncDecCheck(Type func, Type retType, TypeList argsTypes) throws Exception
-    {
-        TypeFunc overloadedFuncType = (TypeFunc)func;
-        if (overloadedFuncType.retType != retType) { throw new SemanticException(); }
-        if (!(overloadedFuncType.isValidArgs(argsTypes))) { throw new SemanticException(); }
-    }
-
     @Override
     public TempReg toIR()
     {
+        int numLocals = funcType.locals.size();
         IR.add(new IRComm_Label(funcName));
-        IR.add(new IRComm_FuncPrologue(funcType.numLocals));
+        IR.add(new IRComm_FuncPrologue(numLocals));
         if (body != null) body.toIR();
-        IR.add(new IRComm_FuncEpilogue(funcType.numLocals));
+        IR.add(new IRComm_FuncEpilogue(numLocals));
         return null;
     }
 

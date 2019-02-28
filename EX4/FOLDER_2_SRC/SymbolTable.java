@@ -89,11 +89,13 @@ public class SymbolTable
 		enter(Type.STRING.name, Type.STRING);
 
 		// enter lib functions
-		TypeFunc printIntFunc = new TypeFunc(Type.VOID, new TypeList(Type.INT, null));
-		TypeFunc printStringFunc = new TypeFunc(Type.VOID, new TypeList(Type.STRING, null));
-		TypeFunc printTraceFunc = new TypeFunc(Type.VOID, null);
+		TypeFunc printIntFunc = new TypeFunc(Type.VOID);
+        printIntFunc.params.add(new Symbol("n", Type.INT));
 		enter("PrintInt", printIntFunc);
+		TypeFunc printStringFunc = new TypeFunc(Type.VOID);
+        printStringFunc.params.add(new Symbol("s", Type.STRING));
 		enter("PrintString", printStringFunc);
+		TypeFunc printTraceFunc = new TypeFunc(Type.VOID);
 		enter("PrintTrace", printTraceFunc);
 	}
 

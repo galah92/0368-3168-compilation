@@ -49,18 +49,16 @@ public class VarDec extends ClassField
         }
 
         Type initValType = initVal != null ? initVal.Semant() : null;
+
+        if (initValType == Type.NIL)
+        {
+            if (varType instanceof Type.Primitive) { throw new SemanticException("assign NIL to primitive"); }
+            SymbolTable.enter(varName, varType);
+            return varType;
+        }
+
         if (initValType != null)
         {
-            if (initValType == Type.NIL)
-            {
-                if (varType == Type.INT || varType == Type.STRING) { throw new SemanticException("assign NIL to primitive"); }
-                SymbolTable.enter(varName, varType);
-                return varType;
-            }
-            if (SymbolTable.isScope(Type.Scope.CLASS.name)) // we're in the middle of ClassDec
-            {
-                if (!(initVal instanceof ExpPrimitive)) { throw new SemanticException(varType + ", " + initValType); }
-            }
             if (varType instanceof TypeArray)
             {
                 if (((TypeArray)varType).elementType != initValType) { throw new SemanticException(varType + ", " + initValType); }

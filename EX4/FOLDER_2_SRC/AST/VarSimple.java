@@ -36,7 +36,7 @@ public class VarSimple extends Var
                     id = i;
                 }
             }
-            List<Symbol> funcParams = SymbolTable.findFunc().params2;
+            List<Symbol> funcParams = SymbolTable.findFunc().params;
             for (int i = 0; i < funcParams.size(); i++)
             {
                 if (varName.equals(funcParams.get(i).name))

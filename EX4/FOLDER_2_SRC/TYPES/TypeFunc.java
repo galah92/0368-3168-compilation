@@ -5,43 +5,39 @@ import java.util.*;
 public class TypeFunc extends Type
 {
 	public Type retType;
-	public TypeList params;
-	public List<Symbol> params2 = new ArrayList<Symbol>();
+	public List<Symbol> params = new ArrayList<Symbol>();
 	public List<Symbol> locals = new ArrayList<Symbol>();
-	public int numLocals = 0;
 	
 
-	public TypeFunc(Type retType, TypeList params)
+	public TypeFunc(Type retType)
 	{
 		super("Function");
 		this.retType = retType;
-		this.params = params;
 	}
 
-	public boolean isValidArgs(TypeList argsTypes)
+	public boolean isValidArgs(List<Type> args)
 	{
-		TypeList param = params;
-		TypeList arg = argsTypes;
-		while (param != null && arg != null)
+		if (args.size() != params.size()) { return false; }
+		Iterator<Symbol> it1 = params.iterator();
+		Iterator<Type> it2 = args.iterator();
+		while (it1.hasNext() && it2.hasNext())
 		{
-			if (arg.head != Type.NIL)
+			Symbol param = it1.next();
+			Type arg = it2.next();
+			if (arg != Type.NIL)
 			{
-				if (arg.head instanceof TypeClass && param.head instanceof TypeClass)
+				if (arg instanceof TypeClass && param.type instanceof TypeClass)
 				{
-					if (!((TypeClass)arg.head).isInheritingFrom((TypeClass)param.head)) { return false; }
+					if (!((TypeClass)arg).isInheritingFrom((TypeClass)param.type)) { return false; }
 				}
-				else if (arg.head != param.head) { return false; }
+				else if (arg != param.type) { return false; }
 			}
 			else
 			{
-				if (!(param.head instanceof TypeClass || param.head instanceof TypeArray)) { return false; }
+				if (!(param.type instanceof TypeClass || param.type instanceof TypeArray)) { return false; }
 			}
-
-			boolean isParamClassOrArray = param.head instanceof TypeClass || param.head instanceof TypeArray;
-
-			param = param.tail;
-			arg = arg.tail;
 		}
-		return param == null && arg == null;
+		return true;
 	}
+
 }

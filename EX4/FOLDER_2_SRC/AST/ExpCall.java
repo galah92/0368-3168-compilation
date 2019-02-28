@@ -1,6 +1,7 @@
 package AST;
 
 import pcomp.*;
+import java.util.*;
 
 
 public class ExpCall extends Exp
@@ -56,7 +57,9 @@ public class ExpCall extends Exp
             funcType = (TypeFunc)t;
         }
 
-        if (!funcType.isValidArgs(argsTypes)) { throw new SemanticException("invalid arguments to function"); }
+        List<Type> argsTypes2 = new ArrayList<Type>();
+        for (TypeList it = argsTypes; it != null; it = it.tail) { argsTypes2.add(it.head); }
+        if (!funcType.isValidArgs(argsTypes2)) { throw new SemanticException("invalid arguments to function: " + funcName); }
         return funcType.retType;
     }
 
