@@ -54,8 +54,8 @@ public class VarDec extends ClassField
             if (initValType == Type.NIL)
             {
                 if (varType == Type.INT || varType == Type.STRING) { throw new SemanticException("assign NIL to primitive"); }
-                SymbolTable.enter(varName, varType); //TODO: CHeck if neccessry
-                return new TypeClassVar(varType, varName);
+                SymbolTable.enter(varName, varType);
+                return varType;
             }
             if (SymbolTable.isScope(Type.Scope.CLASS.name)) // we're in the middle of ClassDec
             {
@@ -76,7 +76,7 @@ public class VarDec extends ClassField
         }
 
         SymbolTable.enter(varName, varType);
-        return new TypeClassVar(varType, varName);
+        return varType;
     }
 
     @Override

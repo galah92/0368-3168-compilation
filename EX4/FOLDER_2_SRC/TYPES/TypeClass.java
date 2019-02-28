@@ -47,4 +47,5 @@ public class TypeClass extends Type
 		}
 		return (isRecursive && base != null) ? base.getFuncField(funcName) : null;
 	}
+	
 }
