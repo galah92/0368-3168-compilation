@@ -53,6 +53,12 @@ void too(int x)
     }
 }
 
+void noo(int x)
+{
+    x := x + 1;
+    PrintInt(x);
+}
+
 void main()
 {
     foo();
@@ -63,4 +69,5 @@ void main()
     doo(10, 11);
     roo(13, 1);
     too(15);
+    noo(15);
 }

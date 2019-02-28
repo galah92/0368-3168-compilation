@@ -19,7 +19,7 @@ public class StmtAssign extends Stmt
 		if (var != null) var.logGraphviz();
 		if (exp != null) exp.logGraphviz();
 
-		logNode("ASSIGN\nleft := right\n");
+		logNode("StmtAssign\n");
 		logEdge(var);
 		logEdge(exp);
 	}
@@ -53,9 +53,19 @@ public class StmtAssign extends Stmt
 
 	public TempReg toIR()
 	{
-		TempReg src = exp.toIR();
-		IR.add(new IRComm_Store(((VarSimple)var).varName, src));
-
-		return null;
+		TempReg to = var.toIR();
+		if (var instanceof VarSimple)
+		{
+			VarSimple varSimple = (VarSimple)var;
+			if (varSimple.numLocal != -1)
+			{
+				IR.add(new IR.Stack.set(exp.toIR(), varSimple.numLocal - 1));
+			}
+			if (varSimple.numParam != -1)
+			{
+				IR.add(new IR.frameSet(exp.toIR(), varSimple.numParam + 2));
+			}
+		}
+		return to;
 	}
 }

@@ -127,6 +127,17 @@ public class IR
 		}
 	}
 
+	public static class move extends IRComm
+	{
+		TempReg dst;
+		TempReg src;
+		public move(TempReg dst, TempReg src) { this.dst = dst; this.src = src; }
+		public void toMIPS()
+		{
+			MIPSGen.writer.printf("\tmove Temp_%d, Temp_%d\n", dst.id, src.id);
+		}
+	}
+
 	public static class push extends IRComm
 	{
 		TempReg src;
