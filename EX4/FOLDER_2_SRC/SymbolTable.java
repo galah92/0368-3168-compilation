@@ -85,8 +85,8 @@ public class SymbolTable
     public static void init()
 	{
 		// enter primitive types
-		enter("int", Type.INT);
-		enter("string", Type.STRING);
+		enter(Type.INT.name, Type.INT);
+		enter(Type.STRING.name, Type.STRING);
 
 		// enter lib functions
 		TypeFunc printIntFunc = new TypeFunc(Type.VOID, new TypeList(Type.INT, null));

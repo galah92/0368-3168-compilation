@@ -21,10 +21,11 @@ public class ArrayDec extends Dec
 
     public Type Semant() throws Exception
     {
-        if (!SymbolTable.isGlobalScope()) { throw new SemanticException(); }
-        if (SymbolTable.find(arrName) != null) { throw new SemanticException(); }
+        if (!SymbolTable.isGlobalScope()) { throw new SemanticException("array definition valid only in global scope"); }
+        if (SymbolTable.find(arrName) != null) { throw new SemanticException("symbol found: " + arrName); }
         Type arrType = SymbolTable.find(arrTypeName);
         if (arrType == null) { throw new SemanticException("type not defined: " + arrType); }
+        if (arrType instanceof Type.Primitive && !arrTypeName.equals(arrType.name)) { throw new SemanticException("invalid array type: " + arrTypeName); }
         SymbolTable.enter(arrName, new TypeArray(arrType));
         return null;
     }
