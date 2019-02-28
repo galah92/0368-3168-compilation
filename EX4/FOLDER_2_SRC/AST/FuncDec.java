@@ -92,6 +92,7 @@ public class FuncDec extends ClassField
         IR.add(new IRComm_Label(funcName));
         IR.add(new IRComm_FuncPrologue(numLocals));
         if (body != null) body.toIR();
+        IR.add(new IR.label(funcName + "_end"));
         IR.add(new IRComm_FuncEpilogue(numLocals));
         return null;
     }

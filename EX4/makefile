@@ -85,6 +85,12 @@ test_run:
 	@sed -i 's/\bTemp_39\b/$$t7/g' ${OUTPUT_DIR}/MIPS.txt
 	@sed -i 's/\bTemp_40\b/$$t7/g' ${OUTPUT_DIR}/MIPS.txt
 	@sed -i 's/\bTemp_41\b/$$t7/g' ${OUTPUT_DIR}/MIPS.txt
+	@sed -i 's/\bTemp_42\b/$$t7/g' ${OUTPUT_DIR}/MIPS.txt
+	@sed -i 's/\bTemp_43\b/$$t7/g' ${OUTPUT_DIR}/MIPS.txt
+	@sed -i 's/\bTemp_44\b/$$t7/g' ${OUTPUT_DIR}/MIPS.txt
+	@sed -i 's/\bTemp_45\b/$$t7/g' ${OUTPUT_DIR}/MIPS.txt
+	@sed -i 's/\bTemp_46\b/$$t7/g' ${OUTPUT_DIR}/MIPS.txt
+	@sed -i 's/\bTemp_47\b/$$t7/g' ${OUTPUT_DIR}/MIPS.txt
 	spim -f ${OUTPUT_DIR}/MIPS.txt #> ${OUTPUT_DIR}/MIPS_OUTPUT.txt	
 
 everything: clean compile test test_run

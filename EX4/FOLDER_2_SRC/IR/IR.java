@@ -86,6 +86,47 @@ public class IR
 		}
 	}
 
+	public static class jump extends IRComm
+	{
+		String label;
+		public jump(String label) { this.label = label; }
+		public void toMIPS()
+		{
+			MIPSGen.writer.printf("\tj %s\n", label);
+		}
+	}
+
+	public static class label extends IRComm
+	{
+		String label;
+		public label(String label) { this.label = label; }
+		public void toMIPS()
+		{
+			MIPSGen.writer.println();
+			MIPSGen.writer.printf("%s:\n", label);
+		}
+	}
+
+	public static class setRetVal extends IRComm
+	{
+		TempReg src;
+		public setRetVal(TempReg src) { this.src = src; }
+		public void toMIPS()
+		{
+			MIPSGen.writer.printf("\tmove $v0, Temp_%d\n", src.id);
+		}
+	}
+
+	public static class getRetVal extends IRComm
+	{
+		TempReg dst;
+		public getRetVal(TempReg dst) { this.dst = dst; }
+		public void toMIPS()
+		{
+			MIPSGen.writer.printf("\tmove Temp_%d, $v0\n", dst.id);
+		}
+	}
+
 	public static class push extends IRComm
 	{
 		TempReg src;

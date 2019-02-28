@@ -24,6 +24,15 @@ public class SymbolTable
         return null;
     }
 
+    public static String findName(Type type)
+	{
+        for (Symbol symbol : stack)
+        {
+            if (symbol.type == type) { return symbol.name; }
+        }
+        return null;
+    }
+
     public static TypeFunc findFunc()
     {
         for (Symbol symbol : stack)

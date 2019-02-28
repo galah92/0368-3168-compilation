@@ -35,6 +35,24 @@ void doo(int x, int y)
     PrintInt(w);
 }
 
+void roo(int x, int y)
+{
+    int z := x + y;
+    PrintInt(z);
+}
+
+void too(int x)
+{
+    if (x = 15)
+    {
+        PrintInt(x);
+    }
+    if (x = 16)
+    {
+        PrintInt(x);
+    }
+}
+
 void main()
 {
     foo();
@@ -43,4 +61,6 @@ void main()
     boo(6, 7);
     boo(8, 9);
     doo(10, 11);
+    roo(13, 1);
+    too(15);
 }

@@ -44,7 +44,7 @@ public class StmtWhile extends Stmt
         TempReg condTemp = cond.toIR();
         IR.add(new IRComm_Jump_If_Eq_To_Zero(condTemp, whileEndLabel));
         body.toIR();
-        IR.add(new IRComm_Jump_Label(whileCondLabel));		
+        IR.add(new IR.jump(whileCondLabel));
         IR.add(new IRComm_Label(whileEndLabel));
         return null;
     }
