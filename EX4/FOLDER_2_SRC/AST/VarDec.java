@@ -30,13 +30,23 @@ public class VarDec extends ClassField
     public Type SemantDeclaration() throws Exception
     {
         if (varName.equals(Type.VOID.name)) { throw new SemanticException("invalid variable name: " + varName); }
-        if (SymbolTable.findInScope(varName) != null) { throw new SemanticException("variable name already defined"); }
+        if (SymbolTable.findInScope(varName) != null) { throw new SemanticException("symbol already defined: " + varName); }
 
         Type varType = SymbolTable.find(varTypeName);
         if (varType == null) { throw new SemanticException("type not defined: " + varTypeName); }
 
         TypeClass classType = SymbolTable.findClass();
-        boolean isSemantingClass = classType != null && classType.fields == null;
+
+        if (SymbolTable.isScope(Type.Scope.FUNC.name))  // local variable
+        {
+            TypeFunc funcType = SymbolTable.findFunc();
+            id = funcType.locals.size();
+            funcType.locals.add(new Symbol(varName, varType));
+        }
+        else if (SymbolTable.isScope(Type.Scope.CLASS.name))  // class member
+        {
+            classType.members.add(new Symbol(varName, varType));
+        }
 
         Type initValType = initVal != null ? initVal.Semant() : null;
         if (initValType != null)
@@ -47,7 +57,7 @@ public class VarDec extends ClassField
                 SymbolTable.enter(varName, varType); //TODO: CHeck if neccessry
                 return new TypeClassVar(varType, varName);
             }
-            if (isSemantingClass) // we're in the middle of ClassDec
+            if (SymbolTable.isScope(Type.Scope.CLASS.name)) // we're in the middle of ClassDec
             {
                 if (!(initVal instanceof ExpPrimitive)) { throw new SemanticException(varType + ", " + initValType); }
             }
@@ -63,14 +73,6 @@ public class VarDec extends ClassField
             {
                 if (initValType != varType) { throw new SemanticException(); }
             }
-        }
-
-        // if local variable
-        if (SymbolTable.isScope(Type.Scope.FUNC.name))
-        {
-            TypeFunc funcType = SymbolTable.findFunc();
-            id = funcType.locals.size();
-            funcType.locals.add(new Symbol(varName, varType));
         }
 
         SymbolTable.enter(varName, varType);

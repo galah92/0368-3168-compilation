@@ -38,23 +38,22 @@ public class ClassDec extends Dec
         if (SymbolTable.find(className) != null) { throw new SemanticException("symbol already defined"); }
 
         // enter the class Type to that we could field of same Type
-        TypeClass classType = new TypeClass(baseType, null);
+        TypeClass classType = new TypeClass(baseType);
         SymbolTable.enter(className, classType);
 
         SymbolTable.beginScope(Type.Scope.CLASS);
         while (baseType != null)
         {
-            for (TypeList t = baseType.fields; t != null; t = t.tail)
+            for (Symbol symbol : baseType.members)
             {
-                if (SymbolTable.findInScope(t.head.name) == null)
+                if (SymbolTable.findInScope(symbol.name) == null)
                 {
-                    SymbolTable.enter(t.head.name, t.head instanceof TypeClassVar ? ((TypeClassVar)t.head).varType : t.head);
+                    SymbolTable.enter(symbol.name, symbol.type);
                 }
             }
             baseType = baseType.base;
         }
-        TypeList fieldsTypes = fields.SemantDeclaration();
-        classType.fields = fieldsTypes;
+        fields.SemantDeclaration();
         fields.SemantBody();
         SymbolTable.endScope();
 
