@@ -1,9 +1,12 @@
 package pcomp;
+import java.util.*;
+
 
 public class TypeClass extends Type
 {
 	public TypeClass base;
 	public TypeList fields;
+	public List<Symbol> methods = new ArrayList<Symbol>();
 	
 	public TypeClass(TypeClass base, TypeList fields)
 	{
@@ -34,12 +37,11 @@ public class TypeClass extends Type
 
 	public TypeFunc getFuncField(String funcFieldName)
 	{
-		for (TypeList it = fields; it != null; it = it.tail)
+		for (Symbol symbol : methods)
 		{
-			if (it.head instanceof TypeFunc)
+			if (funcFieldName.equals(symbol.name))
 			{
-				TypeFunc funcFieldType = (TypeFunc)it.head;
-				if (funcFieldName.equals(funcFieldType.name)) { return funcFieldType; }
+				return (TypeFunc)symbol.type;
 			}
 		}
 		if (base != null) { return base.getFuncField(funcFieldName); }

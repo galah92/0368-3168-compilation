@@ -48,7 +48,7 @@ public class ExpCall extends Exp
             funcType = (TypeFunc)t;
         }
 
-        if (funcType == null) { throw new SemanticException("function symbol not found"); }
+        if (funcType == null) { throw new SemanticException("function symbol not found: " + funcName); }
 
         if (!funcType.isValidArgs(argsTypes)) { throw new SemanticException("invalid arguments to function"); }
         return funcType.retType;

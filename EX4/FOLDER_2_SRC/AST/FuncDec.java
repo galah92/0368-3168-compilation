@@ -37,6 +37,7 @@ public class FuncDec extends ClassField
         if (funcName.equals(Type.VOID.name)) { throw new SemanticException("invalid function name: " + funcName); }
         Type retType = retTypeName.equals(Type.VOID.name) ? Type.VOID : SymbolTable.find(retTypeName);
         TypeList paramsTypes = params != null ? params.SemantDeclaration(): null;
+
         Type func = SymbolTable.findInScope(funcName);
         if (func == null)
         {
@@ -50,7 +51,11 @@ public class FuncDec extends ClassField
             if (currentClass == funcClass) { throw new SemanticException(); } // func declerated before
             OverrideFuncDecCheck(func, retType, paramsTypes);
         }
-        funcType = new TypeFunc(retType, paramsTypes, SymbolTable.findClass());
+
+        TypeClass classType = SymbolTable.findClass();
+        funcType = new TypeFunc(retType, paramsTypes, classType);
+        if (classType != null) { classType.methods.add(new Symbol(funcName, funcType)); }
+        
         SymbolTable.enter(funcName, funcType);
         return funcType;
     }
