@@ -26,7 +26,6 @@ public class FuncDec extends ClassField
     {
         if (params != null) params.logGraphviz();
         if (body != null) body.logGraphviz();
-
         logNode(String.format("FuncDec\n%s\n%s", retTypeName, funcName));
         if (params != null) logEdge(params);
         if (body != null) logEdge(body);
@@ -38,22 +37,32 @@ public class FuncDec extends ClassField
         Type retType = retTypeName.equals(Type.VOID.name) ? Type.VOID : SymbolTable.find(retTypeName);
         TypeList paramsTypes = params != null ? params.SemantDeclaration(): null;
 
+        TypeClass classType = SymbolTable.findClass();
+        if (classType != null)
+        {
+            if (classType.getFuncField(funcName, false) != null) { throw new SemanticException("function already declared in current class: " + funcName); }
+            TypeFunc overriddenFunc = classType.getFuncField(funcName);
+            if (overriddenFunc != null)
+            {
+                if (retType != overriddenFunc.retType) { throw new SemanticException("overridding method with different return type: " + funcName); }
+                // TODO: should also check args equality
+            }
+        }
+
+        funcType = new TypeFunc(retType, paramsTypes);
+
         Type func = SymbolTable.findInScope(funcName);
         if (func == null)
         {
             func = SymbolTable.find(funcName);
             if (func != null && (func instanceof TypeClass)) { throw new SemanticException(); }
-        } else {
+        }
+        else
+        {
             if (!(func instanceof TypeFunc)) { throw new SemanticException(); }
-            TypeClass currentClass = SymbolTable.findClass();
-            if (currentClass == null) { throw new SemanticException("function already declared: " + funcName); }
-            TypeClass funcClass = ((TypeFunc)func).cls;
-            if (currentClass == funcClass) { throw new SemanticException(); } // func declerated before
-            OverrideFuncDecCheck(func, retType, paramsTypes);
+            if (classType == null) { throw new SemanticException("function already declared: " + funcName); }
         }
 
-        TypeClass classType = SymbolTable.findClass();
-        funcType = new TypeFunc(retType, paramsTypes, classType);
         if (classType != null) { classType.methods.add(new Symbol(funcName, funcType)); }
         
         SymbolTable.enter(funcName, funcType);

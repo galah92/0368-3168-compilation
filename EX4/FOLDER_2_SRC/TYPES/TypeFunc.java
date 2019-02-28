@@ -6,18 +6,16 @@ public class TypeFunc extends Type
 {
 	public Type retType;
 	public TypeList params;
-	public TypeClass cls;
 	public List<Symbol> params2 = new ArrayList<Symbol>();
 	public List<Symbol> locals = new ArrayList<Symbol>();
 	public int numLocals = 0;
 	
 
-	public TypeFunc(Type retType, TypeList params, TypeClass cls)
+	public TypeFunc(Type retType, TypeList params)
 	{
 		super("Function");
 		this.retType = retType;
 		this.params = params;
-		this.cls = cls;
 	}
 
 	public boolean isValidArgs(TypeList argsTypes)

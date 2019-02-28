@@ -35,16 +35,22 @@ public class TypeClass extends Type
 		return null;
 	}
 
-	public TypeFunc getFuncField(String funcFieldName)
+	public TypeFunc getFuncField(String funcName)
 	{
 		for (Symbol symbol : methods)
 		{
-			if (funcFieldName.equals(symbol.name))
-			{
-				return (TypeFunc)symbol.type;
-			}
+			if (funcName.equals(symbol.name)) { return (TypeFunc)symbol.type; }
 		}
-		if (base != null) { return base.getFuncField(funcFieldName); }
+		if (base != null) { return base.getFuncField(funcName); }
 		return null;
+	}
+
+	public TypeFunc getFuncField(String funcName, boolean isRecursive)
+	{
+		for (Symbol symbol : methods)
+		{
+			if (funcName.equals(symbol.name)) { return (TypeFunc)symbol.type; }
+		}
+		return (isRecursive && base != null) ? base.getFuncField(funcName) : null;
 	}
 }
