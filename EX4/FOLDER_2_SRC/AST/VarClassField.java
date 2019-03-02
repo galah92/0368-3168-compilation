@@ -27,7 +27,7 @@ public class VarClassField extends Var
 		Type t = className.Semant();
 		if (!(t instanceof TypeClass)) { throw new SemanticException(); }
 		TypeClass typeClass = (TypeClass)t;
-		return typeClass.getVarField(fieldName);
+		return typeClass.getMember(fieldName);
 	}
 
 	@Override

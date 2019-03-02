@@ -43,12 +43,12 @@ public class ExpCall extends Exp
             Type t = instanceName.Semant();
             if (!(t instanceof TypeClass)) { throw new SemanticException("symbol is not of class type: " + instanceName); }
             TypeClass instanceType = (TypeClass)t;
-            funcType = instanceType.getFuncField(funcName);
+            funcType = instanceType.getMethod(funcName);
             if (funcType == null) { throw new SemanticException("symbol not found: " + funcName); }
         }
         else if (classType != null) // own class method
         {
-            funcType = classType.getFuncField(funcName);
+            funcType = classType.getMethod(funcName);
         }
         
         if (funcType == null) // global functions

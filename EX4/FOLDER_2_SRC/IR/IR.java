@@ -215,4 +215,18 @@ public class IR
         }
     }
 
+    public static class malloc extends IRComm
+    {
+        int size;
+        public malloc(int size) { this.size = size; }
+        public void toMIPS()
+        {
+            MIPSGen.writer.printf("\t# start of malloc\n");
+            MIPSGen.writer.printf("\tli $a0, %d\n", size);
+            MIPSGen.writer.printf("\tli $v0, 9\n");
+            MIPSGen.writer.printf("\tsyscall\n");
+            MIPSGen.writer.printf("\t# end of malloc\n");
+        }
+    }
+
 }

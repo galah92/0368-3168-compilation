@@ -39,8 +39,8 @@ public class FuncDec extends ClassField
         TypeClass classType = SymbolTable.findClass();
         if (classType != null)
         {
-            if (classType.getFuncField(funcName, false) != null) { throw new SemanticException("function already declared in current class: " + funcName); }
-            TypeFunc overriddenFunc = classType.getFuncField(funcName);
+            if (classType.getMethod(funcName, false) != null) { throw new SemanticException("function already declared in current class: " + funcName); }
+            TypeFunc overriddenFunc = classType.getMethod(funcName);
             if (overriddenFunc != null)
             {
                 if (retType != overriddenFunc.retType) { throw new SemanticException("overridding method with different return type: " + funcName); }
