@@ -17,6 +17,7 @@ public abstract class IRComm_SysCalls extends IRComm
         @Override
         public void toMIPS()
         {
+            MIPSGen.writer.printf("\t# start of print_int\n");
             // print_int
             MIPSGen.move(MIPSGen.a0, t);
             MIPSGen.li(MIPSGen.v0, 1);
@@ -25,6 +26,7 @@ public abstract class IRComm_SysCalls extends IRComm
             MIPSGen.li(MIPSGen.a0, 32);
             MIPSGen.li(MIPSGen.v0, 11);
             MIPSGen.syscall();
+            MIPSGen.writer.printf("\t# end of print_int\n");
         }
 
     }
@@ -42,10 +44,12 @@ public abstract class IRComm_SysCalls extends IRComm
         @Override
         public void toMIPS()
         {
+            MIPSGen.writer.printf("\t# start of print_string\n");
             // print_string
             MIPSGen.move(MIPSGen.a0, t);
             MIPSGen.li(MIPSGen.v0, 4);
             MIPSGen.syscall();
+            MIPSGen.writer.printf("\t# end of print_string\n");
         }
 
     }

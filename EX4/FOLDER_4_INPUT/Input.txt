@@ -6,8 +6,5 @@ void main()
     IntArray arr := new int[3];
     arr[0] := 7;
     PrintInt(arr[0]);
-    arr[1] := 8;
     PrintInt(arr[1]);
-    arr[2] := 9;
-    PrintInt(arr[2]);
 }

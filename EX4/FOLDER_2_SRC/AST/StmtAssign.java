@@ -80,7 +80,7 @@ public class StmtAssign extends Stmt
             {
                 IR.add(new IR.frameGet(tmp, var.numParam + 2));
             }
-            IR.add(new IR.heapSet(tmp, exp.toIR(), TempReg.ZeroReg));
+            IR.add(new IR.heapSet(tmp, exp.toIR()));
         }
         return to;
     }

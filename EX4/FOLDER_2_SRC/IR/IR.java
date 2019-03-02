@@ -120,6 +120,17 @@ public class IR
         }
     }
 
+    public static class frameGetOffset extends IRComm
+    {
+        TempReg dst;
+        int offset;
+        public frameGetOffset(TempReg dst, int offset) { this.dst = dst; this.offset = offset; }
+        public void toMIPS()
+        {
+            MIPSGen.writer.printf("\tadd Temp_%d, $fp, %d\n", dst.id, offset * MIPSGen.WORD);
+        }
+    }
+
     public static class jump extends IRComm
     {
         String label;
@@ -243,6 +254,20 @@ public class IR
         }
     }
 
+    public static class calcOffset extends IRComm
+    {
+        TempReg dst;
+        TempReg src;
+        TempReg offset;
+        public calcOffset(TempReg dst, TempReg src, TempReg offset) { this.dst = dst; this.src = src; this.offset = offset; }
+        public void toMIPS()
+        {
+            // TODO: boundary-check!
+            MIPSGen.writer.printf("\tsll Temp_%d, Temp_%d, %d\n", offset.id, offset.id, MIPSGen.WORD);
+            MIPSGen.writer.printf("\tadd Temp_%d, Temp_%d, Temp_%d\n", dst.id, src.id, offset.id);
+        }
+    }
+
     public static class heapGet extends IRComm
     {
         TempReg dst;
@@ -262,13 +287,10 @@ public class IR
     {
         TempReg dst;
         TempReg src;
-        TempReg offset;
-        public heapSet(TempReg dst, TempReg src, TempReg offset) { this.dst = dst; this.src = src; this.offset = offset; }
+        public heapSet(TempReg dst, TempReg src) { this.dst = dst; this.src = src; }
         public void toMIPS()
         {
             // TODO: boundary-check!
-            MIPSGen.writer.printf("\tsll Temp_%d, Temp_%d, %d\n", offset.id, offset.id, MIPSGen.WORD);
-            MIPSGen.writer.printf("\tadd Temp_%d, Temp_%d, Temp_%d\n", src.id, src.id, offset.id);
             MIPSGen.writer.printf("\tsw Temp_%d, (Temp_%d)\n", src.id, dst.id);
         }
     }
