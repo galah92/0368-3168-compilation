@@ -8,8 +8,6 @@ public class VarSimple extends Var
 {
 
     public String varName;
-    public int numLocal = -1;
-    public int numParam = -1;
     
     public VarSimple(String varName)
     {

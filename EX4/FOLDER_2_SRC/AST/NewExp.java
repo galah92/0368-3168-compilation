@@ -18,6 +18,7 @@ public class NewExp extends Exp
     @Override
     public void logGraphviz()
 	{
+        if (exp != null) exp.logGraphviz();
 		logNode(String.format("NewExp\n%s", typeName));
         if (exp != null) logEdge(exp);
 	}

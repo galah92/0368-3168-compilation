@@ -20,8 +20,9 @@ public class VarArrayElement extends Var
     {
         var.logGraphviz();
         index.logGraphviz();
-        logNode(String.format("VarArrayElement\n%s", index));
+        logNode(String.format("VarArrayElement\n"));
         logEdge(var);
+        logEdge(index);
     }
 
     @Override
@@ -30,6 +31,8 @@ public class VarArrayElement extends Var
         if (index.Semant() != Type.INT) { throw new SemanticException("array index is not of type int"); }
         Type arrType = var.Semant();
         if (!(arrType instanceof TypeArray)) { throw new SemanticException("symbol is not of type array"); }
+        numLocal = var.numLocal;
+        numParam = var.numParam;
         return ((TypeArray)arrType).elementType;
     }
 

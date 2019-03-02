@@ -215,15 +215,27 @@ public class IR
         }
     }
 
+    public static class lw extends IRComm
+    {
+        TempReg dst;
+        int val;
+        public lw(TempReg dst, int val) { this.dst = dst; this.val = val; }
+        public void toMIPS()
+        {
+            MIPSGen.writer.printf("\tlw Temp_%d, %d\n", dst.id, val);
+        }
+    }
+
     public static class heapAlloc extends IRComm
     {
         TempReg dst;
-        TempReg size;
-        public heapAlloc(TempReg dst, TempReg size) { this.dst = dst; this.size = size; }
+        TempReg numBytes;
+        public heapAlloc(TempReg dst, TempReg numBytes) { this.dst = dst; this.numBytes = numBytes; }
         public void toMIPS()
         {
             MIPSGen.writer.printf("\t# start of malloc\n");
-            MIPSGen.writer.printf("\tmove $a0, Temp_%d\n", size.id);
+            MIPSGen.writer.printf("\tmove $a0, Temp_%d\n", numBytes.id);
+            MIPSGen.writer.printf("\tsll $a0, $a0, %d\n", MIPSGen.WORD);
             MIPSGen.writer.printf("\tli $v0, 9\n");
             MIPSGen.writer.printf("\tsyscall\n");
             MIPSGen.writer.printf("\tmove Temp_%d, $v0\n", dst.id);
@@ -240,9 +252,24 @@ public class IR
         public void toMIPS()
         {
             // TODO: boundary-check!
-            MIPSGen.writer.printf("\tmul Temp_%d, Temp_%d, Temp_%d\n", offset.id, offset.id, MIPSGen.WORD);
+            MIPSGen.writer.printf("\tsll Temp_%d, Temp_%d, %d\n", offset.id, offset.id, MIPSGen.WORD);
             MIPSGen.writer.printf("\tadd Temp_%d, Temp_%d, Temp_%d\n", src.id, src.id, offset.id);
             MIPSGen.writer.printf("\tlw Temp_%d, (Temp_%d)\n", dst.id, src.id);
+        }
+    }
+
+    public static class heapSet extends IRComm
+    {
+        TempReg dst;
+        TempReg src;
+        TempReg offset;
+        public heapSet(TempReg dst, TempReg src, TempReg offset) { this.dst = dst; this.src = src; this.offset = offset; }
+        public void toMIPS()
+        {
+            // TODO: boundary-check!
+            MIPSGen.writer.printf("\tsll Temp_%d, Temp_%d, %d\n", offset.id, offset.id, MIPSGen.WORD);
+            MIPSGen.writer.printf("\tadd Temp_%d, Temp_%d, Temp_%d\n", src.id, src.id, offset.id);
+            MIPSGen.writer.printf("\tsw Temp_%d, (Temp_%d)\n", src.id, dst.id);
         }
     }
 
