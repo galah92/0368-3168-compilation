@@ -94,20 +94,15 @@ public class VarDec extends ClassField
     public TempReg toIR()
     {
         TempReg valReg = initVal == null ? TempReg.ZeroReg : initVal.toIR();
-        if (numLocal == -1)
+        if (numLocal != -1)  // local variable?
         {
-            // IR.add(new IRComm_Allocate(varName));
-            // if (initVal != null)
-            // {
-            //     IR.add(new IRComm_Store(varName, initVal.toIR()));
-            // }
+            IR.add(new IR.frameSet(valReg, -numLocal - 1));
         }
-        else  // local variable?
+        else
         {
-            IR.add(new IR.Stack.set(valReg, numLocal - 1));
-            // IR.add(new IRComm_StoreLocal(initVal == null ? TempReg.ZeroReg : initVal.toIR(), numLocal));
+            // TODO: complete
         }
-        return null;
+        return valReg;
     }
 
 }

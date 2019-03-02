@@ -59,7 +59,7 @@ public class StmtAssign extends Stmt
 			VarSimple varSimple = (VarSimple)var;
 			if (varSimple.numLocal != -1)
 			{
-				IR.add(new IR.Stack.set(exp.toIR(), varSimple.numLocal - 1));
+				IR.add(new IR.frameSet(exp.toIR(), -varSimple.numLocal - 1));
 			}
 			if (varSimple.numParam != -1)
 			{

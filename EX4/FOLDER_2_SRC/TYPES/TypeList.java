@@ -1,7 +1,9 @@
 package pcomp;
 
+
 public class TypeList extends Type
 {
+
 	public Type head;
 	public TypeList tail;
 
@@ -11,4 +13,5 @@ public class TypeList extends Type
 		this.head = head;
 		this.tail = tail;
 	}
+
 }

@@ -53,10 +53,21 @@ void too(int x)
     }
 }
 
-void noo(int x)
+int noo(int x)
 {
     x := x + 1;
     PrintInt(x);
+    return x;
+}
+
+int moo(int x, int y)
+{
+    return x * y;
+}
+
+int zoo(int x)
+{
+    return x = 1;
 }
 
 void main()
@@ -69,5 +80,8 @@ void main()
     doo(10, 11);
     roo(13, 1);
     too(15);
-    noo(15);
+    int r := noo(15);
+    PrintInt(r + 1);
+    PrintInt(moo(2, 9));
+    PrintInt(zoo(1));
 }

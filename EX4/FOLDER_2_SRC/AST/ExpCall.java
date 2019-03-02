@@ -81,11 +81,15 @@ public class ExpCall extends Exp
             return TempReg.ZeroReg;
         default:
             IR.add(new IR.Stack.claim(args2.size()));
-            for (int i = 0; i < args2.size(); i++) { IR.add(new IR.Stack.set(args2.get(i).toIR(), i)); }
+            for (int i = 0; i < args2.size(); i++)
+            {
+                IR.add(new IR.Stack.set(args2.get(i).toIR(), i));
+            }
             IR.add(new IR.jal(funcName));
             IR.add(new IR.Stack.release(args2.size()));
         }
         TempReg retVal = new TempReg();
+        IR.add(new IR.getRetVal(retVal));
         return retVal;
     }
 

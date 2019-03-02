@@ -4,6 +4,7 @@ import java.util.*;
 
 public class TypeClass extends Type
 {
+	
 	public TypeClass base;
 	public List<Symbol> members = new ArrayList<Symbol>();
 	public List<Symbol> methods = new ArrayList<Symbol>();

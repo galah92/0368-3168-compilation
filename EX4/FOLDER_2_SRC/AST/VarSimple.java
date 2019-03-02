@@ -6,6 +6,7 @@ import java.util.*;
 
 public class VarSimple extends Var
 {
+
     public String varName;
     public int numLocal = -1;
     public int numParam = -1;
@@ -56,12 +57,10 @@ public class VarSimple extends Var
         if (numParam != -1)
         {
             IR.add(new IR.frameGet(reg, numParam + 2));
-            return reg;
         }
         else if (numLocal != -1)
         {
-            IR.add(new IR.Stack.get(reg, numLocal - 1));
-            return reg;
+            IR.add(new IR.frameGet(reg, -numLocal - 1));
         }
         else
         {
@@ -69,4 +68,5 @@ public class VarSimple extends Var
         }
         return reg;
     }
+
 }

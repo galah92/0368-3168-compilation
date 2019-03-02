@@ -102,6 +102,7 @@ public class MIPSGen
 
     public static void func_prologue(int numLocals)
     {
+        writer.printf("\t# start of function prologue\n");
         // save fp & ra
         writer.printf("\taddi $sp, $sp, -8\n");
         writer.printf("\tsw	$fp, 0($sp)\n");
@@ -110,10 +111,12 @@ public class MIPSGen
         writer.printf("\tmove $fp, $sp\n");
 	    // allocate stack frame
         writer.printf("\taddi $sp, $sp, %d\n", -WORD * numLocals);
+        writer.printf("\t# end of function prologue\n");
     }
 
     public static void func_epilogue(int numLocals)
     {
+        writer.printf("\t# start of function epilogue\n");
         // deallocate stack frame
         writer.printf("\taddi $sp, $sp, %d\n", WORD * numLocals);
         // restore fp & ra
@@ -123,6 +126,7 @@ public class MIPSGen
         writer.printf("\taddi $sp, $sp, 8\n");
         // jump back
         writer.printf("\tjr $ra\n");
+        writer.printf("\t# end of function epilogue\n");
     }
 
 }
