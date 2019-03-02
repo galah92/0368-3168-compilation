@@ -53,11 +53,11 @@ public class VarSimple extends Var
         TempReg reg = new TempReg();
         if (numParam != -1)
         {
-            IR.add(new IR.frameGet(reg, numParam + 2));
+            IR.add(new IR.frameGetOffset(reg, numParam + 2));
         }
         else if (numLocal != -1)
         {
-            IR.add(new IR.frameGet(reg, -numLocal - 1));
+            IR.add(new IR.frameGetOffset(reg, -numLocal - 1));
         }
         else
         {

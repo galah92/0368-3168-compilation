@@ -1,5 +1,7 @@
 void main()
 {
     int x := 5;
+    PrintInt(x);
     x := x + 1;
+    PrintInt(x);
 }

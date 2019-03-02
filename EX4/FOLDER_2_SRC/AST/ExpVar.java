@@ -31,7 +31,7 @@ public class ExpVar extends Exp
     public TempReg toIR()
     {
         TempReg reg = var.toIR();
-        // IR.add(new IR.dereference(reg));
+        IR.add(new IR.dereference(reg));
         return reg;
     }
 
