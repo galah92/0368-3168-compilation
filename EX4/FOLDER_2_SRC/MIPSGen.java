@@ -63,12 +63,6 @@ public class MIPSGen
     public static void jr(String rs) { writer.printf("\tjr %s\n", rs); }
 
     public static void syscall() { writer.printf("\tsyscall\n"); }
-    
-    public static void allocate(String var_name)
-    {
-        // writer.printf(".data\n");
-        writer.printf("\tglobal_%s: .word 721\n",var_name);
-    }
 
     public static void load(TempReg dst, String var_name)
     {
@@ -90,43 +84,8 @@ public class MIPSGen
 
     public static void blt(TempReg reg1, TempReg reg2, String label) { writer.printf("\tblt Temp_%d, Temp_%d, %s\n", reg1.id, reg2.id, label); }
 
-    public static void bge(TempReg reg1, TempReg reg2, String label) { writer.printf("\tbge Temp_%d, Temp_%d, %s\n", reg1.id, reg2.id, label); }
-
-    public static void bne(TempReg reg1,TempReg reg2,String label) { writer.printf("\tbne Temp_%d, Temp_%d, %s\n", reg1.id, reg2.id, label); }
-
     public static void beq(TempReg reg1,TempReg reg2,String label) { writer.printf("\tbeq Temp_%d, Temp_%d, %s\n", reg1.id, reg2.id, label); }
 
     public static void beqz(TempReg reg1, String label) { writer.printf("\tbeq Temp_%d, $zero, %s\n", reg1.id, label); }
-
-    public static void la(TempReg reg, String label) { writer.printf("\tla Temp_%d, %s\n", reg.id, label); }
-
-    public static void func_prologue(int numLocals)
-    {
-        writer.printf("\t# start of function prologue\n");
-        // save fp & ra
-        writer.printf("\taddi $sp, $sp, -8\n");
-        writer.printf("\tsw	$fp, 0($sp)\n");
-        writer.printf("\tsw	$ra, 4($sp)\n");
-        // set fp = sp
-        writer.printf("\tmove $fp, $sp\n");
-	    // allocate stack frame
-        writer.printf("\taddi $sp, $sp, %d\n", -WORD * numLocals);
-        writer.printf("\t# end of function prologue\n");
-    }
-
-    public static void func_epilogue(int numLocals)
-    {
-        writer.printf("\t# start of function epilogue\n");
-        // deallocate stack frame
-        writer.printf("\taddi $sp, $sp, %d\n", WORD * numLocals);
-        // restore fp & ra
-        writer.printf("\tlw	$ra, 4($fp)\n");
-        writer.printf("\tlw	$fp, ($fp)\n");
-        // deallocate place for ra & fp
-        writer.printf("\taddi $sp, $sp, 8\n");
-        // jump back
-        writer.printf("\tjr $ra\n");
-        writer.printf("\t# end of function epilogue\n");
-    }
 
 }

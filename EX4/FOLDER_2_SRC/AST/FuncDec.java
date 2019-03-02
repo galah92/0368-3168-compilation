@@ -89,11 +89,11 @@ public class FuncDec extends ClassField
     public TempReg toIR()
     {
         int numLocals = funcType.locals.size();
-        IR.add(new IRComm_Label(funcName));
-        IR.add(new IRComm_FuncPrologue(numLocals));
+        IR.add(new IR.label(funcName));
+        IR.add(new IR.funcPrologue(numLocals));
         if (body != null) body.toIR();
         IR.add(new IR.label(funcName + "_end"));
-        IR.add(new IRComm_FuncEpilogue(numLocals));
+        IR.add(new IR.funcEpilogue(numLocals));
         return null;
     }
 

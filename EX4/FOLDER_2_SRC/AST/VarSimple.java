@@ -64,7 +64,7 @@ public class VarSimple extends Var
         }
         else
         {
-            IR.add(new IRComm_Load(reg, varName));
+            System.out.println("VarSimple.toIR() not implemented yet");
         }
         return reg;
     }
