@@ -217,14 +217,16 @@ public class IR
 
     public static class heapAlloc extends IRComm
     {
-        int size;
-        public heapAlloc(int size) { this.size = size; }
+        TempReg dst;
+        TempReg size;
+        public heapAlloc(TempReg dst, TempReg size) { this.dst = dst; this.size = size; }
         public void toMIPS()
         {
             MIPSGen.writer.printf("\t# start of malloc\n");
-            MIPSGen.writer.printf("\tli $a0, %d\n", size);
+            MIPSGen.writer.printf("\tmove $a0, Temp_%d\n", size.id);
             MIPSGen.writer.printf("\tli $v0, 9\n");
             MIPSGen.writer.printf("\tsyscall\n");
+            MIPSGen.writer.printf("\tmove Temp_%d, $v0\n", dst.id);
             MIPSGen.writer.printf("\t# end of malloc\n");
         }
     }
@@ -238,9 +240,9 @@ public class IR
         public void toMIPS()
         {
             // TODO: boundary-check!
-            MIPSGen.writer.printf("\tmul Temp_%d, Temp_%d, Temp_%d\n", offset, offset, 4);
-            MIPSGen.writer.printf("\tadd Temp_%d, Temp_%d, Temp_%d\n", src, src, offset);
-            MIPSGen.writer.printf("\tlw Temp_%d, (Temp_%d)\n", dst, src);
+            MIPSGen.writer.printf("\tmul Temp_%d, Temp_%d, Temp_%d\n", offset.id, offset.id, MIPSGen.WORD);
+            MIPSGen.writer.printf("\tadd Temp_%d, Temp_%d, Temp_%d\n", src.id, src.id, offset.id);
+            MIPSGen.writer.printf("\tlw Temp_%d, (Temp_%d)\n", dst.id, src.id);
         }
     }
 

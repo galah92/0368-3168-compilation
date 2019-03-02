@@ -22,6 +22,7 @@ CUP_FLAGS   = -nosummary -nowarn -parser Parser -symbols TokenNames
 CUP_FILE    = ${CUP_DIR}/CUP_FILE.cup
 
 INPUT    = ${INPUT_DIR}/TEST_01_Print_Primes.txt
+# INPUT    = ${INPUT_DIR}/TEST_02_Bubble_Sort.txt
 OUTPUT   = ${OUTPUT_DIR}/SemanticStatus.txt
 
 default: compile
@@ -112,6 +113,17 @@ test_run:
 	@sed -i 's/\bTemp_67\b/$$t3/g' ${OUTPUT_DIR}/MIPS.txt
 	@sed -i 's/\bTemp_68\b/$$t4/g' ${OUTPUT_DIR}/MIPS.txt
 	@sed -i 's/\bTemp_69\b/$$t5/g' ${OUTPUT_DIR}/MIPS.txt
+	@sed -i 's/\bTemp_70\b/$$t6/g' ${OUTPUT_DIR}/MIPS.txt
+	@sed -i 's/\bTemp_71\b/$$t7/g' ${OUTPUT_DIR}/MIPS.txt
+	@sed -i 's/\bTemp_72\b/$$t0/g' ${OUTPUT_DIR}/MIPS.txt
+	@sed -i 's/\bTemp_73\b/$$t1/g' ${OUTPUT_DIR}/MIPS.txt
+	@sed -i 's/\bTemp_74\b/$$t2/g' ${OUTPUT_DIR}/MIPS.txt
+	@sed -i 's/\bTemp_75\b/$$t3/g' ${OUTPUT_DIR}/MIPS.txt
+	@sed -i 's/\bTemp_76\b/$$t4/g' ${OUTPUT_DIR}/MIPS.txt
+	@sed -i 's/\bTemp_77\b/$$t5/g' ${OUTPUT_DIR}/MIPS.txt
+	@sed -i 's/\bTemp_78\b/$$t6/g' ${OUTPUT_DIR}/MIPS.txt
+	@sed -i 's/\bTemp_79\b/$$t7/g' ${OUTPUT_DIR}/MIPS.txt
+	@sed -i 's/\bTemp_80\b/$$t0/g' ${OUTPUT_DIR}/MIPS.txt
 	spim -f ${OUTPUT_DIR}/MIPS.txt #> ${OUTPUT_DIR}/MIPS_OUTPUT.txt	
 
 everything: clean compile test test_run

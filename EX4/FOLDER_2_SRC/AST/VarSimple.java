@@ -45,7 +45,6 @@ public class VarSimple extends Var
                     numParam = i;
                 }
             }
-
         }
         return varType;
     }
