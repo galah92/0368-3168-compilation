@@ -1,10 +1,5 @@
-array IntArray = int[]
-
-
 void main()
 {
-    IntArray arr := new int[3];
-    arr[0] := 7;
-    PrintInt(arr[0]);
-    PrintInt(arr[1]);
+    int x := 5;
+    x := x + 1;
 }

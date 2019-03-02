@@ -58,6 +58,7 @@ public class StmtAssign extends Stmt
     public TempReg toIR()
     {
         TempReg to = var.toIR();
+        // IR.add(new IR.sw(to, exp.toIR()));
         if (var instanceof VarSimple)
         {
             if (var.numLocal != -1)

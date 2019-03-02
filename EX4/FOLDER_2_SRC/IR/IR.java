@@ -59,6 +59,16 @@ public class IR
 
     }
 
+    public static class dereference extends IRComm
+    {
+        TempReg src;
+        public dereference(TempReg src) { this.src = src; }
+        public void toMIPS()
+        {
+            MIPSGen.writer.printf("\tlw Temp_%d, (Temp_%d)\n", src.id, src.id);
+        }
+    }
+
     public static class funcPrologue extends IRComm
     {
         int numLocals;
@@ -128,6 +138,17 @@ public class IR
         public void toMIPS()
         {
             MIPSGen.writer.printf("\tadd Temp_%d, $fp, %d\n", dst.id, offset * MIPSGen.WORD);
+        }
+    }
+
+    public static class sw extends IRComm
+    {
+        TempReg dst;
+        TempReg src;
+        public sw(TempReg dst, TempReg src) { this.dst = dst; this.src = src; }
+        public void toMIPS()
+        {
+            MIPSGen.writer.printf("\tsw Temp_%d, (Temp_%d)\n", src.id, dst.id);
         }
     }
 

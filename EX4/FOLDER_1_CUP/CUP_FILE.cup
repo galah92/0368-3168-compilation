@@ -71,6 +71,7 @@ non terminal AST.ClassField cField;
 non terminal AST.ClassFieldList cFieldList;
 non terminal AST.Exp exp;
 non terminal AST.Var var;
+non terminal AST.ExpVar varExp;
 non terminal AST.ExpCall callExp;
 non terminal AST.ExpBinOp binopExp;
 non terminal AST.ExpPrimitive primitiveExp;
@@ -127,11 +128,14 @@ classDec	::=		CLASS ID:name LBRACE cFieldList:l RBRACE	                {: RESULT
 
 arrayDec    ::=     ARRAY ID:name EQ ID:Type LBRACK RBRACK                        {: RESULT = new AST.ArrayDec(name, Type); RESULT.lineNumber = nameleft; :};
 
-exp			::=		var:v		            {: RESULT = v; RESULT.lineNumber = vleft; :} |
+exp			::=		varExp:v	            {: RESULT = v; RESULT.lineNumber = vleft; :} |
                     LPAREN exp:e RPAREN		{: RESULT = e; RESULT.lineNumber = eleft; :} |
                     binopExp:e	            {: RESULT = e; RESULT.lineNumber = eleft; :} |
                     callExp:e		        {: RESULT = e; RESULT.lineNumber = eleft; :} |
                     primitiveExp:e          {: RESULT = e; RESULT.lineNumber = eleft; :}
+                    ;
+
+varExp      ::=     var:v                   {: RESULT = new AST.ExpVar(v); RESULT.lineNumber = vleft; :}
                     ;
 
 var		::=		    ID:name						{: RESULT = new AST.VarSimple(name); RESULT.lineNumber = nameleft; :} |
