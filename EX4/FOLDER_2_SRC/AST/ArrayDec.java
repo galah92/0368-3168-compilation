@@ -33,9 +33,7 @@ public class ArrayDec extends Dec
     @Override
     public TempReg toIR()
     {
-        // TODO: implement
-        
-        return null;
+        return null;  // nothing to be done here
     }
 
 }

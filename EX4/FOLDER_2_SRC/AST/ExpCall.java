@@ -80,7 +80,7 @@ public class ExpCall extends Exp
             System.out.println("PrintTrace not supported yet");
             return TempReg.ZeroReg;
         default:
-            IR.add(new IR.Stack.claim(args2.size()));
+            IR.add(new IR.Stack.alloc(args2.size()));
             for (int i = 0; i < args2.size(); i++)
             {
                 IR.add(new IR.Stack.set(args2.get(i).toIR(), i));

@@ -15,10 +15,10 @@ public class IR
     public static class Stack
     {
 
-        public static class claim extends IRComm
+        public static class alloc extends IRComm
         {
             int offset;
-            public claim(int offset) { this.offset = offset; }
+            public alloc(int offset) { this.offset = offset; }
             public void toMIPS()
             {
                 MIPSGen.writer.printf("\taddi $sp, $sp, -%d\n", offset * MIPSGen.WORD);
@@ -215,10 +215,10 @@ public class IR
         }
     }
 
-    public static class malloc extends IRComm
+    public static class heapAlloc extends IRComm
     {
         int size;
-        public malloc(int size) { this.size = size; }
+        public heapAlloc(int size) { this.size = size; }
         public void toMIPS()
         {
             MIPSGen.writer.printf("\t# start of malloc\n");
@@ -226,6 +226,21 @@ public class IR
             MIPSGen.writer.printf("\tli $v0, 9\n");
             MIPSGen.writer.printf("\tsyscall\n");
             MIPSGen.writer.printf("\t# end of malloc\n");
+        }
+    }
+
+    public static class heapGet extends IRComm
+    {
+        TempReg dst;
+        TempReg src;
+        TempReg offset;
+        public heapGet(TempReg dst, TempReg src, TempReg offset) { this.dst = dst; this.src = src; this.offset = offset; }
+        public void toMIPS()
+        {
+            // TODO: boundary-check!
+            MIPSGen.writer.printf("\tmul Temp_%d, Temp_%d, Temp_%d\n", offset, offset, 4);
+            MIPSGen.writer.printf("\tadd Temp_%d, Temp_%d, Temp_%d\n", src, src, offset);
+            MIPSGen.writer.printf("\tlw Temp_%d, (Temp_%d)\n", dst, src);
         }
     }
 
