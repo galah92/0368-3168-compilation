@@ -5,6 +5,7 @@ import pcomp.*;
 
 public class ExpString extends ExpPrimitive
 {
+
     public String value;
     
     public ExpString(String value)
@@ -27,8 +28,9 @@ public class ExpString extends ExpPrimitive
     @Override
 	public TempReg toIR()
 	{
-		// TODO: implement
-		return null;
+		TempReg reg = new TempReg();
+        IR.add(new IR.stringLiteral(reg, value));
+        return reg;
 	}
     
 }

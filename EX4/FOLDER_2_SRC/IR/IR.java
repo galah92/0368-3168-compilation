@@ -316,4 +316,17 @@ public class IR
         }
     }
 
+    public static class stringLiteral extends IRComm
+    {
+        TempReg dst;
+        String str;
+        public stringLiteral(TempReg dst, String str) { this.dst = dst; this.str = str; }
+        public void toMIPS()
+        {
+            String label = IRComm.getLabel("string_literal");
+            MIPSGen.dataWriter.printf("%s: .asciiz %s\n", label, str);
+            MIPSGen.writer.printf("\tla Temp_%d, %s\n", dst.id, label);
+        }
+    }
+
 }

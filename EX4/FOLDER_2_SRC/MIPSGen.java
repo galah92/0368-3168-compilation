@@ -8,11 +8,16 @@ public class MIPSGen
     private static final StringWriter stringWriter = new StringWriter();
     public static final PrintWriter writer = new PrintWriter(stringWriter);
 
+    private static final StringWriter dataStringWriter = new StringWriter();
+    public static final PrintWriter dataWriter = new PrintWriter(dataStringWriter);
+
     public static void toFile(String outFile) throws Exception
     {
         writer.print("\tli $v0, 10\n");
         writer.print("\tsyscall\n");
         writer.close();
+
+        dataWriter.close();
 
         PrintWriter fileWriter = new PrintWriter(outFile);
         fileWriter.append(stringWriter.toString());
@@ -21,6 +26,7 @@ public class MIPSGen
         fileWriter.println("string_access_violation: .asciiz \"Access Violation\"");
         fileWriter.println("string_illegal_div_by_0: .asciiz \"Illegal Division By Zero\"");
         fileWriter.println("string_invalid_ptr_dref: .asciiz \"Invalid Pointer Dereference\"");
+        fileWriter.append(dataStringWriter.toString());
         fileWriter.close();
     }
 
