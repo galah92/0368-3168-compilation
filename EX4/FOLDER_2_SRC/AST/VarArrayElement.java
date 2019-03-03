@@ -40,7 +40,9 @@ public class VarArrayElement extends Var
     public TempReg toIR()
     {
         TempReg valReg = new TempReg();
-        IR.add(new IR.heapGet(valReg, var.toIR(), index.toIR()));
+        TempReg baseReg = var.toIR();
+        IR.add(new IR.dereference(baseReg));
+        IR.add(new IR.calcOffset(valReg, baseReg, index.toIR()));
         return valReg;
     }
 

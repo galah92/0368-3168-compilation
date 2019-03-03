@@ -13,6 +13,7 @@ public class TypeClass extends Type
     {
         super("Class");
         this.base = base;
+        if (base != null) { members.addAll(base.members); }
     }
 
     public boolean isInheritingFrom(TypeClass other)

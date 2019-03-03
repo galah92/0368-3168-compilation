@@ -5,6 +5,7 @@ import pcomp.*;
 
 public class ClassDec extends Dec
 {
+
     public String className;
     public String baseName;
     public ClassFieldList fields;
@@ -16,43 +17,35 @@ public class ClassDec extends Dec
         this.fields = fields;
     }
 
+    @Override
     public void logGraphviz()
     {
-        if (fields != null) fields.logGraphviz();
+        fields.logGraphviz();
         logNode(String.format("ClassDec\n%s\n%s", className, baseName));
         logEdge(fields);
     }
 
+    @Override
     public Type Semant() throws Exception
     {
-        if (!SymbolTable.isGlobalScope()) { throw new SemanticException(); }
+        if (!SymbolTable.isGlobalScope()) { throw new SemanticException("class definition must be at global scope"); }
 
         TypeClass baseType = null;
         if (baseName != null)
         {
             Type t = SymbolTable.find(baseName);
-            if (!(t instanceof TypeClass)) { throw new SemanticException(); }
+            if (!(t instanceof TypeClass)) { throw new SemanticException("symbol is not of type class: " + baseName); }
             baseType = (TypeClass)t;
         }
 
         if (SymbolTable.find(className) != null) { throw new SemanticException("symbol already defined"); }
 
-        // enter the class Type to that we could field of same Type
         TypeClass classType = new TypeClass(baseType);
         SymbolTable.enter(className, classType);
 
         SymbolTable.beginScope(Type.Scope.CLASS);
-        while (baseType != null)
-        {
-            for (Symbol symbol : baseType.members)
-            {
-                if (SymbolTable.findInScope(symbol.name) == null)
-                {
-                    SymbolTable.enter(symbol.name, symbol.type);
-                }
-            }
-            baseType = baseType.base;
-        }
+        for (Symbol symbol : classType.members) { SymbolTable.enter(symbol.name, symbol.type); }
+        
         fields.SemantDeclaration();
         fields.SemantBody();
         SymbolTable.endScope();

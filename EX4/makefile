@@ -21,8 +21,9 @@ CUP_PROGRAM = java -jar ${EXTERNAL_JARS_DIR}/java-cup-11b.jar
 CUP_FLAGS   = -nosummary -nowarn -parser Parser -symbols TokenNames
 CUP_FILE    = ${CUP_DIR}/CUP_FILE.cup
 
-INPUT    = ${INPUT_DIR}/TEST_01_Print_Primes.txt
-# INPUT    = ${INPUT_DIR}/Input.txt
+INPUT    = ${INPUT_DIR}/Input.txt
+# INPUT    = ${INPUT_DIR}/TEST_01_Print_Primes.txt
+# INPUT    = ${INPUT_DIR}/TEST_02_Bubble_Sort.txt
 OUTPUT   = ${OUTPUT_DIR}/SemanticStatus.txt
 
 default: compile
@@ -124,6 +125,55 @@ test_run:
 	@sed -i 's/\bTemp_78\b/$$t6/g' ${OUTPUT_DIR}/MIPS.txt
 	@sed -i 's/\bTemp_79\b/$$t7/g' ${OUTPUT_DIR}/MIPS.txt
 	@sed -i 's/\bTemp_80\b/$$t0/g' ${OUTPUT_DIR}/MIPS.txt
+	@sed -i 's/\bTemp_81\b/$$t1/g' ${OUTPUT_DIR}/MIPS.txt
+	@sed -i 's/\bTemp_82\b/$$t2/g' ${OUTPUT_DIR}/MIPS.txt
+	@sed -i 's/\bTemp_83\b/$$t3/g' ${OUTPUT_DIR}/MIPS.txt
+	@sed -i 's/\bTemp_84\b/$$t4/g' ${OUTPUT_DIR}/MIPS.txt
+	@sed -i 's/\bTemp_85\b/$$t5/g' ${OUTPUT_DIR}/MIPS.txt
+	@sed -i 's/\bTemp_86\b/$$t6/g' ${OUTPUT_DIR}/MIPS.txt
+	@sed -i 's/\bTemp_87\b/$$t7/g' ${OUTPUT_DIR}/MIPS.txt
+	@sed -i 's/\bTemp_88\b/$$t0/g' ${OUTPUT_DIR}/MIPS.txt
+	@sed -i 's/\bTemp_89\b/$$t1/g' ${OUTPUT_DIR}/MIPS.txt
+	@sed -i 's/\bTemp_90\b/$$t2/g' ${OUTPUT_DIR}/MIPS.txt
+	@sed -i 's/\bTemp_91\b/$$t3/g' ${OUTPUT_DIR}/MIPS.txt
+	@sed -i 's/\bTemp_92\b/$$t4/g' ${OUTPUT_DIR}/MIPS.txt
+	@sed -i 's/\bTemp_93\b/$$t5/g' ${OUTPUT_DIR}/MIPS.txt
+	@sed -i 's/\bTemp_94\b/$$t6/g' ${OUTPUT_DIR}/MIPS.txt
+	@sed -i 's/\bTemp_95\b/$$t7/g' ${OUTPUT_DIR}/MIPS.txt
+	@sed -i 's/\bTemp_96\b/$$t0/g' ${OUTPUT_DIR}/MIPS.txt
+	@sed -i 's/\bTemp_97\b/$$t1/g' ${OUTPUT_DIR}/MIPS.txt
+	@sed -i 's/\bTemp_98\b/$$t2/g' ${OUTPUT_DIR}/MIPS.txt
+	@sed -i 's/\bTemp_99\b/$$t3/g' ${OUTPUT_DIR}/MIPS.txt
+	@sed -i 's/\bTemp_100\b/$$t4/g' ${OUTPUT_DIR}/MIPS.txt
+	@sed -i 's/\bTemp_101\b/$$t5/g' ${OUTPUT_DIR}/MIPS.txt
+	@sed -i 's/\bTemp_102\b/$$t6/g' ${OUTPUT_DIR}/MIPS.txt
+	@sed -i 's/\bTemp_103\b/$$t7/g' ${OUTPUT_DIR}/MIPS.txt
+	@sed -i 's/\bTemp_104\b/$$t0/g' ${OUTPUT_DIR}/MIPS.txt
+	@sed -i 's/\bTemp_105\b/$$t1/g' ${OUTPUT_DIR}/MIPS.txt
+	@sed -i 's/\bTemp_106\b/$$t2/g' ${OUTPUT_DIR}/MIPS.txt
+	@sed -i 's/\bTemp_107\b/$$t3/g' ${OUTPUT_DIR}/MIPS.txt
+	@sed -i 's/\bTemp_108\b/$$t4/g' ${OUTPUT_DIR}/MIPS.txt
+	@sed -i 's/\bTemp_109\b/$$t5/g' ${OUTPUT_DIR}/MIPS.txt
+	@sed -i 's/\bTemp_110\b/$$t6/g' ${OUTPUT_DIR}/MIPS.txt
+	@sed -i 's/\bTemp_111\b/$$t7/g' ${OUTPUT_DIR}/MIPS.txt
+	@sed -i 's/\bTemp_112\b/$$t0/g' ${OUTPUT_DIR}/MIPS.txt
+	@sed -i 's/\bTemp_113\b/$$t1/g' ${OUTPUT_DIR}/MIPS.txt
+	@sed -i 's/\bTemp_114\b/$$t2/g' ${OUTPUT_DIR}/MIPS.txt
+	@sed -i 's/\bTemp_115\b/$$t3/g' ${OUTPUT_DIR}/MIPS.txt
+	@sed -i 's/\bTemp_116\b/$$t4/g' ${OUTPUT_DIR}/MIPS.txt
+	@sed -i 's/\bTemp_117\b/$$t5/g' ${OUTPUT_DIR}/MIPS.txt
+	@sed -i 's/\bTemp_118\b/$$t6/g' ${OUTPUT_DIR}/MIPS.txt
+	@sed -i 's/\bTemp_119\b/$$t7/g' ${OUTPUT_DIR}/MIPS.txt
+	@sed -i 's/\bTemp_120\b/$$t0/g' ${OUTPUT_DIR}/MIPS.txt
+	@sed -i 's/\bTemp_121\b/$$t1/g' ${OUTPUT_DIR}/MIPS.txt
+	@sed -i 's/\bTemp_122\b/$$t2/g' ${OUTPUT_DIR}/MIPS.txt
+	@sed -i 's/\bTemp_123\b/$$t3/g' ${OUTPUT_DIR}/MIPS.txt
+	@sed -i 's/\bTemp_124\b/$$t4/g' ${OUTPUT_DIR}/MIPS.txt
+	@sed -i 's/\bTemp_125\b/$$t5/g' ${OUTPUT_DIR}/MIPS.txt
+	@sed -i 's/\bTemp_126\b/$$t6/g' ${OUTPUT_DIR}/MIPS.txt
+	@sed -i 's/\bTemp_127\b/$$t7/g' ${OUTPUT_DIR}/MIPS.txt
+	@sed -i 's/\bTemp_128\b/$$t0/g' ${OUTPUT_DIR}/MIPS.txt
+	@sed -i 's/\bTemp_129\b/$$t1/g' ${OUTPUT_DIR}/MIPS.txt
 	spim -f ${OUTPUT_DIR}/MIPS.txt #> ${OUTPUT_DIR}/MIPS_OUTPUT.txt	
 
 everything: clean compile test test_run

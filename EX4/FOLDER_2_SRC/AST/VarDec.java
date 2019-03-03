@@ -100,6 +100,7 @@ public class VarDec extends ClassField
         }
         else
         {
+            System.out.println("not supported yet");
             // TODO: complete
         }
         return valReg;
