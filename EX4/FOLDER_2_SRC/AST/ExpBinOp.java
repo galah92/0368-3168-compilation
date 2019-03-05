@@ -62,11 +62,11 @@ public class ExpBinOp extends Exp
 	}
 
 	@Override
-	public TempReg toIR()
+	public IRReg toIR()
 	{
-		TempReg t1 = left.toIR();
-		TempReg t2 = right.toIR();
-		TempReg dst = new TempReg();
+		IRReg t1 = left.toIR();
+		IRReg t2 = right.toIR();
+		IRReg dst = new IRReg();
 
 		if (isStringsExpessions)
 		{

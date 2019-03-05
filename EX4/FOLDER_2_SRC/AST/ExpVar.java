@@ -28,9 +28,9 @@ public class ExpVar extends Exp
     }
 
     @Override
-    public TempReg toIR()
+    public IRReg toIR()
     {
-        TempReg reg = var.toIR();
+        IRReg reg = var.toIR();
         IR.add(new IR.dereference(reg));
         return reg;
     }

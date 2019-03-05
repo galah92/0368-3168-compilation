@@ -46,7 +46,7 @@ public class ParamsList extends Node
 	}
 	
 	@Override
-	public TempReg toIR()
+	public IRReg toIR()
 	{
 		return null;
 	}

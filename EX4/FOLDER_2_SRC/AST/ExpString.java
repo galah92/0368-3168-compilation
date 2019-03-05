@@ -26,9 +26,9 @@ public class ExpString extends ExpPrimitive
     }
 
     @Override
-	public TempReg toIR()
+	public IRReg toIR()
 	{
-		TempReg reg = new TempReg();
+		IRReg reg = new IRReg();
         IR.add(new IR.stringLiteral(reg, value));
         return reg;
 	}

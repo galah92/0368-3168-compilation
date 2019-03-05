@@ -55,9 +55,9 @@ public class StmtAssign extends Stmt
     }
 
     @Override
-    public TempReg toIR()
+    public IRReg toIR()
     {
-        TempReg to = var.toIR();
+        IRReg to = var.toIR();
         IR.add(new IR.sw(to, exp.toIR()));
         return to;
     }

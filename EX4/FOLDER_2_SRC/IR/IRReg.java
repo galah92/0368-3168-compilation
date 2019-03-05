@@ -1,11 +1,11 @@
 package pcomp;
 
 
-public class TempReg
+public class IRReg
 {
     private static int counter = 0;
 
     public final int id = (counter++) % 8;
 
-    public static final TempReg ZeroReg = new TempReg();
+    public static final IRReg ZeroReg = new IRReg();
 }

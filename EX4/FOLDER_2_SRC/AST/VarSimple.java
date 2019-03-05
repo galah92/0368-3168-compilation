@@ -48,9 +48,9 @@ public class VarSimple extends Var
     }
 
     @Override
-    public TempReg toIR()
+    public IRReg toIR()
     {
-        TempReg reg = new TempReg();
+        IRReg reg = new IRReg();
         if (numParam != -1)
         {
             IR.add(new IR.frameGetOffset(reg, numParam + 2));

@@ -66,7 +66,7 @@ public class ExpCall extends Exp
     }
 
     @Override
-    public TempReg toIR()
+    public IRReg toIR()
     {
         switch (funcName)
         {
@@ -88,7 +88,7 @@ public class ExpCall extends Exp
             IR.add(new IR.jal(funcName));
             IR.add(new IR.Stack.release(args2.size()));
         }
-        TempReg retVal = new TempReg();
+        IRReg retVal = new IRReg();
         IR.add(new IR.getRetVal(retVal));
         return retVal;
     }

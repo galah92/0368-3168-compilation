@@ -31,7 +31,7 @@ public class VarClassField extends Var
     }
 
     @Override
-    public TempReg toIR()
+    public IRReg toIR()
     {
 		// TODO: implement
 		return null;

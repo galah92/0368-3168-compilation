@@ -25,7 +25,7 @@ public class StmtCall extends Stmt
         return callExp.Semant();
     }
 
-    public TempReg toIR()
+    public IRReg toIR()
     {
         if (callExp != null) callExp.toIR();
         return null;

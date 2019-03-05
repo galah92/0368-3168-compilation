@@ -22,7 +22,7 @@ public class Main
 
             ast.toIR();
             IR.toMIPS();
-            MIPSGen.toFile("./FOLDER_5_OUTPUT/MIPS.txt");
+            MIPS.toFile("./FOLDER_5_OUTPUT/MIPS.txt");
             
             writer.println("OK");
         }

@@ -37,10 +37,10 @@ public class VarArrayElement extends Var
     }
 
     @Override
-    public TempReg toIR()
+    public IRReg toIR()
     {
-        TempReg valReg = new TempReg();
-        TempReg baseReg = var.toIR();
+        IRReg valReg = new IRReg();
+        IRReg baseReg = var.toIR();
         IR.add(new IR.dereference(baseReg));
         IR.add(new IR.calcOffset(valReg, baseReg, index.toIR()));
         return valReg;

@@ -2,7 +2,7 @@ package pcomp;
 import java.io.*;
 
 
-public class MIPSGen
+public class MIPS
 {
 
     private static final StringWriter stringWriter = new StringWriter();

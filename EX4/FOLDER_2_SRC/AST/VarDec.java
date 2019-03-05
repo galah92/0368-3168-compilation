@@ -91,9 +91,9 @@ public class VarDec extends ClassField
     }
 
     @Override
-    public TempReg toIR()
+    public IRReg toIR()
     {
-        TempReg valReg = initVal == null ? TempReg.ZeroReg : initVal.toIR();
+        IRReg valReg = initVal == null ? IRReg.ZeroReg : initVal.toIR();
         if (numLocal != -1)  // local variable?
         {
             IR.add(new IR.frameSet(valReg, -numLocal - 1));

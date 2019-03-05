@@ -18,8 +18,8 @@ public class ExpNil extends ExpPrimitive
     }
 
     @Override
-	public TempReg toIR()
+	public IRReg toIR()
 	{
-        return TempReg.ZeroReg;
+        return IRReg.ZeroReg;
 	}
 }

@@ -28,7 +28,7 @@ public class StmtVarDec extends Stmt
     }
 
     @Override
-    public TempReg toIR()
+    public IRReg toIR()
     {
         return var.toIR();
     }

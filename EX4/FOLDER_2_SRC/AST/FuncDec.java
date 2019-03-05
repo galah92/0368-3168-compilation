@@ -86,7 +86,7 @@ public class FuncDec extends ClassField
     }
 
     @Override
-    public TempReg toIR()
+    public IRReg toIR()
     {
         int numLocals = funcType.locals.size();
         IR.add(new IR.label(funcName));

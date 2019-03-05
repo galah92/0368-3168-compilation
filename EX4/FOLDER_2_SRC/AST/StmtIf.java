@@ -38,10 +38,10 @@ public class StmtIf extends Stmt
     }
 
     @Override
-    public TempReg toIR()
+    public IRReg toIR()
     {
         String endIfLabel = IR.uniqueLabel("endIf");
-        TempReg condTemp = cond.toIR();
+        IRReg condTemp = cond.toIR();
         IR.add(new IR.beqz(condTemp, endIfLabel));
         body.toIR();
         IR.add(new IR.label(endIfLabel));

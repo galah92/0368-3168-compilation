@@ -29,7 +29,7 @@ public class ExpList extends Node
     }
 
     @Override
-    public TempReg toIR()
+    public IRReg toIR()
     {
         if (head != null) head.toIR();
         if (tail != null) tail.toIR();

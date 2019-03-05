@@ -12,7 +12,7 @@ public abstract class Node
 
     public abstract Type Semant() throws Exception;
 
-    public abstract TempReg toIR();
+    public abstract IRReg toIR();
 
     public class SemanticException extends Exception
     {

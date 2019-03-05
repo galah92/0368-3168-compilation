@@ -40,9 +40,9 @@ public class StmtReturn extends Stmt
     }
 
     @Override
-    public TempReg toIR()
+    public IRReg toIR()
     {
-        IR.add(new IR.setRetVal(exp == null ? TempReg.ZeroReg : exp.toIR()));
+        IR.add(new IR.setRetVal(exp == null ? IRReg.ZeroReg : exp.toIR()));
         IR.add(new IR.jump(funcName + "_end"));
         return null;
     }

@@ -54,7 +54,7 @@ public class ClassDec extends Dec
     }
 
     @Override
-    public TempReg toIR()
+    public IRReg toIR()
     {
         // TODO: implement
         return null;
