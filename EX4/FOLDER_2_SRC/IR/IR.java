@@ -3,13 +3,14 @@ package pcomp;
 import java.util.*;
 
 
+abstract class IRComm
+{
+    public abstract void toMIPS();
+}
+
+
 public class IR
 {
-
-    private static abstract class IRComm
-    {
-        public abstract void toMIPS();
-    }
 
     private static final Deque<IRComm> commands = new ArrayDeque<IRComm>();
 
@@ -17,7 +18,7 @@ public class IR
     
     public static void toMIPS() { for (IRComm comm : commands) { comm.toMIPS(); } }
 
-    public static int uniqueLabelCounter = 0;
+    private static int uniqueLabelCounter = 0;
 
     public static String uniqueLabel(String label)
     {
@@ -27,7 +28,7 @@ public class IR
     public static class Stack
     {
 
-        public static class alloc extends IR.IRComm
+        public static class alloc extends IRComm
         {
             int offset;
             public alloc(int offset) { this.offset = offset; }
@@ -37,7 +38,7 @@ public class IR
             }
         }
 
-        public static class release extends IR.IRComm
+        public static class release extends IRComm
         {
             int offset;
             public release(int offset) { this.offset = offset; }
@@ -47,7 +48,7 @@ public class IR
             }
         }
 
-        public static class set extends IR.IRComm
+        public static class set extends IRComm
         {
             IRReg src;
             int offset;
@@ -58,7 +59,7 @@ public class IR
             }
         }
 
-        public static class get extends IR.IRComm
+        public static class get extends IRComm
         {
             IRReg dst;
             int offset;
@@ -71,7 +72,7 @@ public class IR
 
     }
 
-    public static class dereference extends IR.IRComm
+    public static class dereference extends IRComm
     {
         IRReg src;
         public dereference(IRReg src) { this.src = src; }
@@ -81,7 +82,7 @@ public class IR
         }
     }
 
-    public static class funcPrologue extends IR.IRComm
+    public static class funcPrologue extends IRComm
     {
         int numLocals;
         public funcPrologue(int numLocals) { this.numLocals = numLocals; }
@@ -100,7 +101,7 @@ public class IR
         }
     }
 
-    public static class funcEpilogue extends IR.IRComm
+    public static class funcEpilogue extends IRComm
     {
         int numLocals;
         public funcEpilogue(int numLocals) { this.numLocals = numLocals; }
@@ -120,7 +121,7 @@ public class IR
         }
     }
 
-    public static class frameSet extends IR.IRComm
+    public static class frameSet extends IRComm
     {
         IRReg src;
         int offset;
@@ -131,7 +132,7 @@ public class IR
         }
     }
 
-    public static class frameGet extends IR.IRComm
+    public static class frameGet extends IRComm
     {
         IRReg dst;
         int offset;
@@ -142,7 +143,7 @@ public class IR
         }
     }
 
-    public static class frameGetOffset extends IR.IRComm
+    public static class frameGetOffset extends IRComm
     {
         IRReg dst;
         int offset;
@@ -153,7 +154,7 @@ public class IR
         }
     }
 
-    public static class sw extends IR.IRComm
+    public static class sw extends IRComm
     {
         IRReg dst;
         IRReg src;
@@ -164,7 +165,7 @@ public class IR
         }
     }
 
-    public static class jump extends IR.IRComm
+    public static class jump extends IRComm
     {
         String label;
         public jump(String label) { this.label = label; }
@@ -174,7 +175,7 @@ public class IR
         }
     }
 
-    public static class label extends IR.IRComm
+    public static class label extends IRComm
     {
         String label;
         public label(String label) { this.label = label; }
@@ -185,7 +186,7 @@ public class IR
         }
     }
 
-    public static class setRetVal extends IR.IRComm
+    public static class setRetVal extends IRComm
     {
         IRReg src;
         public setRetVal(IRReg src) { this.src = src; }
@@ -195,7 +196,7 @@ public class IR
         }
     }
 
-    public static class getRetVal extends IR.IRComm
+    public static class getRetVal extends IRComm
     {
         IRReg dst;
         public getRetVal(IRReg dst) { this.dst = dst; }
@@ -205,7 +206,7 @@ public class IR
         }
     }
 
-    public static class move extends IR.IRComm
+    public static class move extends IRComm
     {
         IRReg dst;
         IRReg src;
@@ -216,7 +217,7 @@ public class IR
         }
     }
 
-    public static class push extends IR.IRComm
+    public static class push extends IRComm
     {
         IRReg src;
         public push(IRReg src) { this.src = src; }
@@ -227,7 +228,7 @@ public class IR
         }
     }
 
-    public static class pop extends IR.IRComm
+    public static class pop extends IRComm
     {
         IRReg dst;
         public pop(IRReg dst) { this.dst = dst; }
@@ -238,7 +239,7 @@ public class IR
         }
     }
 
-    public static class jal extends IR.IRComm
+    public static class jal extends IRComm
     {
         String label;
         public jal(String label) { this.label = label; }
@@ -248,7 +249,7 @@ public class IR
         }
     }
 
-    public static class li extends IR.IRComm
+    public static class li extends IRComm
     {
         IRReg dst;
         int val;
@@ -259,7 +260,7 @@ public class IR
         }
     }
 
-    public static class lw extends IR.IRComm
+    public static class lw extends IRComm
     {
         IRReg dst;
         int val;
@@ -270,7 +271,7 @@ public class IR
         }
     }
 
-    public static class heapAlloc extends IR.IRComm
+    public static class heapAlloc extends IRComm
     {
         IRReg dst;
         IRReg numBytes;
@@ -287,7 +288,7 @@ public class IR
         }
     }
 
-    public static class calcOffset extends IR.IRComm
+    public static class calcOffset extends IRComm
     {
         IRReg dst;
         IRReg src;
@@ -301,7 +302,7 @@ public class IR
         }
     }
 
-    public static class heapGet extends IR.IRComm
+    public static class heapGet extends IRComm
     {
         IRReg dst;
         IRReg src;
@@ -316,7 +317,7 @@ public class IR
         }
     }
 
-    public static class heapSet extends IR.IRComm
+    public static class heapSet extends IRComm
     {
         IRReg dst;
         IRReg src;
@@ -328,7 +329,7 @@ public class IR
         }
     }
 
-    public static class stringLiteral extends IR.IRComm
+    public static class stringLiteral extends IRComm
     {
         IRReg dst;
         String str;
@@ -341,7 +342,7 @@ public class IR
         }
     }
 
-    public static class printInt extends IR.IRComm
+    public static class printInt extends IRComm
     {
         IRReg value;
         public printInt(IRReg value) { this.value = value; }
@@ -360,7 +361,7 @@ public class IR
         }
     }
 
-    public static class printString extends IR.IRComm
+    public static class printString extends IRComm
     {
         IRReg value;
         public printString(IRReg value) { this.value = value; }
@@ -374,7 +375,7 @@ public class IR
         }
     }
 
-    public static class intBinOp extends IR.IRComm
+    public static class intBinOp extends IRComm
     {
         IRReg dst;
         IRReg left;
@@ -409,7 +410,7 @@ public class IR
         }
     }
 
-    public static class beqz extends IR.IRComm
+    public static class beqz extends IRComm
     {
         IRReg value;
         String label;
