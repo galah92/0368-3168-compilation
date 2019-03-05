@@ -42,7 +42,7 @@ public class IR
             public set(TempReg src, int offset) { this.src = src; this.offset = offset; }
             public void toMIPS()
             {
-                MIPSGen.writer.printf("\tsw Temp_%d, %d($sp)\n", src.id, offset * MIPSGen.WORD);
+                MIPSGen.writer.printf("\tsw $t%d, %d($sp)\n", src.id, offset * MIPSGen.WORD);
             }
         }
 
@@ -53,7 +53,7 @@ public class IR
             public get(TempReg dst, int offset) { this.dst = dst; this.offset = offset; }
             public void toMIPS()
             {
-                MIPSGen.writer.printf("\tlw Temp_%d, %d($sp)\n", dst.id, offset * MIPSGen.WORD);
+                MIPSGen.writer.printf("\tlw $t%d, %d($sp)\n", dst.id, offset * MIPSGen.WORD);
             }
         }
 
@@ -65,7 +65,7 @@ public class IR
         public dereference(TempReg src) { this.src = src; }
         public void toMIPS()
         {
-            MIPSGen.writer.printf("\tlw Temp_%d, (Temp_%d)\n", src.id, src.id);
+            MIPSGen.writer.printf("\tlw $t%d, ($t%d)\n", src.id, src.id);
         }
     }
 
@@ -115,7 +115,7 @@ public class IR
         public frameSet(TempReg src, int offset) { this.src = src; this.offset = offset; }
         public void toMIPS()
         {
-            MIPSGen.writer.printf("\tsw Temp_%d, %d($fp)\n", src.id, offset * MIPSGen.WORD);
+            MIPSGen.writer.printf("\tsw $t%d, %d($fp)\n", src.id, offset * MIPSGen.WORD);
         }
     }
 
@@ -126,7 +126,7 @@ public class IR
         public frameGet(TempReg dst, int offset) { this.dst = dst; this.offset = offset; }
         public void toMIPS()
         {
-            MIPSGen.writer.printf("\tlw Temp_%d, %d($fp)\n", dst.id, offset * MIPSGen.WORD);
+            MIPSGen.writer.printf("\tlw $t%d, %d($fp)\n", dst.id, offset * MIPSGen.WORD);
         }
     }
 
@@ -137,7 +137,7 @@ public class IR
         public frameGetOffset(TempReg dst, int offset) { this.dst = dst; this.offset = offset; }
         public void toMIPS()
         {
-            MIPSGen.writer.printf("\tadd Temp_%d, $fp, %d\n", dst.id, offset * MIPSGen.WORD);
+            MIPSGen.writer.printf("\tadd $t%d, $fp, %d\n", dst.id, offset * MIPSGen.WORD);
         }
     }
 
@@ -148,7 +148,7 @@ public class IR
         public sw(TempReg dst, TempReg src) { this.dst = dst; this.src = src; }
         public void toMIPS()
         {
-            MIPSGen.writer.printf("\tsw Temp_%d, (Temp_%d)\n", src.id, dst.id);
+            MIPSGen.writer.printf("\tsw $t%d, ($t%d)\n", src.id, dst.id);
         }
     }
 
@@ -179,7 +179,7 @@ public class IR
         public setRetVal(TempReg src) { this.src = src; }
         public void toMIPS()
         {
-            MIPSGen.writer.printf("\tmove $v0, Temp_%d\n", src.id);
+            MIPSGen.writer.printf("\tmove $v0, $t%d\n", src.id);
         }
     }
 
@@ -189,7 +189,7 @@ public class IR
         public getRetVal(TempReg dst) { this.dst = dst; }
         public void toMIPS()
         {
-            MIPSGen.writer.printf("\tmove Temp_%d, $v0\n", dst.id);
+            MIPSGen.writer.printf("\tmove $t%d, $v0\n", dst.id);
         }
     }
 
@@ -200,7 +200,7 @@ public class IR
         public move(TempReg dst, TempReg src) { this.dst = dst; this.src = src; }
         public void toMIPS()
         {
-            MIPSGen.writer.printf("\tmove Temp_%d, Temp_%d\n", dst.id, src.id);
+            MIPSGen.writer.printf("\tmove $t%d, $t%d\n", dst.id, src.id);
         }
     }
 
@@ -211,7 +211,7 @@ public class IR
         public void toMIPS()
         {
             MIPSGen.writer.printf("\taddi $sp, $sp, -4\n");
-            MIPSGen.writer.printf("\tsw Temp_%d, ($sp)\n", src.id);
+            MIPSGen.writer.printf("\tsw $t%d, ($sp)\n", src.id);
         }
     }
 
@@ -221,7 +221,7 @@ public class IR
         public pop(TempReg dst) { this.dst = dst; }
         public void toMIPS()
         {
-            MIPSGen.writer.printf("\tlw Temp_%d, ($sp)\n", dst.id);
+            MIPSGen.writer.printf("\tlw $t%d, ($sp)\n", dst.id);
             MIPSGen.writer.printf("\taddi $sp, $sp, 4\n");
         }
     }
@@ -243,7 +243,7 @@ public class IR
         public li(TempReg dst, int val) { this.dst = dst; this.val = val; }
         public void toMIPS()
         {
-            MIPSGen.writer.printf("\tli Temp_%d, %d\n", dst.id, val);
+            MIPSGen.writer.printf("\tli $t%d, %d\n", dst.id, val);
         }
     }
 
@@ -254,7 +254,7 @@ public class IR
         public lw(TempReg dst, int val) { this.dst = dst; this.val = val; }
         public void toMIPS()
         {
-            MIPSGen.writer.printf("\tlw Temp_%d, %d\n", dst.id, val);
+            MIPSGen.writer.printf("\tlw $t%d, %d\n", dst.id, val);
         }
     }
 
@@ -266,11 +266,11 @@ public class IR
         public void toMIPS()
         {
             MIPSGen.writer.printf("\t# start of malloc\n");
-            MIPSGen.writer.printf("\tmove $a0, Temp_%d\n", numBytes.id);
+            MIPSGen.writer.printf("\tmove $a0, $t%d\n", numBytes.id);
             MIPSGen.writer.printf("\tsll $a0, $a0, %d\n", MIPSGen.WORD);
             MIPSGen.writer.printf("\tli $v0, 9\n");
             MIPSGen.writer.printf("\tsyscall\n");
-            MIPSGen.writer.printf("\tmove Temp_%d, $v0\n", dst.id);
+            MIPSGen.writer.printf("\tmove $t%d, $v0\n", dst.id);
             MIPSGen.writer.printf("\t# end of malloc\n");
         }
     }
@@ -284,8 +284,8 @@ public class IR
         public void toMIPS()
         {
             // TODO: boundary-check!
-            MIPSGen.writer.printf("\tsll Temp_%d, Temp_%d, %d\n", offset.id, offset.id, MIPSGen.WORD);
-            MIPSGen.writer.printf("\tadd Temp_%d, Temp_%d, Temp_%d\n", dst.id, src.id, offset.id);
+            MIPSGen.writer.printf("\tsll $t%d, $t%d, %d\n", offset.id, offset.id, MIPSGen.WORD);
+            MIPSGen.writer.printf("\tadd $t%d, $t%d, $t%d\n", dst.id, src.id, offset.id);
         }
     }
 
@@ -298,9 +298,9 @@ public class IR
         public void toMIPS()
         {
             // TODO: boundary-check!
-            MIPSGen.writer.printf("\tsll Temp_%d, Temp_%d, %d\n", offset.id, offset.id, MIPSGen.WORD);
-            MIPSGen.writer.printf("\tadd Temp_%d, Temp_%d, Temp_%d\n", src.id, src.id, offset.id);
-            MIPSGen.writer.printf("\tlw Temp_%d, (Temp_%d)\n", dst.id, src.id);
+            MIPSGen.writer.printf("\tsll $t%d, $t%d, %d\n", offset.id, offset.id, MIPSGen.WORD);
+            MIPSGen.writer.printf("\tadd $t%d, $t%d, $t%d\n", src.id, src.id, offset.id);
+            MIPSGen.writer.printf("\tlw $t%d, ($t%d)\n", dst.id, src.id);
         }
     }
 
@@ -312,7 +312,7 @@ public class IR
         public void toMIPS()
         {
             // TODO: boundary-check!
-            MIPSGen.writer.printf("\tsw Temp_%d, (Temp_%d)\n", src.id, dst.id);
+            MIPSGen.writer.printf("\tsw $t%d, ($t%d)\n", src.id, dst.id);
         }
     }
 
@@ -325,7 +325,7 @@ public class IR
         {
             String label = IRComm.getLabel("string_literal");
             MIPSGen.dataWriter.printf("%s: .asciiz %s\n", label, str);
-            MIPSGen.writer.printf("\tla Temp_%d, %s\n", dst.id, label);
+            MIPSGen.writer.printf("\tla $t%d, %s\n", dst.id, label);
         }
     }
 
@@ -337,7 +337,7 @@ public class IR
         {
             // // print_int
             MIPSGen.writer.printf("\t# start of print_int\n");
-            MIPSGen.writer.printf("\tmove $a0, Temp_%d\n", value.id);
+            MIPSGen.writer.printf("\tmove $a0, $t%d\n", value.id);
             MIPSGen.writer.printf("\tli $v0, 1\n");
             MIPSGen.writer.printf("\tsyscall\n");
             // // print_char (whitespace)
@@ -355,7 +355,7 @@ public class IR
         public void toMIPS()
         {
             MIPSGen.writer.printf("\t# start of print_string\n");
-            MIPSGen.writer.printf("\tmove $a0, Temp_%d\n", value.id);
+            MIPSGen.writer.printf("\tmove $a0, $t%d\n", value.id);
             MIPSGen.writer.printf("\tli $v0, 4\n");
             MIPSGen.writer.printf("\tsyscall\n");
             MIPSGen.writer.printf("\t# end of print_string\n");
@@ -374,23 +374,23 @@ public class IR
             switch (op)
             {
             case '+':
-                MIPSGen.writer.printf("\tadd Temp_%d, Temp_%d, Temp_%d\n", dst.id, left.id, right.id);
+                MIPSGen.writer.printf("\tadd $t%d, $t%d, $t%d\n", dst.id, left.id, right.id);
                 break;
             case '*':
-                MIPSGen.writer.printf("\tmul Temp_%d, Temp_%d, Temp_%d\n", dst.id, left.id, right.id);
+                MIPSGen.writer.printf("\tmul $t%d, $t%d, $t%d\n", dst.id, left.id, right.id);
                 break;
             case '<':
                 String ltEndLabel = IRComm.getLabel("ltEnd");
-                MIPSGen.writer.printf("\tli Temp_%d, 1\n", dst.id);  // be positive - assume equality
-                MIPSGen.writer.printf("\tblt Temp_%d, Temp_%d, %s\n", left.id, right.id, ltEndLabel);
-                MIPSGen.writer.printf("\tli Temp_%d, 0\n", dst.id);  // guess not
+                MIPSGen.writer.printf("\tli $t%d, 1\n", dst.id);  // be positive - assume equality
+                MIPSGen.writer.printf("\tblt $t%d, $t%d, %s\n", left.id, right.id, ltEndLabel);
+                MIPSGen.writer.printf("\tli $t%d, 0\n", dst.id);  // guess not
                 MIPSGen.writer.printf("%s:\n", ltEndLabel);
                 break;
             case '=':
                 String eqEndLabel = IRComm.getLabel("eqEnd");
-                MIPSGen.writer.printf("\tli Temp_%d, 1\n", dst.id);  // be positive - assume equality
-                MIPSGen.writer.printf("\tbeq Temp_%d, Temp_%d, %s\n", left.id, right.id, eqEndLabel);
-                MIPSGen.writer.printf("\tli Temp_%d, 0\n", dst.id);  // guess not
+                MIPSGen.writer.printf("\tli $t%d, 1\n", dst.id);  // be positive - assume equality
+                MIPSGen.writer.printf("\tbeq $t%d, $t%d, %s\n", left.id, right.id, eqEndLabel);
+                MIPSGen.writer.printf("\tli $t%d, 0\n", dst.id);  // guess not
                 MIPSGen.writer.printf("%s:\n", eqEndLabel);
                 break;
             }
@@ -404,7 +404,7 @@ public class IR
         public beqz(TempReg value, String label) { this.value = value; this.label = label; }
         public void toMIPS()
         {
-            MIPSGen.writer.printf("\tbeqz Temp_%d, %s\n", value.id, label);
+            MIPSGen.writer.printf("\tbeqz $t%d, %s\n", value.id, label);
         }
     }
 
