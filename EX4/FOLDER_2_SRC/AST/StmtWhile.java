@@ -6,6 +6,7 @@ import pcomp.*;
 
 public class StmtWhile extends Stmt
 {
+    
     public Exp cond;
     public StmtList body;
 
@@ -19,9 +20,7 @@ public class StmtWhile extends Stmt
     {
         if (cond != null) cond.logGraphviz();
         if (body != null) body.logGraphviz();
-
         logNode("StmtWhile");
-
         if (cond != null) logEdge(cond);
         if (body != null) logEdge(body);
     }
@@ -38,8 +37,8 @@ public class StmtWhile extends Stmt
     @Override
     public TempReg toIR()
     {
-        String whileCondLabel = IRComm.getLabel("whileCond");
-        String whileEndLabel = IRComm.getLabel("whileEnd");
+        String whileCondLabel = IR.uniqueLabel("whileCond");
+        String whileEndLabel = IR.uniqueLabel("whileEnd");
         IR.add(new IR.label(whileCondLabel));
         TempReg condTemp = cond.toIR();
         IR.add(new IR.beqz(condTemp, whileEndLabel));

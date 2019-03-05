@@ -3,9 +3,9 @@ package AST;
 import pcomp.*;
 
 
-
 public class StmtIf extends Stmt
 {
+
     public Exp cond;
     public StmtList body;
 
@@ -40,7 +40,7 @@ public class StmtIf extends Stmt
     @Override
     public TempReg toIR()
     {
-        String endIfLabel = IRComm.getLabel("endIf");
+        String endIfLabel = IR.uniqueLabel("endIf");
         TempReg condTemp = cond.toIR();
         IR.add(new IR.beqz(condTemp, endIfLabel));
         body.toIR();

@@ -6,16 +6,30 @@ import java.util.*;
 public class IR
 {
 
+    public static abstract class IRComm
+    {
+
+        public abstract void toMIPS();
+        
+    }
+
     private static final Deque<IRComm> commands = new ArrayDeque<IRComm>();
 
     public static void add(IRComm cmd) { commands.add(cmd); }
     
     public static void toMIPS() { for (IRComm comm : commands) { comm.toMIPS(); } }
 
+    public static int uniqueLabelCounter = 0;
+
+    public static String uniqueLabel(String label)
+    {
+        return String.format("label_%d_%s", uniqueLabelCounter++, label);
+    }
+
     public static class Stack
     {
 
-        public static class alloc extends IRComm
+        public static class alloc extends IR.IRComm
         {
             int offset;
             public alloc(int offset) { this.offset = offset; }
@@ -25,7 +39,7 @@ public class IR
             }
         }
 
-        public static class release extends IRComm
+        public static class release extends IR.IRComm
         {
             int offset;
             public release(int offset) { this.offset = offset; }
@@ -35,7 +49,7 @@ public class IR
             }
         }
 
-        public static class set extends IRComm
+        public static class set extends IR.IRComm
         {
             TempReg src;
             int offset;
@@ -46,7 +60,7 @@ public class IR
             }
         }
 
-        public static class get extends IRComm
+        public static class get extends IR.IRComm
         {
             TempReg dst;
             int offset;
@@ -59,7 +73,7 @@ public class IR
 
     }
 
-    public static class dereference extends IRComm
+    public static class dereference extends IR.IRComm
     {
         TempReg src;
         public dereference(TempReg src) { this.src = src; }
@@ -69,7 +83,7 @@ public class IR
         }
     }
 
-    public static class funcPrologue extends IRComm
+    public static class funcPrologue extends IR.IRComm
     {
         int numLocals;
         public funcPrologue(int numLocals) { this.numLocals = numLocals; }
@@ -88,7 +102,7 @@ public class IR
         }
     }
 
-    public static class funcEpilogue extends IRComm
+    public static class funcEpilogue extends IR.IRComm
     {
         int numLocals;
         public funcEpilogue(int numLocals) { this.numLocals = numLocals; }
@@ -108,7 +122,7 @@ public class IR
         }
     }
 
-    public static class frameSet extends IRComm
+    public static class frameSet extends IR.IRComm
     {
         TempReg src;
         int offset;
@@ -119,7 +133,7 @@ public class IR
         }
     }
 
-    public static class frameGet extends IRComm
+    public static class frameGet extends IR.IRComm
     {
         TempReg dst;
         int offset;
@@ -130,7 +144,7 @@ public class IR
         }
     }
 
-    public static class frameGetOffset extends IRComm
+    public static class frameGetOffset extends IR.IRComm
     {
         TempReg dst;
         int offset;
@@ -141,7 +155,7 @@ public class IR
         }
     }
 
-    public static class sw extends IRComm
+    public static class sw extends IR.IRComm
     {
         TempReg dst;
         TempReg src;
@@ -152,7 +166,7 @@ public class IR
         }
     }
 
-    public static class jump extends IRComm
+    public static class jump extends IR.IRComm
     {
         String label;
         public jump(String label) { this.label = label; }
@@ -162,7 +176,7 @@ public class IR
         }
     }
 
-    public static class label extends IRComm
+    public static class label extends IR.IRComm
     {
         String label;
         public label(String label) { this.label = label; }
@@ -173,7 +187,7 @@ public class IR
         }
     }
 
-    public static class setRetVal extends IRComm
+    public static class setRetVal extends IR.IRComm
     {
         TempReg src;
         public setRetVal(TempReg src) { this.src = src; }
@@ -183,7 +197,7 @@ public class IR
         }
     }
 
-    public static class getRetVal extends IRComm
+    public static class getRetVal extends IR.IRComm
     {
         TempReg dst;
         public getRetVal(TempReg dst) { this.dst = dst; }
@@ -193,7 +207,7 @@ public class IR
         }
     }
 
-    public static class move extends IRComm
+    public static class move extends IR.IRComm
     {
         TempReg dst;
         TempReg src;
@@ -204,7 +218,7 @@ public class IR
         }
     }
 
-    public static class push extends IRComm
+    public static class push extends IR.IRComm
     {
         TempReg src;
         public push(TempReg src) { this.src = src; }
@@ -215,7 +229,7 @@ public class IR
         }
     }
 
-    public static class pop extends IRComm
+    public static class pop extends IR.IRComm
     {
         TempReg dst;
         public pop(TempReg dst) { this.dst = dst; }
@@ -226,7 +240,7 @@ public class IR
         }
     }
 
-    public static class jal extends IRComm
+    public static class jal extends IR.IRComm
     {
         String label;
         public jal(String label) { this.label = label; }
@@ -236,7 +250,7 @@ public class IR
         }
     }
 
-    public static class li extends IRComm
+    public static class li extends IR.IRComm
     {
         TempReg dst;
         int val;
@@ -247,7 +261,7 @@ public class IR
         }
     }
 
-    public static class lw extends IRComm
+    public static class lw extends IR.IRComm
     {
         TempReg dst;
         int val;
@@ -258,7 +272,7 @@ public class IR
         }
     }
 
-    public static class heapAlloc extends IRComm
+    public static class heapAlloc extends IR.IRComm
     {
         TempReg dst;
         TempReg numBytes;
@@ -275,7 +289,7 @@ public class IR
         }
     }
 
-    public static class calcOffset extends IRComm
+    public static class calcOffset extends IR.IRComm
     {
         TempReg dst;
         TempReg src;
@@ -289,7 +303,7 @@ public class IR
         }
     }
 
-    public static class heapGet extends IRComm
+    public static class heapGet extends IR.IRComm
     {
         TempReg dst;
         TempReg src;
@@ -304,7 +318,7 @@ public class IR
         }
     }
 
-    public static class heapSet extends IRComm
+    public static class heapSet extends IR.IRComm
     {
         TempReg dst;
         TempReg src;
@@ -316,20 +330,20 @@ public class IR
         }
     }
 
-    public static class stringLiteral extends IRComm
+    public static class stringLiteral extends IR.IRComm
     {
         TempReg dst;
         String str;
         public stringLiteral(TempReg dst, String str) { this.dst = dst; this.str = str; }
         public void toMIPS()
         {
-            String label = IRComm.getLabel("string_literal");
+            String label = IR.uniqueLabel("string_literal");
             MIPSGen.dataWriter.printf("%s: .asciiz %s\n", label, str);
             MIPSGen.writer.printf("\tla $t%d, %s\n", dst.id, label);
         }
     }
 
-    public static class printInt extends IRComm
+    public static class printInt extends IR.IRComm
     {
         TempReg value;
         public printInt(TempReg value) { this.value = value; }
@@ -348,7 +362,7 @@ public class IR
         }
     }
 
-    public static class printString extends IRComm
+    public static class printString extends IR.IRComm
     {
         TempReg value;
         public printString(TempReg value) { this.value = value; }
@@ -362,7 +376,7 @@ public class IR
         }
     }
 
-    public static class intBinOp extends IRComm
+    public static class intBinOp extends IR.IRComm
     {
         TempReg dst;
         TempReg left;
@@ -380,14 +394,14 @@ public class IR
                 MIPSGen.writer.printf("\tmul $t%d, $t%d, $t%d\n", dst.id, left.id, right.id);
                 break;
             case '<':
-                String ltEndLabel = IRComm.getLabel("ltEnd");
+                String ltEndLabel = IR.uniqueLabel("ltEnd");
                 MIPSGen.writer.printf("\tli $t%d, 1\n", dst.id);  // be positive - assume equality
                 MIPSGen.writer.printf("\tblt $t%d, $t%d, %s\n", left.id, right.id, ltEndLabel);
                 MIPSGen.writer.printf("\tli $t%d, 0\n", dst.id);  // guess not
                 MIPSGen.writer.printf("%s:\n", ltEndLabel);
                 break;
             case '=':
-                String eqEndLabel = IRComm.getLabel("eqEnd");
+                String eqEndLabel = IR.uniqueLabel("eqEnd");
                 MIPSGen.writer.printf("\tli $t%d, 1\n", dst.id);  // be positive - assume equality
                 MIPSGen.writer.printf("\tbeq $t%d, $t%d, %s\n", left.id, right.id, eqEndLabel);
                 MIPSGen.writer.printf("\tli $t%d, 0\n", dst.id);  // guess not
@@ -397,7 +411,7 @@ public class IR
         }
     }
 
-    public static class beqz extends IRComm
+    public static class beqz extends IR.IRComm
     {
         TempReg value;
         String label;
