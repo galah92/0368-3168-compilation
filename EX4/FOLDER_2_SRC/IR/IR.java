@@ -329,4 +329,83 @@ public class IR
         }
     }
 
+    public static class printInt extends IRComm
+    {
+        TempReg value;
+        public printInt(TempReg value) { this.value = value; }
+        public void toMIPS()
+        {
+            // // print_int
+            MIPSGen.writer.printf("\t# start of print_int\n");
+            MIPSGen.writer.printf("\tmove $a0, Temp_%d\n", value.id);
+            MIPSGen.writer.printf("\tli $v0, 1\n");
+            MIPSGen.writer.printf("\tsyscall\n");
+            // // print_char (whitespace)
+            MIPSGen.writer.printf("\tli $a0, 32\n");
+            MIPSGen.writer.printf("\tli $v0, 11\n");
+            MIPSGen.writer.printf("\tsyscall\n");
+            MIPSGen.writer.printf("\t# end of print_int\n");
+        }
+    }
+
+    public static class printString extends IRComm
+    {
+        TempReg value;
+        public printString(TempReg value) { this.value = value; }
+        public void toMIPS()
+        {
+            MIPSGen.writer.printf("\t# start of print_string\n");
+            MIPSGen.writer.printf("\tmove $a0, Temp_%d\n", value.id);
+            MIPSGen.writer.printf("\tli $v0, 4\n");
+            MIPSGen.writer.printf("\tsyscall\n");
+            MIPSGen.writer.printf("\t# end of print_string\n");
+        }
+    }
+
+    public static class intBinOp extends IRComm
+    {
+        TempReg dst;
+        TempReg left;
+        TempReg right;
+        char op;
+        public intBinOp(TempReg dst, TempReg left, TempReg right, char op) { this.dst = dst; this.left = left; this.right = right; this.op = op; }
+        public void toMIPS()
+        {
+            switch (op)
+            {
+            case '+':
+                MIPSGen.writer.printf("\tadd Temp_%d, Temp_%d, Temp_%d\n", dst.id, left.id, right.id);
+                break;
+            case '*':
+                MIPSGen.writer.printf("\tmul Temp_%d, Temp_%d, Temp_%d\n", dst.id, left.id, right.id);
+                break;
+            case '<':
+                String ltEndLabel = IRComm.getLabel("ltEnd");
+                MIPSGen.writer.printf("\tli Temp_%d, 1\n", dst.id);  // be positive - assume equality
+                MIPSGen.writer.printf("\tblt Temp_%d, Temp_%d, %s\n", left.id, right.id, ltEndLabel);
+                MIPSGen.writer.printf("\tli Temp_%d, 0\n", dst.id);  // guess not
+                MIPSGen.writer.printf("%s:\n", ltEndLabel);
+                break;
+            case '=':
+                String eqEndLabel = IRComm.getLabel("eqEnd");
+                MIPSGen.writer.printf("\tli Temp_%d, 1\n", dst.id);  // be positive - assume equality
+                MIPSGen.writer.printf("\tbeq Temp_%d, Temp_%d, %s\n", left.id, right.id, eqEndLabel);
+                MIPSGen.writer.printf("\tli Temp_%d, 0\n", dst.id);  // guess not
+                MIPSGen.writer.printf("%s:\n", eqEndLabel);
+                break;
+            }
+        }
+    }
+
+    public static class beqz extends IRComm
+    {
+        TempReg value;
+        String label;
+        public beqz(TempReg value, String label) { this.value = value; this.label = label; }
+        public void toMIPS()
+        {
+            MIPSGen.writer.printf("\tbeqz Temp_%d, %s\n", value.id, label);
+        }
+    }
+
 }

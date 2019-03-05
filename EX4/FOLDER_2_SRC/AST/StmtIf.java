@@ -42,9 +42,9 @@ public class StmtIf extends Stmt
     {
         String endIfLabel = IRComm.getLabel("endIf");
         TempReg condTemp = cond.toIR();
-        IR.add(new IRComm_Jump_If_Eq_To_Zero(condTemp, endIfLabel));
+        IR.add(new IR.beqz(condTemp, endIfLabel));
         body.toIR();
-        IR.add(new IRComm_Label(endIfLabel));
+        IR.add(new IR.label(endIfLabel));
         return null;
     }
 

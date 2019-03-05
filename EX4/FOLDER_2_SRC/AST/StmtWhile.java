@@ -40,12 +40,12 @@ public class StmtWhile extends Stmt
     {
         String whileCondLabel = IRComm.getLabel("whileCond");
         String whileEndLabel = IRComm.getLabel("whileEnd");
-        IR.add(new IRComm_Label(whileCondLabel));
+        IR.add(new IR.label(whileCondLabel));
         TempReg condTemp = cond.toIR();
-        IR.add(new IRComm_Jump_If_Eq_To_Zero(condTemp, whileEndLabel));
+        IR.add(new IR.beqz(condTemp, whileEndLabel));
         body.toIR();
         IR.add(new IR.jump(whileCondLabel));
-        IR.add(new IRComm_Label(whileEndLabel));
+        IR.add(new IR.label(whileEndLabel));
         return null;
     }
 

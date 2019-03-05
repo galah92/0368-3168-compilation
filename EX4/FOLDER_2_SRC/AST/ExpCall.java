@@ -71,14 +71,14 @@ public class ExpCall extends Exp
         switch (funcName)
         {
         case "PrintInt":
-            IR.add(new IRComm_SysCalls.PrintInt(args2.get(0).toIR()));
-            return TempReg.ZeroReg;
+            IR.add(new IR.printInt(args2.get(0).toIR()));
+            break;
         case "PrintString":
-            IR.add(new IRComm_SysCalls.PrintString(args2.get(0).toIR()));
-            return TempReg.ZeroReg;
+        IR.add(new IR.printString(args2.get(0).toIR()));
+            break;
         case "PrintTrace":
             System.out.println("PrintTrace not supported yet");
-            return TempReg.ZeroReg;
+            break;
         default:
             IR.add(new IR.Stack.alloc(args2.size()));
             for (int i = 0; i < args2.size(); i++)

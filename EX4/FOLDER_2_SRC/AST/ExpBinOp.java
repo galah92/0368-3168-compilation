@@ -75,7 +75,7 @@ public class ExpBinOp extends Exp
 		}
 		else
 		{
-			IR.add(new IRComm_BinOpInt(op, dst, t1, t2));
+			IR.add(new IR.intBinOp(dst, t1, t2, op));
 		}
 		return dst;
 	}
