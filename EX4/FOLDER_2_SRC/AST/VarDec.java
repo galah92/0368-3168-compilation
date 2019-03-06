@@ -93,16 +93,21 @@ public class VarDec extends ClassField
     @Override
     public IRReg toIR()
     {
-        IRReg valReg = initVal == null ? IRReg.zero : initVal.toIR();
         if (numLocal != -1)  // local variable
         {
+            IRReg valReg = initVal == null ? IRReg.zero : initVal.toIR();
             IR.add(new IR.sw(valReg, IRReg.fp, (-numLocal - 1) * 4));
         }
         else  // global variable
         {
+            String initLabel = IR.uniqueLabel("init_" + varName);
+            IR.globalVars.add(initLabel);
+            IR.add(new IR.label(initLabel));
+            IRReg valReg = initVal == null ? IRReg.zero : initVal.toIR();
             IR.add(new IR.declareGlobal(varName, valReg));
+            IR.add(new IR.jr(IRReg.ra));
         }
-        return valReg;
+        return null;
     }
 
 }

@@ -1,16 +1,12 @@
 
 string y := "lalala";
-
-void bla()
-{
-    PrintInt(10);
-    return;
-}
+string z := "zazaza";
 
 void main()
 {
     string x := "nanana";
-    bla();
     PrintString(x);
+    PrintString(y);
+    PrintString(z);
 }
 

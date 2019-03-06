@@ -88,12 +88,14 @@ public class FuncDec extends ClassField
     @Override
     public IRReg toIR()
     {
+        boolean isMain = funcName.equals("main") && funcType.retType == Type.VOID && funcType.params.size() == 0;
         int numLocals = funcType.locals.size();
         IR.add(new IR.label(funcName));
+        if (isMain) { for (String initLabel : IR.globalVars) { IR.add(new IR.jal(initLabel)); } }
         IR.add(new IR.funcPrologue(numLocals));
-        if (body != null) body.toIR();
+        body.toIR();
         IR.add(new IR.label(funcName + "_end"));
-        IR.add(new IR.funcEpilogue(numLocals));
+        if (!isMain) { IR.add(new IR.funcEpilogue(numLocals)); }
         return null;
     }
 

@@ -13,6 +13,7 @@ public class IR
 {
 
     private static final Deque<IRComm> commands = new ArrayDeque<IRComm>();
+    
 
     public static void add(IRComm cmd) { commands.add(cmd); }
     
@@ -24,6 +25,8 @@ public class IR
     {
         return String.format("label_%d_%s", uniqueLabelCounter++, label);
     }
+
+    public static final Deque<String> globalVars = new ArrayDeque<String>();
 
     public static class addi extends IRComm
     {
@@ -72,18 +75,6 @@ public class IR
         }
     }
 
-    public static class sw extends IRComm
-    {
-        IRReg dst;
-        IRReg src;
-        int offset;
-        public sw(IRReg src, IRReg dst, int offset) { this.dst = dst; this.src = src; this.offset = offset; }
-        public void toMIPS()
-        {
-            MIPS.writer.printf("\tsw %s, %d(%s)\n", src.toMIPS(), offset, dst.toMIPS());
-        }
-    }
-
     public static class jump extends IRComm
     {
         String label;
@@ -91,6 +82,26 @@ public class IR
         public void toMIPS()
         {
             MIPS.writer.printf("\tj %s\n", label);
+        }
+    }
+
+    public static class jal extends IRComm
+    {
+        String label;
+        public jal(String label) { this.label = label; }
+        public void toMIPS()
+        {
+            MIPS.writer.printf("\tjal %s\n", label);
+        }
+    }
+
+    public static class jr extends IRComm
+    {
+        IRReg reg;
+        public jr(IRReg reg) { this.reg = reg; }
+        public void toMIPS()
+        {
+            MIPS.writer.printf("\tjr %s\n", reg.toMIPS());
         }
     }
 
@@ -115,16 +126,6 @@ public class IR
         }
     }
 
-    public static class jal extends IRComm
-    {
-        String label;
-        public jal(String label) { this.label = label; }
-        public void toMIPS()
-        {
-            MIPS.writer.printf("\tjal %s\n", label);
-        }
-    }
-
     public static class li extends IRComm
     {
         IRReg dst;
@@ -133,6 +134,17 @@ public class IR
         public void toMIPS()
         {
             MIPS.writer.printf("\tli %s, %d\n", dst.toMIPS(), val);
+        }
+    }
+
+    public static class la extends IRComm
+    {
+        IRReg dst;
+        String val;
+        public la(IRReg dst, String val) { this.dst = dst; this.val = val; }
+        public void toMIPS()
+        {
+            MIPS.writer.printf("\tla %s, %s\n", dst.toMIPS(), val);
         }
     }
 
@@ -145,6 +157,18 @@ public class IR
         public void toMIPS()
         {
             MIPS.writer.printf("\tlw %s, %d(%s)\n", dst.toMIPS(), offset, src.toMIPS());
+        }
+    }
+
+    public static class sw extends IRComm
+    {
+        IRReg dst;
+        IRReg src;
+        int offset;
+        public sw(IRReg src, IRReg dst, int offset) { this.dst = dst; this.src = src; this.offset = offset; }
+        public void toMIPS()
+        {
+            MIPS.writer.printf("\tsw %s, %d(%s)\n", src.toMIPS(), offset, dst.toMIPS());
         }
     }
 
