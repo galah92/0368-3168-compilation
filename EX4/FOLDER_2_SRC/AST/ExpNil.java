@@ -20,6 +20,6 @@ public class ExpNil extends ExpPrimitive
     @Override
 	public IRReg toIR()
 	{
-        return IRReg.ZeroReg;
+        return IRReg.zero;
 	}
 }

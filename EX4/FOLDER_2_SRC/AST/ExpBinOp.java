@@ -66,7 +66,7 @@ public class ExpBinOp extends Exp
 	{
 		IRReg t1 = left.toIR();
 		IRReg t2 = right.toIR();
-		IRReg dst = new IRReg();
+		IRReg dst = new IRReg.TempReg();
 
 		if (isStringsExpessions)
 		{

@@ -28,7 +28,7 @@ public class ExpInt extends ExpPrimitive
     @Override
     public IRReg toIR()
     {
-        IRReg reg = new IRReg();
+        IRReg reg = new IRReg.TempReg();
         IR.add(new IR.li(reg, value));
         return reg;
     }

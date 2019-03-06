@@ -28,7 +28,7 @@ public class ExpString extends ExpPrimitive
     @Override
 	public IRReg toIR()
 	{
-		IRReg reg = new IRReg();
+		IRReg reg = new IRReg.TempReg();
         IR.add(new IR.stringLiteral(reg, value));
         return reg;
 	}

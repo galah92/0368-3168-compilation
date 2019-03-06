@@ -50,7 +50,7 @@ public class VarSimple extends Var
     @Override
     public IRReg toIR()
     {
-        IRReg reg = new IRReg();
+        IRReg reg = new IRReg.TempReg();
         if (numParam != -1)
         {
             IR.add(new IR.frameGetOffset(reg, numParam + 2));

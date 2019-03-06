@@ -39,7 +39,7 @@ public class VarArrayElement extends Var
     @Override
     public IRReg toIR()
     {
-        IRReg valReg = new IRReg();
+        IRReg valReg = new IRReg.TempReg();
         IRReg baseReg = var.toIR();
         IR.add(new IR.lw(baseReg, baseReg, 0));
         IR.add(new IR.calcOffset(valReg, baseReg, index.toIR()));

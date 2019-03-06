@@ -32,7 +32,7 @@ public class MIPS
 
     public static final int WORD = 4;
 
-    public static final String zero = "zero";  // the value 0, not changeable
+    public static final String zero = "$0";  // the value 0, not changeable
 
     // value from expression evaluation or function return
     public static final String v0 = "$v0";

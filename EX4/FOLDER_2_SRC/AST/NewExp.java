@@ -44,7 +44,7 @@ public class NewExp extends Exp
     @Override
 	public IRReg toIR()
 	{
-        IRReg dstReg = new IRReg();
+        IRReg dstReg = new IRReg.TempReg();
         if (exp != null)
         {
             IR.add(new IR.heapAlloc(dstReg, exp.toIR()));
