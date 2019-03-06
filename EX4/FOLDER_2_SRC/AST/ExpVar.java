@@ -31,7 +31,7 @@ public class ExpVar extends Exp
     public IRReg toIR()
     {
         IRReg reg = var.toIR();
-        IR.add(new IR.lw(reg, reg, 0));
+        IR.add(new IR.lw(reg, reg, 0));  // dereference
         return reg;
     }
 

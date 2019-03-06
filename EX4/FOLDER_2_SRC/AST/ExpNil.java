@@ -4,7 +4,7 @@ package AST;
 import pcomp.*;
 
 
-public class ExpNil extends ExpPrimitive
+public class ExpNil extends Exp
 {
 
     public void logGraphviz()

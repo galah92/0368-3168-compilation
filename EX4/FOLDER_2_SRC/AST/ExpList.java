@@ -31,7 +31,7 @@ public class ExpList extends Node
     @Override
     public IRReg toIR()
     {
-        if (head != null) head.toIR();
+        head.toIR();
         if (tail != null) tail.toIR();
         return null;
     }

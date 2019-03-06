@@ -27,8 +27,7 @@ public class StmtCall extends Stmt
 
     public IRReg toIR()
     {
-        if (callExp != null) callExp.toIR();
-        return null;
+        return callExp == null ? null : callExp.toIR();
     }
 
 }

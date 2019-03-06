@@ -3,7 +3,7 @@ package AST;
 import pcomp.*;
 
 
-public class ExpInt extends ExpPrimitive
+public class ExpInt extends Exp
 {
 
     private int value;

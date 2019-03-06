@@ -70,7 +70,6 @@ non terminal AST.Var var;
 non terminal AST.ExpVar varExp;
 non terminal AST.ExpCall callExp;
 non terminal AST.ExpBinOp binopExp;
-non terminal AST.ExpPrimitive primitiveExp;
 non terminal AST.ExpList expList;
 non terminal AST.NewExp newExp;
 non terminal AST.Stmt stmt;
@@ -128,7 +127,10 @@ exp			::=		varExp:v	            {: RESULT = v; RESULT.lineNumber = vleft; :} |
                     LPAREN exp:e RPAREN		{: RESULT = e; RESULT.lineNumber = eleft; :} |
                     binopExp:e	            {: RESULT = e; RESULT.lineNumber = eleft; :} |
                     callExp:e		        {: RESULT = e; RESULT.lineNumber = eleft; :} |
-                    primitiveExp:e          {: RESULT = e; RESULT.lineNumber = eleft; :}
+                    INT:i           {: RESULT = new AST.ExpInt(i); RESULT.lineNumber = ileft; :} |
+                    MINUS INT:i     {: RESULT = new AST.ExpInt(-i); RESULT.lineNumber = ileft; :} |
+                    STRING:s        {: RESULT = new AST.ExpString(s); RESULT.lineNumber = sleft; :} |
+                    NIL:n           {: RESULT = new AST.ExpNil(); RESULT.lineNumber = nleft; :}
                     ;
 
 varExp      ::=     var:v                   {: RESULT = new AST.ExpVar(v); RESULT.lineNumber = vleft; :}
@@ -153,12 +155,6 @@ callExp		::=		ID:funcName LPAREN RPAREN                           {: RESULT = ne
                     var:v DOT ID:funcName LPAREN RPAREN                 {: RESULT = new AST.ExpCall(funcName, v, null); RESULT.lineNumber = funcNameleft; :} |
                     var:v DOT ID:funcName LPAREN expList:args RPAREN    {: RESULT = new AST.ExpCall(funcName, v, args); RESULT.lineNumber = funcNameleft; :}
                     ;
-
-primitiveExp    ::=     INT:i           {: RESULT = new AST.ExpInt(i); RESULT.lineNumber = ileft; :} |
-                        MINUS INT:i     {: RESULT = new AST.ExpInt(-i); RESULT.lineNumber = ileft; :} |
-                        STRING:s        {: RESULT = new AST.ExpString(s); RESULT.lineNumber = sleft; :} |
-                        NIL:n           {: RESULT = new AST.ExpNil(); RESULT.lineNumber = nleft; :}
-                        ;
 
 stmtList	::=		stmt:s stmtList:l	{: RESULT = new AST.StmtList(s,l); RESULT.lineNumber = sleft; :} |
                     stmt:s  			{: RESULT = new AST.StmtList(s,null); RESULT.lineNumber = sleft; :}

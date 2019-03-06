@@ -3,7 +3,7 @@ package AST;
 import pcomp.*;
 
 
-public class ExpString extends ExpPrimitive
+public class ExpString extends Exp
 {
 
     public String value;
