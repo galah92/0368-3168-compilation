@@ -4,18 +4,14 @@ import java_cup.runtime.*;
 parser code 
 {:
     public Lexer lexer;
-    public PrintWriter writer;
 
-    public Parser(String inFile, PrintWriter writer) throws Exception
+    public Parser(String inFile) throws Exception
     {
         this.lexer = new Lexer(new FileReader(inFile));
-        this.writer = writer;
     }
     public void report_error(String message, Object info)
     {
-        // writer.println("ParserError(" + lexer.getLine() + ", " + lexer.getCharPos() + ")");
-        writer.println("ERROR(" + lexer.getLine() + ")");
-        writer.close();
+        System.out.println("ERROR(" + lexer.getLine() + ")");
         System.exit(0);
     }
 :}

@@ -7,11 +7,9 @@ public class Main
 
     static public void main(String argv[])
     {
-        PrintWriter writer = null;
         try
         {
-            writer = new PrintWriter(argv[1]);
-            Parser parser = new Parser(argv[0], writer);
+            Parser parser = new Parser(argv[0]);
             
             AST.Node ast = (AST.Node)parser.parse().value;
             ast.toGraphviz("./FOLDER_5_OUTPUT/AST.txt");
@@ -22,23 +20,11 @@ public class Main
 
             ast.toIR();
             IR.toMIPS();
-            MIPS.toFile("./FOLDER_5_OUTPUT/MIPS.txt");
-            
-            writer.println("OK");
-        }
-        catch (AST.Node.SemanticException e)
-        {
-            e.printStackTrace();
-            if (writer != null) { writer.println("ERROR(" + e.getLineNumber() + ")"); }
+            MIPS.toFile(argv[1]);
         }
         catch (Exception e)
         {
             e.printStackTrace();
-            if (writer != null) { writer.println("ERROR"); }
-        }
-        finally
-        {
-            if (writer != null) { writer.close(); }
         }
     }
 }

@@ -24,7 +24,7 @@ CUP_FILE    = ${CUP_DIR}/CUP_FILE.cup
 INPUT    = ${INPUT_DIR}/Input.txt
 # INPUT    = ${INPUT_DIR}/TEST_01_Print_Primes.txt
 # INPUT    = ${INPUT_DIR}/TEST_02_Bubble_Sort.txt
-OUTPUT   = ${OUTPUT_DIR}/SemanticStatus.txt
+OUTPUT   = ${OUTPUT_DIR}/MIPS.txt
 
 default: compile
 
