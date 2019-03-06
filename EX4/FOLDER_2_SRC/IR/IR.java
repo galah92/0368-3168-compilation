@@ -55,7 +55,7 @@ public class IR
             public set(IRReg src, int offset) { this.src = src; this.offset = offset; }
             public void toMIPS()
             {
-                MIPS.writer.printf("\tsw $t%d, %d($sp)\n", src.id, offset * MIPS.WORD);
+                MIPS.writer.printf("\tsw %s, %d($sp)\n", src.toMIPS(), offset * MIPS.WORD);
             }
         }
 
@@ -66,7 +66,7 @@ public class IR
             public get(IRReg dst, int offset) { this.dst = dst; this.offset = offset; }
             public void toMIPS()
             {
-                MIPS.writer.printf("\tlw $t%d, %d($sp)\n", dst.id, offset * MIPS.WORD);
+                MIPS.writer.printf("\tlw %s, %d($sp)\n", dst.toMIPS(), offset * MIPS.WORD);
             }
         }
 
@@ -114,7 +114,7 @@ public class IR
         public frameSet(IRReg src, int offset) { this.src = src; this.offset = offset; }
         public void toMIPS()
         {
-            MIPS.writer.printf("\tsw $t%d, %d($fp)\n", src.id, offset * MIPS.WORD);
+            MIPS.writer.printf("\tsw %s, %d($fp)\n", src.toMIPS(), offset * MIPS.WORD);
         }
     }
 
@@ -125,7 +125,7 @@ public class IR
         public frameGetOffset(IRReg dst, int offset) { this.dst = dst; this.offset = offset; }
         public void toMIPS()
         {
-            MIPS.writer.printf("\tadd $t%d, $fp, %d\n", dst.id, offset * MIPS.WORD);
+            MIPS.writer.printf("\tadd %s, $fp, %d\n", dst.toMIPS(), offset * MIPS.WORD);
         }
     }
 
@@ -136,7 +136,7 @@ public class IR
         public sw(IRReg dst, IRReg src) { this.dst = dst; this.src = src; }
         public void toMIPS()
         {
-            MIPS.writer.printf("\tsw $t%d, ($t%d)\n", src.id, dst.id);
+            MIPS.writer.printf("\tsw %s, (%s)\n", src.toMIPS(), dst.toMIPS());
         }
     }
 
@@ -166,7 +166,7 @@ public class IR
         public setRetVal(IRReg src) { this.src = src; }
         public void toMIPS()
         {
-            MIPS.writer.printf("\tmove $v0, $t%d\n", src.id);
+            MIPS.writer.printf("\tmove $v0, %s\n", src.toMIPS());
         }
     }
 
@@ -176,7 +176,7 @@ public class IR
         public getRetVal(IRReg dst) { this.dst = dst; }
         public void toMIPS()
         {
-            MIPS.writer.printf("\tmove $t%d, $v0\n", dst.id);
+            MIPS.writer.printf("\tmove %s, $v0\n", dst.toMIPS());
         }
     }
 
@@ -187,7 +187,7 @@ public class IR
         public move(IRReg dst, IRReg src) { this.dst = dst; this.src = src; }
         public void toMIPS()
         {
-            MIPS.writer.printf("\tmove $t%d, $t%d\n", dst.id, src.id);
+            MIPS.writer.printf("\tmove %s, %s\n", dst.toMIPS(), src.toMIPS());
         }
     }
 
@@ -208,7 +208,7 @@ public class IR
         public li(IRReg dst, int val) { this.dst = dst; this.val = val; }
         public void toMIPS()
         {
-            MIPS.writer.printf("\tli $t%d, %d\n", dst.id, val);
+            MIPS.writer.printf("\tli %s, %d\n", dst.toMIPS(), val);
         }
     }
 
@@ -220,7 +220,7 @@ public class IR
         public lw(IRReg dst, IRReg src, int offset) { this.dst = dst; this.src = src; this.offset = offset; }
         public void toMIPS()
         {
-            MIPS.writer.printf("\tlw $t%d, %d($t%d)\n", dst.id, offset, src.id);
+            MIPS.writer.printf("\tlw %s, %d(%s)\n", dst.toMIPS(), offset, src.toMIPS());
         }
     }
 
@@ -231,11 +231,11 @@ public class IR
         public heapAlloc(IRReg dst, IRReg numBytes) { this.dst = dst; this.numBytes = numBytes; }
         public void toMIPS()
         {
-            MIPS.writer.printf("\tmove $a0, $t%d  # start of malloc\n", numBytes.id);
+            MIPS.writer.printf("\tmove $a0, %s  # start of malloc\n", numBytes.toMIPS());
             MIPS.writer.printf("\tsll $a0, $a0, %d\n", MIPS.WORD);
             MIPS.writer.printf("\tli $v0, 9\n");
             MIPS.writer.printf("\tsyscall\n");
-            MIPS.writer.printf("\tmove $t%d, $v0  # end of malloc\n", dst.id);
+            MIPS.writer.printf("\tmove %s, $v0  # end of malloc\n", dst.toMIPS());
         }
     }
 
@@ -248,8 +248,8 @@ public class IR
         public void toMIPS()
         {
             // TODO: boundary-check!
-            MIPS.writer.printf("\tsll $t%d, $t%d, %d\n", offset.id, offset.id, MIPS.WORD);
-            MIPS.writer.printf("\tadd $t%d, $t%d, $t%d\n", dst.id, src.id, offset.id);
+            MIPS.writer.printf("\tsll %s, %s, %d\n", offset.toMIPS(), offset.toMIPS(), MIPS.WORD);
+            MIPS.writer.printf("\tadd %s, %s, %s\n", dst.toMIPS(), src.toMIPS(), offset.toMIPS());
         }
     }
 
@@ -262,9 +262,9 @@ public class IR
         public void toMIPS()
         {
             // TODO: boundary-check!
-            MIPS.writer.printf("\tsll $t%d, $t%d, %d\n", offset.id, offset.id, MIPS.WORD);
-            MIPS.writer.printf("\tadd $t%d, $t%d, $t%d\n", src.id, src.id, offset.id);
-            MIPS.writer.printf("\tlw $t%d, ($t%d)\n", dst.id, src.id);
+            MIPS.writer.printf("\tsll %s, %s, %d\n", offset.toMIPS(), offset.toMIPS(), MIPS.WORD);
+            MIPS.writer.printf("\tadd %s, %s, %s\n", src.toMIPS(), src.toMIPS(), offset.toMIPS());
+            MIPS.writer.printf("\tlw %s, (%s)\n", dst.toMIPS(), src.toMIPS());
         }
     }
 
@@ -277,7 +277,7 @@ public class IR
         {
             String label = IR.uniqueLabel("string_literal");
             MIPS.dataWriter.printf("%s: .asciiz %s\n", label, str);
-            MIPS.writer.printf("\tla $t%d, %s\n", dst.id, label);
+            MIPS.writer.printf("\tla %s, %s\n", dst.toMIPS(), label);
         }
     }
 
@@ -288,7 +288,7 @@ public class IR
         public void toMIPS()
         {
             // // print_int
-            MIPS.writer.printf("\tmove $a0, $t%d  # start of print_int\n", value.id);
+            MIPS.writer.printf("\tmove $a0, %s  # start of print_int\n", value.toMIPS());
             MIPS.writer.printf("\tli $v0, 1\n");
             MIPS.writer.printf("\tsyscall\n");
             // // print_char (whitespace)
@@ -304,7 +304,7 @@ public class IR
         public printString(IRReg value) { this.value = value; }
         public void toMIPS()
         {
-            MIPS.writer.printf("\tmove $a0, $t%d  # start of print_string\n", value.id);
+            MIPS.writer.printf("\tmove $a0, %s  # start of print_string\n", value.toMIPS());
             MIPS.writer.printf("\tli $v0, 4\n");
             MIPS.writer.printf("\tsyscall  # end of print_string\n");
         }
@@ -322,23 +322,23 @@ public class IR
             switch (op)
             {
             case '+':
-                MIPS.writer.printf("\tadd $t%d, $t%d, $t%d\n", dst.id, left.id, right.id);
+                MIPS.writer.printf("\tadd %s, %s, %s\n", dst.toMIPS(), left.toMIPS(), right.toMIPS());
                 break;
             case '*':
-                MIPS.writer.printf("\tmul $t%d, $t%d, $t%d\n", dst.id, left.id, right.id);
+                MIPS.writer.printf("\tmul %s, %s, %s\n", dst.toMIPS(), left.toMIPS(), right.toMIPS());
                 break;
             case '<':
                 String ltEndLabel = IR.uniqueLabel("ltEnd");
-                MIPS.writer.printf("\tli $t%d, 1\n", dst.id);  // be positive - assume equality
-                MIPS.writer.printf("\tblt $t%d, $t%d, %s\n", left.id, right.id, ltEndLabel);
-                MIPS.writer.printf("\tli $t%d, 0\n", dst.id);  // guess not
+                MIPS.writer.printf("\tli %s, 1\n", dst.toMIPS());  // be positive - assume equality
+                MIPS.writer.printf("\tblt %s, %s, %s\n", left.toMIPS(), right.toMIPS(), ltEndLabel);
+                MIPS.writer.printf("\tli %s, 0\n", dst.toMIPS());  // guess not
                 MIPS.writer.printf("%s:\n", ltEndLabel);
                 break;
             case '=':
                 String eqEndLabel = IR.uniqueLabel("eqEnd");
-                MIPS.writer.printf("\tli $t%d, 1\n", dst.id);  // be positive - assume equality
-                MIPS.writer.printf("\tbeq $t%d, $t%d, %s\n", left.id, right.id, eqEndLabel);
-                MIPS.writer.printf("\tli $t%d, 0\n", dst.id);  // guess not
+                MIPS.writer.printf("\tli %s, 1\n", dst.toMIPS());  // be positive - assume equality
+                MIPS.writer.printf("\tbeq %s, %s, %s\n", left.toMIPS(), right.toMIPS(), eqEndLabel);
+                MIPS.writer.printf("\tli %s, 0\n", dst.toMIPS());  // guess not
                 MIPS.writer.printf("%s:\n", eqEndLabel);
                 break;
             }
@@ -352,7 +352,7 @@ public class IR
         public beqz(IRReg value, String label) { this.value = value; this.label = label; }
         public void toMIPS()
         {
-            MIPS.writer.printf("\tbeqz $t%d, %s\n", value.id, label);
+            MIPS.writer.printf("\tbeqz %s, %s\n", value.toMIPS(), label);
         }
     }
 
@@ -364,7 +364,7 @@ public class IR
         public void toMIPS()
         {
             MIPS.dataWriter.printf("global_%s:\t.word 0\n", name);
-            MIPS.writer.printf("\tsw $t%d, global_%s\n", value.id, name);
+            MIPS.writer.printf("\tsw %s, global_%s\n", value.toMIPS(), name);
         }
     }
 
@@ -375,7 +375,7 @@ public class IR
         public getGlobal(String name, IRReg dst) { this.name = name; this.dst = dst; }
         public void toMIPS()
         {
-            MIPS.writer.printf("\tla $t%d, global_%s\n", dst.id, name);
+            MIPS.writer.printf("\tla %s, global_%s\n", dst.toMIPS(), name);
         }
     }
 
