@@ -12,11 +12,11 @@ public class Main
             Parser parser = new Parser(argv[0]);
             
             AST.Node ast = (AST.Node)parser.parse().value;
-            ast.toGraphviz("./FOLDER_5_OUTPUT/AST.txt");
+            // ast.toGraphviz("./FOLDER_5_OUTPUT/AST.txt");
 
             SymbolTable.init();
             ast.Semant();
-            SymbolTable.toGraphviz("./FOLDER_5_OUTPUT/SymbolTable.txt");
+            // SymbolTable.toGraphviz("./FOLDER_5_OUTPUT/SymbolTable.txt");
 
             ast.toIR();
             IR.toMIPS();

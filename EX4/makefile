@@ -40,8 +40,8 @@ compile: clean
 	
 test:
 	java -jar COMPILER ${INPUT} ${OUTPUT}
-	dot -Tjpeg -o${OUTPUT_DIR}/AST.jpeg ${OUTPUT_DIR}/AST.txt
-	dot -Tjpeg -o${OUTPUT_DIR}/SymbolTable.jpeg ${OUTPUT_DIR}/SymbolTable.txt
+	# dot -Tjpeg -o${OUTPUT_DIR}/AST.jpeg ${OUTPUT_DIR}/AST.txt
+	# dot -Tjpeg -o${OUTPUT_DIR}/SymbolTable.jpeg ${OUTPUT_DIR}/SymbolTable.txt
 
 test_run:
 	spim -f ${OUTPUT_DIR}/MIPS.txt #> ${OUTPUT_DIR}/MIPS_OUTPUT.txt	
