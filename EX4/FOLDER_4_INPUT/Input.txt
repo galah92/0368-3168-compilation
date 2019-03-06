@@ -1,7 +1,14 @@
 
+string y := "lalala";
+
+void bla()
+{
+    PrintInt(10);
+}
+
 void main()
 {
-    string x := "yoo";
+    string x := "nanana";
     PrintString(x);
 }
 

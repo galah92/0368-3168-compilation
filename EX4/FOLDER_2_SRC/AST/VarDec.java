@@ -94,14 +94,13 @@ public class VarDec extends ClassField
     public IRReg toIR()
     {
         IRReg valReg = initVal == null ? IRReg.ZeroReg : initVal.toIR();
-        if (numLocal != -1)  // local variable?
+        if (numLocal != -1)  // local variable
         {
             IR.add(new IR.frameSet(valReg, -numLocal - 1));
         }
-        else
+        else  // global variable
         {
-            System.out.println("not supported yet");
-            // TODO: complete
+            IR.add(new IR.declareGlobal(varName, valReg));
         }
         return valReg;
     }

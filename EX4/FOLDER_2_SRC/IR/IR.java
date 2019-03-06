@@ -88,16 +88,14 @@ public class IR
         public funcPrologue(int numLocals) { this.numLocals = numLocals; }
         public void toMIPS()
         {
-            MIPS.writer.printf("\t# start of function prologue\n");
             // save fp & ra
-            MIPS.writer.printf("\taddi $sp, $sp, -8\n");
+            MIPS.writer.printf("\taddi $sp, $sp, -8  # start of function prologue\n");
             MIPS.writer.printf("\tsw	$fp, 0($sp)\n");
             MIPS.writer.printf("\tsw	$ra, 4($sp)\n");
             // set fp = sp
             MIPS.writer.printf("\tmove $fp, $sp\n");
             // allocate stack frame
-            MIPS.writer.printf("\taddi $sp, $sp, %d\n", -MIPS.WORD * numLocals);
-            MIPS.writer.printf("\t# end of function prologue\n");
+            MIPS.writer.printf("\taddi $sp, $sp, %d  # end of function prologue\n", -MIPS.WORD * numLocals);
         }
     }
 
@@ -107,17 +105,15 @@ public class IR
         public funcEpilogue(int numLocals) { this.numLocals = numLocals; }
         public void toMIPS()
         {
-            MIPS.writer.printf("\t# start of function epilogue\n");
             // deallocate stack frame
-            MIPS.writer.printf("\taddi $sp, $sp, %d\n", MIPS.WORD * numLocals);
+            MIPS.writer.printf("\taddi $sp, $sp, %d  # start of function epilogue\n", MIPS.WORD * numLocals);
             // restore fp & ra
             MIPS.writer.printf("\tlw	$ra, 4($fp)\n");
             MIPS.writer.printf("\tlw	$fp, ($fp)\n");
             // deallocate place for ra & fp
             MIPS.writer.printf("\taddi $sp, $sp, 8\n");
             // jump back
-            MIPS.writer.printf("\tjr $ra\n");
-            MIPS.writer.printf("\t# end of function epilogue\n");
+            MIPS.writer.printf("\tjr $ra  # end of function epilogue\n");
         }
     }
 
@@ -349,15 +345,13 @@ public class IR
         public void toMIPS()
         {
             // // print_int
-            MIPS.writer.printf("\t# start of print_int\n");
-            MIPS.writer.printf("\tmove $a0, $t%d\n", value.id);
+            MIPS.writer.printf("\tmove $a0, $t%d  # start of print_int\n", value.id);
             MIPS.writer.printf("\tli $v0, 1\n");
             MIPS.writer.printf("\tsyscall\n");
             // // print_char (whitespace)
             MIPS.writer.printf("\tli $a0, 32\n");
             MIPS.writer.printf("\tli $v0, 11\n");
-            MIPS.writer.printf("\tsyscall\n");
-            MIPS.writer.printf("\t# end of print_int\n");
+            MIPS.writer.printf("\tsyscall  # end of print_int\n");
         }
     }
 
@@ -367,11 +361,9 @@ public class IR
         public printString(IRReg value) { this.value = value; }
         public void toMIPS()
         {
-            MIPS.writer.printf("\t# start of print_string\n");
-            MIPS.writer.printf("\tmove $a0, $t%d\n", value.id);
+            MIPS.writer.printf("\tmove $a0, $t%d  # start of print_string\n", value.id);
             MIPS.writer.printf("\tli $v0, 4\n");
-            MIPS.writer.printf("\tsyscall\n");
-            MIPS.writer.printf("\t# end of print_string\n");
+            MIPS.writer.printf("\tsyscall  # end of print_string\n");
         }
     }
 
@@ -418,6 +410,29 @@ public class IR
         public void toMIPS()
         {
             MIPS.writer.printf("\tbeqz $t%d, %s\n", value.id, label);
+        }
+    }
+
+    public static class declareGlobal extends IRComm
+    {
+        String name;
+        IRReg value;
+        public declareGlobal(String name, IRReg value) { this.name = name; this.value = value; }
+        public void toMIPS()
+        {
+            MIPS.dataWriter.printf("global_%s:\t.word 0\n", name);
+            MIPS.writer.printf("\tsw $t%d, global_%s\n", value.id, name);
+        }
+    }
+
+    public static class getGlobal extends IRComm
+    {
+        String name;
+        IRReg dst;
+        public getGlobal(String name, IRReg dst) { this.name = name; this.dst = dst; }
+        public void toMIPS()
+        {
+            MIPS.writer.printf("\tla $t%d, global_%s\n", dst.id, name);
         }
     }
 
