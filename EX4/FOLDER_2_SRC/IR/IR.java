@@ -72,16 +72,6 @@ public class IR
 
     }
 
-    public static class dereference extends IRComm
-    {
-        IRReg src;
-        public dereference(IRReg src) { this.src = src; }
-        public void toMIPS()
-        {
-            MIPS.writer.printf("\tlw $t%d, ($t%d)\n", src.id, src.id);
-        }
-    }
-
     public static class funcPrologue extends IRComm
     {
         int numLocals;
@@ -90,8 +80,8 @@ public class IR
         {
             // save fp & ra
             MIPS.writer.printf("\taddi $sp, $sp, -8  # start of function prologue\n");
-            MIPS.writer.printf("\tsw	$fp, 0($sp)\n");
-            MIPS.writer.printf("\tsw	$ra, 4($sp)\n");
+            MIPS.writer.printf("\tsw $fp, 0($sp)\n");
+            MIPS.writer.printf("\tsw $ra, 4($sp)\n");
             // set fp = sp
             MIPS.writer.printf("\tmove $fp, $sp\n");
             // allocate stack frame
@@ -125,17 +115,6 @@ public class IR
         public void toMIPS()
         {
             MIPS.writer.printf("\tsw $t%d, %d($fp)\n", src.id, offset * MIPS.WORD);
-        }
-    }
-
-    public static class frameGet extends IRComm
-    {
-        IRReg dst;
-        int offset;
-        public frameGet(IRReg dst, int offset) { this.dst = dst; this.offset = offset; }
-        public void toMIPS()
-        {
-            MIPS.writer.printf("\tlw $t%d, %d($fp)\n", dst.id, offset * MIPS.WORD);
         }
     }
 
@@ -177,8 +156,7 @@ public class IR
         public label(String label) { this.label = label; }
         public void toMIPS()
         {
-            MIPS.writer.println();
-            MIPS.writer.printf("%s:\n", label);
+            MIPS.writer.printf("\n%s:\n", label);
         }
     }
 
@@ -213,28 +191,6 @@ public class IR
         }
     }
 
-    public static class push extends IRComm
-    {
-        IRReg src;
-        public push(IRReg src) { this.src = src; }
-        public void toMIPS()
-        {
-            MIPS.writer.printf("\taddi $sp, $sp, -4\n");
-            MIPS.writer.printf("\tsw $t%d, ($sp)\n", src.id);
-        }
-    }
-
-    public static class pop extends IRComm
-    {
-        IRReg dst;
-        public pop(IRReg dst) { this.dst = dst; }
-        public void toMIPS()
-        {
-            MIPS.writer.printf("\tlw $t%d, ($sp)\n", dst.id);
-            MIPS.writer.printf("\taddi $sp, $sp, 4\n");
-        }
-    }
-
     public static class jal extends IRComm
     {
         String label;
@@ -259,11 +215,12 @@ public class IR
     public static class lw extends IRComm
     {
         IRReg dst;
-        int val;
-        public lw(IRReg dst, int val) { this.dst = dst; this.val = val; }
+        IRReg src;
+        int offset;
+        public lw(IRReg dst, IRReg src, int offset) { this.dst = dst; this.src = src; this.offset = offset; }
         public void toMIPS()
         {
-            MIPS.writer.printf("\tlw $t%d, %d\n", dst.id, val);
+            MIPS.writer.printf("\tlw $t%d, %d($t%d)\n", dst.id, offset, src.id);
         }
     }
 
@@ -274,13 +231,11 @@ public class IR
         public heapAlloc(IRReg dst, IRReg numBytes) { this.dst = dst; this.numBytes = numBytes; }
         public void toMIPS()
         {
-            MIPS.writer.printf("\t# start of malloc\n");
-            MIPS.writer.printf("\tmove $a0, $t%d\n", numBytes.id);
+            MIPS.writer.printf("\tmove $a0, $t%d  # start of malloc\n", numBytes.id);
             MIPS.writer.printf("\tsll $a0, $a0, %d\n", MIPS.WORD);
             MIPS.writer.printf("\tli $v0, 9\n");
             MIPS.writer.printf("\tsyscall\n");
-            MIPS.writer.printf("\tmove $t%d, $v0\n", dst.id);
-            MIPS.writer.printf("\t# end of malloc\n");
+            MIPS.writer.printf("\tmove $t%d, $v0  # end of malloc\n", dst.id);
         }
     }
 
@@ -310,18 +265,6 @@ public class IR
             MIPS.writer.printf("\tsll $t%d, $t%d, %d\n", offset.id, offset.id, MIPS.WORD);
             MIPS.writer.printf("\tadd $t%d, $t%d, $t%d\n", src.id, src.id, offset.id);
             MIPS.writer.printf("\tlw $t%d, ($t%d)\n", dst.id, src.id);
-        }
-    }
-
-    public static class heapSet extends IRComm
-    {
-        IRReg dst;
-        IRReg src;
-        public heapSet(IRReg dst, IRReg src) { this.dst = dst; this.src = src; }
-        public void toMIPS()
-        {
-            // TODO: boundary-check!
-            MIPS.writer.printf("\tsw $t%d, ($t%d)\n", src.id, dst.id);
         }
     }
 

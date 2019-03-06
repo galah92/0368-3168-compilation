@@ -41,7 +41,7 @@ public class VarArrayElement extends Var
     {
         IRReg valReg = new IRReg();
         IRReg baseReg = var.toIR();
-        IR.add(new IR.dereference(baseReg));
+        IR.add(new IR.lw(baseReg, baseReg, 0));
         IR.add(new IR.calcOffset(valReg, baseReg, index.toIR()));
         return valReg;
     }
