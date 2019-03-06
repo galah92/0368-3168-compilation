@@ -25,51 +25,16 @@ public class IR
         return String.format("label_%d_%s", uniqueLabelCounter++, label);
     }
 
-    public static class Stack
+    public static class addi extends IRComm
     {
-
-        public static class alloc extends IRComm
+        IRReg dst;
+        IRReg src;
+        int imm;
+        public addi(IRReg dst, IRReg src, int imm) { this.dst = dst; this.src = src; this.imm = imm; }
+        public void toMIPS()
         {
-            int offset;
-            public alloc(int offset) { this.offset = offset; }
-            public void toMIPS()
-            {
-                MIPS.writer.printf("\taddi $sp, $sp, -%d\n", offset * MIPS.WORD);
-            }
+            MIPS.writer.printf("\taddi %s, %s, %d\n", dst.toMIPS(), src.toMIPS(), imm);
         }
-
-        public static class release extends IRComm
-        {
-            int offset;
-            public release(int offset) { this.offset = offset; }
-            public void toMIPS()
-            {
-                MIPS.writer.printf("\taddi $sp, $sp, %d\n", offset * MIPS.WORD);
-            }
-        }
-
-        public static class set extends IRComm
-        {
-            IRReg src;
-            int offset;
-            public set(IRReg src, int offset) { this.src = src; this.offset = offset; }
-            public void toMIPS()
-            {
-                MIPS.writer.printf("\tsw %s, %d($sp)\n", src.toMIPS(), offset * MIPS.WORD);
-            }
-        }
-
-        public static class get extends IRComm
-        {
-            IRReg dst;
-            int offset;
-            public get(IRReg dst, int offset) { this.dst = dst; this.offset = offset; }
-            public void toMIPS()
-            {
-                MIPS.writer.printf("\tlw %s, %d($sp)\n", dst.toMIPS(), offset * MIPS.WORD);
-            }
-        }
-
     }
 
     public static class funcPrologue extends IRComm
@@ -107,36 +72,15 @@ public class IR
         }
     }
 
-    public static class frameSet extends IRComm
-    {
-        IRReg src;
-        int offset;
-        public frameSet(IRReg src, int offset) { this.src = src; this.offset = offset; }
-        public void toMIPS()
-        {
-            MIPS.writer.printf("\tsw %s, %d($fp)\n", src.toMIPS(), offset * MIPS.WORD);
-        }
-    }
-
-    public static class frameGetOffset extends IRComm
-    {
-        IRReg dst;
-        int offset;
-        public frameGetOffset(IRReg dst, int offset) { this.dst = dst; this.offset = offset; }
-        public void toMIPS()
-        {
-            MIPS.writer.printf("\tadd %s, $fp, %d\n", dst.toMIPS(), offset * MIPS.WORD);
-        }
-    }
-
     public static class sw extends IRComm
     {
         IRReg dst;
         IRReg src;
-        public sw(IRReg dst, IRReg src) { this.dst = dst; this.src = src; }
+        int offset;
+        public sw(IRReg src, IRReg dst, int offset) { this.dst = dst; this.src = src; this.offset = offset; }
         public void toMIPS()
         {
-            MIPS.writer.printf("\tsw %s, (%s)\n", src.toMIPS(), dst.toMIPS());
+            MIPS.writer.printf("\tsw %s, %d(%s)\n", src.toMIPS(), offset, dst.toMIPS());
         }
     }
 
@@ -157,26 +101,6 @@ public class IR
         public void toMIPS()
         {
             MIPS.writer.printf("\n%s:\n", label);
-        }
-    }
-
-    public static class setRetVal extends IRComm
-    {
-        IRReg src;
-        public setRetVal(IRReg src) { this.src = src; }
-        public void toMIPS()
-        {
-            MIPS.writer.printf("\tmove $v0, %s\n", src.toMIPS());
-        }
-    }
-
-    public static class getRetVal extends IRComm
-    {
-        IRReg dst;
-        public getRetVal(IRReg dst) { this.dst = dst; }
-        public void toMIPS()
-        {
-            MIPS.writer.printf("\tmove %s, $v0\n", dst.toMIPS());
         }
     }
 

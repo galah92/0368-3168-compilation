@@ -77,15 +77,17 @@ public abstract class IRReg
     }
 
     public static final IRReg zero = new IRReg.Zero();
-    public static final IRReg sp = new IRReg.SP();  // stack pointer (top of stack)
-    public static final IRReg fp = new IRReg.FP();  // frame pointer (bottom of current stack frame)
-    public static final IRReg ra = new IRReg.RA();  // return address of most recent caller
+    
+    // stack pointer (top of stack)
+    public static final IRReg sp = new IRReg.SP();
+    // frame pointer (bottom of current stack frame)
+    public static final IRReg fp = new IRReg.FP();
+    // return address of most recent caller
+    public static final IRReg ra = new IRReg.RA();
 
-    // value from expression evaluation or function return
     public static final IRReg v0 = new IRReg.V0();
     public static final IRReg v1 = new IRReg.V1();
 
-    // first four arguments to a function/subroutine, if needed
     public static final IRReg a0 = new IRReg.A0();
     public static final IRReg a1 = new IRReg.A1();
     public static final IRReg a2 = new IRReg.A2();

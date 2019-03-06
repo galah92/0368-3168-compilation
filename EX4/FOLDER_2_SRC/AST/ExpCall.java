@@ -80,16 +80,16 @@ public class ExpCall extends Exp
             System.out.println("PrintTrace not supported yet");
             break;
         default:
-            IR.add(new IR.Stack.alloc(args2.size()));
+            IR.add(new IR.addi(IRReg.sp, IRReg.sp, -args2.size() * 4));
             for (int i = 0; i < args2.size(); i++)
             {
-                IR.add(new IR.Stack.set(args2.get(i).toIR(), i));
+                IR.add(new IR.sw(args2.get(i).toIR(), IRReg.sp, i * 4));
             }
             IR.add(new IR.jal(funcName));
-            IR.add(new IR.Stack.release(args2.size()));
+            IR.add(new IR.addi(IRReg.sp, IRReg.sp, args2.size() * 4));
         }
         IRReg retVal = new IRReg.TempReg();
-        IR.add(new IR.getRetVal(retVal));
+        IR.add(new IR.move(retVal, IRReg.v0));  // v0 store the return value
         return retVal;
     }
 

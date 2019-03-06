@@ -53,11 +53,11 @@ public class VarSimple extends Var
         IRReg reg = new IRReg.TempReg();
         if (numParam != -1)
         {
-            IR.add(new IR.frameGetOffset(reg, numParam + 2));
+            IR.add(new IR.addi(reg, IRReg.fp, (numParam + 2) * 4));
         }
         else if (numLocal != -1)
         {
-            IR.add(new IR.frameGetOffset(reg, -numLocal - 1));
+            IR.add(new IR.addi(reg, IRReg.fp, (-numLocal - 1) * 4));
         }
         else
         {

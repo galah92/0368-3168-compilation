@@ -58,7 +58,7 @@ public class StmtAssign extends Stmt
     public IRReg toIR()
     {
         IRReg to = var.toIR();
-        IR.add(new IR.sw(to, exp.toIR()));
+        IR.add(new IR.sw(exp.toIR(), to, 0));
         return to;
     }
     
