@@ -52,6 +52,78 @@ public class IR
         }
     }
 
+    public static class sub extends IRComm
+    {
+        IRReg dst;
+        IRReg src1;
+        IRReg src2;
+        public sub(IRReg dst, IRReg src1, IRReg src2) { this.dst = dst; this.src1 = src1; this.src2 = src2; }
+        public void toMIPS()
+        {
+            MIPS.writer.printf("\tsub %s, %s, %s\n", dst.toMIPS(), src1.toMIPS(), src2.toMIPS());
+        }
+    }
+
+    public static class mul extends IRComm
+    {
+        IRReg dst;
+        IRReg src1;
+        IRReg src2;
+        public mul(IRReg dst, IRReg src1, IRReg src2) { this.dst = dst; this.src1 = src1; this.src2 = src2; }
+        public void toMIPS()
+        {
+            MIPS.writer.printf("\tmul %s, %s, %s\n", dst.toMIPS(), src1.toMIPS(), src2.toMIPS());
+        }
+    }
+
+    public static class div extends IRComm
+    {
+        IRReg dst;
+        IRReg src1;
+        IRReg src2;
+        public div(IRReg dst, IRReg src1, IRReg src2) { this.dst = dst; this.src1 = src1; this.src2 = src2; }
+        public void toMIPS()
+        {
+            MIPS.writer.printf("\tdiv %s, %s, %s\n", dst.toMIPS(), src1.toMIPS(), src2.toMIPS());
+        }
+    }
+
+    public static class blt extends IRComm
+    {
+        String label;
+        IRReg src1;
+        IRReg src2;
+        public blt(IRReg src1, IRReg src2, String label) { this.label = label; this.src1 = src1; this.src2 = src2; }
+        public void toMIPS()
+        {
+            MIPS.writer.printf("\tblt %s, %s, %s\n", src1.toMIPS(), src2.toMIPS(), label);
+        }
+    }
+
+    public static class bgt extends IRComm
+    {
+        String label;
+        IRReg src1;
+        IRReg src2;
+        public bgt(IRReg src1, IRReg src2, String label) { this.label = label; this.src1 = src1; this.src2 = src2; }
+        public void toMIPS()
+        {
+            MIPS.writer.printf("\tbgt %s, %s, %s\n", src1.toMIPS(), src2.toMIPS(), label);
+        }
+    }
+
+    public static class beq extends IRComm
+    {
+        String label;
+        IRReg src1;
+        IRReg src2;
+        public beq(IRReg src1, IRReg src2, String label) { this.label = label; this.src1 = src1; this.src2 = src2; }
+        public void toMIPS()
+        {
+            MIPS.writer.printf("\tbeq %s, %s, %s\n", src1.toMIPS(), src2.toMIPS(), label);
+        }
+    }
+
     public static class sbrk extends IRComm
     {
         public void toMIPS()
@@ -219,45 +291,6 @@ public class IR
             MIPS.writer.printf("\tmove $a0, %s  # start of print_string\n", value.toMIPS());
             MIPS.writer.printf("\tli $v0, 4\n");
             MIPS.writer.printf("\tsyscall  # end of print_string\n");
-        }
-    }
-
-    public static class intBinOp extends IRComm
-    {
-        IRReg dst;
-        IRReg left;
-        IRReg right;
-        char op;
-        public intBinOp(IRReg dst, IRReg left, IRReg right, char op) { this.dst = dst; this.left = left; this.right = right; this.op = op; }
-        public void toMIPS()
-        {
-            switch (op)
-            {
-            case '+':
-                MIPS.writer.printf("\tadd %s, %s, %s\n", dst.toMIPS(), left.toMIPS(), right.toMIPS());
-                break;
-            case '-':
-                MIPS.writer.printf("\tsub %s, %s, %s\n", dst.toMIPS(), left.toMIPS(), right.toMIPS());
-                break;
-            case '*':
-                MIPS.writer.printf("\tmul %s, %s, %s\n", dst.toMIPS(), left.toMIPS(), right.toMIPS());
-                break;
-            // TODO: add div, ge, etc
-            case '<':
-                String ltEndLabel = IR.uniqueLabel("ltEnd");
-                MIPS.writer.printf("\tli %s, 1\n", dst.toMIPS());  // be positive - assume equality
-                MIPS.writer.printf("\tblt %s, %s, %s\n", left.toMIPS(), right.toMIPS(), ltEndLabel);
-                MIPS.writer.printf("\tli %s, 0\n", dst.toMIPS());  // guess not
-                MIPS.writer.printf("%s:\n", ltEndLabel);
-                break;
-            case '=':
-                String eqEndLabel = IR.uniqueLabel("eqEnd");
-                MIPS.writer.printf("\tli %s, 1\n", dst.toMIPS());  // be positive - assume equality
-                MIPS.writer.printf("\tbeq %s, %s, %s\n", left.toMIPS(), right.toMIPS(), eqEndLabel);
-                MIPS.writer.printf("\tli %s, 0\n", dst.toMIPS());  // guess not
-                MIPS.writer.printf("%s:\n", eqEndLabel);
-                break;
-            }
         }
     }
 

@@ -70,12 +70,54 @@ public class ExpBinOp extends Exp
 
 		if (isStringsExpessions)
 		{
-			if (op == '=') { System.out.println("Strings comparison not supported yet"); }
-			if (op == '+') { System.out.println("Strings concatination not supported yet"); }
+			switch (op)
+			{
+				case '+':
+					System.out.println("Strings concatination not supported yet");
+					break;
+				case '=':
+					System.out.println("Strings comparison not supported yet");
+					break;
+			}
 		}
 		else
 		{
-			IR.add(new IR.intBinOp(dst, leftReg, rightReg, op));
+			switch (op)
+			{
+				case '+':
+					IR.add(new IR.add(dst, leftReg, rightReg));
+					break;
+				case '-':
+					IR.add(new IR.sub(dst, leftReg, rightReg));
+					break;
+				case '*':
+					IR.add(new IR.mul(dst, leftReg, rightReg));
+					break;
+				case '/':
+					IR.add(new IR.div(dst, leftReg, rightReg));
+					break;
+				case '<':
+					String ltEndLabel = IR.uniqueLabel("ltEnd");
+					IR.add(new IR.li(dst, 1));
+					IR.add(new IR.blt(leftReg, rightReg, ltEndLabel));
+					IR.add(new IR.li(dst, 0));
+					IR.add(new IR.label(ltEndLabel));
+					break;
+				case '>':
+					String gtEndLabel = IR.uniqueLabel("gtEnd");
+					IR.add(new IR.li(dst, 1));
+					IR.add(new IR.bgt(leftReg, rightReg, gtEndLabel));
+					IR.add(new IR.li(dst, 0));
+					IR.add(new IR.label(gtEndLabel));
+					break;
+				case '=':
+					String eqEndLabel = IR.uniqueLabel("eqEnd");
+					IR.add(new IR.li(dst, 1));
+					IR.add(new IR.beq(leftReg, rightReg, eqEndLabel));
+					IR.add(new IR.li(dst, 0));
+					IR.add(new IR.label(eqEndLabel));
+					break;
+			}
 		}
 		return dst;
 	}
