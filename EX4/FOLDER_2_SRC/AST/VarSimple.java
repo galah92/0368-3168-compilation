@@ -73,7 +73,7 @@ public class VarSimple extends Var
         else if (numMember != -1)
         {
             IR.add(new IR.lw(reg, IRReg.fp, 2 * 4));  // "this"
-            IR.add(new IR.addi(reg, reg, numMember));  // calculate address of member
+            IR.add(new IR.addi(reg, reg, numMember * 4));  // calculate address of member
         }
         else
         {

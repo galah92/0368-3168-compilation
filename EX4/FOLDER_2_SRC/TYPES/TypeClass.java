@@ -18,8 +18,9 @@ public class TypeClass extends Type
         this.base = base;
         if (base != null)
         {
-            members.addAll(base.members);
-            initVals.addAll(base.initVals);
+            methods = new ArrayList<Symbol>(base.methods);
+            members = new ArrayList<Symbol>(base.members);
+            initVals = new ArrayList<Integer>(base.initVals);
         }
     }
 
@@ -35,7 +36,7 @@ public class TypeClass extends Type
         {
             if (memberName.equals(symbol.name)) { return symbol.type; }
         }
-        return (base != null) ? base.getMember(memberName) : null;
+        return null;
     }
 
     public TypeFunc getMethod(String funcName)
@@ -44,17 +45,7 @@ public class TypeClass extends Type
         {
             if (funcName.equals(symbol.name)) { return (TypeFunc)symbol.type; }
         }
-        if (base != null) { return base.getMethod(funcName); }
-        return (base != null) ? base.getMethod(funcName) : null;
-    }
-
-    public TypeFunc getMethod(String funcName, boolean isRecursive)
-    {
-        for (Symbol symbol : methods)
-        {
-            if (funcName.equals(symbol.name)) { return (TypeFunc)symbol.type; }
-        }
-        return (isRecursive && base != null) ? base.getMethod(funcName) : null;
+        return null;
     }
     
 }

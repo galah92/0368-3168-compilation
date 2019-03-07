@@ -10,6 +10,7 @@ public class VarDec extends ClassField
     public String varName;
     public Exp initVal;
     public int numLocal = -1;
+    public int numMember = -1;
 
     public VarDec(String varTypeName, String varName, Exp initVal)
     {
@@ -45,6 +46,7 @@ public class VarDec extends ClassField
         }
         else if (SymbolTable.isScope(Type.Scope.CLASS.name))  // class member
         {
+            numMember = classType.members.size();
             classType.members.add(new Symbol(varName, varType));
             Type initValType = initVal == null ? Type.VOID : initVal.Semant();
             if (initValType == Type.INT && varType == Type.INT)
@@ -110,6 +112,10 @@ public class VarDec extends ClassField
         {
             IRReg valReg = initVal == null ? IRReg.zero : initVal.toIR();
             IR.add(new IR.sw(valReg, IRReg.fp, (-numLocal - 3) * 4));
+        }
+        else if (numMember != -1)
+        {
+
         }
         else  // global variable
         {

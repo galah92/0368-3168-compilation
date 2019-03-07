@@ -11,7 +11,7 @@ public class ExpCall extends Exp
     public Var instanceVar;
     public ExpList args;
     public List<Exp> args2 = new ArrayList<Exp>();
-    public String className;
+    public String funcFullname;
 
     public ExpCall(String funcName, Var instanceVar, ExpList args)
     {
@@ -46,7 +46,6 @@ public class ExpCall extends Exp
             TypeClass instanceType = (TypeClass)t;
             funcType = instanceType.getMethod(funcName);
             if (funcType == null) { throw new SemanticException("symbol not found: " + funcName); }
-            className = instanceType.className;
         }
         else if (classType != null) // own class method
         {
@@ -61,6 +60,7 @@ public class ExpCall extends Exp
             funcType = (TypeFunc)t;
         }
 
+        funcFullname = funcType.fullname;
         List<Type> argsTypes2 = new ArrayList<Type>();
         for (TypeList it = argsTypes; it != null; it = it.tail) { argsTypes2.add(it.head); }
         if (!funcType.isValidArgs(argsTypes2)) { throw new SemanticException("invalid arguments to function: " + funcName); }
@@ -85,7 +85,9 @@ public class ExpCall extends Exp
             IR.add(new IR.addi(IRReg.sp, IRReg.sp, -(args2.size() + 1) * 4));
             if (instanceVar != null)
             {
-                IR.add(new IR.sw(instanceVar.toIR(), IRReg.sp, 0 * 4));  // add "this" as first param
+                IRReg instanceReg = instanceVar.toIR();
+                IR.add(new IR.lw(instanceReg, instanceReg, 0));
+                IR.add(new IR.sw(instanceReg, IRReg.sp, 0 * 4));  // add "this" as first param
             }
             else
             {
@@ -95,7 +97,7 @@ public class ExpCall extends Exp
             {
                 IR.add(new IR.sw(args2.get(i).toIR(), IRReg.sp, (i + 1) * 4));
             }
-            IR.add(new IR.jal(className == null ? funcName : className + "_" + funcName));
+            IR.add(new IR.jal(funcFullname));
             IR.add(new IR.addi(IRReg.sp, IRReg.sp, (args2.size() + 1) * 4));
         }
         return IRReg.v0;  // v0 store the return value

@@ -5,13 +5,15 @@ import java.util.*;
 public class TypeFunc extends Type
 {
 
+	public final String fullname;
 	public Type retType;
 	public List<Symbol> params = new ArrayList<Symbol>();
 	public List<Symbol> locals = new ArrayList<Symbol>();
 
-	public TypeFunc(Type retType)
+	public TypeFunc(Type retType, String fullname)
 	{
 		super("Function");
+		this.fullname = fullname;
 		this.retType = retType;
 	}
 

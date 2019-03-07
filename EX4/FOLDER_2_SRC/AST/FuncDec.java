@@ -36,11 +36,11 @@ public class FuncDec extends ClassField
     {
         if (funcName.equals(Type.VOID.name)) { throw new SemanticException("invalid function name: " + funcName); }
         Type retType = retTypeName.equals(Type.VOID.name) ? Type.VOID : SymbolTable.find(retTypeName);
-
+        
         TypeClass classType = SymbolTable.isScope(Type.Scope.CLASS.name) ? SymbolTable.findClass() : null;
         if (classType != null)
         {
-            if (classType.getMethod(funcName, false) != null) { throw new SemanticException("function already declared in current class: " + funcName); }
+            if (classType.getMethod(funcName) != null) { throw new SemanticException("function already declared in current class: " + funcName); }
             TypeFunc overriddenFunc = classType.getMethod(funcName);
             if (overriddenFunc != null)
             {
@@ -62,8 +62,20 @@ public class FuncDec extends ClassField
             if (classType == null) { throw new SemanticException("function already declared: " + funcName); }
         }
 
-        funcType = new TypeFunc(retType);
-        if (classType != null) { classType.methods.add(new Symbol(funcName, funcType)); }
+        funcType = new TypeFunc(retType, className == null ? funcName : className + "_" + funcName);
+        if (classType != null)
+        {
+            boolean isFound = false;
+            for (Symbol symbol : classType.methods)
+            {
+                if (funcName.equals(symbol.name))
+                {
+                    symbol.type = funcType;
+                    isFound = true;
+                }
+            }
+            if (!isFound) { classType.methods.add(new Symbol(funcName, funcType)); }
+        }
         SymbolTable.enter(funcName, funcType);
         if (params != null) { params.SemantDeclaration(); }
         return funcType;
@@ -93,7 +105,7 @@ public class FuncDec extends ClassField
         boolean isMain = funcName.equals("main") && funcType.retType == Type.VOID && funcType.params.size() == 0;
         int numLocals = funcType.locals.size();
 
-        IR.add(new IR.label(className == null ? funcName : className + "_" + funcName));
+        IR.add(new IR.label(funcType.fullname));
         if (isMain) { for (String initLabel : IR.globalVars) { IR.add(new IR.jal(initLabel)); } }
         
         // prologue
