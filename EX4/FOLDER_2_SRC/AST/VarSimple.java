@@ -57,7 +57,7 @@ public class VarSimple extends Var
         }
         else if (numLocal != -1)
         {
-            IR.add(new IR.addi(reg, IRReg.fp, (-numLocal - 2) * 4));
+            IR.add(new IR.addi(reg, IRReg.fp, (-numLocal - 3) * 4));
         }
         else
         {

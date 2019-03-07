@@ -39,11 +39,12 @@ public class VarArrayElement extends Var
     @Override
     public IRReg toIR()
     {
-        IRReg valReg = new IRReg.TempReg();
-        IRReg baseReg = var.toIR();
-        IR.add(new IR.lw(baseReg, baseReg, 0));
-        IR.add(new IR.calcOffset(valReg, baseReg, index.toIR()));
-        return valReg;
+        IRReg reg = var.toIR();
+        IR.add(new IR.lw(reg, reg, 0));  // dereference array
+        IRReg indexReg = index.toIR();  // get index
+        IR.add(new IR.sll(indexReg, indexReg, 4));  // convert to index in bytes
+        IR.add(new IR.add(reg, reg, indexReg));  // calculate address of element
+        return reg;
     }
 
 }

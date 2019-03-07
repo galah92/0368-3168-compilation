@@ -96,7 +96,7 @@ public class VarDec extends ClassField
         if (numLocal != -1)  // local variable
         {
             IRReg valReg = initVal == null ? IRReg.zero : initVal.toIR();
-            IR.add(new IR.sw(valReg, IRReg.fp, (-numLocal - 2) * 4));
+            IR.add(new IR.sw(valReg, IRReg.fp, (-numLocal - 3) * 4));
         }
         else  // global variable
         {

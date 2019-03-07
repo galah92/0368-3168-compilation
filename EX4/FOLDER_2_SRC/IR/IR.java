@@ -28,6 +28,18 @@ public class IR
 
     public static final Deque<String> globalVars = new ArrayDeque<String>();
 
+    public static class add extends IRComm
+    {
+        IRReg dst;
+        IRReg src1;
+        IRReg src2;
+        public add(IRReg dst, IRReg src1, IRReg src2) { this.dst = dst; this.src1 = src1; this.src2 = src2; }
+        public void toMIPS()
+        {
+            MIPS.writer.printf("\tadd %s, %s, %s\n", dst.toMIPS(), src1.toMIPS(), src2.toMIPS());
+        }
+    }
+
     public static class addi extends IRComm
     {
         IRReg dst;
@@ -165,20 +177,6 @@ public class IR
         public void toMIPS()
         {
             MIPS.writer.printf("\tsw %s, %d(%s)\n", src.toMIPS(), offset, dst.toMIPS());
-        }
-    }
-
-    public static class calcOffset extends IRComm
-    {
-        IRReg dst;
-        IRReg src;
-        IRReg offset;
-        public calcOffset(IRReg dst, IRReg src, IRReg offset) { this.dst = dst; this.src = src; this.offset = offset; }
-        public void toMIPS()
-        {
-            // TODO: boundary-check!
-            MIPS.writer.printf("\tsll %s, %s, %d\n", offset.toMIPS(), offset.toMIPS(), MIPS.WORD);
-            MIPS.writer.printf("\tadd %s, %s, %s\n", dst.toMIPS(), src.toMIPS(), offset.toMIPS());
         }
     }
 
