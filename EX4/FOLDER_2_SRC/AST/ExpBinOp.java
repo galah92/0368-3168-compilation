@@ -64,8 +64,8 @@ public class ExpBinOp extends Exp
 	@Override
 	public IRReg toIR()
 	{
-		IRReg t1 = left.toIR();
-		IRReg t2 = right.toIR();
+		IRReg leftReg = left.toIR();
+		IRReg rightReg = right.toIR();
 		IRReg dst = new IRReg.TempReg();
 
 		if (isStringsExpessions)
@@ -75,7 +75,7 @@ public class ExpBinOp extends Exp
 		}
 		else
 		{
-			IR.add(new IR.intBinOp(dst, t1, t2, op));
+			IR.add(new IR.intBinOp(dst, leftReg, rightReg, op));
 		}
 		return dst;
 	}

@@ -25,6 +25,7 @@ INPUT    = ${INPUT_DIR}/Input.txt
 # INPUT    = ${INPUT_DIR}/TEST_01_Print_Primes.txt
 # INPUT    = ${INPUT_DIR}/TEST_02_Bubble_Sort.txt
 # INPUT    = ${INPUT_DIR}/TEST_03_Merge_Lists.txt
+# INPUT    = ${INPUT_DIR}/TEST_04_Matrices.txt
 OUTPUT   = ${OUTPUT_DIR}/MIPS.txt
 
 default: compile
