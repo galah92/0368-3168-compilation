@@ -21,9 +21,10 @@ CUP_PROGRAM = java -jar ${EXTERNAL_JARS_DIR}/java-cup-11b.jar
 CUP_FLAGS   = -nosummary -nowarn -parser Parser -symbols TokenNames
 CUP_FILE    = ${CUP_DIR}/CUP_FILE.cup
 
-# INPUT    = ${INPUT_DIR}/Input.txt
-INPUT    = ${INPUT_DIR}/TEST_01_Print_Primes.txt
+INPUT    = ${INPUT_DIR}/Input.txt
+# INPUT    = ${INPUT_DIR}/TEST_01_Print_Primes.txt
 # INPUT    = ${INPUT_DIR}/TEST_02_Bubble_Sort.txt
+# INPUT    = ${INPUT_DIR}/TEST_03_Merge_Lists.txt
 OUTPUT   = ${OUTPUT_DIR}/MIPS.txt
 
 default: compile
@@ -40,10 +41,8 @@ compile: clean
 	
 test:
 	java -jar COMPILER ${INPUT} ${OUTPUT}
-	# dot -Tjpeg -o${OUTPUT_DIR}/AST.jpeg ${OUTPUT_DIR}/AST.txt
-	# dot -Tjpeg -o${OUTPUT_DIR}/SymbolTable.jpeg ${OUTPUT_DIR}/SymbolTable.txt
-
-test_run:
+	@# dot -Tjpeg -o${OUTPUT_DIR}/AST.jpeg ${OUTPUT_DIR}/AST.txt
+	@# dot -Tjpeg -o${OUTPUT_DIR}/SymbolTable.jpeg ${OUTPUT_DIR}/SymbolTable.txt
 	spim -f ${OUTPUT_DIR}/MIPS.txt #> ${OUTPUT_DIR}/MIPS_OUTPUT.txt	
 
-everything: clean compile test test_run
+everything: clean compile test
