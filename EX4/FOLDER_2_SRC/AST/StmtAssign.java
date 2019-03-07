@@ -57,9 +57,9 @@ public class StmtAssign extends Stmt
     @Override
     public IRReg toIR()
     {
-        IRReg to = var.toIR();
-        IR.add(new IR.sw(exp.toIR(), to, 0));
-        return to;
+        IR.add(new IR.move(IRReg.s0, var.toIR()));  // eval left side first and store it
+        IR.add(new IR.sw(exp.toIR(), IRReg.s0, 0));  // eval right side and assign
+        return IRReg.s0;
     }
     
 }
