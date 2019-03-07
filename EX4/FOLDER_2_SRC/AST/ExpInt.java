@@ -6,7 +6,7 @@ import pcomp.*;
 public class ExpInt extends Exp
 {
 
-    private int value;
+    public final int value;
     
     public ExpInt(int value)
     {

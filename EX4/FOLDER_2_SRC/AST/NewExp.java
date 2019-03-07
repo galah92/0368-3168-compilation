@@ -9,6 +9,7 @@ public class NewExp extends Exp
     String typeName;
     Exp exp;
     int numMembers;
+    TypeClass classType;
 
     public NewExp(String typeName, Exp exp)
     {
@@ -37,6 +38,7 @@ public class NewExp extends Exp
         else // new class
         {
             if (newExpType == Type.INT || newExpType == Type.STRING) { throw new SemanticException(); }
+            classType = (TypeClass)newExpType;
             numMembers = ((TypeClass)newExpType).members.size();
         }
 
@@ -58,9 +60,11 @@ public class NewExp extends Exp
         IR.add(new IR.sbrk());  // allocate heap memory, v0 contain the result
         if (exp == null)
         {
-            for (int i = 0; i < numMembers; i++)  // zero all members values
+            IRReg tmpReg = new IRReg.TempReg();
+            for (int i = 0; i < numMembers; i++)  // init all members values
             {
-                IR.add(new IR.sw(IRReg.zero, IRReg.v0, i * 4));
+                IR.add(new IR.li(tmpReg, classType.initVals.get(i)));
+                IR.add(new IR.sw(tmpReg, IRReg.v0, i * 4));
             }
         }
 		return IRReg.v0;

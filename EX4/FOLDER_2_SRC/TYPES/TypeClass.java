@@ -8,6 +8,7 @@ public class TypeClass extends Type
     public TypeClass base;
     public List<Symbol> members = new ArrayList<Symbol>();
     public List<Symbol> methods = new ArrayList<Symbol>();
+    public List<Integer> initVals = new ArrayList<Integer>();
     
     public TypeClass(TypeClass base)
     {

@@ -46,6 +46,19 @@ public class VarDec extends ClassField
         else if (SymbolTable.isScope(Type.Scope.CLASS.name))  // class member
         {
             classType.members.add(new Symbol(varName, varType));
+            Type initValType = initVal == null ? Type.VOID : initVal.Semant();
+            if (initValType == Type.INT && varType == Type.INT)
+            {
+                classType.initVals.add(((ExpInt)initVal).value);
+            }
+            else if (initValType == Type.VOID)
+            {
+                classType.initVals.add(0);
+            }
+            else
+            {
+                throw new SemanticException("invalid initialization type for class member");
+            }
         }
 
         Type initValType = initVal != null ? initVal.Semant() : null;
