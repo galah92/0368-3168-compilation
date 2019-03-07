@@ -43,7 +43,7 @@ public class StmtReturn extends Stmt
     public IRReg toIR()
     {
         IR.add(new IR.move(IRReg.v0, exp == null ? IRReg.zero : exp.toIR()));
-        IR.add(new IR.jump(funcName + "_end"));
+        IR.add(new IR.jump(funcName + "_epilogue"));
         return null;
     }
 

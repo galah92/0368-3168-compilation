@@ -90,12 +90,31 @@ public class FuncDec extends ClassField
     {
         boolean isMain = funcName.equals("main") && funcType.retType == Type.VOID && funcType.params.size() == 0;
         int numLocals = funcType.locals.size();
+        
         IR.add(new IR.label(funcName));
         if (isMain) { for (String initLabel : IR.globalVars) { IR.add(new IR.jal(initLabel)); } }
-        IR.add(new IR.funcPrologue(numLocals));
+        
+        // prologue
+        IR.add(new IR.addi(IRReg.sp, IRReg.sp, -8));
+        IR.add(new IR.sw(IRReg.fp, IRReg.sp, 0));  // save fp
+        IR.add(new IR.sw(IRReg.ra, IRReg.sp, 4));  // save ra
+        IR.add(new IR.move(IRReg.fp, IRReg.sp));  // update to new fp
+        IR.add(new IR.addi(IRReg.sp, IRReg.sp, -numLocals * 4));  // allocate stack
+        IR.add(new IR.comment("end of prologue"));
+        
         body.toIR();
-        IR.add(new IR.label(funcName + "_end"));
-        if (!isMain) { IR.add(new IR.funcEpilogue(numLocals)); }
+        
+        // epilogue
+        IR.add(new IR.label(funcName + "_epilogue"));
+        if (!isMain)
+        {
+            IR.add(new IR.addi(IRReg.sp, IRReg.sp, numLocals * 4));  // deallocate stack
+            IR.add(new IR.lw(IRReg.ra, IRReg.sp, 4));  // retrieve ra
+            IR.add(new IR.lw(IRReg.fp, IRReg.sp, 0));  // retrieve fp
+            IR.add(new IR.addi(IRReg.sp, IRReg.sp, 8));
+            IR.add(new IR.jr(IRReg.ra));  // return
+        }
+        
         return null;
     }
 

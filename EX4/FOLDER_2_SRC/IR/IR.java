@@ -61,38 +61,13 @@ public class IR
         }
     }
 
-    public static class funcPrologue extends IRComm
+    public static class comment extends IRComm
     {
-        int numLocals;
-        public funcPrologue(int numLocals) { this.numLocals = numLocals; }
+        String text;
+        public comment(String text) { this.text = text; }
         public void toMIPS()
         {
-            // save fp & ra
-            MIPS.writer.printf("\taddi $sp, $sp, -8  # start of function prologue\n");
-            MIPS.writer.printf("\tsw $fp, 0($sp)\n");
-            MIPS.writer.printf("\tsw $ra, 4($sp)\n");
-            // set fp = sp
-            MIPS.writer.printf("\tmove $fp, $sp\n");
-            // allocate stack frame
-            MIPS.writer.printf("\taddi $sp, $sp, %d  # end of function prologue\n", -MIPS.WORD * numLocals);
-        }
-    }
-
-    public static class funcEpilogue extends IRComm
-    {
-        int numLocals;
-        public funcEpilogue(int numLocals) { this.numLocals = numLocals; }
-        public void toMIPS()
-        {
-            // deallocate stack frame
-            MIPS.writer.printf("\taddi $sp, $sp, %d  # start of function epilogue\n", MIPS.WORD * numLocals);
-            // restore fp & ra
-            MIPS.writer.printf("\tlw	$ra, 4($fp)\n");
-            MIPS.writer.printf("\tlw	$fp, ($fp)\n");
-            // deallocate place for ra & fp
-            MIPS.writer.printf("\taddi $sp, $sp, 8\n");
-            // jump back
-            MIPS.writer.printf("\tjr $ra  # end of function epilogue\n");
+            MIPS.writer.printf("\t# %s\n", text);
         }
     }
 
