@@ -44,6 +44,12 @@ public class MIPS
     public static final String a2 = "$a2";
     public static final String a3 = "$a3";
 
+    // safe function variable, must not be overwritten by called subroutine
+    public static final String s0 = "$s0";
+    public static final String s1 = "$s1";
+    public static final String s2 = "$s2";
+    public static final String s3 = "$s3";
+
     public static final String sp = "$sp";  // stack pointer (top of stack)
     public static final String fp = "$fp";  // frame pointer (bottom of current stack frame)
     public static final String ra = "$ra";  // return address of most recent caller

@@ -99,7 +99,8 @@ public class FuncDec extends ClassField
         IR.add(new IR.sw(IRReg.fp, IRReg.sp, 0));  // save fp
         IR.add(new IR.sw(IRReg.ra, IRReg.sp, 4));  // save ra
         IR.add(new IR.move(IRReg.fp, IRReg.sp));  // update to new fp
-        IR.add(new IR.addi(IRReg.sp, IRReg.sp, -numLocals * 4));  // allocate stack
+        IR.add(new IR.addi(IRReg.sp, IRReg.sp, -(numLocals + 1) * 4));  // allocate stack
+        IR.add(new IR.sw(IRReg.s0, IRReg.fp, -1 * 4));
         IR.add(new IR.comment("end of prologue"));
         
         body.toIR();
@@ -108,7 +109,8 @@ public class FuncDec extends ClassField
         IR.add(new IR.label(funcName + "_epilogue"));
         if (!isMain)
         {
-            IR.add(new IR.addi(IRReg.sp, IRReg.sp, numLocals * 4));  // deallocate stack
+            IR.add(new IR.lw(IRReg.s0, IRReg.fp, -1 * 4));
+            IR.add(new IR.addi(IRReg.sp, IRReg.sp, (numLocals + 1) * 4));  // deallocate stack
             IR.add(new IR.lw(IRReg.ra, IRReg.sp, 4));  // retrieve ra
             IR.add(new IR.lw(IRReg.fp, IRReg.sp, 0));  // retrieve fp
             IR.add(new IR.addi(IRReg.sp, IRReg.sp, 8));

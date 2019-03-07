@@ -76,6 +76,30 @@ public abstract class IRReg
         public String toMIPS() { return MIPS.a3; }
     }
 
+    private static class S0 extends IRReg
+    {
+        @Override
+        public String toMIPS() { return MIPS.s0; }
+    }
+
+    private static class S1 extends IRReg
+    {
+        @Override
+        public String toMIPS() { return MIPS.s1; }
+    }
+
+    private static class S2 extends IRReg
+    {
+        @Override
+        public String toMIPS() { return MIPS.s2; }
+    }
+
+    private static class S3 extends IRReg
+    {
+        @Override
+        public String toMIPS() { return MIPS.s3; }
+    }
+
     public static final IRReg zero = new IRReg.Zero();
     
     // stack pointer (top of stack)
@@ -92,5 +116,10 @@ public abstract class IRReg
     public static final IRReg a1 = new IRReg.A1();
     public static final IRReg a2 = new IRReg.A2();
     public static final IRReg a3 = new IRReg.A3();
+
+    public static final IRReg s0 = new IRReg.S0();
+    public static final IRReg s1 = new IRReg.S1();
+    public static final IRReg s2 = new IRReg.S2();
+    public static final IRReg s3 = new IRReg.S3();
 
 }
