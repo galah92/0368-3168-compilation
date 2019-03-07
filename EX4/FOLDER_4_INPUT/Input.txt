@@ -14,7 +14,8 @@ IntList MergeLists(IntList l1, IntList l2)
     {
         return l1;
     }
-    
+    PrintInt(l1.head);
+    PrintInt(l2.head);
     if (l1.head < l2.head)
     {
         IntList l3 := l1;
@@ -68,9 +69,5 @@ void main()
     
     IntList l := MergeLists(a,A);
     
-    while (1 - (l = nil))
-    {
-        PrintInt(l.head);
-        l := l.tail;
-    }
+    
 }

@@ -278,9 +278,13 @@ public class IR
             case '+':
                 MIPS.writer.printf("\tadd %s, %s, %s\n", dst.toMIPS(), left.toMIPS(), right.toMIPS());
                 break;
+            case '-':
+                MIPS.writer.printf("\tsub %s, %s, %s\n", dst.toMIPS(), left.toMIPS(), right.toMIPS());
+                break;
             case '*':
                 MIPS.writer.printf("\tmul %s, %s, %s\n", dst.toMIPS(), left.toMIPS(), right.toMIPS());
                 break;
+            // TODO: add div, ge, etc
             case '<':
                 String ltEndLabel = IR.uniqueLabel("ltEnd");
                 MIPS.writer.printf("\tli %s, 1\n", dst.toMIPS());  // be positive - assume equality
