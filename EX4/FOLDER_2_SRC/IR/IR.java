@@ -40,6 +40,27 @@ public class IR
         }
     }
 
+    public static class sbrk extends IRComm
+    {
+        public void toMIPS()
+        {
+            MIPS.writer.printf("\tli $v0, 9\n");
+            MIPS.writer.printf("\tsyscall\n");
+        }
+    }
+
+    public static class sll extends IRComm
+    {
+        IRReg dst;
+        IRReg src;
+        int imm;
+        public sll(IRReg dst, IRReg src, int imm) { this.dst = dst; this.src = src; this.imm = imm; }
+        public void toMIPS()
+        {
+            MIPS.writer.printf("\tsll %s, %s, %d\n", dst.toMIPS(), src.toMIPS(), imm);
+        }
+    }
+
     public static class funcPrologue extends IRComm
     {
         int numLocals;
@@ -169,21 +190,6 @@ public class IR
         public void toMIPS()
         {
             MIPS.writer.printf("\tsw %s, %d(%s)\n", src.toMIPS(), offset, dst.toMIPS());
-        }
-    }
-
-    public static class heapAlloc extends IRComm
-    {
-        IRReg dst;
-        IRReg numBytes;
-        public heapAlloc(IRReg dst, IRReg numBytes) { this.dst = dst; this.numBytes = numBytes; }
-        public void toMIPS()
-        {
-            MIPS.writer.printf("\tmove $a0, %s  # start of malloc\n", numBytes.toMIPS());
-            MIPS.writer.printf("\tsll $a0, $a0, %d\n", MIPS.WORD);
-            MIPS.writer.printf("\tli $v0, 9\n");
-            MIPS.writer.printf("\tsyscall\n");
-            MIPS.writer.printf("\tmove %s, $v0  # end of malloc\n", dst.toMIPS());
         }
     }
 

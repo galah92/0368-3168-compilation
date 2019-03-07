@@ -8,6 +8,7 @@ public class NewExp extends Exp
 
     String typeName;
     Exp exp;
+    int numMembers;
 
     public NewExp(String typeName, Exp exp)
     {
@@ -36,6 +37,7 @@ public class NewExp extends Exp
         else // new class
         {
             if (newExpType == Type.INT || newExpType == Type.STRING) { throw new SemanticException(); }
+            numMembers = ((TypeClass)newExpType).members.size();
         }
 
         return newExpType;
@@ -44,15 +46,18 @@ public class NewExp extends Exp
     @Override
 	public IRReg toIR()
 	{
+        if (exp != null)  // array variable
+        {
+            IR.add(new IR.move(IRReg.a0, exp.toIR()));  // copy array size
+        }
+        else  // class variable
+        {
+            IR.add(new IR.li(IRReg.a0, numMembers));  // copy class size
+        }
+        IR.add(new IR.sll(IRReg.a0, IRReg.a0, 4));  // convert to size in bytes
+        IR.add(new IR.sbrk());  // allocate heap memory
         IRReg dstReg = new IRReg.TempReg();
-        if (exp != null)
-        {
-            IR.add(new IR.heapAlloc(dstReg, exp.toIR()));
-        }
-        else
-        {
-            System.out.println("allocating classes not supported yet");
-        }
+        IR.add(new IR.move(dstReg, IRReg.v0));  // copy buffer back
 		return dstReg;
 	}
     
