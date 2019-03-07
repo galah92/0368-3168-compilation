@@ -55,17 +55,15 @@ public class NewExp extends Exp
             IR.add(new IR.li(IRReg.a0, numMembers));  // copy class size
         }
         IR.add(new IR.sll(IRReg.a0, IRReg.a0, 4));  // convert to size in bytes
-        IR.add(new IR.sbrk());  // allocate heap memory
-        IRReg dstReg = new IRReg.TempReg();
-        IR.add(new IR.move(dstReg, IRReg.v0));  // copy pointer to buffer back
+        IR.add(new IR.sbrk());  // allocate heap memory, v0 contain the result
         if (exp == null)
         {
-            for (int i = 0; i < numMembers; i++)
+            for (int i = 0; i < numMembers; i++)  // zero all members values
             {
-                IR.add(new IR.sw(IRReg.zero, dstReg, i * 4));  // zero all members values
+                IR.add(new IR.sw(IRReg.zero, IRReg.v0, i * 4));
             }
         }
-		return dstReg;
+		return IRReg.v0;
 	}
     
 }

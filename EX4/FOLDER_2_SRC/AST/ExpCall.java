@@ -88,9 +88,7 @@ public class ExpCall extends Exp
             IR.add(new IR.jal(funcName));
             IR.add(new IR.addi(IRReg.sp, IRReg.sp, args2.size() * 4));
         }
-        IRReg retVal = new IRReg.TempReg();
-        IR.add(new IR.move(retVal, IRReg.v0));  // v0 store the return value
-        return retVal;
+        return IRReg.v0;  // v0 store the return value
     }
 
 }

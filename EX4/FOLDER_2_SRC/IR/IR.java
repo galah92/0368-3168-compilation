@@ -180,21 +180,6 @@ public class IR
         }
     }
 
-    public static class heapGet extends IRComm
-    {
-        IRReg dst;
-        IRReg src;
-        IRReg offset;
-        public heapGet(IRReg dst, IRReg src, IRReg offset) { this.dst = dst; this.src = src; this.offset = offset; }
-        public void toMIPS()
-        {
-            // TODO: boundary-check!
-            MIPS.writer.printf("\tsll %s, %s, %d\n", offset.toMIPS(), offset.toMIPS(), MIPS.WORD);
-            MIPS.writer.printf("\tadd %s, %s, %s\n", src.toMIPS(), src.toMIPS(), offset.toMIPS());
-            MIPS.writer.printf("\tlw %s, (%s)\n", dst.toMIPS(), src.toMIPS());
-        }
-    }
-
     public static class stringLiteral extends IRComm
     {
         IRReg dst;
