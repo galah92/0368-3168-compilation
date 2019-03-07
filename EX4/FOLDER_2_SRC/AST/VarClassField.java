@@ -43,10 +43,10 @@ public class VarClassField extends Var
     @Override
     public IRReg toIR()
     {
+        IRReg instanceReg = instance.toIR();
+        IR.add(new IR.lw(instanceReg, instanceReg, 0));  // dereference instance
         IRReg valReg = new IRReg.TempReg();
-        IRReg baseReg = instance.toIR();
-        IR.add(new IR.lw(baseReg, baseReg, 0));
-        IR.add(new IR.addi(valReg, baseReg, numMember * 4));
+        IR.add(new IR.addi(valReg, instanceReg, numMember * 4));  // access member
         return valReg;
     }
     
