@@ -40,7 +40,7 @@ public class ClassDec extends Dec
 
         if (SymbolTable.find(className) != null) { throw new SemanticException("symbol already defined"); }
 
-        TypeClass classType = new TypeClass(baseType);
+        TypeClass classType = new TypeClass(baseType, className);
         SymbolTable.enter(className, classType);
 
         SymbolTable.beginScope(Type.Scope.CLASS);
@@ -56,7 +56,7 @@ public class ClassDec extends Dec
     @Override
     public IRReg toIR()
     {
-        // TODO: implement
+        for (ClassFieldList it = fields; it != null; it = it.tail) { it.head.toIR(); }
         return null;
     }
 

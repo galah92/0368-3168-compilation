@@ -8,14 +8,15 @@ public class ExpCall extends Exp
 {
 
     public String funcName;
-    public Var instanceName;
+    public Var instanceVar;
     public ExpList args;
     public List<Exp> args2 = new ArrayList<Exp>();
+    public String className;
 
-    public ExpCall(String funcName, Var instanceName, ExpList args)
+    public ExpCall(String funcName, Var instanceVar, ExpList args)
     {
         this.funcName = funcName;
-        this.instanceName = instanceName;
+        this.instanceVar = instanceVar;
         this.args = args;
         for (ExpList it = args; it != null; it = it.tail) { args2.add(it.head); }
     }
@@ -23,11 +24,11 @@ public class ExpCall extends Exp
     public void logGraphviz()
     {
         if (args != null) args.logGraphviz();
-        if (instanceName != null) instanceName.logGraphviz();
+        if (instanceVar != null) instanceVar.logGraphviz();
 
         logNode(String.format("ExpCall\n%s", funcName));
         if (args != null) logEdge(args);
-        if (instanceName != null) logEdge(instanceName);
+        if (instanceVar != null) logEdge(instanceVar);
     }
 
     @Override
@@ -38,13 +39,14 @@ public class ExpCall extends Exp
         TypeFunc funcType = null;
         TypeClass classType = SymbolTable.findClass();
 
-        if (instanceName != null) // class variable method
+        if (instanceVar != null) // class variable method
         {
-            Type t = instanceName.Semant();
-            if (!(t instanceof TypeClass)) { throw new SemanticException("symbol is not of class type: " + instanceName); }
+            Type t = instanceVar.Semant();
+            if (!(t instanceof TypeClass)) { throw new SemanticException("symbol is not of class type: " + instanceVar); }
             TypeClass instanceType = (TypeClass)t;
             funcType = instanceType.getMethod(funcName);
             if (funcType == null) { throw new SemanticException("symbol not found: " + funcName); }
+            className = instanceType.className;
         }
         else if (classType != null) // own class method
         {
@@ -80,13 +82,21 @@ public class ExpCall extends Exp
             System.out.println("PrintTrace not supported yet");
             break;
         default:
-            IR.add(new IR.addi(IRReg.sp, IRReg.sp, -args2.size() * 4));
+            IR.add(new IR.addi(IRReg.sp, IRReg.sp, -(args2.size() + 1) * 4));
+            if (instanceVar != null)
+            {
+                IR.add(new IR.sw(instanceVar.toIR(), IRReg.sp, 0 * 4));  // add "this" as first param
+            }
+            else
+            {
+                IR.add(new IR.sw(IRReg.zero, IRReg.sp, 0 * 4));
+            }
             for (int i = 0; i < args2.size(); i++)
             {
-                IR.add(new IR.sw(args2.get(i).toIR(), IRReg.sp, i * 4));
+                IR.add(new IR.sw(args2.get(i).toIR(), IRReg.sp, (i + 1) * 4));
             }
-            IR.add(new IR.jal(funcName));
-            IR.add(new IR.addi(IRReg.sp, IRReg.sp, args2.size() * 4));
+            IR.add(new IR.jal(className == null ? funcName : className + "_" + funcName));
+            IR.add(new IR.addi(IRReg.sp, IRReg.sp, (args2.size() + 1) * 4));
         }
         return IRReg.v0;  // v0 store the return value
     }

@@ -9,5 +9,6 @@ public abstract class Var extends Exp
 
     public int numLocal = -1;
     public int numParam = -1;
+    public int numMember = -1;
 
 }

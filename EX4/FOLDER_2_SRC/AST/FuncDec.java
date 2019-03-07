@@ -11,6 +11,7 @@ public class FuncDec extends ClassField
     public ParamsList params;
     public StmtList body;
     public TypeFunc funcType;
+    public String className;
     
     public FuncDec(String retTypeName, String funcName, ParamsList params, StmtList body)
     {
@@ -36,7 +37,7 @@ public class FuncDec extends ClassField
         if (funcName.equals(Type.VOID.name)) { throw new SemanticException("invalid function name: " + funcName); }
         Type retType = retTypeName.equals(Type.VOID.name) ? Type.VOID : SymbolTable.find(retTypeName);
 
-        TypeClass classType = SymbolTable.findClass();
+        TypeClass classType = SymbolTable.isScope(Type.Scope.CLASS.name) ? SymbolTable.findClass() : null;
         if (classType != null)
         {
             if (classType.getMethod(funcName, false) != null) { throw new SemanticException("function already declared in current class: " + funcName); }
@@ -46,6 +47,7 @@ public class FuncDec extends ClassField
                 if (retType != overriddenFunc.retType) { throw new SemanticException("overridding method with different return type: " + funcName); }
                 // TODO: should also check args equality
             }
+            className = classType.className;
         }
 
         Type func = SymbolTable.findInScope(funcName);
@@ -63,7 +65,7 @@ public class FuncDec extends ClassField
         funcType = new TypeFunc(retType);
         if (classType != null) { classType.methods.add(new Symbol(funcName, funcType)); }
         SymbolTable.enter(funcName, funcType);
-        if (params != null) params.SemantDeclaration();
+        if (params != null) { params.SemantDeclaration(); }
         return funcType;
     }
 
@@ -90,8 +92,8 @@ public class FuncDec extends ClassField
     {
         boolean isMain = funcName.equals("main") && funcType.retType == Type.VOID && funcType.params.size() == 0;
         int numLocals = funcType.locals.size();
-        
-        IR.add(new IR.label(funcName));
+
+        IR.add(new IR.label(className == null ? funcName : className + "_" + funcName));
         if (isMain) { for (String initLabel : IR.globalVars) { IR.add(new IR.jal(initLabel)); } }
         
         // prologue

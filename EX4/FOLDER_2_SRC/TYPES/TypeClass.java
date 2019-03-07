@@ -5,16 +5,22 @@ import java.util.*;
 public class TypeClass extends Type
 {
     
+    public final String className;
     public TypeClass base;
     public List<Symbol> members = new ArrayList<Symbol>();
     public List<Symbol> methods = new ArrayList<Symbol>();
     public List<Integer> initVals = new ArrayList<Integer>();
     
-    public TypeClass(TypeClass base)
+    public TypeClass(TypeClass base, String className)
     {
         super("Class");
+        this.className = className;
         this.base = base;
-        if (base != null) { members.addAll(base.members); }
+        if (base != null)
+        {
+            members.addAll(base.members);
+            initVals.addAll(base.initVals);
+        }
     }
 
     public boolean isInheritingFrom(TypeClass other)

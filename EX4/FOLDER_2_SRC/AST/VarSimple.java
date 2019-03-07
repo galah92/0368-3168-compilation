@@ -44,6 +44,17 @@ public class VarSimple extends Var
                 }
             }
         }
+        if (SymbolTable.isScope(Type.Scope.CLASS.name))
+        {
+            List<Symbol> classMembers = SymbolTable.findClass().members;
+            for (int i = 0; i < classMembers.size(); i++)
+            {
+                if (varName.equals(classMembers.get(i).name))
+                {
+                    numMember = i;
+                }
+            }
+        }
         return varType;
     }
 
@@ -53,11 +64,16 @@ public class VarSimple extends Var
         IRReg reg = new IRReg.TempReg();
         if (numParam != -1)
         {
-            IR.add(new IR.addi(reg, IRReg.fp, (numParam + 2) * 4));
+            IR.add(new IR.addi(reg, IRReg.fp, (numParam + 3) * 4));
         }
         else if (numLocal != -1)
         {
             IR.add(new IR.addi(reg, IRReg.fp, (-numLocal - 3) * 4));
+        }
+        else if (numMember != -1)
+        {
+            IR.add(new IR.lw(reg, IRReg.fp, 2 * 4));  // "this"
+            IR.add(new IR.addi(reg, reg, numMember));  // calculate address of member
         }
         else
         {

@@ -1,31 +1,39 @@
-array IntArray = int[]
-array Mat      = IntArray[]
-
-int trace3x3(Mat A)
+class IntList
 {
-    PrintInt(A[0][0]);
-    PrintInt(A[1][1]);
-    PrintInt(A[2][2]);
-    PrintInt(0+4+8);
-    PrintInt(A[0][0]+A[1][1]+A[2][2]);
-	return A[0][0]+A[1][1]+A[2][2];
+    int head := 33;
+    IntList tail;
 }
 
 void main()
 {
-	IntArray row0 := new int[3];
-	IntArray row1 := new int[3];
-	IntArray row2 := new int[3];
+    IntList a := new IntList;
+    IntList b := new IntList;
+    IntList c := new IntList;
+    IntList d := new IntList;
 
-	Mat A := new IntArray[3];
+    IntList A := new IntList;
+    IntList B := new IntList;
+    IntList C := new IntList;
+    IntList D := new IntList;
+    PrintInt(a.head);
+    a.head := 34;
+    b.head := 70;
+    c.head := 92;
+    d.head := 96;
 
-	A[0] := row0;
-	A[1] := row1;
-	A[2] := row2;
+    A.head := 12;
+    B.head := 50;
+    C.head := 97;
+    D.head := 99;
 
-	A[0][0]:=0;A[0][1]:=1;A[0][2]:=2;
-	A[1][0]:=3;A[1][1]:=4;A[1][2]:=5;
-	A[2][0]:=6;A[2][1]:=7;A[2][2]:=8;
+    a.tail := b;
+    b.tail := c;
+    c.tail := d;
+    d.tail := nil;
 
-	PrintInt(trace3x3(A));
+    A.tail := B;
+    B.tail := C;
+    C.tail := D;
+    D.tail := nil;
+    
 }
