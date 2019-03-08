@@ -40,11 +40,11 @@ public class FuncDec extends ClassField
         TypeClass classType = SymbolTable.isScope(Type.Scope.CLASS.name) ? SymbolTable.findClass() : null;
         if (classType != null)
         {
-            if (classType.getMethod(funcName) != null) { throw new SemanticException("function already declared in current class: " + funcName); }
             TypeFunc overriddenFunc = classType.getMethod(funcName);
             if (overriddenFunc != null)
             {
-                if (retType != overriddenFunc.retType) { throw new SemanticException("overridding method with different return type: " + funcName); }
+                if (overriddenFunc.className.equals(className)) { throw new SemanticException("function already declared in current class: " + funcName); }
+                if (overriddenFunc.retType != retType) { throw new SemanticException("overridding method with different return type: " + funcName); }
                 // TODO: should also check args equality
             }
             className = classType.className;
@@ -63,6 +63,7 @@ public class FuncDec extends ClassField
         }
 
         funcType = new TypeFunc(retType, className == null ? funcName : className + "_" + funcName);
+        if (className != null) { funcType.className = className; }
         if (classType != null)
         {
             boolean isFound = false;
@@ -121,7 +122,7 @@ public class FuncDec extends ClassField
         body.toIR();
         
         // epilogue
-        IR.add(new IR.label(funcName + "_epilogue"));
+        IR.add(new IR.label(funcType.fullname + "_epilogue"));
         if (!isMain)
         {
             IR.add(new IR.lw(IRReg.s0, IRReg.fp, -1 * 4));

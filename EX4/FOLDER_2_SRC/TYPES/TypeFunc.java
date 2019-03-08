@@ -5,7 +5,8 @@ import java.util.*;
 public class TypeFunc extends Type
 {
 
-	public final String fullname;
+	public String fullname;
+	public String className;
 	public Type retType;
 	public List<Symbol> params = new ArrayList<Symbol>();
 	public List<Symbol> locals = new ArrayList<Symbol>();
