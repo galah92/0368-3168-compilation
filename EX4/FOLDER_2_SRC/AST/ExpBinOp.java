@@ -114,21 +114,31 @@ public class ExpBinOp extends Exp
                 IR.add(new IR.div(dst, leftReg, rightReg));
                 break;
             case '<':
-                String ltEndLabel = IR.uniqueLabel("ltEnd");
+                String ltEndLabel = IR.uniqueLabel("lt_end");
                 IR.add(new IR.li(dst, 1));
                 IR.add(new IR.blt(leftReg, rightReg, ltEndLabel));
                 IR.add(new IR.li(dst, 0));
                 IR.add(new IR.label(ltEndLabel));
                 break;
+                // implementation without dst register - we utilize leftReg
+                // String ltTrueLabel = IR.uniqueLabel("lt_true");
+                // String ltEndLabel = IR.uniqueLabel("lt_end");
+                // IR.add(new IR.blt(leftReg, rightReg, ltTrueLabel));
+                // IR.add(new IR.li(leftReg, 0));
+                // IR.add(new IR.jump(ltEndLabel));
+                // IR.add(new IR.label(ltTrueLabel));
+                // IR.add(new IR.li(leftReg, 1));
+                // IR.add(new IR.label(ltEndLabel));
+                // return leftReg;
             case '>':
-                String gtEndLabel = IR.uniqueLabel("gtEnd");
+                String gtEndLabel = IR.uniqueLabel("gt_end");
                 IR.add(new IR.li(dst, 1));
                 IR.add(new IR.bgt(leftReg, rightReg, gtEndLabel));
                 IR.add(new IR.li(dst, 0));
                 IR.add(new IR.label(gtEndLabel));
                 break;
             case '=':
-                String eqEndLabel = IR.uniqueLabel("eqEnd");
+                String eqEndLabel = IR.uniqueLabel("eq_end");
                 IR.add(new IR.li(dst, 1));
                 IR.add(new IR.beq(leftReg, rightReg, eqEndLabel));
                 IR.add(new IR.li(dst, 0));

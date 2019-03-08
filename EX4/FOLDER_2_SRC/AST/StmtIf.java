@@ -40,9 +40,8 @@ public class StmtIf extends Stmt
     @Override
     public IRReg toIR()
     {
-        String endIfLabel = IR.uniqueLabel("endIf");
-        IRReg condReg = cond.toIR();
-        IR.add(new IR.beqz(condReg, endIfLabel));
+        String endIfLabel = IR.uniqueLabel("if_end");
+        IR.add(new IR.beqz(cond.toIR(), endIfLabel));
         body.toIR();
         IR.add(new IR.label(endIfLabel));
         return null;
