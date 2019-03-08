@@ -48,18 +48,20 @@ public class NewExp extends Exp
     @Override
 	public IRReg toIR()
 	{
-        if (exp != null)  // array variable
+        if (exp != null)  // array instance
         {
-            IR.add(new IR.move(IRReg.a0, exp.toIR()));  // copy array size
+            IRReg sizeReg = exp.toIR();
+            IR.add(new IR.move(IRReg.a0, sizeReg));  // copy array sizez
+            IR.add(new IR.addi(IRReg.a0, IRReg.a0, 1));  // first element is size
+            IR.add(new IR.sll(IRReg.a0, IRReg.a0, 4));  // convert to size in bytes
+            IR.add(new IR.sbrk());  // allocate heap memory, v0 contain the result
+            IR.add(new IR.sw(sizeReg, IRReg.v0, 0));  // store size as first element
         }
-        else  // class variable
+        else  // class instance
         {
             IR.add(new IR.li(IRReg.a0, numMembers));  // copy class size
-        }
-        IR.add(new IR.sll(IRReg.a0, IRReg.a0, 4));  // convert to size in bytes
-        IR.add(new IR.sbrk());  // allocate heap memory, v0 contain the result
-        if (exp == null)
-        {
+            IR.add(new IR.sll(IRReg.a0, IRReg.a0, 4));  // convert to size in bytes
+            IR.add(new IR.sbrk());  // allocate heap memory, v0 contain the result
             IRReg tmpReg = new IRReg.TempReg();
             for (int i = 0; i < numMembers; i++)  // init all members values
             {

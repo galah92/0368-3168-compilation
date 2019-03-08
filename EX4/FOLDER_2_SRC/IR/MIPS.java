@@ -21,11 +21,6 @@ public class MIPS
 
         PrintWriter fileWriter = new PrintWriter(outFile);
         fileWriter.append(stringWriter.toString());
-        fileWriter.println();
-        fileWriter.println(".data");
-        fileWriter.println("string_access_violation: .asciiz \"Access Violation\"");
-        fileWriter.println("string_illegal_div_by_0: .asciiz \"Illegal Division By Zero\"");
-        fileWriter.println("string_invalid_ptr_dref: .asciiz \"Invalid Pointer Dereference\"");
         fileWriter.append(dataStringWriter.toString());
         fileWriter.close();
     }

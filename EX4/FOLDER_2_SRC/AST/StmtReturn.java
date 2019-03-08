@@ -27,7 +27,7 @@ public class StmtReturn extends Stmt
     {
         TypeFunc funcType = SymbolTable.findFunc();
         if (funcType == null) { throw new SemanticException(); }
-        funcName = SymbolTable.findName(funcType);
+        funcName = funcType.fullname;
         Type expType = exp != null ? exp.Semant() : Type.VOID;
         if (funcType.retType != expType) {
             if (!(expType == Type.NIL) || 

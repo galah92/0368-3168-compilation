@@ -18,6 +18,7 @@ public class Main
             ast.Semant();
             // SymbolTable.toGraphviz("./FOLDER_5_OUTPUT/SymbolTable.txt");
 
+            IR.init();
             ast.toIR();
             IR.toMIPS();
             MIPS.toFile(argv[1]);

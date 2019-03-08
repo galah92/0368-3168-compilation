@@ -14,7 +14,6 @@ public class IR
 
     private static final Deque<IRComm> commands = new ArrayDeque<IRComm>();
     
-
     public static void add(IRComm cmd) { commands.add(cmd); }
     
     public static void toMIPS() { for (IRComm comm : commands) { comm.toMIPS(); } }
@@ -27,6 +26,15 @@ public class IR
     }
 
     public static final Deque<String> globalVars = new ArrayDeque<String>();
+
+    public static void init()
+    {
+        MIPS.dataWriter.println();
+        MIPS.dataWriter.println(".data");
+        MIPS.dataWriter.println("string_access_violation: .asciiz \"Access Violation\"");
+        MIPS.dataWriter.println("string_illegal_div_by_0: .asciiz \"Illegal Division By Zero\"");
+        MIPS.dataWriter.println("string_invalid_ptr_dref: .asciiz \"Invalid Pointer Dereference\"");
+    }
 
     public static class add extends IRComm
     {
@@ -141,6 +149,15 @@ public class IR
         public void toMIPS()
         {
             MIPS.writer.printf("\tli $v0, 9\n");
+            MIPS.writer.printf("\tsyscall\n");
+        }
+    }
+
+    public static class exit extends IRComm
+    {
+        public void toMIPS()
+        {
+            MIPS.writer.printf("\tli $v0, 10\n");
             MIPS.writer.printf("\tsyscall\n");
         }
     }
