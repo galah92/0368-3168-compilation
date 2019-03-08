@@ -74,8 +74,61 @@ public class ExpBinOp extends Exp
             switch (op)
             {
             case '+':
-                System.out.println("Strings concatination not supported yet");
-                break;
+                IRReg tempReg = new IRReg.TempReg();
+                IRReg charReg = new IRReg.TempReg();
+                // strlen for left string
+                String strlenLoopLabel = IR.uniqueLabel("strlen_loop");
+                String strlenEndLabel = IR.uniqueLabel("strlen_end");
+                IR.add(new IR.move(tempReg, leftReg));
+                IR.add(new IR.label(strlenLoopLabel));
+                IR.add(new IR.lb(charReg, tempReg, 0));
+                IR.add(new IR.beq(charReg, IRReg.zero, strlenEndLabel));
+                IR.add(new IR.addi(tempReg, tempReg, 1));
+                IR.add(new IR.jump(strlenLoopLabel));
+                IR.add(new IR.label(strlenEndLabel));
+                IR.add(new IR.sub(IRReg.a0, tempReg, leftReg));
+                // strlen for right string
+                strlenLoopLabel = IR.uniqueLabel("strlen_loop");
+                strlenEndLabel = IR.uniqueLabel("strlen_end");
+                IR.add(new IR.move(tempReg, rightReg));
+                IR.add(new IR.label(strlenLoopLabel));
+                IR.add(new IR.lb(charReg, tempReg, 0));
+                IR.add(new IR.beq(charReg, IRReg.zero, strlenEndLabel));
+                IR.add(new IR.addi(tempReg, tempReg, 1));
+                IR.add(new IR.jump(strlenLoopLabel));
+                IR.add(new IR.label(strlenEndLabel));
+                IR.add(new IR.sub(tempReg, tempReg, rightReg));
+                IR.add(new IR.add(IRReg.a0, IRReg.a0, tempReg));
+                // malloc
+                IR.add(new IR.addi(IRReg.a0, IRReg.a0, 1));  // null terminated
+                IR.add(new IR.sbrk());
+                IR.add(new IR.move(tempReg, IRReg.v0));
+                IR.add(new IR.move(dst, IRReg.v0));
+                // copy left string
+                String strcpyLoopLabel = IR.uniqueLabel("strcpy_loop");
+                String strcpyEndLabel = IR.uniqueLabel("strcpy_end");
+                IR.add(new IR.label(strcpyLoopLabel));
+                IR.add(new IR.lb(charReg, leftReg, 0));
+                IR.add(new IR.beq(charReg, IRReg.zero, strcpyEndLabel));
+                IR.add(new IR.sb(charReg, tempReg, 0));
+                IR.add(new IR.addi(tempReg, tempReg, 1));
+                IR.add(new IR.addi(leftReg, leftReg, 1));
+                IR.add(new IR.jump(strcpyLoopLabel));
+                IR.add(new IR.label(strcpyEndLabel));
+                // copy right string
+                strcpyLoopLabel = IR.uniqueLabel("strcpy_loop");
+                strcpyEndLabel = IR.uniqueLabel("strcpy_end");
+                IR.add(new IR.label(strcpyLoopLabel));
+                IR.add(new IR.lb(charReg, rightReg, 0));
+                IR.add(new IR.beq(charReg, IRReg.zero, strcpyEndLabel));
+                IR.add(new IR.sb(charReg, tempReg, 0));
+                IR.add(new IR.addi(tempReg, tempReg, 1));
+                IR.add(new IR.addi(rightReg, rightReg, 1));
+                IR.add(new IR.jump(strcpyLoopLabel));
+                IR.add(new IR.label(strcpyEndLabel));
+                // null terminating
+                IR.add(new IR.sb(IRReg.zero, tempReg, 0));
+                return dst;
             case '=':
                 String strcmpLoopLabel = IR.uniqueLabel("strcmp_loop");
                 String strcmpFalseLabel = IR.uniqueLabel("strcmp_false");

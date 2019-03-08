@@ -264,6 +264,18 @@ public class IR
         }
     }
 
+    public static class sb extends IRComm
+    {
+        IRReg dst;
+        IRReg src;
+        int offset;
+        public sb(IRReg src, IRReg dst, int offset) { this.dst = dst; this.src = src; this.offset = offset; }
+        public void toMIPS()
+        {
+            MIPS.writer.printf("\tsb %s, %d(%s)\n", src.toMIPS(), offset, dst.toMIPS());
+        }
+    }
+
     public static class sw extends IRComm
     {
         IRReg dst;
