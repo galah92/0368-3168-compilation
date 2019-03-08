@@ -124,6 +124,18 @@ public class IR
         }
     }
 
+    public static class bne extends IRComm
+    {
+        String label;
+        IRReg src1;
+        IRReg src2;
+        public bne(IRReg src1, IRReg src2, String label) { this.label = label; this.src1 = src1; this.src2 = src2; }
+        public void toMIPS()
+        {
+            MIPS.writer.printf("\tbne %s, %s, %s\n", src1.toMIPS(), src2.toMIPS(), label);
+        }
+    }
+
     public static class sbrk extends IRComm
     {
         public void toMIPS()
@@ -225,6 +237,18 @@ public class IR
         public void toMIPS()
         {
             MIPS.writer.printf("\tla %s, %s\n", dst.toMIPS(), val);
+        }
+    }
+
+    public static class lb extends IRComm
+    {
+        IRReg dst;
+        IRReg src;
+        int offset;
+        public lb(IRReg dst, IRReg src, int offset) { this.dst = dst; this.src = src; this.offset = offset; }
+        public void toMIPS()
+        {
+            MIPS.writer.printf("\tlb %s, %d(%s)\n", dst.toMIPS(), offset, src.toMIPS());
         }
     }
 

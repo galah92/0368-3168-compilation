@@ -13,7 +13,7 @@ public abstract class IRReg
         private final int id = counter++;
 
         @Override
-        public String toMIPS() { return String.format("$t%d", id % 8); }
+        public String toMIPS() { return String.format("$t%d", id % 10); }
     }
 
     private static class Zero extends IRReg
