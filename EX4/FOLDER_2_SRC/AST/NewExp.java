@@ -56,6 +56,17 @@ public class NewExp extends Exp
             IR.add(new IR.sll(IRReg.a0, IRReg.a0, 4));  // convert to size in bytes
             IR.add(new IR.sbrk());  // allocate heap memory, v0 contain the result
             IR.add(new IR.sw(sizeReg, IRReg.v0, 0));  // store size as first element
+            
+            // TODO: zero all array elements
+            // String arrInitLoopLabel = IR.uniqueLabel("arr_init_loop");
+            // String arrInitEndLabel = IR.uniqueLabel("arr_init_end");
+            // IRReg itReg = new IRReg.TempReg();
+            // IR.add(new IR.add(sizeReg, IRReg.v0, IRReg.a0));
+            // IR.add(new IR.addi(itReg, IRReg.v0, 4));
+            // IR.add(new IR.label(arrInitLoopLabel));
+            // IR.add(new IR.sw(IRReg.zero, itReg, 0));
+            // IR.add(new IR.addi(itReg, itReg, 4));
+            // IR.add(new IR.blt(itReg, sizeReg, arrInitLoopLabel));
         }
         else  // class instance
         {

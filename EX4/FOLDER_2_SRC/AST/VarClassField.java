@@ -45,6 +45,15 @@ public class VarClassField extends Var
     {
         IRReg reg = instance.toIR();
         IR.add(new IR.lw(reg, reg, 0));  // dereference instance
+
+        // pointer dereference validation
+        String instanceAccessEndLabel = IR.uniqueLabel("instance_access_end");
+        IR.add(new IR.bne(reg, IRReg.zero, instanceAccessEndLabel));
+        IR.add(new IR.la(reg, "string_invalid_ptr_dref"));
+        IR.add(new IR.printString(reg));
+        IR.add(new IR.exit());
+        IR.add(new IR.label(instanceAccessEndLabel));
+
         IR.add(new IR.addi(reg, reg, numMember * 4));  // access member
         return reg;
     }
