@@ -48,12 +48,12 @@ public class VarDec extends ClassField
         {
             numMember = classType.members.size();
             classType.members.add(new Symbol(varName, varType));
-            Type initValType = initVal == null ? Type.VOID : initVal.Semant();
+            Type initValType = initVal == null ? Type.NIL : initVal.Semant();
             if (initValType == Type.INT && varType == Type.INT)
             {
                 classType.initVals.add(((ExpInt)initVal).value);
             }
-            else if (initValType == Type.VOID)
+            else if (initValType == Type.NIL)
             {
                 classType.initVals.add(0);
             }
