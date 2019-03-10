@@ -1,7 +1,7 @@
 import java.io.*;
 import java_cup.runtime.*;
 
-parser code 
+parser code
 {:
     public Lexer lexer;
 
@@ -80,10 +80,8 @@ precedence nonassoc ASSIGN;
 precedence left     EQ;
 precedence left     LT;
 precedence left     GT;
-precedence left     PLUS;
-precedence left     MINUS;
-precedence left     TIMES;
-precedence left     DIVIDE;
+precedence left     PLUS,MINUS;
+precedence left     TIMES,DIVIDE;
 precedence nonassoc LBRACK;
 precedence nonassoc LPAREN;
 precedence left     DOT;
@@ -159,7 +157,7 @@ callExp		::=		ID:funcName LPAREN RPAREN                           {: RESULT = ne
 stmtList	::=		stmt:s stmtList:l	{: RESULT = new AST.StmtList(s,l); RESULT.lineNumber = sleft; :} |
                     stmt:s  			{: RESULT = new AST.StmtList(s,null); RESULT.lineNumber = sleft; :}
                     ;
-                    
+
 stmt		::=		varDec:v                                                    {: RESULT = new AST.StmtVarDec(v); RESULT.lineNumber = vleft; :} |
                     var:v ASSIGN exp:e SEMICOLON						    	{: RESULT = new AST.StmtAssign(v,e); RESULT.lineNumber = vleft; :} |
                     var:v ASSIGN newExp:e SEMICOLON						    	{: RESULT = new AST.StmtAssign(v,e); RESULT.lineNumber = vleft; :} |
