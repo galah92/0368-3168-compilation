@@ -12,92 +12,77 @@ public abstract class IRReg
 
         private final int id = counter++;
 
-        @Override
-        public String toMIPS() { return String.format("$t%d", id % 10); }
+        @Override public String toMIPS() { return String.format("$t%d", id % 10); }
     }
 
     private static class Zero extends IRReg
     {
-        @Override
-        public String toMIPS() { return MIPS.zero; }
+        @Override public String toMIPS() { return MIPS.zero; }
     }
 
     private static class SP extends IRReg
     {
-        @Override
-        public String toMIPS() { return MIPS.sp; }
+        @Override public String toMIPS() { return MIPS.sp; }
     }
 
     private static class FP extends IRReg
     {
-        @Override
-        public String toMIPS() { return MIPS.fp; }
+        @Override public String toMIPS() { return MIPS.fp; }
     }
 
     private static class RA extends IRReg
     {
-        @Override
-        public String toMIPS() { return MIPS.ra; }
+        @Override public String toMIPS() { return MIPS.ra; }
     }
 
     private static class V0 extends IRReg
     {
-        @Override
-        public String toMIPS() { return MIPS.v0; }
+        @Override public String toMIPS() { return MIPS.v0; }
     }
 
     private static class V1 extends IRReg
     {
-        @Override
-        public String toMIPS() { return MIPS.v1; }
+        @Override public String toMIPS() { return MIPS.v1; }
     }
 
     private static class A0 extends IRReg
     {
-        @Override
-        public String toMIPS() { return MIPS.a0; }
+        @Override public String toMIPS() { return MIPS.a0; }
     }
 
     private static class A1 extends IRReg
     {
-        @Override
-        public String toMIPS() { return MIPS.a1; }
+        @Override public String toMIPS() { return MIPS.a1; }
     }
 
     private static class A2 extends IRReg
     {
-        @Override
-        public String toMIPS() { return MIPS.a2; }
+        @Override public String toMIPS() { return MIPS.a2; }
     }
 
     private static class A3 extends IRReg
     {
-        @Override
-        public String toMIPS() { return MIPS.a3; }
+        @Override public String toMIPS() { return MIPS.a3; }
     }
 
     private static class S0 extends IRReg
     {
-        @Override
-        public String toMIPS() { return MIPS.s0; }
+        @Override public String toMIPS() { return MIPS.s0; }
     }
 
     private static class S1 extends IRReg
     {
-        @Override
-        public String toMIPS() { return MIPS.s1; }
+        @Override public String toMIPS() { return MIPS.s1; }
     }
 
     private static class S2 extends IRReg
     {
-        @Override
-        public String toMIPS() { return MIPS.s2; }
+        @Override public String toMIPS() { return MIPS.s2; }
     }
 
     private static class S3 extends IRReg
     {
-        @Override
-        public String toMIPS() { return MIPS.s3; }
+        @Override public String toMIPS() { return MIPS.s3; }
     }
 
     public static final IRReg zero = new IRReg.Zero();

@@ -30,6 +30,7 @@ INPUT    = ${INPUT_DIR}/Input.txt
 # INPUT    = ${INPUT_DIR}/TEST_06_Strings.txt
 # INPUT    = ${INPUT_DIR}/TEST_07_Arrays.txt
 # INPUT    = ${INPUT_DIR}/TEST_08_Access_Violation.txt
+# INPUT    = ${INPUT_DIR}/TEST_09_Access_Violation.txt
 OUTPUT   = ${OUTPUT_DIR}/MIPS.txt
 
 default: compile

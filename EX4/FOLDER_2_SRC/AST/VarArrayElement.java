@@ -39,9 +39,9 @@ public class VarArrayElement extends Var
     @Override
     public IRReg toIR()
     {
+        IRReg indexReg = index.toIR();  // get index
         IRReg baseReg = var.toIR();
         IR.add(new IR.lw(baseReg, baseReg, 0));  // dereference array
-        IRReg indexReg = index.toIR();  // get index
         
         // boundary check
         IRReg sizeReg = new IRReg.TempReg();
