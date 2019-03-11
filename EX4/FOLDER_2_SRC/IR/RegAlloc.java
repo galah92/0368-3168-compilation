@@ -13,9 +13,8 @@ public class RegAlloc {
         List<TmpReg> tempRegs = new ArrayList<TmpReg>();
         Pattern p = Pattern.compile("(,|\\s|\\(|\\()");
 
-        int tmp_num = 10000;
-        int maxTemp = 0;
-        for (int tmp_index = 0; tmp_index <= tmp_num; tmp_index++) {
+        int numTempRegs = 0;
+        while (true) {
             String line = null;
             BufferedReader bufferedReader = new BufferedReader(new FileReader(outputPath));
             int start = 0;
@@ -25,40 +24,25 @@ public class RegAlloc {
                 for (String splited : p.split(line)) {
                     String s = splited;
                     if (splited.contains(")")) { s = splited.substring(0, splited.indexOf(")") ); }
-                    if (s.equals("Temp_" + tmp_index)) {
-                        if (start == 0) { start = i++; }
+                    if (s.equals("Temp_" + numTempRegs)) {
+                        if (start == 0) { start = i; }
                         end = i;
                         break;
                     }
                 }
                 i++;
             }
-            while ((line = bufferedReader.readLine()) != null) {
-                System.out.println(Arrays.toString(p.split(line)));
-                for (String splited : p.split(line)) {
-                    String s = splited;
-                    if (splited.contains(")")) { s = splited.substring(0, splited.indexOf(")")); }
-                    if (s.equals("Temp_" + tmp_index)) { end = i; }
-                }
-                i++;
-            }
-            bufferedReader.close();  // close the BufferedReader when we're done
-            if (start == 0 && end == 0)
-            {
-                maxTemp = tmp_index;
-                break;
-            }
-            tempRegs.add(new TmpReg(tmp_index, start, end));
+            bufferedReader.close();
+            if (start == 0 && end == 0) { break; }  // break if no more temp registers
+            tempRegs.add(new TmpReg(numTempRegs, start, end));
+            numTempRegs++;
         }
 
-        for (TmpReg t : tempRegs) { t.end--; }  // end parameter is too large by 1, fix:
-
         Graph interferenceGraph = new Graph(tempRegs.size());
-        for (TmpReg t : tempRegs) {
-            for (TmpReg k : tempRegs) {
-                if (k.isInterfering(t) && k.id != t.id) {
-                    k.addInterferance(t);
-                    interferenceGraph.addEdge(t.id, k.id);
+        for (TmpReg reg1 : tempRegs) {
+            for (TmpReg reg2 : tempRegs) {
+                if (reg1.isInterfering(reg2) && reg1.id != reg2.id) {
+                    interferenceGraph.addEdge(reg1.id, reg2.id);
                 }
             }
         }
@@ -68,7 +52,7 @@ public class RegAlloc {
 
         // apply the coloring
         String text = new String(Files.readAllBytes(Paths.get(outputPath)));
-        for (int i = maxTemp; i >= 0; i--) {
+        for (int i = numTempRegs; i >= 0; i--) {
             Pattern pat = Pattern.compile("Temp_" + i);
             text = pat.matcher(text).replaceAll("\\$t" + colors.get(i));
         }
@@ -83,15 +67,12 @@ class TmpReg {
     int id;
     int start;
     int end;
-    HashSet<Integer> interferences = new HashSet<Integer>();
 
     public TmpReg(int id, int start, int end) {
         this.id = id;
         this.start = start;
         this.end = end;
     }
-
-    public void addInterferance(TmpReg t) { interferences.add(t.id); }
 
     public boolean isInterfering(TmpReg t) {
     int x1 = t.start;
@@ -111,11 +92,11 @@ class Graph
 	private final int numVertices; // number of vertices
 	private LinkedList<Integer> adj[];  // adjacency List
 
-	Graph(int v)
+	Graph(int numVertices)
 	{
-		numVertices = v;
-        adj = new LinkedList[v];
-		for (int i = 0; i < v; i++) { adj[i] = new LinkedList(); }
+		this.numVertices = numVertices;
+        adj = new LinkedList[numVertices];
+		for (int i = 0; i < numVertices; i++) { adj[i] = new LinkedList(); }
 	}
 
 	void addEdge(int v, int w)
@@ -131,7 +112,7 @@ class Graph
 		result[0] = 0;  // assign the first color to first vertex
 
 		// A temporary array to store the available colors. False
-		// value of available[cr] would mean that the color cr is
+		// value of available[color] would mean that the color is
 		// assigned to one of its adjacent vertices
 		boolean available[] = new boolean[numVertices];
 		Arrays.fill(available, true);  // initially, all colors are available
@@ -139,17 +120,13 @@ class Graph
 		for (int u = 1; u < numVertices; u++)  // assign colors to remaining numVertices-1 vertices
 		{
 			// process all adjacent vertices and flag their colors as unavailable
-			Iterator<Integer> it = adj[u].iterator();
-			while (it.hasNext())
-			{
-				int i = it.next();
-				if (result[i] != -1) { available[result[i]] = false; }
-			}
-
-			int cr;  // find the first available color
-			for (cr = 0; cr < numVertices; cr++) { if (available[cr]) break; }
-
-			result[u] = cr; // assign the found color
+            for (Integer v : adj[u])
+            {
+                if (result[v] != -1) { available[result[v]] = false; }
+            }
+			int color;  // find the first available color
+			for (color = 0; color < numVertices; color++) { if (available[color]) break; }
+			result[u] = color; // assign the found color
 			Arrays.fill(available, true);  // reset the values back to true for the next iteration
 		}
 
