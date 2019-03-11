@@ -22,6 +22,8 @@ public class Main
             ast.toIR();
             IR.toMIPS();
             MIPS.toFile(argv[1]);
+
+            RegAlloc.allocate(argv[1]);
         }
         catch (Exception e)
         {

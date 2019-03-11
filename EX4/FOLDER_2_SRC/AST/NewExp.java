@@ -73,11 +73,10 @@ public class NewExp extends Exp
             IR.add(new IR.li(IRReg.a0, numMembers));  // copy class size
             IR.add(new IR.sll(IRReg.a0, IRReg.a0, 4));  // convert to size in bytes
             IR.add(new IR.sbrk());  // allocate heap memory, v0 contain the result
-            IRReg tmpReg = new IRReg.TempReg();
             for (int i = 0; i < numMembers; i++)  // init all members values
             {
-                IR.add(new IR.li(tmpReg, classType.initVals.get(i)));
-                IR.add(new IR.sw(tmpReg, IRReg.v0, i * 4));
+                IR.add(new IR.li(IRReg.a0, classType.initVals.get(i)));
+                IR.add(new IR.sw(IRReg.a0, IRReg.v0, i * 4));
             }
         }
 		return IRReg.v0;
