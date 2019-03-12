@@ -66,15 +66,11 @@ public class ExpBinOp extends Exp
     public IRReg toIR()
     {
         IRReg leftReg = left.toIR();
-        // IR.add(new IR.move(IRReg.s0, leftReg));
-        // leftReg = IRReg.s0;
         IRReg rightReg = right.toIR();
-        // IR.add(new IR.move(IRReg.s1, rightReg));
-        // rightReg = IRReg.s1;
-        IRReg dst = new IRReg.TempReg();
 
         if (isStringsExpessions)
         {
+            IRReg dst = new IRReg.TempReg();
             switch (op)
             {
             case '+':
@@ -153,57 +149,57 @@ public class ExpBinOp extends Exp
                 IR.add(new IR.label(strcmpEndLabel));
                 break;
             }
+            return dst;
         }
         else
         {
             switch (op)
             {
             case '+':
-                IR.add(new IR.add(dst, leftReg, rightReg));
+                IR.add(new IR.add(leftReg, leftReg, rightReg));
                 break;
             case '-':
-                IR.add(new IR.sub(dst, leftReg, rightReg));
+                IR.add(new IR.sub(leftReg, leftReg, rightReg));
                 break;
             case '*':
-                IR.add(new IR.mul(dst, leftReg, rightReg));
+                IR.add(new IR.mul(leftReg, leftReg, rightReg));
                 break;
             case '/':
-                IR.add(new IR.div(dst, leftReg, rightReg));
+                IR.add(new IR.div(leftReg, leftReg, rightReg));
                 break;
             case '<':
+                String ltTrueLabel = IR.uniqueLabel("lt_true");
                 String ltEndLabel = IR.uniqueLabel("lt_end");
-                IR.add(new IR.li(dst, 1));
-                IR.add(new IR.blt(leftReg, rightReg, ltEndLabel));
-                IR.add(new IR.li(dst, 0));
+                IR.add(new IR.blt(leftReg, rightReg, ltTrueLabel));
+                IR.add(new IR.li(leftReg, 0));
+                IR.add(new IR.jump(ltEndLabel));
+                IR.add(new IR.label(ltTrueLabel));
+                IR.add(new IR.li(leftReg, 1));
                 IR.add(new IR.label(ltEndLabel));
                 break;
-                // implementation without dst register - we utilize leftReg
-                // String ltTrueLabel = IR.uniqueLabel("lt_true");
-                // String ltEndLabel = IR.uniqueLabel("lt_end");
-                // IR.add(new IR.blt(leftReg, rightReg, ltTrueLabel));
-                // IR.add(new IR.li(leftReg, 0));
-                // IR.add(new IR.jump(ltEndLabel));
-                // IR.add(new IR.label(ltTrueLabel));
-                // IR.add(new IR.li(leftReg, 1));
-                // IR.add(new IR.label(ltEndLabel));
-                // return leftReg;
             case '>':
+                String gtTrueLabel = IR.uniqueLabel("gt_true");
                 String gtEndLabel = IR.uniqueLabel("gt_end");
-                IR.add(new IR.li(dst, 1));
-                IR.add(new IR.bgt(leftReg, rightReg, gtEndLabel));
-                IR.add(new IR.li(dst, 0));
+                IR.add(new IR.bgt(leftReg, rightReg, gtTrueLabel));
+                IR.add(new IR.li(leftReg, 0));
+                IR.add(new IR.jump(gtEndLabel));
+                IR.add(new IR.label(gtTrueLabel));
+                IR.add(new IR.li(leftReg, 1));
                 IR.add(new IR.label(gtEndLabel));
                 break;
             case '=':
+                String eqTrueLabel = IR.uniqueLabel("eq_true");
                 String eqEndLabel = IR.uniqueLabel("eq_end");
-                IR.add(new IR.li(dst, 1));
-                IR.add(new IR.beq(leftReg, rightReg, eqEndLabel));
-                IR.add(new IR.li(dst, 0));
+                IR.add(new IR.beq(leftReg, rightReg, eqTrueLabel));
+                IR.add(new IR.li(leftReg, 0));
+                IR.add(new IR.jump(eqEndLabel));
+                IR.add(new IR.label(eqTrueLabel));
+                IR.add(new IR.li(leftReg, 1));
                 IR.add(new IR.label(eqEndLabel));
                 break;
             }
+            return leftReg;
         }
-        return dst;
     }
 
 }
