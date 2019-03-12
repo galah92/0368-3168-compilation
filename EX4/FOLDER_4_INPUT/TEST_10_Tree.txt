@@ -32,26 +32,12 @@ void main()
 	while (i < 17)
 	{
 		TA[i] := new Tree;
-		TA[i].weight := 19*i;
+		TA[i].weight := 2*i;
 		i := i+1;
 	}
 
 	root.left  := TA[0];
 	root.right := TA[1];
-
-	root.left.left  := TA[2];
-	root.left.right := TA[3];
-	root.right.left  := TA[4];
-	root.right.right := TA[5];
-
-	root.left.left.left    := TA[ 6];
-	root.left.left.right   := TA[ 7];
-	root.left.right.left   := TA[ 8];
-	root.left.right.right  := TA[ 9];
-	root.right.left.left   := TA[10];
-	root.right.left.right  := TA[11];
-	root.right.right.left  := TA[12];
-	root.right.right.right := TA[13];
 
 	PrintInt(sum(root));
 }
