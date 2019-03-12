@@ -41,5 +41,13 @@ void main()
     arr[6] := -580;
     
     BubbleSort(arr,7);
+
+    PrintInt(arr[0]);
+    PrintInt(arr[1]);
+    PrintInt(arr[2]);
+    PrintInt(arr[3]);
+    PrintInt(arr[4]);
+    PrintInt(arr[5]);
+    PrintInt(arr[6]);
 }
 
