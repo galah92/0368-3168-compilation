@@ -25,7 +25,7 @@ public class MIPS
         fileWriter.close();
     }
 
-    public static final int WORD = 4;
+    // SPIM reference: http://cgi.cse.unsw.edu.au/~cs1521/17s2/docs/spim.php
 
     public static final String zero = "$0";  // the value 0, not changeable
 
@@ -44,6 +44,22 @@ public class MIPS
     public static final String s1 = "$s1";
     public static final String s2 = "$s2";
     public static final String s3 = "$s3";
+    public static final String s3 = "$s4";
+    public static final String s3 = "$s5";
+    public static final String s3 = "$s6";
+    public static final String s3 = "$s7";
+
+    // temporaries: must be saved by caller to subroutine
+    public static final String t0 = "$t0";
+    public static final String t1 = "$t1";
+    public static final String t1 = "$t2";
+    public static final String t1 = "$t3";
+    public static final String t1 = "$t4";
+    public static final String t1 = "$t5";
+    public static final String t1 = "$t6";
+    public static final String t1 = "$t7";
+    public static final String t1 = "$t8";
+    public static final String t1 = "$t9";
 
     public static final String sp = "$sp";  // stack pointer (top of stack)
     public static final String fp = "$fp";  // frame pointer (bottom of current stack frame)
