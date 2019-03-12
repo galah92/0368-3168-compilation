@@ -29,6 +29,19 @@ public class IR
 
     public static void init()
     {
+        // exit function for invalid dereference
+        IR.add(new IR.label("exit_invalid_dereference"));
+        IR.add(new IR.la(IRReg.a0, "string_invalid_ptr_dref"));
+        IR.add(new IR.printString(IRReg.a0));
+        IR.add(new IR.exit());
+        
+        // exit function for invalid array index
+        IR.add(new IR.label("exit_access_violation"));
+        IR.add(new IR.la(IRReg.a0, "string_access_violation"));
+        IR.add(new IR.printString(IRReg.a0));
+        IR.add(new IR.exit());
+
+        // strings for runtime checks
         MIPS.dataWriter.println();
         MIPS.dataWriter.println(".data");
         MIPS.dataWriter.println("string_access_violation: .asciiz \"Access Violation\"");

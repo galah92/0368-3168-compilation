@@ -40,19 +40,16 @@ public class VarArrayElement extends Var
     public IRReg toIR()
     {
         IRReg indexReg = index.toIR();  // get index
-        IRReg baseReg = var.toIR();
+        IRReg baseReg = var.toIR();  // get array address
         IR.add(new IR.lw(baseReg, baseReg, 0));  // dereference array
         
         // boundary check
         IRReg sizeReg = new IRReg.TempReg();
-        IR.add(new IR.lw(sizeReg, baseReg, 0));
-        String arrAccessEndLabel = IR.uniqueLabel("arr_access_end");
-        IR.add(new IR.blt(indexReg, sizeReg, arrAccessEndLabel));
-        IR.add(new IR.la(sizeReg, "string_access_violation"));
-        IR.add(new IR.printString(sizeReg));
-        IR.add(new IR.exit());
-        IR.add(new IR.label(arrAccessEndLabel));
+        IR.add(new IR.lw(sizeReg, baseReg, 0));  // first element is size
+        IR.add(new IR.bgt(indexReg, sizeReg, "exit_access_violation"));  // runtime
+        IR.add(new IR.beq(sizeReg, indexReg, "exit_access_violation"));  // TODO: validate if needed
 
+        // calculate element address
         IR.add(new IR.addi(indexReg, indexReg, 1)); // first element is size
         IR.add(new IR.sll(indexReg, indexReg, 4));  // convert to index in bytes
         IR.add(new IR.add(baseReg, baseReg, indexReg));  // calculate address of element
