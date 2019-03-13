@@ -18,7 +18,7 @@ public class TypeClass extends Type
         this.base = base;
         if (base != null)
         {
-            methods = new ArrayList<Symbol>(base.methods);
+            for(Symbol s : base.methods){methods.add((new Symbol(s.name, s.type)));}
             members = new ArrayList<Symbol>(base.members);
             initVals = new ArrayList<Integer>(base.initVals);
         }
