@@ -43,6 +43,9 @@ public class VarArrayElement extends Var
         IRReg baseReg = var.toIR();  // get array address
         IR.add(new IR.lw(baseReg, baseReg, 0));  // dereference array
         
+        // pointer dereference
+        IR.add(new IR.beq(baseReg, IRReg.zero, "exit_invalid_dereference"));  // runtime check
+
         // boundary check
         IRReg sizeReg = new IRReg.TempReg();
         IR.add(new IR.lw(sizeReg, baseReg, 0));  // first element is size

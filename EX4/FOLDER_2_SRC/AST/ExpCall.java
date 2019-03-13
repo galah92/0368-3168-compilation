@@ -94,6 +94,7 @@ public class ExpCall extends Exp
             {
                 IRReg instanceReg = instanceVar.toIR();
                 IR.add(new IR.lw(instanceReg, instanceReg, 0));
+                IR.add(new IR.beq(instanceReg, IRReg.zero, "exit_invalid_dereference"));  // runtime check
                 IR.add(new IR.sw(instanceReg, IRReg.sp, 0 * 4));  // add "this" as first param
             }
             else
