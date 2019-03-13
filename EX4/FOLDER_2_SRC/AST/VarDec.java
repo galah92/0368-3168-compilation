@@ -37,6 +37,7 @@ public class VarDec extends ClassField
         if (varType == null) { throw new SemanticException("type not defined: " + varTypeName); }
 
         TypeClass classType = SymbolTable.findClass();
+        Type initValType = initVal == null ? Type.NIL : initVal.Semant();
 
         if (SymbolTable.isScope(Type.Scope.FUNC.name))  // local variable
         {
@@ -48,10 +49,14 @@ public class VarDec extends ClassField
         {
             numMember = classType.members.size();
             classType.members.add(new Symbol(varName, varType));
-            Type initValType = initVal == null ? Type.NIL : initVal.Semant();
+
             if (initValType == Type.INT && varType == Type.INT)
             {
                 classType.initVals.add(((ExpInt)initVal).value);
+            }
+            else if (initValType == Type.STRING && varType == Type.STRING)
+            {
+                classType.initVals.add(((ExpString)initVal).label);
             }
             else if (initValType == Type.NIL)
             {
@@ -63,7 +68,7 @@ public class VarDec extends ClassField
             }
         }
 
-        Type initValType = initVal != null ? initVal.Semant() : null;
+        initValType = initVal != null ? initValType : null;
 
         if (initValType == Type.NIL)
         {
@@ -115,7 +120,11 @@ public class VarDec extends ClassField
         }
         else if (numMember != -1)
         {
-
+            String initLabel = IR.uniqueLabel("init_" + varName);
+            IR.globalVars.add(initLabel);
+            IR.add(new IR.label(initLabel));
+            if (initVal != null) { initVal.toIR(); }
+            IR.add(new IR.jr(IRReg.ra));
         }
         else  // global variable
         {

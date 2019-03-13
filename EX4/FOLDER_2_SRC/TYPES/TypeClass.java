@@ -9,7 +9,7 @@ public class TypeClass extends Type
     public TypeClass base;
     public List<Symbol> members = new ArrayList<Symbol>();
     public List<Symbol> methods = new ArrayList<Symbol>();
-    public List<Integer> initVals = new ArrayList<Integer>();
+    public List<Object> initVals = new ArrayList<Object>();
     
     public TypeClass(TypeClass base, String className)
     {
@@ -20,7 +20,7 @@ public class TypeClass extends Type
         {
             for(Symbol s : base.methods){methods.add((new Symbol(s.name, s.type)));}
             members = new ArrayList<Symbol>(base.members);
-            initVals = new ArrayList<Integer>(base.initVals);
+            initVals = new ArrayList<Object>(base.initVals);
         }
     }
 
