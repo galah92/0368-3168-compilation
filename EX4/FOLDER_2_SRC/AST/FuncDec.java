@@ -115,36 +115,19 @@ public class FuncDec extends ClassField
         IR.add(new IR.sw(IRReg.ra, IRReg.sp, 4));  // save ra
         IR.add(new IR.move(IRReg.fp, IRReg.sp));  // update to new fp
         IR.add(new IR.addi(IRReg.sp, IRReg.sp, -(numLocals + 8) * 4));  // allocate stack
-        IR.add(new IR.sw(IRReg.t0, IRReg.fp, -1 * 4));  // save t0
-        IR.add(new IR.sw(IRReg.t1, IRReg.fp, -2 * 4));  // save t1
-        IR.add(new IR.sw(IRReg.t2, IRReg.fp, -3 * 4));  // save t2
-        IR.add(new IR.sw(IRReg.t3, IRReg.fp, -4 * 4));  // save t3
-        IR.add(new IR.sw(IRReg.t4, IRReg.fp, -5 * 4));  // save t4
-        IR.add(new IR.sw(IRReg.t5, IRReg.fp, -6 * 4));  // save t5
-        IR.add(new IR.sw(IRReg.t6, IRReg.fp, -7 * 4));  // save t6
-        IR.add(new IR.sw(IRReg.t7, IRReg.fp, -8 * 4));  // save t7
-        IR.add(new IR.comment("end of prologue"));
+        IR.add(new IR.jal("store_tmp_regs"));
         
         body.toIR();
         
         // epilogue
         IR.add(new IR.label(funcType.fullname + "_epilogue"));
-        if (!isMain)
-        {
-            IR.add(new IR.lw(IRReg.t0, IRReg.fp, -1 * 4));  // retrieve t0
-            IR.add(new IR.lw(IRReg.t1, IRReg.fp, -2 * 4));  // retrieve t1
-            IR.add(new IR.lw(IRReg.t2, IRReg.fp, -3 * 4));  // retrieve t2
-            IR.add(new IR.lw(IRReg.t3, IRReg.fp, -4 * 4));  // retrieve t3
-            IR.add(new IR.lw(IRReg.t4, IRReg.fp, -5 * 4));  // retrieve t4
-            IR.add(new IR.lw(IRReg.t5, IRReg.fp, -6 * 4));  // retrieve t5
-            IR.add(new IR.lw(IRReg.t6, IRReg.fp, -7 * 4));  // retrieve t6
-            IR.add(new IR.lw(IRReg.t7, IRReg.fp, -8 * 4));  // retrieve t7
-            IR.add(new IR.addi(IRReg.sp, IRReg.sp, (numLocals + 8) * 4));  // deallocate stack
-            IR.add(new IR.lw(IRReg.ra, IRReg.sp, 4));  // retrieve ra
-            IR.add(new IR.lw(IRReg.fp, IRReg.sp, 0));  // retrieve fp
-            IR.add(new IR.addi(IRReg.sp, IRReg.sp, 8));
-            IR.add(new IR.jr(IRReg.ra));  // return
-        }
+        if (isMain) { IR.add(new IR.exit()); }
+        IR.add(new IR.jal("retrieve_tmp_regs"));
+        IR.add(new IR.addi(IRReg.sp, IRReg.sp, (numLocals + 8) * 4));  // deallocate stack
+        IR.add(new IR.lw(IRReg.ra, IRReg.sp, 4));  // retrieve ra
+        IR.add(new IR.lw(IRReg.fp, IRReg.sp, 0));  // retrieve fp
+        IR.add(new IR.addi(IRReg.sp, IRReg.sp, 8));
+        IR.add(new IR.jr(IRReg.ra));  // return
         
         return null;
     }

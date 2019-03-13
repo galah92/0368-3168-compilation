@@ -29,6 +29,28 @@ public class IR
 
     public static void init()
     {
+        IR.add(new IR.label("store_tmp_regs"));
+        IR.add(new IR.sw(IRReg.t0, IRReg.fp, -1 * 4));  // save t0
+        IR.add(new IR.sw(IRReg.t1, IRReg.fp, -2 * 4));  // save t1
+        IR.add(new IR.sw(IRReg.t2, IRReg.fp, -3 * 4));  // save t2
+        IR.add(new IR.sw(IRReg.t3, IRReg.fp, -4 * 4));  // save t3
+        IR.add(new IR.sw(IRReg.t4, IRReg.fp, -5 * 4));  // save t4
+        IR.add(new IR.sw(IRReg.t5, IRReg.fp, -6 * 4));  // save t5
+        IR.add(new IR.sw(IRReg.t6, IRReg.fp, -7 * 4));  // save t6
+        IR.add(new IR.sw(IRReg.t7, IRReg.fp, -8 * 4));  // save t7
+        IR.add(new IR.jr(IRReg.ra));
+
+        IR.add(new IR.label("retrieve_tmp_regs"));
+        IR.add(new IR.lw(IRReg.t0, IRReg.fp, -1 * 4));  // retrieve t0
+        IR.add(new IR.lw(IRReg.t1, IRReg.fp, -2 * 4));  // retrieve t1
+        IR.add(new IR.lw(IRReg.t2, IRReg.fp, -3 * 4));  // retrieve t2
+        IR.add(new IR.lw(IRReg.t3, IRReg.fp, -4 * 4));  // retrieve t3
+        IR.add(new IR.lw(IRReg.t4, IRReg.fp, -5 * 4));  // retrieve t4
+        IR.add(new IR.lw(IRReg.t5, IRReg.fp, -6 * 4));  // retrieve t5
+        IR.add(new IR.lw(IRReg.t6, IRReg.fp, -7 * 4));  // retrieve t6
+        IR.add(new IR.lw(IRReg.t7, IRReg.fp, -8 * 4));  // retrieve t7
+        IR.add(new IR.jr(IRReg.ra));
+
         // exit function for invalid dereference
         IR.add(new IR.label("exit_invalid_dereference"));
         IR.add(new IR.la(IRReg.a0, "string_invalid_ptr_dref"));

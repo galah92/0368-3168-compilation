@@ -13,13 +13,7 @@ public class MIPS
 
     public static void toFile(String outFile) throws Exception
     {
-        writer.printf("\tli $a0, 0xA\n");  // 0xA is newline char
-        writer.printf("\tli $v0, 11\n");
-        writer.printf("\tsyscall\n");
-        writer.print("\tli $v0, 10\n");
-        writer.print("\tsyscall\n");
         writer.close();
-
         dataWriter.close();
 
         PrintWriter fileWriter = new PrintWriter(outFile);
