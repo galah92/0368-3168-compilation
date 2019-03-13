@@ -63,7 +63,6 @@ public class FuncDec extends ClassField
         }
 
         funcType = new TypeFunc(retType, className == null ? funcName : className + "_" + funcName);
-        funcType.funcName = funcName;
         if (className != null) { funcType.className = className; }
         if (classType != null)
         {
@@ -106,6 +105,9 @@ public class FuncDec extends ClassField
     {
         boolean isMain = funcName.equals("main") && funcType.retType == Type.VOID && funcType.params.size() == 0;
         int numLocals = funcType.locals.size();
+
+        String funcNameLabel = IR.uniqueLabel("func_name");
+        IR.add(new IR.stringLiteral(String.format("\"%s\"", funcName), funcNameLabel));
 
         IR.add(new IR.label(funcType.fullname));
         if (isMain) { for (String initLabel : IR.globalVars) { IR.add(new IR.jal(initLabel)); } }

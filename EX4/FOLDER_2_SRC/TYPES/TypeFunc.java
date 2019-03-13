@@ -5,7 +5,6 @@ import java.util.*;
 public class TypeFunc extends Type
 {
 
-	public String funcName;
 	public String fullname;
 	public String className;
 	public Type retType;
