@@ -49,7 +49,7 @@ BadEndOfLineComment = "//"[^CommentContent]
 "new"				{ return symbol(TokenNames.NEW); }
 
 {Comment}					{}
-{INTEGER}					{ return symbol(TokenNames.INT, new Short(yytext()).intValue()); }
+{INTEGER}					{ return symbol(TokenNames.INT, new Integer(yytext()).intValue()); }
 {BadInteger}				{}
 {UnclosedComment}			{}
 {BadEndOfLineComment}		{}
