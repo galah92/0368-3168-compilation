@@ -20,6 +20,8 @@ public class ExpNil extends Exp
     @Override
 	public IRReg toIR()
 	{
-        return IRReg.zero;
+        IRReg reg = new IRReg.TempReg();
+        IR.add(new IR.move(reg, IRReg.zero));
+        return reg;
 	}
 }

@@ -81,7 +81,7 @@ public class VarDec extends ClassField
         {
             if (varType instanceof TypeArray)
             {
-                if (((TypeArray)varType).elementType != initValType) { throw new SemanticException(varType + ", " + initValType); }
+                if (((TypeArray)varType).elementType != initValType && varType != initValType) { throw new SemanticException(varType + ", " + initValType); }
             }
             else if (initValType instanceof TypeClass)
             {

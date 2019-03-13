@@ -24,14 +24,14 @@ public class ExpString extends Exp
     public Type Semant() throws Exception
     {
         label = IR.uniqueLabel("string_literal");
-        System.out.println("1: " + label + ", " + value);
+        // System.out.println("1: " + label + ", " + value);
         return Type.STRING;
     }
 
     @Override
 	public IRReg toIR()
 	{
-        System.out.println("2: " + label + ", " + value);
+        // System.out.println("2: " + label + ", " + value);
 		IRReg reg = new IRReg.TempReg();
         IR.add(new IR.stringLiteral(value, label));
         IR.add(new IR.la(reg, label));
