@@ -56,17 +56,6 @@ public class NewExp extends Exp
             IR.add(new IR.sll(IRReg.a0, IRReg.a0, 4));  // convert to size in bytes
             IR.add(new IR.sbrk());  // allocate heap memory, v0 contain the result
             IR.add(new IR.sw(sizeReg, IRReg.v0, 0));  // store size as first element
-            
-            // TODO: zero all array elements
-            // String arrInitLoopLabel = IR.uniqueLabel("arr_init_loop");
-            // String arrInitEndLabel = IR.uniqueLabel("arr_init_end");
-            // IRReg itReg = new IRReg.TempReg();
-            // IR.add(new IR.add(sizeReg, IRReg.v0, IRReg.a0));
-            // IR.add(new IR.addi(itReg, IRReg.v0, 4));
-            // IR.add(new IR.label(arrInitLoopLabel));
-            // IR.add(new IR.sw(IRReg.zero, itReg, 0));
-            // IR.add(new IR.addi(itReg, itReg, 4));
-            // IR.add(new IR.blt(itReg, sizeReg, arrInitLoopLabel));
         }
         else  // class instance
         {
@@ -75,7 +64,15 @@ public class NewExp extends Exp
             IR.add(new IR.sbrk());  // allocate heap memory, v0 contain the result
             for (int i = 0; i < numMembers; i++)  // init all members values
             {
-                IR.add(new IR.li(IRReg.a0, classType.initVals.get(i)));
+                Object initVal = classType.initVals.get(i);
+                if (initVal instanceof Integer)
+                {
+                    IR.add(new IR.li(IRReg.a0, (Integer)initVal));
+                }
+                else if (initVal instanceof String)
+                {
+                    IR.add(new IR.la(IRReg.a0, (String)initVal));
+                }
                 IR.add(new IR.sw(IRReg.a0, IRReg.v0, i * 4));
             }
         }

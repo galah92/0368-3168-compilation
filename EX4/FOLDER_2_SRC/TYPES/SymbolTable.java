@@ -44,13 +44,13 @@ public class SymbolTable
 
     public static TypeClass findClass()
     {
-        boolean s = false;
-          for (Symbol symbol : stack)
-          {
-            if(s) return (TypeClass)symbol.type;
-            if (symbol.name.equals("SCOPE-Class")) { s = true;}
-          }
-          return null;
+        boolean isAfterClassSope = false;
+        for (Symbol symbol : stack)
+        {
+            if (isAfterClassSope) {return (TypeClass)symbol.type; }
+            if (symbol.name.equals("SCOPE-Class")) { isAfterClassSope = true; }
+        }
+        return null;
     }
 
     public static Type findInScope(String name)
