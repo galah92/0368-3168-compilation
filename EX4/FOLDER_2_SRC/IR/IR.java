@@ -108,6 +108,42 @@ public class IR
             MIPS.writer.printf("\tdiv %s, %s, %s\n", dst.toMIPS(), src1.toMIPS(), src2.toMIPS());
         }
     }
+    
+    public static class slt extends IRComm
+    {
+        IRReg dst;
+        IRReg src1;
+        IRReg src2;
+        public slt(IRReg dst, IRReg src1, IRReg src2) { this.dst = dst; this.src1 = src1; this.src2 = src2; }
+        public void toMIPS()
+        {
+            MIPS.writer.printf("\tslt %s, %s, %s\n", dst.toMIPS(), src1.toMIPS(), src2.toMIPS());
+        }
+    }
+
+    public static class sltu extends IRComm
+    {
+        IRReg dst;
+        IRReg src1;
+        IRReg src2;
+        public sltu(IRReg dst, IRReg src1, IRReg src2) { this.dst = dst; this.src1 = src1; this.src2 = src2; }
+        public void toMIPS()
+        {
+            MIPS.writer.printf("\tsltu %s, %s, %s\n", dst.toMIPS(), src1.toMIPS(), src2.toMIPS());
+        }
+    }
+
+    public static class xori extends IRComm
+    {
+        IRReg dst;
+        IRReg src;
+        int imm;
+        public xori(IRReg dst, IRReg src, int imm) { this.dst = dst; this.src = src; this.imm = imm; }
+        public void toMIPS()
+        {
+            MIPS.writer.printf("\txori %s, %s, %d\n", dst.toMIPS(), src.toMIPS(), imm);
+        }
+    }
 
     public static class blt extends IRComm
     {

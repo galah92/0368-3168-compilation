@@ -168,34 +168,17 @@ public class ExpBinOp extends Exp
                 IR.add(new IR.div(leftReg, leftReg, rightReg));
                 break;
             case '<':
-                String ltTrueLabel = IR.uniqueLabel("lt_true");
-                String ltEndLabel = IR.uniqueLabel("lt_end");
-                IR.add(new IR.blt(leftReg, rightReg, ltTrueLabel));
-                IR.add(new IR.li(leftReg, 0));
-                IR.add(new IR.jump(ltEndLabel));
-                IR.add(new IR.label(ltTrueLabel));
-                IR.add(new IR.li(leftReg, 1));
-                IR.add(new IR.label(ltEndLabel));
+                IR.add(new IR.slt(leftReg, leftReg, rightReg));
                 break;
             case '>':
-                String gtTrueLabel = IR.uniqueLabel("gt_true");
-                String gtEndLabel = IR.uniqueLabel("gt_end");
-                IR.add(new IR.bgt(leftReg, rightReg, gtTrueLabel));
-                IR.add(new IR.li(leftReg, 0));
-                IR.add(new IR.jump(gtEndLabel));
-                IR.add(new IR.label(gtTrueLabel));
-                IR.add(new IR.li(leftReg, 1));
-                IR.add(new IR.label(gtEndLabel));
+                IR.add(new IR.sub(leftReg, IRReg.zero, leftReg));  // negate
+                IR.add(new IR.sub(rightReg, IRReg.zero, rightReg));  // negate
+                IR.add(new IR.slt(leftReg, leftReg, rightReg));
                 break;
             case '=':
-                String eqTrueLabel = IR.uniqueLabel("eq_true");
-                String eqEndLabel = IR.uniqueLabel("eq_end");
-                IR.add(new IR.beq(leftReg, rightReg, eqTrueLabel));
-                IR.add(new IR.li(leftReg, 0));
-                IR.add(new IR.jump(eqEndLabel));
-                IR.add(new IR.label(eqTrueLabel));
-                IR.add(new IR.li(leftReg, 1));
-                IR.add(new IR.label(eqEndLabel));
+                IR.add(new IR.sub(leftReg, leftReg, rightReg));
+                IR.add(new IR.sltu(leftReg, IRReg.zero, leftReg));  // 1 if not equal
+                IR.add(new IR.xori(leftReg, leftReg, 1));  // 0 becomes 1, 1 becomes 0
                 break;
             }
             return leftReg;
