@@ -63,6 +63,7 @@ public class FuncDec extends ClassField
         }
 
         funcType = new TypeFunc(retType, className == null ? funcName : className + "_" + funcName);
+        funcType.funcName = funcName;
         if (className != null) { funcType.className = className; }
         if (classType != null)
         {

@@ -383,14 +383,12 @@ public class IR
 
     public static class stringLiteral extends IRComm
     {
-        IRReg dst;
         String str;
-        public stringLiteral(IRReg dst, String str) { this.dst = dst; this.str = str; }
+        String label;
+        public stringLiteral(String str, String label) { this.label = label; this.str = str; }
         public void toMIPS()
         {
-            String label = IR.uniqueLabel("string_literal");
             MIPS.dataWriter.printf("%s: .asciiz %s\n", label, str);
-            MIPS.writer.printf("\tla %s, %s\n", dst.toMIPS(), label);
         }
     }
 

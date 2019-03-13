@@ -29,7 +29,9 @@ public class ExpString extends Exp
 	public IRReg toIR()
 	{
 		IRReg reg = new IRReg.TempReg();
-        IR.add(new IR.stringLiteral(reg, value));
+        String label = IR.uniqueLabel("string_literal");
+        IR.add(new IR.stringLiteral(value, label));
+        IR.add(new IR.la(reg, label));
         return reg;
 	}
     
