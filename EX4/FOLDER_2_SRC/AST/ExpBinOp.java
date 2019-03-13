@@ -167,6 +167,7 @@ public class ExpBinOp extends Exp
                 IR.add(new IR.mul(leftReg, leftReg, rightReg));
                 break;
             case '/':
+                IR.add(new IR.beq(rightReg, IRReg.zero, "exit_division_by_zero"));
                 IR.add(new IR.div(leftReg, leftReg, rightReg));
                 break;
             case '<':

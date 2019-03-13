@@ -63,11 +63,17 @@ public class IR
         IR.add(new IR.printString(IRReg.a0));
         IR.add(new IR.exit());
 
+        // exit function for division by zero
+        IR.add(new IR.label("exit_division_by_zero"));
+        IR.add(new IR.la(IRReg.a0, "string_illegal_div_by_0"));
+        IR.add(new IR.printString(IRReg.a0));
+        IR.add(new IR.exit());
+
         // strings for runtime checks
         MIPS.dataWriter.println();
         MIPS.dataWriter.println(".data");
         MIPS.dataWriter.println("string_access_violation: .asciiz \"Access Violation\"");
-        MIPS.dataWriter.println("string_illegal_div_by_0: .asciiz \"Illegal Division By Zero\"");
+        MIPS.dataWriter.println("string_illegal_div_by_0: .asciiz \"Division By Zero\"");
         MIPS.dataWriter.println("string_invalid_ptr_dref: .asciiz \"Invalid Pointer Dereference\"");
     }
 
