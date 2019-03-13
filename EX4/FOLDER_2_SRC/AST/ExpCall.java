@@ -76,10 +76,17 @@ public class ExpCall extends Exp
             IR.add(new IR.printInt(args2.get(0).toIR()));
             break;
         case "PrintString":
-        IR.add(new IR.printString(args2.get(0).toIR()));
+            IR.add(new IR.printString(args2.get(0).toIR()));
             break;
         case "PrintTrace":
-            System.out.println("PrintTrace not supported yet");
+            IRReg addrReg = new IRReg.TempReg();
+            String printTraceLabel = IR.uniqueLabel("print_trace_loop");
+            IR.add(new IR.move(addrReg, IRReg.fp)); // we loop over all fp's
+            IR.add(new IR.label(printTraceLabel));  // start of loop
+            IR.add(new IR.lw(IRReg.a0, addrReg, 2 * 4));  // get function name
+            IR.add(new IR.printString(IRReg.a0));
+            IR.add(new IR.lw(addrReg, addrReg, 0));  // deference and get next fp
+            IR.add(new IR.bne(addrReg, IRReg.zero, printTraceLabel));  // loop condition
             break;
         default:
             IR.add(new IR.addi(IRReg.sp, IRReg.sp, -(args2.size() + 1) * 4));

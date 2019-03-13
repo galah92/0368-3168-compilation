@@ -64,7 +64,7 @@ public class VarSimple extends Var
         IRReg reg = new IRReg.TempReg();
         if (numParam != -1)
         {
-            IR.add(new IR.addi(reg, IRReg.fp, (numParam + 3) * 4));
+            IR.add(new IR.addi(reg, IRReg.fp, (numParam + 4) * 4));
         }
         else if (numLocal != -1)
         {
@@ -72,7 +72,7 @@ public class VarSimple extends Var
         }
         else if (numMember != -1)
         {
-            IR.add(new IR.lw(reg, IRReg.fp, 2 * 4));  // "this"
+            IR.add(new IR.lw(reg, IRReg.fp, 3 * 4));  // "this"
             IR.add(new IR.addi(reg, reg, numMember * 4));  // calculate address of member
         }
         else

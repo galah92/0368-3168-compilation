@@ -113,9 +113,11 @@ public class FuncDec extends ClassField
         if (isMain) { for (String initLabel : IR.globalVars) { IR.add(new IR.jal(initLabel)); } }
         
         // prologue
-        IR.add(new IR.addi(IRReg.sp, IRReg.sp, -8));
+        IR.add(new IR.addi(IRReg.sp, IRReg.sp, -3 * 4));
         IR.add(new IR.sw(IRReg.fp, IRReg.sp, 0));  // save fp
         IR.add(new IR.sw(IRReg.ra, IRReg.sp, 4));  // save ra
+        IR.add(new IR.la(IRReg.ra, funcNameLabel));  // get function name
+        IR.add(new IR.sw(IRReg.ra, IRReg.sp, 8));  // save function name
         IR.add(new IR.move(IRReg.fp, IRReg.sp));  // update to new fp
         IR.add(new IR.addi(IRReg.sp, IRReg.sp, -(numLocals + 8) * 4));  // allocate stack
         IR.add(new IR.jal("store_tmp_regs"));
@@ -129,7 +131,7 @@ public class FuncDec extends ClassField
         IR.add(new IR.addi(IRReg.sp, IRReg.sp, (numLocals + 8) * 4));  // deallocate stack
         IR.add(new IR.lw(IRReg.ra, IRReg.sp, 4));  // retrieve ra
         IR.add(new IR.lw(IRReg.fp, IRReg.sp, 0));  // retrieve fp
-        IR.add(new IR.addi(IRReg.sp, IRReg.sp, 8));
+        IR.add(new IR.addi(IRReg.sp, IRReg.sp, 3 * 4));
         IR.add(new IR.jr(IRReg.ra));  // return
         
         return null;
