@@ -9,6 +9,7 @@ public class ExpBinOp extends Exp
     public char op;
     public Exp left;
     public Exp right;
+    public boolean isIntsExpessions;
     public boolean isStringsExpessions;
 
     public ExpBinOp(Exp left, Exp right, char op)
@@ -37,6 +38,7 @@ public class ExpBinOp extends Exp
 
         if (t1 == Type.INT && t2 == Type.INT)
         {
+            isIntsExpessions = true;
             return Type.INT;
         }
         else if (op == '+' && isStringsExpessions)
@@ -180,6 +182,20 @@ public class ExpBinOp extends Exp
                 IR.add(new IR.sltu(leftReg, IRReg.zero, leftReg));  // 1 if not equal
                 IR.add(new IR.xori(leftReg, leftReg, 1));  // 0 becomes 1, 1 becomes 0
                 break;
+            }
+            if (isIntsExpessions)
+            {
+                String overflowEndLabel = IR.uniqueLabel("int_underflow_end");
+                IR.add(new IR.li(rightReg, -32768));  // -2^15
+                IR.add(new IR.bgt(leftReg, rightReg, overflowEndLabel));
+                IR.add(new IR.move(leftReg, rightReg));
+                IR.add(new IR.label(overflowEndLabel));
+
+                overflowEndLabel = IR.uniqueLabel("int_overflow_end");
+                IR.add(new IR.li(rightReg, 32767));  // 2^15 - 1
+                IR.add(new IR.blt(leftReg, rightReg, overflowEndLabel));
+                IR.add(new IR.move(leftReg, rightReg));
+                IR.add(new IR.label(overflowEndLabel));
             }
             return leftReg;
         }
