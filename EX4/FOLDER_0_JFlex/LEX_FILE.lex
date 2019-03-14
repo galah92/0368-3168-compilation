@@ -25,7 +25,7 @@ ALPHANUM			= {LETTER} | [0-9]
 STRING				= [\"]{LETTER}*[\"]
 ID					= {LETTER}+{ALPHANUM}*
 PARENTHESIS 		= "(" | ")" | "[" | "]" | "{" | "}"
-CommentContent		= ({LETTER} | [0-9] | [ \t\f] | {PARENTHESIS} | "?" | "!" | "+" | "-" | "." | ";")
+CommentContent		= ({LETTER} | [0-9] | [ \t\f] | {PARENTHESIS} | "?" | "!" | "+" | "-" | "." | ";"| [\"])
 
 Comment				= {TraditionalComment} | {EndOfLineComment}
 TraditionalComment	= "/*"(("/"*"*"*("*"*{CommentContent}"*"* | "*"*{LineTerminator}"*"* | {CommentContent}"/"* | {LineTerminator}"/"*)*) ) "*/"
