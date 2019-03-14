@@ -12,7 +12,7 @@ public class ExpCall extends Exp
     public ExpList args;
     public List<Exp> args2 = new ArrayList<Exp>();
     public String funcFullname;
-    public int numMethod;
+    public int numMethod = -1;
 
     public ExpCall(String funcName, Var instanceVar, ExpList args)
     {
@@ -55,7 +55,16 @@ public class ExpCall extends Exp
         }
         else if (classType != null) // own class method
         {
-            funcType = classType.getMethod(funcName);
+            for (int i = 0; i < classType.methods.size(); i++)
+            {
+                Symbol method = classType.methods.get(i);
+                if (funcName.equals(method.name))
+                {
+                    funcType = (TypeFunc)method.type;
+                    numMethod = i;
+                    break;
+                }
+            }
         }
         
         if (funcType == null) // global functions
@@ -96,10 +105,19 @@ public class ExpCall extends Exp
             break;
         default:
             IR.add(new IR.addi(IRReg.sp, IRReg.sp, -(args2.size() + 1) * 4));  // lower stack
-            if (instanceVar != null)  // class method
+            if (numMethod != -1)  // class method
             {
-                IRReg instanceReg = instanceVar.toIR();  // get instance
-                IR.add(new IR.lw(instanceReg, instanceReg, 0));  // dereference instance
+                IRReg instanceReg;
+                if (instanceVar != null)
+                {
+                    instanceReg = instanceVar.toIR();  // get instance
+                    IR.add(new IR.lw(instanceReg, instanceReg, 0));  // dereference instance
+                }
+                else
+                {
+                    instanceReg = new IRReg.TempReg();
+                    IR.add(new IR.lw(instanceReg, IRReg.fp, 3 * 4));  // get "this"
+                }
                 IR.add(new IR.beq(instanceReg, IRReg.zero, "exit_invalid_dereference"));  // runtime check
                 IR.add(new IR.sw(instanceReg, IRReg.sp, 0 * 4));  // add "this" as first argument
                 for (int i = 0; i < args2.size(); i++)  // add arguments
