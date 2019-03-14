@@ -16,10 +16,10 @@ public class ExpList extends Node
     
     public void logGraphviz()
     {
-        if (head != null) head.logGraphviz();
+        head.logGraphviz();
         if (tail != null) tail.logGraphviz();
         logNode("ExpList");
-        if (head != null) logEdge(head);
+        logEdge(head);
         if (tail != null) logEdge(tail);
     }
 

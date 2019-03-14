@@ -30,6 +30,7 @@ public class ClassDec extends Dec
     public Type Semant() throws Exception
     {
         if (!SymbolTable.isGlobalScope()) { throw new SemanticException("class definition must be at global scope"); }
+        if (SymbolTable.find(className) != null) { throw new SemanticException("symbol already defined"); }
 
         TypeClass baseType = null;
         if (baseName != null)
@@ -39,14 +40,12 @@ public class ClassDec extends Dec
             baseType = (TypeClass)t;
         }
 
-        if (SymbolTable.find(className) != null) { throw new SemanticException("symbol already defined"); }
-
         classType = new TypeClass(baseType, className);
         SymbolTable.enter(className, classType);
 
         SymbolTable.beginScope(Type.Scope.CLASS);
         for (Symbol symbol : classType.members) { SymbolTable.enter(symbol.name, symbol.type); }
-        
+        for (Symbol symbol : classType.methods) { SymbolTable.enter(symbol.name, symbol.type); }
         fields.SemantDeclaration();
         fields.SemantBody();
         SymbolTable.endScope();

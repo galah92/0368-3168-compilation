@@ -15,11 +15,11 @@ public class ClassFieldList extends Node
         this.tail = tail;
     }
 
+    @Override
     public void logGraphviz()
     {
         head.logGraphviz();
         if (tail != null) tail.logGraphviz();
-
         logNode("ClassFieldList\n");
         logEdge(head);
         if (tail != null) logEdge(tail);
@@ -37,6 +37,7 @@ public class ClassFieldList extends Node
         if (tail != null) tail.SemantBody();
     }
 
+    @Override
     public TypeList Semant() throws Exception
     {
         Type headType = head.Semant();

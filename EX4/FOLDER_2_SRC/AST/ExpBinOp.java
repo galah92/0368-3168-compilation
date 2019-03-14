@@ -58,10 +58,10 @@ public class ExpBinOp extends Exp
             {
                 if (((TypeClass)t1).isInheritingFrom((TypeClass)t2)) { return Type.INT; }
                 if (((TypeClass)t2).isInheritingFrom((TypeClass)t1)) { return Type.INT; }
-                throw new SemanticException(t1 + ", " + t2);
+                throw new SemanticException("comparison between classes without inheritance relation");
             }
         }
-        throw new SemanticException(t1 + ", " + t2);
+        throw new SemanticException("invalid binary operation");
     }
 
     @Override

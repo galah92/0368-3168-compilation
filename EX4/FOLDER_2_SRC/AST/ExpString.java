@@ -6,7 +6,7 @@ import pcomp.*;
 public class ExpString extends Exp
 {
 
-    public String value;
+    public final String value;
     public String label;
     
     public ExpString(String value)

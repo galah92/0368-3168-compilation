@@ -10,6 +10,7 @@ public class ExpCall extends Exp
     public String funcName;
     public Var instanceVar;
     public ExpList args;
+    
     public List<Exp> args2 = new ArrayList<Exp>();
     public String funcFullname;
     public int numMethod = -1;
@@ -27,7 +28,6 @@ public class ExpCall extends Exp
     {
         if (args != null) args.logGraphviz();
         if (instanceVar != null) instanceVar.logGraphviz();
-
         logNode(String.format("ExpCall\n%s", funcName));
         if (args != null) logEdge(args);
         if (instanceVar != null) logEdge(instanceVar);
@@ -36,24 +36,18 @@ public class ExpCall extends Exp
     @Override
     public Type Semant() throws Exception
     {
-        TypeList argsTypes = args != null ? args.Semant() : null;
-
         TypeFunc funcType = null;
-        TypeClass classType = SymbolTable.findClass();
-
+        TypeList argsTypes = args != null ? args.Semant() : null;
+        
+        TypeClass classType = null;
         if (instanceVar != null) // class variable method
         {
             Type t = instanceVar.Semant();
             if (!(t instanceof TypeClass)) { throw new SemanticException("symbol is not of class type: " + instanceVar); }
-            TypeClass instanceType = (TypeClass)t;
-            funcType = instanceType.getMethod(funcName);
-            for (int i = 0; i < instanceType.methods.size(); i++)
-            {
-                if (funcName.equals(instanceType.methods.get(i).name)) { numMethod = i; break; }
-            }
-            if (funcType == null) { throw new SemanticException("symbol not found: " + funcName); }
+            classType = (TypeClass)t;
         }
-        else if (classType != null) // own class method
+        classType = classType != null ? classType : SymbolTable.findClass();
+        if (classType != null)
         {
             for (int i = 0; i < classType.methods.size(); i++)
             {
@@ -64,9 +58,10 @@ public class ExpCall extends Exp
                     numMethod = i;
                     break;
                 }
-            }
+            }        
         }
-        
+        if (instanceVar != null && funcType == null) { throw new SemanticException("symbol not found: " + funcName); }
+
         if (funcType == null) // global functions
         {
             Type t = SymbolTable.find(funcName);
