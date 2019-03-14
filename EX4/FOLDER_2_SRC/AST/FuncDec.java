@@ -109,7 +109,7 @@ public class FuncDec extends ClassField
         String funcNameLabel = IR.uniqueLabel("func_name");
         IR.add(new IR.stringLiteral(String.format("\"%s\"", funcName), funcNameLabel));
 
-        IR.add(new IR.label(funcType.fullname));
+        IR.add(new IR.label("_" + funcType.fullname));
         if (isMain) { for (String initLabel : IR.globalVars) { IR.add(new IR.jal(initLabel)); } }
         
         // prologue

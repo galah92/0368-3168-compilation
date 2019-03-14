@@ -135,7 +135,7 @@ public class ExpCall extends Exp
                 {
                     IR.add(new IR.sw(args2.get(i).toIR(), IRReg.sp, (i + 1) * 4));
                 }
-                IR.add(new IR.jal(funcFullname));  // actual call to function
+                IR.add(new IR.jal("_" + funcFullname));  // actual call to function
             }
             IR.add(new IR.addi(IRReg.sp, IRReg.sp, (args2.size() + 1) * 4));  // fold stack
             IRReg retVal = new IRReg.TempReg();

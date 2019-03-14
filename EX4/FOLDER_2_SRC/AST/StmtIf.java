@@ -17,13 +17,11 @@ public class StmtIf extends Stmt
 
     public void logGraphviz()
     {
-        if (cond != null) cond.logGraphviz();
-        if (body != null) body.logGraphviz();
-
+        cond.logGraphviz();
+        body.logGraphviz();
         logNode("StmtIf");
-
-        if (cond != null) logEdge(cond);
-        if (body != null) logEdge(body);
+        logEdge(cond);
+        logEdge(body);
     }
 
     public Type Semant() throws Exception

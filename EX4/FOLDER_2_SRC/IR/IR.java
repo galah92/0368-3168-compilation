@@ -16,7 +16,10 @@ public class IR
     
     public static void add(IRComm cmd) { commands.add(cmd); }
     
-    public static void toMIPS() { for (IRComm comm : commands) { comm.toMIPS(); } }
+    public static void toMIPS()
+    {
+        for (IRComm comm : commands) { comm.toMIPS(); }
+    }
 
     private static int uniqueLabelCounter = 0;
 
@@ -31,6 +34,9 @@ public class IR
     {
         MIPS.writer.println(".text");
         MIPS.writer.println(".globl main");
+        MIPS.writer.println("main:");
+        // TODO: find a way to init globals here instead of _main
+        MIPS.writer.println("\t j _main");
         
         IR.add(new IR.label("store_tmp_regs"));
         IR.add(new IR.sw(IRReg.t0, IRReg.fp, -1 * 4));  // save t0

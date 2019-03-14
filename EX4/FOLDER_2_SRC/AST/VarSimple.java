@@ -62,13 +62,13 @@ public class VarSimple extends Var
     public IRReg toIR()
     {
         IRReg reg = new IRReg.TempReg();
-        if (numParam != -1)
-        {
-            IR.add(new IR.addi(reg, IRReg.fp, (numParam + 4) * 4));
-        }
-        else if (numLocal != -1)
+        if (numLocal != -1)
         {
             IR.add(new IR.addi(reg, IRReg.fp, (-numLocal - 9) * 4));
+        }
+        else if (numParam != -1)
+        {
+            IR.add(new IR.addi(reg, IRReg.fp, (numParam + 4) * 4));
         }
         else if (numMember != -1)
         {

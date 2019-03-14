@@ -75,7 +75,7 @@ public class ClassDec extends Dec
             for (int i = 0; i < numMethods; i++)
             {
                 String methodLabel = ((TypeFunc)classType.methods.get(i).type).fullname;
-                IR.add(new IR.la(tmpReg, methodLabel));  // get method address
+                IR.add(new IR.la(tmpReg, "_" + methodLabel));  // get method address
                 IR.add(new IR.sw(tmpReg, vtable, i * 4));  // store in vtable
             }    
             IR.add(new IR.jr(IRReg.ra));
