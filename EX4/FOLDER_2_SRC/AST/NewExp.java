@@ -66,7 +66,6 @@ public class NewExp extends Exp
             if (classType.methods.size() == 0)
             {
                 IR.add(new IR.sw(IRReg.zero, IRReg.v0, 0));  // store zero as vtable address
-		        return IRReg.v0;
             }
             else  // where there are methods there is a vtable
             {

@@ -22,7 +22,7 @@ public class IR
 
     public static String uniqueLabel(String label)
     {
-        return String.format("label_%d_%s", uniqueLabelCounter++, label);
+        return String.format("_%d_%s", uniqueLabelCounter++, label);
     }
 
     public static final Deque<String> globalVars = new ArrayDeque<String>();
