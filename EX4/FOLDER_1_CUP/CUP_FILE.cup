@@ -11,7 +11,8 @@ parser code
     }
     public void report_error(String message, Object info)
     {
-        System.out.println("ERROR(" + lexer.getLine() + ")");
+        String errDesc = String.format("[Syntactic Error] [Line %d]", lexer.getLine());
+        System.err.println(errDesc);
         System.exit(0);
     }
 :}

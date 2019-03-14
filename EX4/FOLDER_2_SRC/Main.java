@@ -25,6 +25,11 @@ public class Main
 
             RegAlloc.allocate(argv[1]);
         }
+        catch (AST.Node.SemanticException e)
+        {
+            String errDesc = String.format("[Semantic Error] [Line %d] : %s", e.getLineNumber(), e.getMessage());
+            System.err.println(errDesc);
+        }
         catch (Exception e)
         {
             e.printStackTrace();
