@@ -29,6 +29,9 @@ public class IR
 
     public static void init()
     {
+        MIPS.writer.println(".text");
+        MIPS.writer.println(".globl main");
+        
         IR.add(new IR.label("store_tmp_regs"));
         IR.add(new IR.sw(IRReg.t0, IRReg.fp, -1 * 4));  // save t0
         IR.add(new IR.sw(IRReg.t1, IRReg.fp, -2 * 4));  // save t1
@@ -70,7 +73,6 @@ public class IR
         IR.add(new IR.exit());
 
         // strings for runtime checks
-        MIPS.dataWriter.println();
         MIPS.dataWriter.println(".data");
         MIPS.dataWriter.println("string_access_violation: .asciiz \"Access Violation\"");
         MIPS.dataWriter.println("string_illegal_div_by_0: .asciiz \"Division By Zero\"");
@@ -286,6 +288,16 @@ public class IR
         }
     }
 
+    public static class jalr extends IRComm
+    {
+        IRReg reg;
+        public jalr(IRReg reg) { this.reg = reg; }
+        public void toMIPS()
+        {
+            MIPS.writer.printf("\tjalr %s\n", reg.toMIPS());
+        }
+    }
+
     public static class jr extends IRComm
     {
         IRReg reg;
@@ -435,6 +447,17 @@ public class IR
         public void toMIPS()
         {
             MIPS.writer.printf("\tbeqz %s, %s\n", value.toMIPS(), label);
+        }
+    }
+
+    public static class declareData extends IRComm
+    {
+        String name;
+        int numBytes;
+        public declareData(String name, int numBytes) { this.name = name; this.numBytes = numBytes; }
+        public void toMIPS()
+        {
+            MIPS.dataWordsWriter.printf("%s:\n\t.align 4\n\t.word %d\n", name, numBytes);
         }
     }
 

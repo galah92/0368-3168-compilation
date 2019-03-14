@@ -60,9 +60,22 @@ public class NewExp extends Exp
         else  // class instance
         {
             IR.add(new IR.li(IRReg.a0, numMembers));  // copy class size
+            IR.add(new IR.addi(IRReg.a0, IRReg.a0, 1));  // first element is vtable
             IR.add(new IR.sll(IRReg.a0, IRReg.a0, 4));  // convert to size in bytes
             IR.add(new IR.sbrk());  // allocate heap memory, v0 contain the result
-            for (int i = 0; i < numMembers; i++)  // init all members values
+            if (classType.methods.size() == 0)
+            {
+                IR.add(new IR.sw(IRReg.zero, IRReg.v0, 0));  // store zero as vtable address
+		        return IRReg.v0;
+            }
+            else  // where there are methods there is a vtable
+            {
+                String vtableLabel = String.format("_%s_vtable", classType.className);
+                IRReg vtable = new IRReg.TempReg();
+                IR.add(new IR.la(vtable, vtableLabel));  // get vtable
+                IR.add(new IR.sw(vtable, IRReg.v0, 0));  // store vtable as first element
+            }
+            for (int i = 0; i < numMembers; i++)  // init all members
             {
                 Object initVal = classType.initVals.get(i);
                 if (initVal instanceof Integer)
@@ -73,7 +86,7 @@ public class NewExp extends Exp
                 {
                     IR.add(new IR.la(IRReg.a0, (String)initVal));
                 }
-                IR.add(new IR.sw(IRReg.a0, IRReg.v0, i * 4));
+                IR.add(new IR.sw(IRReg.a0, IRReg.v0, (i + 1) * 4));
             }
         }
 		return IRReg.v0;

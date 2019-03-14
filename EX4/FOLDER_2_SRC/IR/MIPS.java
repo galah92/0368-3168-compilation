@@ -10,15 +10,17 @@ public class MIPS
 
     private static final StringWriter dataStringWriter = new StringWriter();
     public static final PrintWriter dataWriter = new PrintWriter(dataStringWriter);
+    
+    private static final StringWriter dataWordsStringWriter = new StringWriter();
+    public static final PrintWriter dataWordsWriter = new PrintWriter(dataWordsStringWriter);
 
     public static void toFile(String outFile) throws Exception
     {
-        writer.close();
-        dataWriter.close();
-
         PrintWriter fileWriter = new PrintWriter(outFile);
-        fileWriter.append(stringWriter.toString());
         fileWriter.append(dataStringWriter.toString());
+        fileWriter.append(dataWordsStringWriter.toString());
+        fileWriter.println();
+        fileWriter.append(stringWriter.toString());
         fileWriter.close();
     }
 

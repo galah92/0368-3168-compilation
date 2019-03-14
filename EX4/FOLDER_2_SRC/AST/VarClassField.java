@@ -46,7 +46,7 @@ public class VarClassField extends Var
         IRReg reg = instance.toIR();
         IR.add(new IR.lw(reg, reg, 0));  // dereference instance
         IR.add(new IR.beq(reg, IRReg.zero, "exit_invalid_dereference"));  // runtime check
-        IR.add(new IR.addi(reg, reg, numMember * 4));  // access member
+        IR.add(new IR.addi(reg, reg, (numMember + 1) * 4));  // access member
         return reg;
     }
     
