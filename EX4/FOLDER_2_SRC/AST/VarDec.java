@@ -44,6 +44,7 @@ public class VarDec extends ClassField
             TypeFunc funcType = SymbolTable.findFunc();
             numLocal = funcType.locals.size();
             funcType.locals.add(new Symbol(varName, varType));
+            funcType.currMaxLocals++;
         }
         else if (SymbolTable.isScope(Type.Scope.CLASS.name))  // class member
         {

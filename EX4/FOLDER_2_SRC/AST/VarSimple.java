@@ -27,12 +27,12 @@ public class VarSimple extends Var
 
         if (SymbolTable.isScope(Type.Scope.FUNC.name))
         {
-            List<Symbol> funcLocals = SymbolTable.findFunc().locals;
-            for (int i = 0; i < funcLocals.size(); i++)
+            for (int i = SymbolTable.findFunc().currMaxLocals - 1; i >= 0; i--)
             {
-                if (varName.equals(funcLocals.get(i).name))
+                if (varName.equals(SymbolTable.findFunc().locals.get(i).name))
                 {
                     numLocal = i;
+                    break;
                 }
             }
             List<Symbol> funcParams = SymbolTable.findFunc().params;

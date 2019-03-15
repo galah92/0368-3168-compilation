@@ -28,10 +28,15 @@ public class StmtIf extends Stmt
     {
         if (cond.Semant() != Type.INT) { throw new SemanticException(); }
 
+        TypeFunc funcType = SymbolTable.findFunc();
+        int y = funcType.currMaxLocals;
+        funcType.currMaxLocals = funcType.locals.size();
+        
         SymbolTable.beginScope(Type.Scope.IF);
         body.Semant();
         SymbolTable.endScope();
-
+        
+        funcType.currMaxLocals = y;
         return null;
     }
 

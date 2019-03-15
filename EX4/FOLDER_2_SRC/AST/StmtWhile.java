@@ -3,7 +3,6 @@ package AST;
 import pcomp.*;
 
 
-
 public class StmtWhile extends Stmt
 {
     
@@ -18,19 +17,26 @@ public class StmtWhile extends Stmt
 
     public void logGraphviz()
     {
-        if (cond != null) cond.logGraphviz();
-        if (body != null) body.logGraphviz();
+        cond.logGraphviz();
+        body.logGraphviz();
         logNode("StmtWhile");
-        if (cond != null) logEdge(cond);
-        if (body != null) logEdge(body);
+        logEdge(cond);
+        logEdge(body);
     }
 
     public Type Semant() throws Exception
     {
         if (cond.Semant() != Type.INT) { throw new SemanticException(); }
+
+        TypeFunc funcType = SymbolTable.findFunc();
+        int y = funcType.currMaxLocals;
+        funcType.currMaxLocals = funcType.locals.size();
+        
         SymbolTable.beginScope(Type.Scope.WHILE);
         body.Semant();
         SymbolTable.endScope();
+        
+        funcType.currMaxLocals = y;
         return null;
     }
 

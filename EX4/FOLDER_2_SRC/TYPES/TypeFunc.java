@@ -10,6 +10,7 @@ public class TypeFunc extends Type
 	public Type retType;
 	public List<Symbol> params = new ArrayList<Symbol>();
 	public List<Symbol> locals = new ArrayList<Symbol>();
+	public int currMaxLocals = 0;
 
 	public TypeFunc(Type retType, String fullname)
 	{
